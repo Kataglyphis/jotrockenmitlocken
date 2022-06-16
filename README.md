@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-  <a href="https://jotrockenmitlocken.de"><img src="images/logo.png" alt="VulkanEngine" width="200"></a>
+  <a href="https://jotrockenmitlocken.de"><img src="assets/images/logo.png" alt="My website" width="200"></a>
   <br>
   Cataglyphis template
   <br>
@@ -104,7 +104,7 @@ This project is a template.
 
 1. Clone the repo
    ```sh
-   git clone --recurse-submodules git@github.com:Kataglyphis/....git
+   git clone --recurse-submodules git@github.com:Kataglyphis/jotrockenmitlocken.de.git
    ```
 
 ## Tests
@@ -113,8 +113,6 @@ This project is a template.
 ## Roadmap
 Upcoming :)
 <!-- See the [open issues](https://github.com/othneildrew/Best-README-Template/issues) for a list of proposed features (and known issues). -->
-
-
 
 <!-- CONTRIBUTING -->
 ## Contributing
@@ -136,7 +134,7 @@ Contributions are what make the open source community such an amazing place to b
 
 Jonas Heinle - [@Cataglyphis_](https://twitter.com/Cataglyphis_) - jonasheinle@googlemail.com
 
-Project Link: [https://github.com/Kataglyphis/...](https://github.com/Kataglyphis/...)
+Project Link: [https://github.com/Kataglyphis/jotrockenmitlocken.de](https://github.com/Kataglyphis/jotrockenmitlocken.de)
 
 
 <!-- ACKNOWLEDGEMENTS -->
