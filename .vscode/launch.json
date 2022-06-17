@@ -6,23 +6,23 @@
     "configurations": [
         {
             "name": "website",
-            "cwd": "website",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
+            "program": "${workspaceFolder}/lib/main.dart"
         },
         {
             "name": "website (profile mode)",
-            "cwd": "website",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "profile"
+            "flutterMode": "profile",
+            "program": "${workspaceFolder}/lib/main.dart"
         },
         {
             "name": "website (release mode)",
-            "cwd": "website",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "release"
+            "flutterMode": "release",
+            "program": "${workspaceFolder}/lib/main.dart"
         }
     ]
 }

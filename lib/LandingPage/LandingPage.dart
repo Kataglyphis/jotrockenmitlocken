@@ -1,73 +1,65 @@
 import 'package:flutter/material.dart';
 
+import '../Navbar/Navbar.dart';
+
 class LandingPage extends StatelessWidget {
   List<Widget> pageChildren(double width) {
     return <Widget>[
-      Container(
-        width: width,
+      NavBar(),
+      Padding(
+        padding: const EdgeInsets.symmetric(vertical: 20.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Text(
-              "Website \n for rendering enthusiasts",
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 40.0,
-                  color: Colors.black),
-            ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 20.0),
-              child: Text(
-                "Lets build epic rendering systems together",
+              child: const Text(
+                "Website \n for rendering enthusiasts",
                 style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 40.0,
+                    color: Colors.black),
+              ),
+            ),
+            const Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20.0),
+              child: const Text(
+                "Lets build epic rendering systems together",
+                style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16.0,
                     color: Colors.black),
               ),
             ),
-            MaterialButton(
-              color: Colors.black,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(20.0))),
-              onPressed: () {},
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                    vertical: 20.0, horizontal: 40.0),
-                child: Text(
-                  "Lets go",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16.0,
-                      color: Colors.red),
-                ),
-              ),
-            ),
+            Image.asset("assets/images/Engine_logo.png", width: width),
           ],
         ),
       ),
-      Padding(
-        padding: const EdgeInsets.symmetric(vertical: 20),
-        child: Image.asset("assets/images/Engine_logo.png", width: width),
-      )
     ];
   }
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        if (constraints.maxWidth > 800) {
-          return Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: pageChildren(constraints.biggest.width / 2),
-          );
-        } else {
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: pageChildren(constraints.biggest.width),
-          );
-        }
-      },
+    return Scaffold(
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          if (constraints.maxWidth > 800) {
+            return SingleChildScrollView(
+              child: Column(
+                //mainAxisAlignment: MainAxisAlignment.center,
+                children: pageChildren(constraints.biggest.width),
+              ),
+            );
+          } else {
+            return SingleChildScrollView(
+              child: Column(
+                //mainAxisAlignment: MainAxisAlignment.center,
+                children: pageChildren(constraints.biggest.width),
+              ),
+            );
+          }
+        },
+      ),
     );
   }
 }
