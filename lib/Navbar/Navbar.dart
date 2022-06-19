@@ -70,6 +70,19 @@ class DesktopNavbar extends StatelessWidget {
                     Navigator.pushNamed(context, '/blog');
                   },
                 ),
+                SizedBox(width: 30),
+                ElevatedButton(
+                  child: const Text(
+                    "Info",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                        fontSize: 20),
+                  ),
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/info');
+                  },
+                ),
               ]),
             ]),
       ),
@@ -135,6 +148,19 @@ class MobileNavBar extends StatelessWidget {
                   ),
                   onPressed: () {
                     Navigator.pushNamed(context, '/blog');
+                  },
+                ),
+                SizedBox(width: 30),
+                ElevatedButton(
+                  child: const Text(
+                    "Info",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                        fontSize: 20),
+                  ),
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/info');
                   },
                 ),
               ],
