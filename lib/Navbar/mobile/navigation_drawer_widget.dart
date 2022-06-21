@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:jotrockenmitlocken/Navbar/mobile/DrawerItem.dart';
-import 'package:jotrockenmitlocken/Navbar/mobile/DrawerItems.dart';
-import 'package:jotrockenmitlocken/Navbar/mobile/NavigationDrawerChangeNotifier.dart';
+import 'package:jotrockenmitlocken/Navbar/mobile/drawer_item.dart';
+import 'package:jotrockenmitlocken/Navbar/mobile/drawer_items.dart';
+import 'package:jotrockenmitlocken/Navbar/mobile/navigation_drawer_change_notifier.dart';
 import 'package:provider/provider.dart';
 
 class NavigationDrawerWidget extends StatefulWidget {
@@ -16,29 +14,29 @@ class NavigationDrawerWidget extends StatefulWidget {
 class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
   Widget buildHeader(bool isCollapsed) => isCollapsed
       ? Image.asset(
-          "assets/icons/barbell.ico",
+          "assets/images/barbell.png",
           width: 48,
         )
       : Row(
           children: [
             const SizedBox(width: 24),
             Image.asset(
-              "assets/icons/barbell.ico",
+              "assets/images/barbell.png",
               width: 48,
             ),
             const SizedBox(width: 24),
             const Text(
-              'My blog',
+              'Pump IT',
               style: TextStyle(fontSize: 32, color: Colors.black),
             ),
           ],
         );
 
   Widget buildCollapseIcon(BuildContext context, bool isCollapsed) {
-    final double size = 52;
+    const double size = 52;
     final icon = isCollapsed ? Icons.arrow_forward_ios : Icons.arrow_back_ios;
     final alignment = isCollapsed ? Alignment.center : Alignment.centerRight;
-    final margin = isCollapsed ? null : EdgeInsets.only(right: 16);
+    final margin = isCollapsed ? null : const EdgeInsets.only(right: 16);
     final width = isCollapsed ? double.infinity : size;
     return Container(
       alignment: alignment,
@@ -46,7 +44,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          child: Container(
+          child: SizedBox(
               width: width,
               height: size,
               child: Icon(icon, color: Colors.black)),
@@ -54,32 +52,57 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
             final provider = Provider.of<NavigationDrawerChangeNotifier>(
                 context,
                 listen: false);
-            provider.toogleIsCollapsed();
+            provider.toggleIsCollapsed();
           },
         ),
       ),
     );
   }
 
+  void selectItem(BuildContext context, int index) {
+    switch (index) {
+      case 0:
+        Navigator.of(context).pushNamed('/');
+        break;
+      case 1:
+        Navigator.of(context).pushNamed('/blog');
+        break;
+      case 2:
+        Navigator.of(context).pushNamed('/aboutMe');
+        break;
+    }
+  }
+
   buildMenuItem(
       {required bool isCollapsed,
       required String text,
       required IconData icon,
-      required Null Function() onClicked}) {
-    final color = Colors.black;
+      required void Function() onClicked}) {
+    const color = Colors.black;
     final leading = Icon(icon, color: color);
 
-    return ListTile(
-      leading: leading,
-      title: Text(text, style: TextStyle(color: color, fontSize: 16)),
+    return Material(
+      color: Colors.transparent,
+      child: isCollapsed
+          ? ListTile(
+              title: leading,
+              onTap: onClicked,
+            )
+          : ListTile(
+              leading: leading,
+              title: Text(text,
+                  style: const TextStyle(color: color, fontSize: 16)),
+              onTap: onClicked,
+            ),
     );
   }
 
   buildList({required List<DrawerItem> items, required bool isCollapsed}) {
-    return ListView.builder(
+    return ListView.separated(
       shrinkWrap: true,
       primary: false,
       itemCount: items.length,
+      separatorBuilder: (context, index) => const SizedBox(height: 16),
       itemBuilder: (context, index) {
         final item = items[index];
 
@@ -87,7 +110,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
           isCollapsed: isCollapsed,
           text: item.title,
           icon: item.icon,
-          onClicked: () {},
+          onClicked: () => selectItem(context, index),
         );
       },
     );
@@ -103,14 +126,15 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
       width: isCollapsed ? MediaQuery.of(context).size.width * 0.2 : null,
       child: Drawer(
         child: Container(
-          color: Color.fromARGB(255, 255, 255, 255),
+          color: const Color.fromARGB(255, 255, 255, 255),
           child: Column(
             children: [
               Container(
-                  padding: EdgeInsets.symmetric(vertical: 24).add(safeArea),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 24).add(safeArea),
                   child: buildHeader(isCollapsed)),
               buildList(items: itemsFirst, isCollapsed: isCollapsed),
-              Spacer(),
+              const Spacer(),
               buildCollapseIcon(context, isCollapsed),
               const SizedBox(
                 height: 12,

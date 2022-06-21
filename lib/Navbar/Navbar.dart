@@ -1,171 +1,83 @@
 import 'package:flutter/material.dart';
+import 'package:jotrockenmitlocken/constants.dart';
 
 class NavBar extends StatelessWidget {
+  const NavBar({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        if (constraints.maxWidth > 1200) {
-          return DesktopNavbar();
-        } else {
-          return MobileNavBar();
-        }
-      },
-    );
+    return const DesktopNavbar();
   }
 }
 
 class DesktopNavbar extends StatelessWidget {
+  const DesktopNavbar({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 40),
       child: Container(
-        child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              const Text(
-                "Cataglyphis Blog",
+        child:
+            Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
+          const Text(
+            appName,
+            style: TextStyle(
+                fontWeight: FontWeight.bold, color: Colors.black, fontSize: 60),
+          ),
+          SizedBox(width: 16),
+          Image.asset("assets/images/barbell.png", width: 64),
+          Spacer(),
+          Row(children: <Widget>[
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: kPrimaryColor,
+                padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+              ),
+              child: const Text(
+                "Home",
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Colors.black,
-                    fontSize: 60),
+                    fontSize: 20),
               ),
-              Row(children: <Widget>[
-                ElevatedButton(
-                  child: const Text(
-                    "Home",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                        fontSize: 20),
-                  ),
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/');
-                  },
-                ),
-                SizedBox(width: 30),
-                ElevatedButton(
-                  child: const Text(
-                    "About me",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                        fontSize: 20),
-                  ),
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/aboutMe');
-                  },
-                ),
-                SizedBox(width: 30),
-                ElevatedButton(
-                  child: const Text(
-                    "Blog",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                        fontSize: 20),
-                  ),
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/blog');
-                  },
-                ),
-                SizedBox(width: 30),
-                ElevatedButton(
-                  child: const Text(
-                    "Info",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                        fontSize: 20),
-                  ),
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/info');
-                  },
-                ),
-              ]),
-            ]),
-      ),
-    );
-  }
-}
-
-class MobileNavBar extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 40),
-      child: Container(
-        child: Column(children: <Widget>[
-          const Padding(
-            padding: const EdgeInsets.symmetric(vertical: 32.0),
-            child: const Text(
-              "Cataglyphis Blog",
-              style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                  fontSize: 40),
+              onPressed: () {
+                Navigator.pushNamed(context, '/');
+              },
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 32.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                ElevatedButton(
-                  child: const Text(
-                    "Home",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                        fontSize: 20),
-                  ),
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/');
-                  },
-                ),
-                SizedBox(height: 10),
-                ElevatedButton(
-                  child: const Text(
-                    "About me",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                        fontSize: 20),
-                  ),
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/aboutMe');
-                  },
-                ),
-                SizedBox(height: 10),
-                ElevatedButton(
-                  child: const Text(
-                    "Blog",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                        fontSize: 20),
-                  ),
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/blog');
-                  },
-                ),
-                SizedBox(width: 30),
-                ElevatedButton(
-                  child: const Text(
-                    "Info",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                        fontSize: 20),
-                  ),
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/info');
-                  },
-                ),
-              ],
+            const SizedBox(width: 30),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: kPrimaryColor,
+                padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+              ),
+              child: const Text(
+                "About me",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                    fontSize: 20),
+              ),
+              onPressed: () {
+                Navigator.pushNamed(context, '/aboutMe');
+              },
             ),
-          ),
+            const SizedBox(width: 30),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: kPrimaryColor,
+                padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+              ),
+              child: const Text(
+                "Blog",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                    fontSize: 20),
+              ),
+              onPressed: () {
+                Navigator.pushNamed(context, '/blog');
+              },
+            ),
+          ]),
         ]),
       ),
     );
