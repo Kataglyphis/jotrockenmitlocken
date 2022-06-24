@@ -79,17 +79,10 @@ class NarrowLayout extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 const Text(
-                  "Website \nfor machine learning\nenthusiasts",
+                  "Machine learning",
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 40.0,
-                      color: Colors.white),
-                ),
-                const Text(
-                  "Lets build epic AI together",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 24.0,
                       color: Colors.white),
                 ),
                 Spacer(),
@@ -133,24 +126,17 @@ class NarrowLayout extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 const Text(
-                  "Website \nfor lifting enthusiasts",
+                  "Lifting",
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 30.0,
-                      color: Colors.black),
-                ),
-                const Text(
-                  "Lets lift together",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 32.0,
+                      fontSize: 25.0,
                       color: Colors.black),
                 ),
                 Spacer(),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     primary: kPrimaryColor,
-                    padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                   ),
                   child: const Text(
                     "Blog",

@@ -8,6 +8,7 @@ import 'package:url_launcher/link.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../Navbar/navbar.dart';
+import '../about_me_table.dart';
 
 class AboutMeWideLayout extends StatelessWidget {
   const AboutMeWideLayout({Key? key}) : super(key: key);
@@ -56,14 +57,25 @@ class AboutMeWideLayout extends StatelessWidget {
           ),
           SizedBox(height: 30),
           const Text(
-            "Jonas Heinle\n Some dude interested in various topics. Some text that describes me lorem ipsum ipsum lorem renderdude@jotrockenmitlocken.de",
+            "Jonas Heinle",
             style: TextStyle(
                 fontWeight: FontWeight.bold,
-                fontSize: 20.0,
+                fontSize: 40.0,
+                color: Colors.black),
+          ),
+          const Text(
+            "\nrenderdude@jotrockenmitlocken.de",
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 40.0,
                 color: Colors.black),
           ),
           SizedBox(height: 30),
           SocialMediaWidgets(),
+          SizedBox(
+            height: 20,
+          ),
+          AboutMeTable(),
           SizedBox(
             height: 20,
           ),

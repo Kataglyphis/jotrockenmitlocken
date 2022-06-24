@@ -9,6 +9,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:jotrockenmitlocken/constants.dart';
 
 import '../../Navbar/navbar.dart';
+import '../about_me_table.dart';
 
 class AboutMeNarrowLayout extends StatelessWidget {
   const AboutMeNarrowLayout({Key? key}) : super(key: key);
@@ -27,6 +28,8 @@ class AboutMeNarrowLayout extends StatelessWidget {
     MediaQueryData media = MediaQuery.of(context);
     return SingleChildScrollView(
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           SizedBox(
             width: media.size.width,
@@ -50,15 +53,26 @@ class AboutMeNarrowLayout extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(height: 30),
+          SizedBox(height: 50),
+          SocialMediaWidgets(),
           const Text(
-            "Jonas Heinle\n Some dude interested in various topics. Some text that describes me lorem ipsum ipsum lorem renderdude@jotrockenmitlocken.de",
+            "Jonas Heinle",
             style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 20.0,
                 color: Colors.black),
           ),
-          SocialMediaWidgets(),
+          const Text(
+            "\nrenderdude@jotrockenmitlocken.de",
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 18.0,
+                color: Colors.black),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          AboutMeTable(),
           SizedBox(
             height: 20,
           ),

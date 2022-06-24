@@ -18,80 +18,89 @@ class SocialMediaWidgets extends StatelessWidget {
     }
   }
 
+  List<Widget> buildSocialMediaChildren(double iconSize) {
+    return [
+      IconButton(
+        iconSize: iconSize,
+        icon: const FaIcon(FontAwesomeIcons.facebook),
+        color: Colors.black,
+        onPressed: () {
+          final Uri toLaunch = Uri(
+              scheme: 'https', host: 'www.facebook.com', path: 'jonas.heinle/');
+          _launchInBrowser(toLaunch);
+        },
+      ),
+      SizedBox(
+        width: iconSize / 2,
+      ),
+      IconButton(
+        iconSize: iconSize,
+        icon: const FaIcon(FontAwesomeIcons.github),
+        color: Colors.black,
+        onPressed: () {
+          final Uri toLaunch =
+              Uri(scheme: 'https', host: 'github.com', path: 'Kataglyphis');
+          _launchInBrowser(toLaunch);
+        },
+      ),
+      SizedBox(
+        width: iconSize / 2,
+      ),
+      IconButton(
+        iconSize: iconSize,
+        icon: const FaIcon(FontAwesomeIcons.youtube),
+        color: Colors.black,
+        onPressed: () {
+          final Uri toLaunch = Uri(
+              scheme: 'https',
+              host: 'www.youtube.com',
+              path: 'channel/UC3LZiH4sZzzaVBCUV8knYeg');
+          _launchInBrowser(toLaunch);
+        },
+      ),
+      SizedBox(
+        width: iconSize / 2,
+      ),
+      IconButton(
+        iconSize: iconSize,
+        icon: const FaIcon(FontAwesomeIcons.twitter),
+        color: Colors.black,
+        onPressed: () {
+          final Uri toLaunch =
+              Uri(scheme: 'https', host: 'twitter.com', path: 'Cataglyphis_');
+          _launchInBrowser(toLaunch);
+        },
+      ),
+      SizedBox(
+        width: iconSize / 2,
+      ),
+      IconButton(
+        iconSize: iconSize,
+        icon: const FaIcon(FontAwesomeIcons.linkedin),
+        color: Colors.black,
+        onPressed: () {
+          final Uri toLaunch = Uri(
+              scheme: 'https',
+              host: 'linkedin.com',
+              path: 'in/jonas-heinle-0b2a301a0/');
+          _launchInBrowser(toLaunch);
+        },
+      ),
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
-    const double iconSize = 54;
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        IconButton(
-          iconSize: iconSize,
-          icon: const FaIcon(FontAwesomeIcons.facebook),
-          color: Colors.black,
-          onPressed: () {
-            final Uri toLaunch = Uri(
-                scheme: 'https',
-                host: 'www.facebook.com',
-                path: 'jonas.heinle/');
-            _launchInBrowser(toLaunch);
-          },
-        ),
-        SizedBox(
-          width: 16,
-        ),
-        IconButton(
-          iconSize: iconSize,
-          icon: const FaIcon(FontAwesomeIcons.github),
-          color: Colors.black,
-          onPressed: () {
-            final Uri toLaunch =
-                Uri(scheme: 'https', host: 'github.com', path: 'Kataglyphis');
-            _launchInBrowser(toLaunch);
-          },
-        ),
-        SizedBox(
-          width: 16,
-        ),
-        IconButton(
-          iconSize: iconSize,
-          icon: const FaIcon(FontAwesomeIcons.youtube),
-          color: Colors.black,
-          onPressed: () {
-            final Uri toLaunch = Uri(
-                scheme: 'https',
-                host: 'www.youtube.com',
-                path: 'channel/UC3LZiH4sZzzaVBCUV8knYeg');
-            _launchInBrowser(toLaunch);
-          },
-        ),
-        SizedBox(
-          width: iconSize,
-        ),
-        IconButton(
-          icon: const FaIcon(FontAwesomeIcons.twitter),
-          color: Colors.black,
-          onPressed: () {
-            final Uri toLaunch =
-                Uri(scheme: 'https', host: 'twitter.com', path: 'Cataglyphis_');
-            _launchInBrowser(toLaunch);
-          },
-        ),
-        SizedBox(
-          width: 16,
-        ),
-        IconButton(
-          iconSize: iconSize,
-          icon: const FaIcon(FontAwesomeIcons.linkedin),
-          color: Colors.black,
-          onPressed: () {
-            final Uri toLaunch = Uri(
-                scheme: 'https',
-                host: 'linkedin.com',
-                path: 'in/jonas-heinle-0b2a301a0/');
-            _launchInBrowser(toLaunch);
-          },
-        ),
-      ],
-    );
+    return LayoutBuilder(builder: (context, constraints) {
+      if (constraints.maxWidth > 600) {
+        return Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: buildSocialMediaChildren(54));
+      } else {
+        return Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: buildSocialMediaChildren(20));
+      }
+    });
   }
 }

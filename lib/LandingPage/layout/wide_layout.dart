@@ -39,7 +39,7 @@ class WideLayout extends StatelessWidget {
                           color: kPrimaryColor),
                     ),
                     const Text(
-                      "Lets build epic rendering systems together",
+                      "Lets build rendering systems together",
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 32.0,
@@ -98,7 +98,7 @@ class WideLayout extends StatelessWidget {
                           color: kPrimaryColor),
                     ),
                     const Text(
-                      "Lets build epic AI",
+                      "Lets build AI",
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 24.0,
