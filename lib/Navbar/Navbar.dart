@@ -77,6 +77,40 @@ class DesktopNavbar extends StatelessWidget {
                 Navigator.pushNamed(context, '/blog');
               },
             ),
+            const SizedBox(width: 30),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: kPrimaryColor,
+                padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+              ),
+              child: const Text(
+                "Books",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                    fontSize: 20),
+              ),
+              onPressed: () {
+                Navigator.pushNamed(context, '/books');
+              },
+            ),
+            const SizedBox(width: 30),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: kPrimaryColor,
+                padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+              ),
+              child: const Text(
+                "Films",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                    fontSize: 20),
+              ),
+              onPressed: () {
+                Navigator.pushNamed(context, '/films');
+              },
+            ),
           ]),
         ]),
       ),

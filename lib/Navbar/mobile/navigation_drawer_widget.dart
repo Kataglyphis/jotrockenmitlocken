@@ -70,6 +70,12 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
       case 2:
         Navigator.of(context).pushNamed('/aboutMe');
         break;
+      case 3:
+        Navigator.of(context).pushNamed('/books');
+        break;
+      case 4:
+        Navigator.of(context).pushNamed('/films');
+        break;
     }
   }
 

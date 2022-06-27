@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:jotrockenmitlocken/Media/books_list.dart';
+import 'package:jotrockenmitlocken/Media/films_list.dart';
 import 'package:jotrockenmitlocken/Navbar/mobile/navigation_drawer_change_notifier.dart';
 import 'package:jotrockenmitlocken/constants.dart';
 import 'package:provider/provider.dart';
@@ -20,12 +22,14 @@ class MyApp extends StatelessWidget {
         child: ValueListenableBuilder(
           builder: (context, value, g) {
             return MaterialApp(
-              title: 'Cataglyphis blog',
+              title: 'Jotrockenmitlocken',
               initialRoute: '/',
               routes: {
                 '/': ((context) => const LandingPage()),
                 '/aboutMe': ((context) => const AboutMePage()),
                 '/blog': ((context) => const BlogLandingPage()),
+                '/books': ((context) => const BooksList()),
+                '/films': ((context) => const FilmsList()),
               },
               theme: ThemeData(
                   primaryColor: kPrimaryColor, fontFamily: "Montserrat"),
