@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:jotrockenmitlocken/AboutMe/book.dart';
+import 'package:jotrockenmitlocken/Media/book.dart';
 import 'package:jotrockenmitlocken/Navbar/Navbar.dart';
 import 'package:jotrockenmitlocken/Navbar/mobile/navigation_drawer_widget.dart';
 import 'package:jotrockenmitlocken/constants.dart';
@@ -128,7 +128,7 @@ class _BooksListState extends State<BooksList> {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        if (constraints.maxWidth > 600) {
+        if (constraints.maxWidth > desktopWidthThreshold) {
           return Scaffold(
             body: SingleChildScrollView(
               scrollDirection: Axis.vertical,

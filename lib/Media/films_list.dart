@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:jotrockenmitlocken/AboutMe/film.dart';
+import 'package:jotrockenmitlocken/Media/film.dart';
 import 'package:jotrockenmitlocken/Navbar/Navbar.dart';
 import 'package:jotrockenmitlocken/Navbar/mobile/navigation_drawer_widget.dart';
 import 'package:jotrockenmitlocken/constants.dart';
@@ -131,7 +131,7 @@ class _FilmsListState extends State<FilmsList> {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        if (constraints.maxWidth > 600) {
+        if (constraints.maxWidth > desktopWidthThreshold) {
           return Scaffold(
             body: SingleChildScrollView(
               scrollDirection: Axis.vertical,

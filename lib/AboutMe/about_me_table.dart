@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:jotrockenmitlocken/constants.dart';
 
 class AboutMeTable extends StatefulWidget {
   const AboutMeTable({Key? key}) : super(key: key);
@@ -45,7 +46,7 @@ class _AboutMeTableState extends State<AboutMeTable> {
                     child: ListView.builder(
                         itemCount: values.length,
                         itemBuilder: (context, index) {
-                          if (constraints.maxWidth > 600) {
+                          if (constraints.maxWidth > desktopWidthThreshold) {
                             return Padding(
                               padding: const EdgeInsets.symmetric(vertical: 10),
                               child: Row(

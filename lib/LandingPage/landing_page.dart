@@ -11,7 +11,7 @@ class LandingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        if (constraints.maxWidth > 600) {
+        if (constraints.maxWidth > desktopWidthThreshold) {
           return Scaffold(body: WideLayout());
         } else {
           return Scaffold(
