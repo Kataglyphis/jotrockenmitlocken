@@ -1,9 +1,12 @@
 import 'dart:io';
-
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:csv/csv.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:jotrockenmitlocken/AboutMe/film.dart';
+
+import 'book.dart';
 
 class AboutMeTable extends StatefulWidget {
   const AboutMeTable({Key? key}) : super(key: key);
@@ -13,28 +16,67 @@ class AboutMeTable extends StatefulWidget {
 }
 
 class _AboutMeTableState extends State<AboutMeTable> {
-  //List<DataRow> rows_book = [];
   late Future<List<List<dynamic>>> _bookFuture;
-  List<String> _book_columns = [];
-  List<DataRow> _rows_books = [];
-  late Future<List<List<dynamic>>> _filmFuture;
+  List<String> _bookCategories = [];
+  late List<Book> _books;
   int _sortColumnIndexBook = 0;
-  bool _isAscendingBook = false;
-  //List<DataRow> rows_film = [];
+  bool _isAscendingBook = true;
+
+  late Future<Map<String, dynamic>> _readJson;
+
+  late Future<List<List<dynamic>>> _filmFuture;
+  List<String> _filmCategories = [];
+  late List<Film> _films = [];
   int _sortColumnIndexFilm = 0;
   bool _isAscendingFilm = false;
 
   @override
   initState() {
     super.initState();
-    _bookFuture = _loadCSV("assets/data/Buecherliste.csv");
-    _filmFuture = _loadCSV("assets/data/Filmliste.csv");
+    this._books = [];
+    _readJson = readJson();
+    _bookFuture = _loadBooksFromCSV();
+    _filmFuture = _loadFilmsFromCSV();
   }
 
-  Future<List<List<dynamic>>> _loadCSV(String csvFile) async {
-    final _rawData = await rootBundle.loadString(csvFile);
+  Future<List<List<dynamic>>> _loadBooksFromCSV() async {
+    final _rawData =
+        await rootBundle.loadString("assets/data/Buecherliste.csv");
     List<List<dynamic>> _listData =
         const CsvToListConverter().convert(_rawData);
+    _bookCategories = List<String>.from(_listData.first);
+
+    _books = _listData
+        .getRange(1, _listData.length)
+        .toList()
+        .map((List e) => Book(
+              e.elementAt(0),
+              e.elementAt(1),
+              e.elementAt(2),
+              e.elementAt(3),
+              e.elementAt(4),
+            ))
+        .toList() as List<Book>;
+    return _listData;
+  }
+
+  Future<List<List<dynamic>>> _loadFilmsFromCSV() async {
+    final _rawData = await rootBundle.loadString("assets/data/Filmliste.csv");
+    List<List<dynamic>> _listData =
+        const CsvToListConverter().convert(_rawData);
+
+    _filmCategories = List<String>.from(_listData.first);
+    _films = _listData
+        .getRange(1, _listData.length)
+        .toList()
+        .map((List e) => Film(
+              e.elementAt(0),
+              e.elementAt(1),
+              e.elementAt(2),
+              e.elementAt(3).toString(),
+              e.elementAt(4),
+            ))
+        .toList() as List<Film>;
     return _listData;
   }
 
@@ -51,20 +93,92 @@ class _AboutMeTableState extends State<AboutMeTable> {
 
   void onSortBook(int columnIndex, bool ascending) {
     setState(() {
+      if (columnIndex == 0) {
+        _books.sort((book1, book2) =>
+            compareString(_isAscendingBook, book1.title, book2.title));
+      } else if (columnIndex == 1) {
+        _books.sort((book1, book2) =>
+            compareString(_isAscendingBook, book1.author, book2.author));
+      } else if (columnIndex == 2) {
+        _books.sort((book1, book2) =>
+            compareString(_isAscendingBook, book1.genre, book2.genre));
+      } else if (columnIndex == 3) {
+        _books.sort((book1, book2) =>
+            compareString(_isAscendingBook, book1.read, book2.read));
+      } else if (columnIndex == 4) {
+        _books.sort((book1, book2) =>
+            compareString(_isAscendingBook, book1.year, book2.year));
+      }
+
       this._sortColumnIndexBook = columnIndex;
       this._isAscendingBook = ascending;
-      _rows_books.sort((dataRow1, dataRow2) => compareString(
-          _isAscendingBook,
-          dataRow1.cells[_sortColumnIndexBook].child.toString(),
-          dataRow2.cells[_sortColumnIndexBook].child.toString()));
     });
   }
 
   void onSortFilm(int columnIndex, bool ascending) {
     setState(() {
+      if (columnIndex == 0) {
+        _films.sort((film1, film2) =>
+            compareString(_isAscendingFilm, film1.title, film2.title));
+      } else if (columnIndex == 1) {
+        _films.sort((film1, film2) =>
+            compareString(_isAscendingFilm, film1.genre, film2.genre));
+      } else if (columnIndex == 2) {
+        _films.sort((film1, film2) =>
+            compareString(_isAscendingFilm, film1.director, film2.director));
+      } else if (columnIndex == 3) {
+        _films.sort((film1, film2) =>
+            compareString(_isAscendingFilm, film1.year, film2.year));
+      } else if (columnIndex == 4) {
+        _films.sort((film1, film2) =>
+            compareString(_isAscendingFilm, film1.watched, film2.watched));
+      }
+
       this._sortColumnIndexFilm = columnIndex;
       this._isAscendingFilm = ascending;
     });
+  }
+
+  List<DataRow> getBookDataRows(List<Book> rowData) => rowData.map((Book book) {
+        final cells = [
+          book.title,
+          book.author,
+          book.genre,
+          book.read,
+          book.year
+        ];
+        return DataRow(
+            cells: cells.map((entry) => DataCell(Text('$entry'))).toList());
+      }).toList();
+
+  List<DataColumn> getBookColumns(List<String> _columnsString) {
+    return _columnsString
+        .map((String column) => DataColumn(
+              label: Text(column),
+              onSort: onSortBook,
+            ))
+        .toList();
+  }
+
+  List<DataRow> getFilmDataRows(List<Film> rowData) => rowData.map((Film film) {
+        final cells = [
+          film.title,
+          film.genre,
+          film.director,
+          film.year,
+          film.watched,
+        ];
+        return DataRow(
+            cells: cells.map((entry) => DataCell(Text('$entry'))).toList());
+      }).toList();
+
+  List<DataColumn> getFilmColumns(List<String> _columnsString) {
+    return _columnsString
+        .map((String column) => DataColumn(
+              label: Text(column),
+              onSort: onSortFilm,
+            ))
+        .toList();
   }
 
   @override
@@ -74,7 +188,7 @@ class _AboutMeTableState extends State<AboutMeTable> {
       return Column(
         children: [
           FutureBuilder(
-              future: readJson(),
+              future: _readJson,
               builder: (context, data) {
                 if (data.hasData) {
                   var items = data.data as Map;
@@ -138,81 +252,30 @@ class _AboutMeTableState extends State<AboutMeTable> {
           FutureBuilder(
               future: _bookFuture, //_loadCSV("assets/data/Buecherliste.csv"),
               builder: (context, data) {
-                debugPrint('Build future');
-                if (data.connectionState == ConnectionState.done) {
-                  if (data.hasData) {
-                    var items = data.data as List<List>;
-                    // var keys = items.keys.toList();
-                    // var values = items.entries.toList();
-                    List<String> columns_string =
-                        List<String>.from(items.first);
-                    final book_columns = columns_string
-                        .map((String column) => DataColumn(
-                              label: Text(column),
-                              onSort: onSortBook,
-                            ))
-                        .toList();
-
-                    var row_strings = items.getRange(1, items.length);
-                    _rows_books = row_strings
-                        .map((List row) => DataRow(
-                              cells: row
-                                  .map((entry) => DataCell(Text('$entry')))
-                                  .toList(),
-                            ))
-                        .toList();
-
-                    return SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Column(
-                          children: [
-                            Text(
-                              "Book List",
-                              style: TextStyle(fontSize: 32),
-                            ),
-                            DataTable(
-                                sortColumnIndex: _sortColumnIndexBook,
-                                sortAscending: _isAscendingBook,
-                                columns: book_columns,
-                                rows: _rows_books),
-                          ],
-                        ));
-                  } else {
-                    return Center(child: Text("${data.error}"));
-                  }
+                if (data.hasData) {
+                  return SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Column(
+                        children: [
+                          Text(
+                            "Book List",
+                            style: TextStyle(fontSize: 32),
+                          ),
+                          DataTable(
+                              sortColumnIndex: _sortColumnIndexBook,
+                              sortAscending: _isAscendingBook,
+                              columns: getBookColumns(_bookCategories),
+                              rows: getBookDataRows(_books)),
+                        ],
+                      ));
                 } else {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
+                  return Center(child: Text("${data.error}"));
                 }
               }),
           FutureBuilder(
               future: _filmFuture,
               builder: (context, data) {
                 if (data.hasData) {
-                  var items = data.data as List<List>;
-                  // var keys = items.keys.toList();
-                  // var values = items.entries.toList();
-                  List<String> columns_string = List<String>.from(items.first);
-                  final columns = columns_string
-                      .map((String column) => DataColumn(
-                            label: Text(column),
-                            onSort: onSortFilm,
-                          ))
-                      .toList();
-
-                  var row_strings = items.getRange(1, items.length);
-                  var rows_film = row_strings
-                      .map((List row) => DataRow(
-                            cells: row
-                                .map((entry) => DataCell(Text('$entry')))
-                                .toList(),
-                          ))
-                      .toList();
-                  rows_film.sort((dataRow1, dataRow2) => compareString(
-                      _isAscendingFilm,
-                      dataRow1.cells[_sortColumnIndexFilm].child.toString(),
-                      dataRow2.cells[_sortColumnIndexFilm].child.toString()));
                   return SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: Column(
@@ -224,8 +287,8 @@ class _AboutMeTableState extends State<AboutMeTable> {
                           DataTable(
                               sortColumnIndex: _sortColumnIndexFilm,
                               sortAscending: _isAscendingFilm,
-                              columns: columns,
-                              rows: rows_film),
+                              columns: getFilmColumns(_filmCategories),
+                              rows: getFilmDataRows(_films)),
                         ],
                       ));
                 } else if (data.hasError) {
