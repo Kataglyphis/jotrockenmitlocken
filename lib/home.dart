@@ -3,8 +3,8 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-
-import 'color_palettes_screen.dart';
+import 'package:jotrockenmitlocken/AboutMe/about_me_page.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'component_screen.dart';
 import 'constants.dart';
 
@@ -95,8 +95,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     });
   }
 
-  Widget createScreenFor(
-      ScreenSelected screenSelected, bool showNavBarExample) {
+  Widget createScreenFor(ScreenSelected screenSelected, bool showNavBarExample,
+      ColorSeed colorSelected) {
     switch (screenSelected) {
       case ScreenSelected.component:
         return Expanded(
@@ -112,13 +112,13 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           ),
         );
       case ScreenSelected.color:
-        return const ColorPalettesScreen();
+        return const AboutMePage(); //const ColorPalettesScreen();
     }
   }
 
   PreferredSizeWidget createAppBar() {
     return AppBar(
-      title: const Text('Mate 3'),
+      title: const Text(appName),
       actions: !showMediumSizeLayout && !showLargeSizeLayout
           ? [
               _BrightnessButton(
@@ -161,8 +161,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           animationController: controller,
           railAnimation: railAnimation,
           appBar: createAppBar(),
-          body: createScreenFor(
-              ScreenSelected.values[screenIndex], controller.value == 1),
+          body: createScreenFor(ScreenSelected.values[screenIndex],
+              controller.value == 1, widget.colorSelected),
           navigationRail: NavigationRail(
             extended: showLargeSizeLayout,
             destinations: navRailDestinations,
@@ -305,7 +305,7 @@ class _ExpandedTrailingActions extends StatelessWidget {
         children: [
           Row(
             children: [
-              const Text('Brightness'),
+              Text(AppLocalizations.of(context)!.brightness), //'Brightness'
               Expanded(child: Container()),
               Switch(
                   value: useLightMode,

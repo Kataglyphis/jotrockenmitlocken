@@ -13,8 +13,10 @@ const double largeWidthBreakpoint = 1500;
 
 const double transitionLength = 500;
 
+const appName = "Jotrockenmitlocken";
+
 enum ColorSeed {
-  baseColor('M3 Baseline', Color(0xff6750a4)),
+  baseColor('M3 Baseline', Colors.greenAccent),
   indigo('Indigo', Colors.indigo),
   blue('Blue', Colors.blue),
   teal('Teal', Colors.teal),

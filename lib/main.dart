@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 
 import 'constants.dart';
 import 'home.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() {
   runApp(
@@ -52,6 +54,16 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      localizationsDelegates: [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: [
+        Locale('de'), // Deutsch
+        Locale('en'), // English
+      ],
       title: 'My awesome AI',
       themeMode: themeMode,
       theme: ThemeData(

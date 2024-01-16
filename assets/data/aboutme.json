@@ -1,0 +1,19 @@
+{
+    "Programming Languages (extensive experience in projects)":[ "C/C++", "Python", "Java", "GLSL"],
+    "Programming Languages (basic knowledge and personal experience in projects)": ["C#", "Javascript", "Dart", "R", "PHP", "SQL", "TypeScript", "Pascal", "Bash/Shell"],
+    "Programming Languages (basic knowledge)": ["Haskell", "Prolog", "Matlab", "NoSQL", "PowerShell"],
+    "Other languages":["LaTeX", "HTML", "CSS"],
+    "Data banks (basic knowledge and personal experience in projects)": ["MySQL", "MariaDB", "SQLite", "Firebase Realtime Database"],
+    "Data banks (basic knowledge)": ["PostgreSQL", "Microsoft SQL Server", "MongoDB"],
+    "Web frameworks and technologies (basic knowledge and personal experience in projects)": ["Node.js", "React.js", "jQuery", "Express"],
+    "Web frameworks and technologies (basic knowledge)": ["Django", "Angular"],
+    "OS (frequently in use and development)": ["Windows", "Linux"],
+    "Other frameworks and libraries": [".NET", "NumPy", "Pandas", "TensorFlow", "Flutter", "Scikit-learn", "Torch/PyTorch", "Qt", "Keras", "Matplotlib"],
+    "APIs": ["Vulkan","OpenGL"],
+    "IDEs": ["Visual Studio (Code)", "Eclipse"],
+    "Other tools":["Git","Unity 3D", "npm", "Docker", "Raspberry Pi", "Jupyter"],
+    "Languages": ["German native speaker", "Schwäbisch", "English level B2", "French level B1", "Latin"],
+    "Hobbies": ["Powerbuilding", "Guitar", "Politics", "Philosophy"],
+    "Driving license": ["Class B", "Class L", "Class AM"],
+    "Other licenses": ["Chainsaw"]
+}
