@@ -5,24 +5,18 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"name": "Flutter: Attach to Device",
-			"type": "dart",
-			"request": "attach"
-		},
-
-		{
-			"name": "ai_template",
+			"name": "jotrockenmitlocken (debug mode)",
 			"request": "launch",
 			"type": "dart"
 		},
 		{
-			"name": "ai_template (profile mode)",
+			"name": "jotrockenmitlocken (profile mode)",
 			"request": "launch",
 			"type": "dart",
 			"flutterMode": "profile"
 		},
 		{
-			"name": "ai_template (release mode)",
+			"name": "jotrockenmitlocken (release mode)",
 			"request": "launch",
 			"type": "dart",
 			"flutterMode": "release"
