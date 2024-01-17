@@ -2,5 +2,8 @@
   "brightness": "Brightness",
   "@brightness": {
     "description": "Switch between dark and light mode!"
-  }
+  },
+  "homepage": "Homepage",
+  "aboutme": "About me",
+  "switchLang": "Switch (DE/EN)"
 }

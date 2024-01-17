@@ -25,6 +25,8 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   ThemeMode themeMode = ThemeMode.system;
   ColorSeed colorSelected = ColorSeed.baseColor;
+  bool useOtherLanguageMode = false;
+  late Widget home;
 
   bool get useLightMode {
     switch (themeMode) {
@@ -44,6 +46,20 @@ class _AppState extends State<App> {
     });
   }
 
+  void handleLanguageChange() {
+    setState(() {
+      this.useOtherLanguageMode = this.useOtherLanguageMode ? false : true;
+      home = Home(
+        useLightMode: useLightMode,
+        useOtherLanguageMode: useOtherLanguageMode,
+        handleBrightnessChange: handleBrightnessChange,
+        handleLanguageChange: handleLanguageChange,
+        handleColorSelect: handleColorSelect,
+        colorSelected: colorSelected,
+      );
+    });
+  }
+
   void handleColorSelect(int value) {
     setState(() {
       colorSelected = ColorSeed.values[value];
@@ -52,37 +68,39 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      localizationsDelegates: [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: [
-        Locale('de'), // Deutsch
-        Locale('en'), // English
-      ],
-      title: 'My awesome AI',
-      themeMode: themeMode,
-      theme: ThemeData(
-        colorSchemeSeed: colorSelected.color,
-        colorScheme: null,
-        useMaterial3: true,
-        brightness: Brightness.light,
-      ),
-      darkTheme: ThemeData(
-        colorSchemeSeed: colorSelected.color,
-        useMaterial3: true,
-        brightness: Brightness.dark,
-      ),
-      home: Home(
-        useLightMode: useLightMode,
-        handleBrightnessChange: handleBrightnessChange,
-        handleColorSelect: handleColorSelect,
-        colorSelected: colorSelected,
-      ),
+    home = Home(
+      useLightMode: useLightMode,
+      useOtherLanguageMode: useOtherLanguageMode,
+      handleBrightnessChange: handleBrightnessChange,
+      handleLanguageChange: handleLanguageChange,
+      handleColorSelect: handleColorSelect,
+      colorSelected: colorSelected,
     );
+    return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        localizationsDelegates: [
+          AppLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: [
+          Locale('de'), // Deutsch
+          Locale('en'), // English
+        ],
+        title: 'My awesome AI',
+        themeMode: themeMode,
+        theme: ThemeData(
+          colorSchemeSeed: colorSelected.color,
+          colorScheme: null,
+          useMaterial3: true,
+          brightness: Brightness.light,
+        ),
+        darkTheme: ThemeData(
+          colorSchemeSeed: colorSelected.color,
+          useMaterial3: true,
+          brightness: Brightness.dark,
+        ),
+        home: home);
   }
 }

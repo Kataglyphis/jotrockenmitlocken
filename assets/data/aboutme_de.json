@@ -1,0 +1,19 @@
+{
+    "Programmiersprachen (umfangreiche Erfahrung in Projekten)":[ "C/C++", "Python", "Java", "GLSL"],
+    "Programmiersprachen (Grundwissen und persönliche Erfahrung in Projekten)": ["C#", "Javascript", "Dart", "R", "PHP", "SQL", "TypeScript", "Pascal", "Bash/Shell"],
+    "Programmiersprachen (Grundwissen)": ["Haskell", "Prolog", "Matlab", "NoSQL", "PowerShell"],
+    "Andere Sprachen":["LaTeX", "HTML", "CSS"],
+    "Datenbanken (Grundwissen und persönliche Erfahrung in Projekten)": ["MySQL", "MariaDB", "SQLite", "Firebase Realtime Database"],
+    "Datenbanken (Grundwissen)": ["PostgreSQL", "Microsoft SQL Server", "MongoDB"],
+    "Web Frameworks und Technologien (Grundwissen und persönliche Erfahrung in Projekten)": ["Node.js", "React.js", "jQuery", "Express"],
+    "Web Frameworks und Technologien (Grundwissen)": ["Django", "Angular"],
+    "Betriebssysteme (häufig im Einsatz)": ["Windows", "Linux"],
+    "Andere Frameworks and Bibliotheken": [".NET", "Spring", "NumPy", "Pandas", "TensorFlow", "Flutter", "Scikit-learn", "Torch/PyTorch", "Qt", "Keras", "Matplotlib"],
+    "APIs": ["Vulkan","OpenGL"],
+    "IDEs": ["Visual Studio (Code)", "Eclipse"],
+    "Andere Werkzeuge":["Git","Unity 3D", "npm", "Docker", "Raspberry Pi", "Jupyter"],
+    "Sprachen": ["German native speaker", "Schwäbisch", "English level B2", "French level B1", "Latin"],
+    "Hobbies": ["Powerbuilding", "Guitar", "Politics", "Philosophy"],
+    "Führerschein": ["Class B", "Class L", "Class AM"],
+    "Weitere Lizenzen": ["Kettensäge"]
+}

@@ -8,7 +8,7 @@
     "Web frameworks and technologies (basic knowledge and personal experience in projects)": ["Node.js", "React.js", "jQuery", "Express"],
     "Web frameworks and technologies (basic knowledge)": ["Django", "Angular"],
     "OS (frequently in use and development)": ["Windows", "Linux"],
-    "Other frameworks and libraries": [".NET", "NumPy", "Pandas", "TensorFlow", "Flutter", "Scikit-learn", "Torch/PyTorch", "Qt", "Keras", "Matplotlib"],
+    "Other frameworks and libraries": [".NET", "NumPy", "Spring", "Pandas", "TensorFlow", "Flutter", "Scikit-learn", "Torch/PyTorch", "Qt", "Keras", "Matplotlib"],
     "APIs": ["Vulkan","OpenGL"],
     "IDEs": ["Visual Studio (Code)", "Eclipse"],
     "Other tools":["Git","Unity 3D", "npm", "Docker", "Raspberry Pi", "Jupyter"],

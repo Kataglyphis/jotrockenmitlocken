@@ -6,37 +6,68 @@ import 'package:jotrockenmitlocken/Decoration/decoration_helper.dart';
 import 'package:jotrockenmitlocken/constants.dart';
 
 class SkillTable extends StatefulWidget {
-  const SkillTable({Key? key}) : super(key: key);
+  const SkillTable({Key? key, required this.useOtherLanguageMode})
+      : super(key: key);
+  final bool useOtherLanguageMode;
   @override
   State<SkillTable> createState() => _SkillTableState();
 }
 
 class _SkillTableState extends State<SkillTable> {
   _SkillTableState();
-  late Future<Map<String, dynamic>> _readJson;
-  List keys = [];
-  List<List<dynamic>> values = [];
+  late Future<Map<String, dynamic>> _readJsonEn;
+  late Future<Map<String, dynamic>> _readJsonDe;
+  List keysEn = [];
+  List keysDe = [];
+  List<List<dynamic>> valuesDe = [];
+  List<List<dynamic>> valuesEn = [];
+  String aboutMeFileDe = 'assets/data/aboutme_de.json';
+  String aboutMeFileEn = 'assets/data/aboutme_en.json';
+  late bool langDeActive;
+
   @override
   initState() {
     super.initState();
-    _readJson = readJson();
+    _readJsonDe = readJsonDe(aboutMeFileDe);
+    _readJsonEn = readJsonEn(aboutMeFileEn);
   }
 
   // Fetch content from the json file
-  Future<Map<String, dynamic>> readJson() async {
-    final jsonData = await rootBundle.loadString('assets/data/aboutme.json');
+  Future<Map<String, dynamic>> readJsonEn(String aboutMeFile) async {
+    final jsonData = await rootBundle.loadString(aboutMeFile);
     final Map<String, dynamic> list = json.decode(jsonData);
     var items = list;
-    keys = items.keys.toList();
-    for (int i = 0; i < keys.length; i++) {
-      var val = items[keys[i]];
+    keysEn = items.keys.toList();
+    for (int i = 0; i < keysEn.length; i++) {
+      var val = items[keysEn[i]];
       // no support right now for nested object notations
       if (val is List) {
-        values.add(val);
+        valuesEn.add(val);
       } else if (val == null) {
-        values.add(["not known"]);
+        valuesEn.add(["not known"]);
       } else {
-        values.add([val]);
+        valuesEn.add([val]);
+      }
+    }
+
+    return list;
+  }
+
+  // Fetch content from the json file
+  Future<Map<String, dynamic>> readJsonDe(String aboutMeFile) async {
+    final jsonData = await rootBundle.loadString(aboutMeFile);
+    final Map<String, dynamic> list = json.decode(jsonData);
+    var items = list;
+    keysDe = items.keys.toList();
+    for (int i = 0; i < keysDe.length; i++) {
+      var val = items[keysDe[i]];
+      // no support right now for nested object notations
+      if (val is List) {
+        valuesDe.add(val);
+      } else if (val == null) {
+        valuesDe.add(["not known"]);
+      } else {
+        valuesDe.add([val]);
       }
     }
 
@@ -86,54 +117,110 @@ class _SkillTableState extends State<SkillTable> {
     double betweenColumnPadding =
         (currentWith <= narrowScreenWidthThreshold) ? 40.0 : 80.0;
     const rowDistance = 40.0;
+    bool langDeActive = ((Localizations.localeOf(context) == Locale('en') &&
+                widget.useOtherLanguageMode) ||
+            (Localizations.localeOf(context) == Locale('de')))
+        ? true
+        : false;
 
-    return FutureBuilder(
-        future: _readJson,
-        builder: (context, data) {
-          if (data.hasData) {
-            List<TableRow> skills = [];
-            for (int i = 0; i < keys.length; i++) {
-              String entryVal = "";
-              var entryList = values[i];
-              for (int j = 0; j < entryList.length; j++) {
-                entryVal += "${"• " + entryList[j]}\n";
-              }
-              skills.add(TableRow(children: [
-                TableCell(
-                    child: Padding(
-                  padding: const EdgeInsets.fromLTRB(8, 8, 0, 0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: getSkillTableKeys(keys[i]),
+    if (langDeActive) {
+      return FutureBuilder(
+          future: _readJsonDe,
+          builder: (context, data) {
+            if (data.hasData) {
+              List<TableRow> skills = [];
+              for (int i = 0; i < keysDe.length; i++) {
+                String entryVal = "";
+                var entryList = valuesDe[i];
+                for (int j = 0; j < entryList.length; j++) {
+                  entryVal += "${"• " + entryList[j]}\n";
+                }
+                skills.add(TableRow(children: [
+                  TableCell(
+                      child: Padding(
+                    padding: const EdgeInsets.fromLTRB(8, 8, 0, 0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: getSkillTableKeys(keysDe[i]),
+                    ),
+                  )),
+                  TableCell(
+                      child: Padding(
+                    padding: EdgeInsets.fromLTRB(betweenColumnPadding, 8, 0, 0),
+                    child: Text(entryVal, style: getTextStyle()),
+                  ))
+                ]));
+                skills.add(const TableRow(children: [
+                  SizedBox(
+                    height: 16,
                   ),
-                )),
-                TableCell(
-                    child: Padding(
-                  padding: EdgeInsets.fromLTRB(betweenColumnPadding, 8, 0, 0),
-                  child: Text(entryVal, style: getTextStyle()),
-                ))
-              ]));
-              skills.add(const TableRow(children: [
-                SizedBox(
-                  height: 16,
-                ),
-                SizedBox(
-                  height: 16,
-                ),
-              ]));
-            }
+                  SizedBox(
+                    height: 16,
+                  ),
+                ]));
+              }
 
-            return Table(
-                defaultVerticalAlignment: TableCellVerticalAlignment.top,
-                children: skills);
-          } else if (data.hasError) {
-            return Center(child: Text("${data.error}"));
-          } else {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-        });
+              return Table(
+                  defaultVerticalAlignment: TableCellVerticalAlignment.top,
+                  children: skills);
+            } else if (data.hasError) {
+              return Center(child: Text("${data.error}"));
+            } else {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+          });
+    } else {
+      return FutureBuilder(
+          future: _readJsonEn,
+          builder: (context, data) {
+            if (data.hasData) {
+              List<TableRow> skills = [];
+              for (int i = 0; i < keysEn.length; i++) {
+                String entryVal = "";
+                var entryList = valuesEn[i];
+                for (int j = 0; j < entryList.length; j++) {
+                  entryVal += "${"• " + entryList[j]}\n";
+                }
+                skills.add(TableRow(children: [
+                  TableCell(
+                      child: Padding(
+                    padding: const EdgeInsets.fromLTRB(8, 8, 0, 0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: getSkillTableKeys(keysEn[i]),
+                    ),
+                  )),
+                  TableCell(
+                      child: Padding(
+                    padding: EdgeInsets.fromLTRB(betweenColumnPadding, 8, 0, 0),
+                    child: Text(entryVal, style: getTextStyle()),
+                  ))
+                ]));
+                skills.add(const TableRow(children: [
+                  SizedBox(
+                    height: 16,
+                  ),
+                  SizedBox(
+                    height: 16,
+                  ),
+                ]));
+              }
+
+              return Table(
+                  defaultVerticalAlignment: TableCellVerticalAlignment.top,
+                  children: skills);
+            } else if (data.hasError) {
+              return Center(child: Text("${data.error}"));
+            } else {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+          });
+    }
   }
 }
