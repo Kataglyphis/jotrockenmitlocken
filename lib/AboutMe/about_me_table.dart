@@ -8,6 +8,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'skill_table.dart';
 
@@ -15,22 +16,20 @@ class AboutMeTable extends StatefulWidget {
   const AboutMeTable({
     Key? key,
     required this.useOtherLanguageMode,
+    required this.colorSelected,
   }) : super(key: key);
 
+  final ColorSeed colorSelected;
   final bool useOtherLanguageMode;
 
   @override
-  AboutMeTableState createState() =>
-      AboutMeTableState(useOtherLanguageMode: useOtherLanguageMode);
+  AboutMeTableState createState() => AboutMeTableState();
 }
 
 class AboutMeTableState extends State<AboutMeTable> {
   AboutMeTableState({
     Key? key,
-    required this.useOtherLanguageMode,
   });
-
-  final bool useOtherLanguageMode;
 
   @override
   void initState() {
@@ -58,12 +57,18 @@ class AboutMeTableState extends State<AboutMeTable> {
 
   Widget createMyPerfectDayPieChart() {
     final List<PieChartDataEntry> chartData = [
-      PieChartDataEntry('Sleep', getDayHourPercantage(8)),
-      PieChartDataEntry('Studying', getDayHourPercantage(8)),
-      PieChartDataEntry('Sports', getDayHourPercantage(2)),
-      PieChartDataEntry('Meditation', getDayHourPercantage(1)),
-      PieChartDataEntry('Guitar', getDayHourPercantage(1)),
-      PieChartDataEntry('Family&Friends', getDayHourPercantage(4))
+      PieChartDataEntry(
+          AppLocalizations.of(context)!.sleep, getDayHourPercantage(8)),
+      PieChartDataEntry(
+          AppLocalizations.of(context)!.studying, getDayHourPercantage(8)),
+      PieChartDataEntry(
+          AppLocalizations.of(context)!.sports, getDayHourPercantage(2)),
+      PieChartDataEntry(
+          AppLocalizations.of(context)!.meditation, getDayHourPercantage(1)),
+      PieChartDataEntry(
+          AppLocalizations.of(context)!.guitar, getDayHourPercantage(1)),
+      PieChartDataEntry(
+          AppLocalizations.of(context)!.familyFriends, getDayHourPercantage(4))
     ];
     final double currentWith = MediaQuery.of(context).size.width;
     final bool enableSkillTableLegend =
@@ -132,10 +137,11 @@ class AboutMeTableState extends State<AboutMeTable> {
       marginSkillTable = 20;
       paddingSkillTable = 20;
     }
-    Color selectedColor = Theme.of(context).primaryColor;
+
     SkillTable skillTable = SkillTable(
-      useOtherLanguageMode: useOtherLanguageMode,
+      useOtherLanguageMode: widget.useOtherLanguageMode,
     );
+
     return LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
       return Column(
@@ -160,7 +166,7 @@ class AboutMeTableState extends State<AboutMeTable> {
                 marginPic,
                 borderRadiusPic,
                 10,
-                selectedColor),
+                widget.colorSelected.color),
           ),
           const SizedBox(height: 30),
           Text(
@@ -173,10 +179,19 @@ class AboutMeTableState extends State<AboutMeTable> {
           ),
           SizedBox(
             width: skillTableWidth,
-            child: Text(
-              "»As soon as it works, no-one calls it AI anymore.« (John McCarthy)\n\n I study computer science at the Karlsruhe Institute of Technology, where I major in Computer Graphics, Geometry Processing, Anthropomatics and Cognitive Systems with a specific interest in deep learning.",
-              textAlign: TextAlign.center,
-              style: getTextStyle(),
+            child: Column(
+              children: [
+                Text(
+                  "»As soon as it works, no-one calls it AI anymore.« (John McCarthy)\n\n",
+                  textAlign: TextAlign.center,
+                  style: getTextStyle(),
+                ),
+                Text(
+                  AppLocalizations.of(context)!.shortDescriptionTextMyPersona,
+                  textAlign: TextAlign.center,
+                  style: getTextStyle(),
+                ),
+              ],
             ),
           ),
           const SizedBox(
@@ -202,8 +217,8 @@ class AboutMeTableState extends State<AboutMeTable> {
                   //email app is not opened
                 }
               },
-              child: const Text(
-                "Mail Me Now",
+              child: Text(
+                AppLocalizations.of(context)!.mailMe,
               )),
           const SizedBox(height: 30),
           Text(
@@ -224,7 +239,7 @@ class AboutMeTableState extends State<AboutMeTable> {
                 marginSkillTable,
                 30,
                 10,
-                selectedColor),
+                widget.colorSelected.color),
           ),
           const SizedBox(
             height: 20,

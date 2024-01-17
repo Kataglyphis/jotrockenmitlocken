@@ -478,15 +478,15 @@ class _NavigationBarsState extends State<NavigationBars> {
                   : [
                       NavigationDestination(
                         tooltip: '',
-                        icon: Icon(Icons.widgets_outlined),
+                        icon: Icon(Icons.house_outlined),
                         label: AppLocalizations.of(context)!.homepage,
-                        selectedIcon: Icon(Icons.widgets),
+                        selectedIcon: Icon(Icons.house),
                       ),
                       NavigationDestination(
                         tooltip: '',
-                        icon: Icon(Icons.format_paint_outlined),
+                        icon: Icon(Icons.person_outlined),
                         label: AppLocalizations.of(context)!.aboutme,
-                        selectedIcon: Icon(Icons.format_paint),
+                        selectedIcon: Icon(Icons.person),
                       ),
                     ]),
     );

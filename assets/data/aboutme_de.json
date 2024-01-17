@@ -7,13 +7,13 @@
     "Datenbanken (Grundwissen)": ["PostgreSQL", "Microsoft SQL Server", "MongoDB"],
     "Web Frameworks und Technologien (Grundwissen und persönliche Erfahrung in Projekten)": ["Node.js", "React.js", "jQuery", "Express"],
     "Web Frameworks und Technologien (Grundwissen)": ["Django", "Angular"],
-    "Betriebssysteme (häufig im Einsatz)": ["Windows", "Linux"],
+    "Betriebssysteme (häufig im Einsatz)": ["Windows", "Linux (hauptsächlich verschiedene Debian Derivative)"],
     "Andere Frameworks and Bibliotheken": [".NET", "Spring", "NumPy", "Pandas", "TensorFlow", "Flutter", "Scikit-learn", "Torch/PyTorch", "Qt", "Keras", "Matplotlib"],
     "APIs": ["Vulkan","OpenGL"],
-    "IDEs": ["Visual Studio (Code)", "Eclipse"],
+    "IDEs": ["Visual Studio (Code)", "Eclipse", "IntelliJ"],
     "Andere Werkzeuge":["Git","Unity 3D", "npm", "Docker", "Raspberry Pi", "Jupyter"],
-    "Sprachen": ["German native speaker", "Schwäbisch", "English level B2", "French level B1", "Latin"],
-    "Hobbies": ["Powerbuilding", "Guitar", "Politics", "Philosophy"],
-    "Führerschein": ["Class B", "Class L", "Class AM"],
+    "Sprachen": ["Deutsch Muttersprachler", "Schwäbisch", "English Level B2", "Französisch Level B1", "Latein"],
+    "Hobbies": ["Powerbuilding", "Gitarre", "Politik", "Philosophie"],
+    "Führerschein": ["Klasse B", "Klasse L", "Klasse AM"],
     "Weitere Lizenzen": ["Kettensäge"]
 }

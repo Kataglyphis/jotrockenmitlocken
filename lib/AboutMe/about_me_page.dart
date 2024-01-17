@@ -6,19 +6,18 @@ class AboutMePage extends StatefulWidget {
   const AboutMePage({
     Key? key,
     required this.useOtherLanguageMode,
+    required this.colorSelected,
   }) : super(key: key);
   final bool useOtherLanguageMode;
+  final ColorSeed colorSelected;
   @override
-  State<AboutMePage> createState() =>
-      _AboutMePageState(useOtherLanguageMode: useOtherLanguageMode);
+  State<AboutMePage> createState() => _AboutMePageState();
 }
 
 class _AboutMePageState extends State<AboutMePage> {
   _AboutMePageState({
     Key? key,
-    required this.useOtherLanguageMode,
   });
-  final bool useOtherLanguageMode;
 
   @override
   void initState() {
@@ -34,7 +33,10 @@ class _AboutMePageState extends State<AboutMePage> {
             shrinkWrap: true,
             scrollDirection: Axis.vertical,
             children: <Widget>[
-              AboutMeTable(useOtherLanguageMode: useOtherLanguageMode)
+              AboutMeTable(
+                useOtherLanguageMode: widget.useOtherLanguageMode,
+                colorSelected: widget.colorSelected,
+              )
             ],
           );
         } else {
@@ -42,7 +44,9 @@ class _AboutMePageState extends State<AboutMePage> {
             shrinkWrap: true,
             scrollDirection: Axis.vertical,
             children: <Widget>[
-              AboutMeTable(useOtherLanguageMode: useOtherLanguageMode)
+              AboutMeTable(
+                  useOtherLanguageMode: widget.useOtherLanguageMode,
+                  colorSelected: widget.colorSelected)
             ],
           );
         }
