@@ -101,6 +101,6 @@ class _AppState extends State<App> {
           useMaterial3: true,
           brightness: Brightness.dark,
         ),
-        home: home);
+        home: SelectionArea(child: home));
   }
 }
