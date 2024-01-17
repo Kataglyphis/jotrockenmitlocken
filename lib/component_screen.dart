@@ -4,6 +4,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 const rowDivider = SizedBox(width: 20);
 const colDivider = SizedBox(height: 10);
@@ -354,20 +355,24 @@ class _ClearButton extends StatelessWidget {
 
 enum Value { first, second }
 
-const List<NavigationDestination> appBarDestinations = [
-  NavigationDestination(
-    tooltip: '',
-    icon: Icon(Icons.widgets_outlined),
-    label: 'Components',
-    selectedIcon: Icon(Icons.widgets),
-  ),
-  NavigationDestination(
-    tooltip: '',
-    icon: Icon(Icons.format_paint_outlined),
-    label: 'Color',
-    selectedIcon: Icon(Icons.format_paint),
-  )
-];
+// Expanded(child: LayoutBuilder(
+//     builder: (context, constraints) {
+//     })
+// AppLocalizations.of(context)!.homepage
+// const List<NavigationDestination> appBarDestinations = [
+//   NavigationDestination(
+//     tooltip: '',
+//     icon: Icon(Icons.widgets_outlined),
+//     label: "Components",
+//     selectedIcon: Icon(Icons.widgets),
+//   ),
+//   NavigationDestination(
+//     tooltip: '',
+//     icon: Icon(Icons.format_paint_outlined),
+//     label: 'Color',
+//     selectedIcon: Icon(Icons.format_paint),
+//   )
+// ];
 
 const List<Widget> exampleBarDestinations = [
   NavigationDestination(
@@ -458,19 +463,32 @@ class _NavigationBarsState extends State<NavigationBars> {
     Widget navigationBar = Focus(
       autofocus: !(widget.isExampleBar || widget.isBadgeExample),
       child: NavigationBar(
-        selectedIndex: selectedIndex,
-        onDestinationSelected: (index) {
-          setState(() {
-            selectedIndex = index;
-          });
-          if (!widget.isExampleBar) widget.onSelectItem!(index);
-        },
-        destinations: widget.isExampleBar && widget.isBadgeExample
-            ? barWithBadgeDestinations
-            : widget.isExampleBar
-                ? exampleBarDestinations
-                : appBarDestinations,
-      ),
+          selectedIndex: selectedIndex,
+          onDestinationSelected: (index) {
+            setState(() {
+              selectedIndex = index;
+            });
+            if (!widget.isExampleBar) widget.onSelectItem!(index);
+          },
+          destinations: widget.isExampleBar && widget.isBadgeExample
+              ? barWithBadgeDestinations
+              : widget.isExampleBar
+                  ? exampleBarDestinations
+                  //: appBarDestinations,
+                  : [
+                      NavigationDestination(
+                        tooltip: '',
+                        icon: Icon(Icons.widgets_outlined),
+                        label: AppLocalizations.of(context)!.homepage,
+                        selectedIcon: Icon(Icons.widgets),
+                      ),
+                      NavigationDestination(
+                        tooltip: '',
+                        icon: Icon(Icons.format_paint_outlined),
+                        label: AppLocalizations.of(context)!.aboutme,
+                        selectedIcon: Icon(Icons.format_paint),
+                      ),
+                    ]),
     );
 
     if (widget.isExampleBar && widget.isBadgeExample) {

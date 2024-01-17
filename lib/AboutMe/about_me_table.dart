@@ -14,21 +14,23 @@ import 'skill_table.dart';
 class AboutMeTable extends StatefulWidget {
   const AboutMeTable({
     Key? key,
-  }) : super(key: key); //required this.colorSelected
+    required this.useOtherLanguageMode,
+  }) : super(key: key);
 
-  //final ColorSeed colorSelected;
+  final bool useOtherLanguageMode;
+
   @override
   AboutMeTableState createState() =>
-      AboutMeTableState(); //colorSelected: colorSelected
+      AboutMeTableState(useOtherLanguageMode: useOtherLanguageMode);
 }
 
 class AboutMeTableState extends State<AboutMeTable> {
   AboutMeTableState({
     Key? key,
+    required this.useOtherLanguageMode,
   });
-  //required this.colorSelected,
 
-  //final ColorSeed colorSelected;
+  final bool useOtherLanguageMode;
 
   @override
   void initState() {
@@ -131,6 +133,9 @@ class AboutMeTableState extends State<AboutMeTable> {
       paddingSkillTable = 20;
     }
     Color selectedColor = Theme.of(context).primaryColor;
+    SkillTable skillTable = SkillTable(
+      useOtherLanguageMode: useOtherLanguageMode,
+    );
     return LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
       return Column(
@@ -199,10 +204,6 @@ class AboutMeTableState extends State<AboutMeTable> {
               },
               child: const Text(
                 "Mail Me Now",
-                //style: //TextStyle(
-                //fontWeight: FontWeight.bold,
-                //color: Colors.black,
-                //fontSize: 20)
               )),
           const SizedBox(height: 30),
           Text(
@@ -218,7 +219,7 @@ class AboutMeTableState extends State<AboutMeTable> {
           SizedBox(
             width: skillTableWidth,
             child: applyBoxDecoration(
-                const SkillTable(),
+                skillTable,
                 EdgeInsets.all(paddingSkillTable),
                 marginSkillTable,
                 30,

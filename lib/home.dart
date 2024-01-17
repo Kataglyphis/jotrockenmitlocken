@@ -9,17 +9,21 @@ import 'component_screen.dart';
 import 'constants.dart';
 
 class Home extends StatefulWidget {
-  const Home({
+  Home({
     super.key,
     required this.useLightMode,
+    required this.useOtherLanguageMode,
     required this.colorSelected,
     required this.handleBrightnessChange,
+    required this.handleLanguageChange,
     required this.handleColorSelect,
   });
 
   final bool useLightMode;
+  final bool useOtherLanguageMode;
   final ColorSeed colorSelected;
 
+  final void Function() handleLanguageChange;
   final void Function(bool useLightMode) handleBrightnessChange;
   final void Function(int value) handleColorSelect;
 
@@ -96,7 +100,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   }
 
   Widget createScreenFor(ScreenSelected screenSelected, bool showNavBarExample,
-      ColorSeed colorSelected) {
+      ColorSeed colorSelected, bool useOtherLanguageMode) {
     switch (screenSelected) {
       case ScreenSelected.component:
         return Expanded(
@@ -112,7 +116,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           ),
         );
       case ScreenSelected.color:
-        return const AboutMePage(); //const ColorPalettesScreen();
+        return AboutMePage(useOtherLanguageMode: useOtherLanguageMode);
     }
   }
 
@@ -121,6 +125,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       title: const Text(appName),
       actions: !showMediumSizeLayout && !showLargeSizeLayout
           ? [
+              _LanguageButton(
+                handleLanguageChange: widget.handleLanguageChange,
+              ),
               _BrightnessButton(
                 handleBrightnessChange: widget.handleBrightnessChange,
               ),
@@ -136,6 +143,12 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   Widget _trailingActions() => Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
+          Flexible(
+            child: _LanguageButton(
+              handleLanguageChange: widget.handleLanguageChange,
+              showTooltipBelow: false,
+            ),
+          ),
           Flexible(
             child: _BrightnessButton(
               handleBrightnessChange: widget.handleBrightnessChange,
@@ -153,52 +166,120 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: controller,
-      builder: (context, child) {
-        return NavigationTransition(
-          scaffoldKey: scaffoldKey,
-          animationController: controller,
-          railAnimation: railAnimation,
-          appBar: createAppBar(),
-          body: createScreenFor(ScreenSelected.values[screenIndex],
-              controller.value == 1, widget.colorSelected),
-          navigationRail: NavigationRail(
-            extended: showLargeSizeLayout,
-            destinations: navRailDestinations,
-            selectedIndex: screenIndex,
-            onDestinationSelected: (index) {
-              setState(() {
-                screenIndex = index;
-                handleScreenChanged(screenIndex);
-              });
-            },
-            trailing: Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 20),
-                child: showLargeSizeLayout
-                    ? _ExpandedTrailingActions(
-                        useLightMode: widget.useLightMode,
-                        handleBrightnessChange: widget.handleBrightnessChange,
-                        handleColorSelect: widget.handleColorSelect,
-                        colorSelected: widget.colorSelected,
+    return Localizations.override(
+        context: context,
+        locale: ((Localizations.localeOf(context) == Locale('de') &&
+                    widget.useOtherLanguageMode) ||
+                (Localizations.localeOf(context) == Locale('en')))
+            ? Locale('en')
+            : Locale('de'), //const Locale('en'),
+        // Using a Builder to get the correct BuildContext.
+        // Alternatively, you can create a new widget and Localizations.override
+        // will pass the updated BuildContext to the new widget.
+        child: Builder(
+          builder: (context) {
+            // A toy example for an internationalized Material widget.
+            return AnimatedBuilder(
+              animation: controller,
+              builder: (context, child) {
+                return NavigationTransition(
+                  scaffoldKey: scaffoldKey,
+                  animationController: controller,
+                  railAnimation: railAnimation,
+                  appBar: createAppBar(),
+                  body: createScreenFor(
+                      ScreenSelected.values[screenIndex],
+                      controller.value == 1,
+                      widget.colorSelected,
+                      widget.useOtherLanguageMode),
+                  navigationRail: NavigationRail(
+                    extended: showLargeSizeLayout,
+                    destinations: [
+                      NavigationRailDestination(
+                        icon: Tooltip(
+                          message: AppLocalizations.of(context)!.homepage,
+                          child: Icon(Icons.widgets),
+                        ),
+                        selectedIcon: Tooltip(
+                          message: AppLocalizations.of(context)!.homepage,
+                          child: Icon(Icons.widgets),
+                        ),
+                        label: Text(AppLocalizations.of(context)!.homepage),
+                      ),
+                      NavigationRailDestination(
+                        icon: Tooltip(
+                          message: AppLocalizations.of(context)!.aboutme,
+                          child: Icon(Icons.format_paint),
+                        ),
+                        selectedIcon: Tooltip(
+                          message: AppLocalizations.of(context)!.aboutme,
+                          child: Icon(Icons.format_paint),
+                        ),
+                        label: Text(AppLocalizations.of(context)!.aboutme),
                       )
-                    : _trailingActions(),
-              ),
-            ),
-          ),
-          navigationBar: NavigationBars(
-            onSelectItem: (index) {
-              setState(() {
-                screenIndex = index;
-                handleScreenChanged(screenIndex);
-              });
-            },
-            selectedIndex: screenIndex,
-            isExampleBar: false,
-          ),
-        );
-      },
+                    ], //navRailDestinations,
+                    selectedIndex: screenIndex,
+                    onDestinationSelected: (index) {
+                      setState(() {
+                        screenIndex = index;
+                        handleScreenChanged(screenIndex);
+                      });
+                    },
+                    trailing: Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 20),
+                        child: showLargeSizeLayout
+                            ? _ExpandedTrailingActions(
+                                useLightMode: widget.useLightMode,
+                                useOtherLanguageMode:
+                                    widget.useOtherLanguageMode,
+                                handleLanguageChange:
+                                    widget.handleLanguageChange,
+                                handleBrightnessChange:
+                                    widget.handleBrightnessChange,
+                                handleColorSelect: widget.handleColorSelect,
+                                colorSelected: widget.colorSelected,
+                              )
+                            : _trailingActions(),
+                      ),
+                    ),
+                  ),
+                  navigationBar: NavigationBars(
+                    onSelectItem: (index) {
+                      setState(() {
+                        screenIndex = index;
+                        handleScreenChanged(screenIndex);
+                      });
+                    },
+                    selectedIndex: screenIndex,
+                    isExampleBar: false,
+                  ),
+                );
+              },
+            );
+          },
+        ));
+  }
+}
+
+class _LanguageButton extends StatelessWidget {
+  const _LanguageButton({
+    required this.handleLanguageChange,
+    this.showTooltipBelow = true,
+  });
+
+  final Function handleLanguageChange;
+  final bool showTooltipBelow;
+
+  @override
+  Widget build(BuildContext context) {
+    return Tooltip(
+      preferBelow: showTooltipBelow,
+      message: 'Toggle Language',
+      child: IconButton(
+        icon: const Icon(Icons.light_mode_outlined),
+        onPressed: () => handleLanguageChange(),
+      ),
     );
   }
 }
@@ -281,16 +362,19 @@ class _ColorSeedButton extends StatelessWidget {
 class _ExpandedTrailingActions extends StatelessWidget {
   const _ExpandedTrailingActions({
     required this.useLightMode,
+    required this.useOtherLanguageMode,
     required this.handleBrightnessChange,
+    required this.handleLanguageChange,
     required this.handleColorSelect,
     required this.colorSelected,
   });
 
   final void Function(bool) handleBrightnessChange;
+  final void Function() handleLanguageChange;
   final void Function(int) handleColorSelect;
 
   final bool useLightMode;
-
+  final bool useOtherLanguageMode;
   final ColorSeed colorSelected;
 
   @override
@@ -305,7 +389,19 @@ class _ExpandedTrailingActions extends StatelessWidget {
         children: [
           Row(
             children: [
-              Text(AppLocalizations.of(context)!.brightness), //'Brightness'
+              Text(AppLocalizations.of(context)!.switchLang),
+              Expanded(child: Container()),
+              Switch(
+                  value: useOtherLanguageMode,
+                  onChanged: (value) {
+                    handleLanguageChange();
+                  })
+            ],
+          ),
+          const Divider(),
+          Row(
+            children: [
+              Text(AppLocalizations.of(context)!.brightness),
               Expanded(child: Container()),
               Switch(
                   value: useLightMode,
@@ -433,21 +529,21 @@ class _NavigationTransitionState extends State<NavigationTransition> {
   }
 }
 
-final List<NavigationRailDestination> navRailDestinations = appBarDestinations
-    .map(
-      (destination) => NavigationRailDestination(
-        icon: Tooltip(
-          message: destination.label,
-          child: destination.icon,
-        ),
-        selectedIcon: Tooltip(
-          message: destination.label,
-          child: destination.selectedIcon,
-        ),
-        label: Text(destination.label),
-      ),
-    )
-    .toList();
+// final List<NavigationRailDestination> navRailDestinations = appBarDestinations
+//     .map(
+//       (destination) => NavigationRailDestination(
+//         icon: Tooltip(
+//           message: destination.label,
+//           child: destination.icon,
+//         ),
+//         selectedIcon: Tooltip(
+//           message: destination.label,
+//           child: destination.selectedIcon,
+//         ),
+//         label: Text(destination.label),
+//       ),
+//     )
+//     .toList();
 
 class SizeAnimation extends CurvedAnimation {
   SizeAnimation(Animation<double> parent)

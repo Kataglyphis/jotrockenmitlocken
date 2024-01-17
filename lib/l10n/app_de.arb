@@ -1,3 +1,9 @@
 {
-    "brightness": "Helligkeit"
+  "brightness": "Helligkeit",
+  "@brightness": {
+    "description": "Wechsel zwischen hell und dunkel!"
+  },
+  "homepage": "Startseite",
+  "aboutme": "Über mich",
+  "switchLang": "Wechsel (DE/EN)"
 }
