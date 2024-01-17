@@ -116,7 +116,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           ),
         );
       case ScreenSelected.color:
-        return AboutMePage(useOtherLanguageMode: useOtherLanguageMode);
+        return AboutMePage(
+            useOtherLanguageMode: useOtherLanguageMode,
+            colorSelected: colorSelected);
     }
   }
 
@@ -198,22 +200,22 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       NavigationRailDestination(
                         icon: Tooltip(
                           message: AppLocalizations.of(context)!.homepage,
-                          child: Icon(Icons.widgets),
+                          child: Icon(Icons.house),
                         ),
                         selectedIcon: Tooltip(
                           message: AppLocalizations.of(context)!.homepage,
-                          child: Icon(Icons.widgets),
+                          child: Icon(Icons.house),
                         ),
                         label: Text(AppLocalizations.of(context)!.homepage),
                       ),
                       NavigationRailDestination(
                         icon: Tooltip(
                           message: AppLocalizations.of(context)!.aboutme,
-                          child: Icon(Icons.format_paint),
+                          child: Icon(Icons.person),
                         ),
                         selectedIcon: Tooltip(
                           message: AppLocalizations.of(context)!.aboutme,
-                          child: Icon(Icons.format_paint),
+                          child: Icon(Icons.person),
                         ),
                         label: Text(AppLocalizations.of(context)!.aboutme),
                       )
@@ -277,7 +279,7 @@ class _LanguageButton extends StatelessWidget {
       preferBelow: showTooltipBelow,
       message: 'Toggle Language',
       child: IconButton(
-        icon: const Icon(Icons.light_mode_outlined),
+        icon: const Icon(Icons.translate),
         onPressed: () => handleLanguageChange(),
       ),
     );

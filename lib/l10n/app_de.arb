@@ -5,5 +5,15 @@
   },
   "homepage": "Startseite",
   "aboutme": "Über mich",
-  "switchLang": "Wechsel (DE/EN)"
+  "switchLang": "Wechsel (DE/EN)",
+  "mailMe": "Schreib mir",
+  "shortDescriptionTextMyPersona": "Wissenschaftliche*r Mitarbeiter*in Szenenanalyse, KI-Softwareentwicklung & Bildverarbeitung, Fraunhofer IPA​​​​​​​",
+  "sleep": "Schlaf",
+  "studying": "Lernen",
+  "sports": "Sport",
+  "meditation": "Meditation",
+  "guitar": "Gitarre",
+  "familyFriends": "Familie&Freunde",
+  "spendCoffe": "Spendiere mir einen Kaffee"
+
 }

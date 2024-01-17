@@ -4,6 +4,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'dart:async';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Donation extends StatelessWidget {
   TextStyle textStyle;
@@ -22,7 +23,7 @@ class Donation extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text("You can get me some coffee. ", style: textStyle),
+        Text(AppLocalizations.of(context)!.spendCoffe, style: textStyle),
         IconButton(
           iconSize: 57,
           icon: const FaIcon(FontAwesomeIcons.paypal),
