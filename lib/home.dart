@@ -174,7 +174,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                     widget.useOtherLanguageMode) ||
                 (Localizations.localeOf(context) == const Locale('en')))
             ? const Locale('en')
-            : const Locale('de'), //const Locale('en'),
+            : const Locale('de'),
         // Using a Builder to get the correct BuildContext.
         // Alternatively, you can create a new widget and Localizations.override
         // will pass the updated BuildContext to the new widget.
