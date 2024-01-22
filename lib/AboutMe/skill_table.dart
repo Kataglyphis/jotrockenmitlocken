@@ -12,6 +12,8 @@ class SkillTable extends StatefulWidget {
   State<SkillTable> createState() => _SkillTableState();
 }
 
+class _csvLoader {}
+
 class _SkillTableState extends State<SkillTable> {
   _SkillTableState();
   late Future<Map<String, dynamic>> _readJsonEn;
