@@ -26,7 +26,6 @@ class _AppState extends State<App> {
   ThemeMode themeMode = ThemeMode.system;
   ColorSeed colorSelected = ColorSeed.baseColor;
   bool useOtherLanguageMode = false;
-  late Widget home;
 
   bool get useLightMode {
     switch (themeMode) {
@@ -48,15 +47,7 @@ class _AppState extends State<App> {
 
   void handleLanguageChange() {
     setState(() {
-      this.useOtherLanguageMode = this.useOtherLanguageMode ? false : true;
-      home = Home(
-        useLightMode: useLightMode,
-        useOtherLanguageMode: useOtherLanguageMode,
-        handleBrightnessChange: handleBrightnessChange,
-        handleLanguageChange: handleLanguageChange,
-        handleColorSelect: handleColorSelect,
-        colorSelected: colorSelected,
-      );
+      useOtherLanguageMode = useOtherLanguageMode ? false : true;
     });
   }
 
@@ -68,23 +59,15 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-    home = Home(
-      useLightMode: useLightMode,
-      useOtherLanguageMode: useOtherLanguageMode,
-      handleBrightnessChange: handleBrightnessChange,
-      handleLanguageChange: handleLanguageChange,
-      handleColorSelect: handleColorSelect,
-      colorSelected: colorSelected,
-    );
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        localizationsDelegates: [
+        localizationsDelegates: const [
           AppLocalizations.delegate,
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
         ],
-        supportedLocales: [
+        supportedLocales: const [
           Locale('de'), // Deutsch
           Locale('en'), // English
         ],
@@ -101,6 +84,14 @@ class _AppState extends State<App> {
           useMaterial3: true,
           brightness: Brightness.dark,
         ),
-        home: SelectionArea(child: home));
+        home: SelectionArea(
+            child: Home(
+          useLightMode: useLightMode,
+          useOtherLanguageMode: useOtherLanguageMode,
+          handleBrightnessChange: handleBrightnessChange,
+          handleLanguageChange: handleLanguageChange,
+          handleColorSelect: handleColorSelect,
+          colorSelected: colorSelected,
+        )));
   }
 }

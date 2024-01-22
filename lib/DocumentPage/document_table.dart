@@ -8,7 +8,7 @@ import 'package:jotrockenmitlocken/constants.dart';
 // https://docs.flutter.dev/cookbook/effects/download-button
 
 class DocumentTable extends StatefulWidget {
-  const DocumentTable({Key? key}) : super(key: key);
+  const DocumentTable({super.key});
 
   @override
   AboutMeTableState createState() => AboutMeTableState();

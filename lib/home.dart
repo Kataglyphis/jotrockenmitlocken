@@ -9,7 +9,7 @@ import 'component_screen.dart';
 import 'constants.dart';
 
 class Home extends StatefulWidget {
-  Home({
+  const Home({
     super.key,
     required this.useLightMode,
     required this.useOtherLanguageMode,
@@ -170,11 +170,11 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Localizations.override(
         context: context,
-        locale: ((Localizations.localeOf(context) == Locale('de') &&
+        locale: ((Localizations.localeOf(context) == const Locale('de') &&
                     widget.useOtherLanguageMode) ||
-                (Localizations.localeOf(context) == Locale('en')))
-            ? Locale('en')
-            : Locale('de'), //const Locale('en'),
+                (Localizations.localeOf(context) == const Locale('en')))
+            ? const Locale('en')
+            : const Locale('de'), //const Locale('en'),
         // Using a Builder to get the correct BuildContext.
         // Alternatively, you can create a new widget and Localizations.override
         // will pass the updated BuildContext to the new widget.
@@ -200,22 +200,22 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       NavigationRailDestination(
                         icon: Tooltip(
                           message: AppLocalizations.of(context)!.homepage,
-                          child: Icon(Icons.house),
+                          child: const Icon(Icons.house),
                         ),
                         selectedIcon: Tooltip(
                           message: AppLocalizations.of(context)!.homepage,
-                          child: Icon(Icons.house),
+                          child: const Icon(Icons.house),
                         ),
                         label: Text(AppLocalizations.of(context)!.homepage),
                       ),
                       NavigationRailDestination(
                         icon: Tooltip(
                           message: AppLocalizations.of(context)!.aboutme,
-                          child: Icon(Icons.person),
+                          child: const Icon(Icons.person),
                         ),
                         selectedIcon: Tooltip(
                           message: AppLocalizations.of(context)!.aboutme,
-                          child: Icon(Icons.person),
+                          child: const Icon(Icons.person),
                         ),
                         label: Text(AppLocalizations.of(context)!.aboutme),
                       )
@@ -277,7 +277,7 @@ class _LanguageButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Tooltip(
       preferBelow: showTooltipBelow,
-      message: 'Toggle Language',
+      message: AppLocalizations.of(context)!.toogleLanguage,
       child: IconButton(
         icon: const Icon(Icons.translate),
         onPressed: () => handleLanguageChange(),
@@ -300,7 +300,7 @@ class _BrightnessButton extends StatelessWidget {
     final isBright = Theme.of(context).brightness == Brightness.light;
     return Tooltip(
       preferBelow: showTooltipBelow,
-      message: 'Toggle brightness',
+      message: AppLocalizations.of(context)!.toogleBrightness,
       child: IconButton(
         icon: isBright
             ? const Icon(Icons.dark_mode_outlined)
@@ -327,7 +327,7 @@ class _ColorSeedButton extends StatelessWidget {
         Icons.palette_outlined,
         color: Theme.of(context).colorScheme.onSurfaceVariant,
       ),
-      tooltip: 'Select a seed color',
+      tooltip: AppLocalizations.of(context)!.selectSeedColor,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       itemBuilder: (context) {
         return List.generate(ColorSeed.values.length, (index) {

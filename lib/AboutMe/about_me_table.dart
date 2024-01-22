@@ -14,10 +14,10 @@ import 'skill_table.dart';
 
 class AboutMeTable extends StatefulWidget {
   const AboutMeTable({
-    Key? key,
+    super.key,
     required this.useOtherLanguageMode,
     required this.colorSelected,
-  }) : super(key: key);
+  });
 
   final ColorSeed colorSelected;
   final bool useOtherLanguageMode;
@@ -138,10 +138,6 @@ class AboutMeTableState extends State<AboutMeTable> {
       paddingSkillTable = 20;
     }
 
-    SkillTable skillTable = SkillTable(
-      useOtherLanguageMode: widget.useOtherLanguageMode,
-    );
-
     return LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
       return Column(
@@ -234,7 +230,9 @@ class AboutMeTableState extends State<AboutMeTable> {
           SizedBox(
             width: skillTableWidth,
             child: applyBoxDecoration(
-                skillTable,
+                SkillTable(
+                  useOtherLanguageMode: widget.useOtherLanguageMode,
+                ),
                 EdgeInsets.all(paddingSkillTable),
                 marginSkillTable,
                 30,

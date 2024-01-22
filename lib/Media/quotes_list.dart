@@ -6,7 +6,7 @@ import 'package:jotrockenmitlocken/Media/quote.dart';
 import 'package:jotrockenmitlocken/constants.dart';
 
 class QuotesList extends StatefulWidget {
-  const QuotesList({Key? key}) : super(key: key);
+  const QuotesList({super.key});
 
   @override
   State<QuotesList> createState() => _QuotesListState();

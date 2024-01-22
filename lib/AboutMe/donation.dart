@@ -8,7 +8,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Donation extends StatelessWidget {
   TextStyle textStyle;
-  Donation(this.textStyle, {Key? key}) : super(key: key);
+  Donation(this.textStyle, {super.key});
 
   Future<void> _launchInBrowser(Uri url) async {
     if (!await launchUrl(

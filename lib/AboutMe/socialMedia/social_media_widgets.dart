@@ -7,7 +7,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'dart:async';
 
 class SocialMediaWidgets extends StatelessWidget {
-  const SocialMediaWidgets({Key? key}) : super(key: key);
+  const SocialMediaWidgets({super.key});
 
   Future<void> _launchInBrowser(Uri url) async {
     if (!await launchUrl(
