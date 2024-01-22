@@ -6,8 +6,7 @@ import 'package:jotrockenmitlocken/Decoration/decoration_helper.dart';
 import 'package:jotrockenmitlocken/constants.dart';
 
 class SkillTable extends StatefulWidget {
-  const SkillTable({Key? key, required this.useOtherLanguageMode})
-      : super(key: key);
+  const SkillTable({super.key, required this.useOtherLanguageMode});
   final bool useOtherLanguageMode;
   @override
   State<SkillTable> createState() => _SkillTableState();
@@ -23,7 +22,6 @@ class _SkillTableState extends State<SkillTable> {
   List<List<dynamic>> valuesEn = [];
   String aboutMeFileDe = 'assets/data/aboutme_de.json';
   String aboutMeFileEn = 'assets/data/aboutme_en.json';
-  late bool langDeActive;
 
   @override
   initState() {
@@ -116,12 +114,8 @@ class _SkillTableState extends State<SkillTable> {
     final double currentWith = MediaQuery.of(context).size.width;
     double betweenColumnPadding =
         (currentWith <= narrowScreenWidthThreshold) ? 40.0 : 80.0;
-    const rowDistance = 40.0;
-    bool langDeActive = ((Localizations.localeOf(context) == Locale('en') &&
-                widget.useOtherLanguageMode) ||
-            (Localizations.localeOf(context) == Locale('de')))
-        ? true
-        : false;
+
+    bool langDeActive = Localizations.localeOf(context) == const Locale('de');
 
     if (langDeActive) {
       return FutureBuilder(

@@ -4,10 +4,10 @@ import 'package:jotrockenmitlocken/constants.dart';
 
 class AboutMePage extends StatefulWidget {
   const AboutMePage({
-    Key? key,
+    super.key,
     required this.useOtherLanguageMode,
     required this.colorSelected,
-  }) : super(key: key);
+  });
   final bool useOtherLanguageMode;
   final ColorSeed colorSelected;
   @override
@@ -15,9 +15,7 @@ class AboutMePage extends StatefulWidget {
 }
 
 class _AboutMePageState extends State<AboutMePage> {
-  _AboutMePageState({
-    Key? key,
-  });
+  _AboutMePageState();
 
   @override
   void initState() {

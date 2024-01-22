@@ -5,7 +5,7 @@ import 'package:jotrockenmitlocken/Navbar/mobile/navigation_drawer_change_notifi
 import 'package:provider/provider.dart';
 
 class NavigationDrawerWidget extends StatefulWidget {
-  const NavigationDrawerWidget({Key? key}) : super(key: key);
+  const NavigationDrawerWidget({super.key});
 
   @override
   State<NavigationDrawerWidget> createState() => _NavigationDrawerWidgetState();

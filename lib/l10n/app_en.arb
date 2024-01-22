@@ -14,5 +14,8 @@
   "meditation": "Meditation",
   "guitar": "Guitar",
   "familyFriends": "Family&Friends",
-  "spendCoffe": "You can get me some coffee"
+  "spendCoffe": "You can get me some coffee",
+  "toogleLanguage":"Toogle language",
+  "toogleBrightness": "Toogle brightness",
+  "selectSeedColor": "Select a seed color"
 }

@@ -6,7 +6,7 @@ import 'package:jotrockenmitlocken/Media/film.dart';
 import 'package:jotrockenmitlocken/constants.dart';
 
 class FilmsList extends StatefulWidget {
-  const FilmsList({Key? key}) : super(key: key);
+  const FilmsList({super.key});
 
   @override
   State<FilmsList> createState() => _FilmsListState();

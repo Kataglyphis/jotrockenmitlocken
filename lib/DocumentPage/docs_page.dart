@@ -5,7 +5,7 @@ import 'package:jotrockenmitlocken/Navbar/mobile/navigation_drawer_widget.dart';
 import 'package:jotrockenmitlocken/constants.dart';
 
 class DocsPage extends StatelessWidget {
-  const DocsPage({Key? key}) : super(key: key);
+  const DocsPage({super.key});
 
   @override
   Widget build(BuildContext context) {

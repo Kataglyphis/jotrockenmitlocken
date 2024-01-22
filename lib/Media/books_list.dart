@@ -7,7 +7,7 @@ import 'package:jotrockenmitlocken/constants.dart';
 import 'data_list.dart';
 
 class BooksList extends StatefulWidget {
-  const BooksList({Key? key}) : super(key: key);
+  const BooksList({super.key});
 
   @override
   State<BooksList> createState() => _BooksListState();
