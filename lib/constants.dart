@@ -4,6 +4,8 @@
 
 import 'package:flutter/material.dart';
 
+const String AppTitle = 'My awesome AI';
+
 // NavigationRail shows if the screen width is greater or equal to
 // narrowScreenWidthThreshold; otherwise, NavigationBar is used for navigation.
 const double narrowScreenWidthThreshold = 450;
@@ -16,7 +18,7 @@ const double transitionLength = 500;
 const appName = "Jotrockenmitlocken";
 
 enum ColorSeed {
-  baseColor('M3 Baseline', Colors.greenAccent),
+  baseColor('Green Accent', Colors.greenAccent),
   indigo('Indigo', Colors.indigo),
   blue('Blue', Colors.blue),
   teal('Teal', Colors.teal),
@@ -32,9 +34,14 @@ enum ColorSeed {
 }
 
 enum ScreenSelected {
-  component(0),
-  color(1);
+  home(0),
+  aboutMe(1);
 
   const ScreenSelected(this.value);
   final int value;
 }
+
+const supportedLanguages = [
+  Locale('de'), // Deutsch
+  Locale('en'), // English
+];

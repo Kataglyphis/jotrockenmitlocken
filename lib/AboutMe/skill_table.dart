@@ -24,10 +24,10 @@ class _SkillTableState extends State<SkillTable> {
 
   void initCsvFuture(BuildContext context) {
     if (Localizations.localeOf(context) == const Locale('de')) {
-      _currentLanguage = Locale('de');
+      _currentLanguage = const Locale('de');
       _readJson = readJson(aboutMeFileDe);
     } else {
-      _currentLanguage = Locale('en');
+      _currentLanguage = const Locale('en');
       _readJson = readJson(aboutMeFileEn);
     }
   }

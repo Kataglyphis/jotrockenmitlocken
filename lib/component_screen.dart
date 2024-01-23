@@ -32,8 +32,8 @@ class FirstComponentList extends StatelessWidget {
       colDivider,
       if (!showSecondList) ...[
         colDivider,
-        Navigation(scaffoldKey: scaffoldKey),
-        colDivider,
+        // Navigation(scaffoldKey: scaffoldKey),
+        // colDivider,
       ],
     ];
     List<double?> heights = List.filled(children.length, null);
@@ -76,8 +76,8 @@ class SecondComponentList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Widget> children = [
-      Navigation(scaffoldKey: scaffoldKey),
-      colDivider,
+      // Navigation(scaffoldKey: scaffoldKey),
+      // colDivider,
     ];
     List<double?> heights = List.filled(children.length, null);
 
@@ -205,21 +205,21 @@ class Actions extends StatelessWidget {
   }
 }
 
-class Navigation extends StatelessWidget {
-  const Navigation({super.key, required this.scaffoldKey});
+// class Navigation extends StatelessWidget {
+//   const Navigation({super.key, required this.scaffoldKey});
 
-  final GlobalKey<ScaffoldState> scaffoldKey;
+//   final GlobalKey<ScaffoldState> scaffoldKey;
 
-  @override
-  Widget build(BuildContext context) {
-    return const ComponentGroupDecoration(label: 'Navigation', children: [
-      NavigationBars(
-        selectedIndex: 0,
-        isExampleBar: true,
-      ),
-    ]);
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return const ComponentGroupDecoration(label: 'Navigation', children: [
+//       NavigationBars(
+//         selectedIndex: 0,
+//         isExampleBar: true,
+//       ),
+//     ]);
+//   }
+// }
 
 class Buttons extends StatefulWidget {
   const Buttons({super.key});
