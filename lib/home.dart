@@ -39,7 +39,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   bool showMediumSizeLayout = false;
   bool showLargeSizeLayout = false;
 
-  int screenIndex = ScreenSelected.component.value;
+  int screenIndex = ScreenSelected.home.value;
 
   @override
   initState() {
@@ -102,7 +102,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   Widget createScreenFor(ScreenSelected screenSelected, bool showNavBarExample,
       ColorSeed colorSelected, bool useOtherLanguageMode) {
     switch (screenSelected) {
-      case ScreenSelected.component:
+      case ScreenSelected.home:
         return Expanded(
           child: OneTwoTransition(
             animation: railAnimation,
@@ -115,7 +115,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
             ),
           ),
         );
-      case ScreenSelected.color:
+      case ScreenSelected.aboutMe:
         return AboutMePage(
             useOtherLanguageMode: useOtherLanguageMode,
             colorSelected: colorSelected);
@@ -196,30 +196,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       widget.useOtherLanguageMode),
                   navigationRail: NavigationRail(
                     extended: showLargeSizeLayout,
-                    destinations: [
-                      NavigationRailDestination(
-                        icon: Tooltip(
-                          message: AppLocalizations.of(context)!.homepage,
-                          child: const Icon(Icons.house),
-                        ),
-                        selectedIcon: Tooltip(
-                          message: AppLocalizations.of(context)!.homepage,
-                          child: const Icon(Icons.house),
-                        ),
-                        label: Text(AppLocalizations.of(context)!.homepage),
-                      ),
-                      NavigationRailDestination(
-                        icon: Tooltip(
-                          message: AppLocalizations.of(context)!.aboutme,
-                          child: const Icon(Icons.person),
-                        ),
-                        selectedIcon: Tooltip(
-                          message: AppLocalizations.of(context)!.aboutme,
-                          child: const Icon(Icons.person),
-                        ),
-                        label: Text(AppLocalizations.of(context)!.aboutme),
-                      )
-                    ], //navRailDestinations,
+                    destinations:
+                        ScreenConfigurations.getNavRailDestinations(context),
                     selectedIndex: screenIndex,
                     onDestinationSelected: (index) {
                       setState(() {
@@ -531,21 +509,50 @@ class _NavigationTransitionState extends State<NavigationTransition> {
   }
 }
 
-// final List<NavigationRailDestination> navRailDestinations = appBarDestinations
-//     .map(
-//       (destination) => NavigationRailDestination(
-//         icon: Tooltip(
-//           message: destination.label,
-//           child: destination.icon,
-//         ),
-//         selectedIcon: Tooltip(
-//           message: destination.label,
-//           child: destination.selectedIcon,
-//         ),
-//         label: Text(destination.label),
-//       ),
-//     )
-//     .toList();
+class ScreenConfigurations {
+  static List<NavigationDestination> getAppBarDestinations(
+      BuildContext context) {
+    var result = [
+      NavigationDestination(
+        tooltip: '',
+        icon: const Icon(Icons.widgets_outlined),
+        label: AppLocalizations.of(context)!.homepage,
+        selectedIcon: const Icon(Icons.house),
+      ),
+      NavigationDestination(
+        tooltip: '',
+        icon: const Icon(Icons.format_paint_outlined),
+        label: AppLocalizations.of(context)!.aboutme,
+        selectedIcon: const Icon(Icons.person),
+      ),
+    ];
+    assert(result.length == ScreenSelected.values.length,
+        'You must provide for each screen exact one app bar navigation!');
+    return result;
+  }
+
+  static List<NavigationRailDestination> getNavRailDestinations(
+      BuildContext context) {
+    var result = getAppBarDestinations(context)
+        .map(
+          (destination) => NavigationRailDestination(
+            icon: Tooltip(
+              message: destination.label,
+              child: destination.icon,
+            ),
+            selectedIcon: Tooltip(
+              message: destination.label,
+              child: destination.selectedIcon,
+            ),
+            label: Text(destination.label),
+          ),
+        )
+        .toList();
+    assert(result.length == ScreenSelected.values.length,
+        'You must provide for each screen exact one app bar navigation!');
+    return result;
+  }
+}
 
 class SizeAnimation extends CurvedAnimation {
   SizeAnimation(Animation<double> parent)
