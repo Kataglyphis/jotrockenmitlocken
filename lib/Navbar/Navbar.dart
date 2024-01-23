@@ -32,14 +32,14 @@ class DesktopNavbar extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               SizedBox(
-                height: getpagesSpacingToTop(context),
+                height: 10,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: createLogoAndName(),
               ),
-              SizedBox(height: getpagesSpacingToTop(context)),
+              SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -61,7 +61,7 @@ class DesktopNavbar extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: createLogoAndName(),
               ),
-              SizedBox(height: getpagesSpacingToTop(context)),
+              SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,

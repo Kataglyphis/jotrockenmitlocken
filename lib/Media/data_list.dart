@@ -104,7 +104,7 @@ abstract mixin class DataListState<T extends Data> {
                 return Column(
                   children: [
                     SizedBox(
-                      height: getpagesSpacingToTop(context),
+                      height: 10,
                     ),
                     Container(
                       alignment: Alignment.center,
@@ -115,7 +115,7 @@ abstract mixin class DataListState<T extends Data> {
                       ),
                     ),
                     SizedBox(
-                      height: getpagesSpacingToTop(context),
+                      height: 10,
                     ),
                     Container(
                       alignment: Alignment.center,
@@ -136,7 +136,7 @@ abstract mixin class DataListState<T extends Data> {
                           selectedColor),
                     ),
                     SizedBox(
-                      height: getpagesSpacingToTop(context),
+                      height: 10,
                     ),
                   ],
                 );

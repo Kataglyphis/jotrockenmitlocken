@@ -10,6 +10,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:jotrockenmitlocken/constants.dart';
 import 'package:jotrockenmitlocken/home.dart';
 import 'package:jotrockenmitlocken/main.dart';
+import 'package:jotrockenmitlocken/screen_configurations.dart';
 
 void main() {
   testWidgets('# of screens must be the same as the # of nav bar items',

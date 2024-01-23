@@ -4,7 +4,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:jotrockenmitlocken/home.dart';
+import 'package:jotrockenmitlocken/screen_configurations.dart';
 
 const rowDivider = SizedBox(width: 20);
 const colDivider = SizedBox(height: 10);
@@ -13,37 +13,43 @@ const smallSpacing = 10.0;
 const double cardWidth = 115;
 const double widthConstraint = 450;
 
-class FirstComponentList extends StatelessWidget {
-  const FirstComponentList({
+class FirstComponentList extends StatefulWidget {
+  FirstComponentList({
     super.key,
     required this.showNavBottomBar,
     required this.scaffoldKey,
     required this.showSecondList,
+    required this.childWidgetsLeftPage,
+    required this.childWidgetsRightPage,
   });
 
   final bool showNavBottomBar;
   final GlobalKey<ScaffoldState> scaffoldKey;
   final bool showSecondList;
+  List<Widget> childWidgetsLeftPage;
+  List<Widget> childWidgetsRightPage;
 
   @override
+  State<FirstComponentList> createState() => _FirstComponentListState();
+}
+
+class _FirstComponentListState extends State<FirstComponentList> {
+  @override
   Widget build(BuildContext context) {
-    List<Widget> children = [
-      const Actions(),
-      colDivider,
-      if (!showSecondList) ...[
-        colDivider,
-        // Navigation(scaffoldKey: scaffoldKey),
-        // colDivider,
-      ],
-    ];
-    List<double?> heights = List.filled(children.length, null);
+    if (!widget.showSecondList) {
+      widget.childWidgetsLeftPage =
+          widget.childWidgetsLeftPage + widget.childWidgetsRightPage;
+    }
+
+    List<double?> heights =
+        List.filled(widget.childWidgetsLeftPage.length, null);
 
     // Fully traverse this list before moving on.
     return FocusTraversalGroup(
       child: CustomScrollView(
         slivers: [
           SliverPadding(
-            padding: showSecondList
+            padding: widget.showSecondList
                 ? const EdgeInsetsDirectional.only(end: smallSpacing)
                 : EdgeInsets.zero,
             sliver: SliverList(
@@ -53,7 +59,7 @@ class FirstComponentList extends StatelessWidget {
                   return _CacheHeight(
                     heights: heights,
                     index: index,
-                    child: children[index],
+                    child: widget.childWidgetsLeftPage[index],
                   );
                 },
               ),
@@ -65,21 +71,24 @@ class FirstComponentList extends StatelessWidget {
   }
 }
 
-class SecondComponentList extends StatelessWidget {
-  const SecondComponentList({
+class SecondComponentList extends StatefulWidget {
+  SecondComponentList({
     super.key,
     required this.scaffoldKey,
+    required this.childWidgets,
   });
 
   final GlobalKey<ScaffoldState> scaffoldKey;
+  List<Widget> childWidgets;
 
   @override
+  State<SecondComponentList> createState() => _SecondComponentListState();
+}
+
+class _SecondComponentListState extends State<SecondComponentList> {
+  @override
   Widget build(BuildContext context) {
-    List<Widget> children = [
-      // Navigation(scaffoldKey: scaffoldKey),
-      // colDivider,
-    ];
-    List<double?> heights = List.filled(children.length, null);
+    List<double?> heights = List.filled(widget.childWidgets.length, null);
 
     // Fully traverse this list before moving on.
     return FocusTraversalGroup(
@@ -94,7 +103,7 @@ class SecondComponentList extends StatelessWidget {
                   return _CacheHeight(
                     heights: heights,
                     index: index,
-                    child: children[index],
+                    child: widget.childWidgets[index],
                   );
                 },
               ),

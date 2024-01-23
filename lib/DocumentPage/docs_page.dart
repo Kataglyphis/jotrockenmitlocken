@@ -16,7 +16,7 @@ class DocsPage extends StatelessWidget {
           return Scaffold(
             body: Column(
               children: <Widget>[
-                SizedBox(height: getpagesSpacingToTop(context)),
+                SizedBox(height: 10),
                 Container(
                   alignment: Alignment.center,
                   child: Text(
@@ -25,9 +25,9 @@ class DocsPage extends StatelessWidget {
                     style: getTextStyleHeadings(context),
                   ),
                 ),
-                SizedBox(height: getpagesSpacingToTop(context)),
+                SizedBox(height: 10),
                 const DocumentTable(),
-                SizedBox(height: getpagesSpacingToTop(context)),
+                SizedBox(height: 10),
               ], //
             ),
           );
@@ -41,7 +41,7 @@ class DocsPage extends StatelessWidget {
             ),
             body: Column(
               children: <Widget>[
-                SizedBox(height: getpagesSpacingToTop(context)),
+                SizedBox(height: 10),
                 Container(
                   alignment: Alignment.center,
                   child: Text(
@@ -50,9 +50,9 @@ class DocsPage extends StatelessWidget {
                     style: getTextStyleHeadings(context),
                   ),
                 ),
-                SizedBox(height: getpagesSpacingToTop(context)),
+                SizedBox(height: 10),
                 const DocumentTable(),
-                SizedBox(height: getpagesSpacingToTop(context)),
+                SizedBox(height: 10),
               ],
             ),
           );
