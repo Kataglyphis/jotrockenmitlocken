@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:jotrockenmitlocken/AboutMe/about_me_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'component_screen.dart';
+import 'package:jotrockenmitlocken/AboutMe/about_me_table.dart';
+import 'package:jotrockenmitlocken/AboutMe/perfect_day_chart.dart';
+import 'package:jotrockenmitlocken/AboutMe/skill_table.dart';
+import 'package:jotrockenmitlocken/Decoration/decoration_helper.dart';
+import 'Blog/blog.dart';
 import 'constants.dart';
+import 'package:jotrockenmitlocken/screen_configurations.dart';
 
 class Home extends StatefulWidget {
   const Home({
@@ -35,7 +39,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   bool showMediumSizeLayout = false;
   bool showLargeSizeLayout = false;
 
-  int screenIndex = ScreenSelected.home.value;
+  int screenIndex = ScreenSelected.aboutMe.value;
 
   @override
   initState() {
@@ -95,26 +99,62 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     });
   }
 
+  Widget createOneTwoTransisionWidget(
+    List<Widget> childWidgetsLeftPage,
+    List<Widget> childWidgetsRightPage,
+    bool showNavBarExample,
+  ) {
+    return Expanded(
+      child: OneTwoTransition(
+        animation: railAnimation,
+        one: FirstComponentList(
+          showNavBottomBar: showNavBarExample,
+          scaffoldKey: scaffoldKey,
+          showSecondList: showMediumSizeLayout || showLargeSizeLayout,
+          childWidgetsLeftPage: childWidgetsLeftPage,
+          childWidgetsRightPage: childWidgetsRightPage,
+        ),
+        two: SecondComponentList(
+          scaffoldKey: scaffoldKey,
+          childWidgets: childWidgetsRightPage,
+        ),
+      ),
+    );
+  }
+
   Widget createScreenFor(ScreenSelected screenSelected, bool showNavBarExample,
       ColorSeed colorSelected, bool useOtherLanguageMode) {
     switch (screenSelected) {
       case ScreenSelected.home:
-        return Expanded(
-          child: OneTwoTransition(
-            animation: railAnimation,
-            one: FirstComponentList(
-                showNavBottomBar: showNavBarExample,
-                scaffoldKey: scaffoldKey,
-                showSecondList: showMediumSizeLayout || showLargeSizeLayout),
-            two: SecondComponentList(
-              scaffoldKey: scaffoldKey,
-            ),
-          ),
-        );
+        List<Widget> childWidgetsLeftPage = [colDivider];
+        List<Widget> childWidgetsRightPage = [colDivider];
+        return createOneTwoTransisionWidget(
+            childWidgetsLeftPage, childWidgetsRightPage, showNavBarExample);
       case ScreenSelected.aboutMe:
-        return AboutMePage(
-            useOtherLanguageMode: useOtherLanguageMode,
-            colorSelected: colorSelected);
+        List<Widget> childWidgetsLeftPage = [
+          AboutMeTable(
+              useOtherLanguageMode: useOtherLanguageMode,
+              colorSelected: colorSelected)
+        ];
+        double marginSkillTable = 0;
+        double paddingSkillTable = 5;
+        List<Widget> childWidgetsRightPage = [
+          PerfectDay.createMyPerfectDayPieChart(context),
+          SizedBox(
+            //width: skillTableWidth,
+            child: applyBoxDecoration(
+                SkillTable(
+                  useOtherLanguageMode: widget.useOtherLanguageMode,
+                ),
+                EdgeInsets.all(paddingSkillTable),
+                marginSkillTable,
+                30,
+                10,
+                widget.colorSelected.color),
+          ),
+        ];
+        return createOneTwoTransisionWidget(
+            childWidgetsLeftPage, childWidgetsRightPage, showNavBarExample);
     }
   }
 
@@ -501,51 +541,6 @@ class _NavigationTransitionState extends State<NavigationTransition> {
         child: widget.navigationBar,
       ),
     );
-  }
-}
-
-class ScreenConfigurations {
-  static List<NavigationDestination> getAppBarDestinations(
-      BuildContext context) {
-    var result = [
-      NavigationDestination(
-        tooltip: '',
-        icon: const Icon(Icons.widgets_outlined),
-        label: AppLocalizations.of(context)!.homepage,
-        selectedIcon: const Icon(Icons.house),
-      ),
-      NavigationDestination(
-        tooltip: '',
-        icon: const Icon(Icons.format_paint_outlined),
-        label: AppLocalizations.of(context)!.aboutme,
-        selectedIcon: const Icon(Icons.person),
-      ),
-    ];
-    assert(result.length == ScreenSelected.values.length,
-        'You must provide for each screen exact one app bar navigation!');
-    return result;
-  }
-
-  static List<NavigationRailDestination> getNavRailDestinations(
-      BuildContext context) {
-    var result = getAppBarDestinations(context)
-        .map(
-          (destination) => NavigationRailDestination(
-            icon: Tooltip(
-              message: destination.label,
-              child: destination.icon,
-            ),
-            selectedIcon: Tooltip(
-              message: destination.label,
-              child: destination.selectedIcon,
-            ),
-            label: Text(destination.label),
-          ),
-        )
-        .toList();
-    assert(result.length == ScreenSelected.values.length,
-        'You must provide for each screen exact one app bar navigation!');
-    return result;
   }
 }
 

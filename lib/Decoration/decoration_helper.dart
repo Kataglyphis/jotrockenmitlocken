@@ -44,17 +44,6 @@ TextStyle getTextStyleSubHeadings(BuildContext context) {
         fontSize: 22, fontWeight: FontWeight.bold); // , color: Colors.black
   } else {
     return const TextStyle(
-        fontSize: 22, fontWeight: FontWeight.bold); // , color: Colors.black
-  }
-}
-
-double getpagesSpacingToTop(BuildContext context) {
-  var currentWidth = MediaQuery.of(context).size.width;
-  if (currentWidth <= narrowScreenWidthThreshold) {
-    return 20;
-  } else if (currentWidth <= largeWidthBreakpoint) {
-    return 30;
-  } else {
-    return 30;
+        fontSize: 32, fontWeight: FontWeight.bold); // , color: Colors.black
   }
 }

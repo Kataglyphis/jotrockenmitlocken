@@ -69,7 +69,7 @@ class _SkillTableState extends State<SkillTable> {
           fontSize: 22, fontWeight: FontWeight.normal); // , color: Colors.black
     } else {
       return const TextStyle(
-          fontSize: 22, fontWeight: FontWeight.normal); // , color: Colors.black
+          fontSize: 32, fontWeight: FontWeight.normal); // , color: Colors.black
     }
   }
 
