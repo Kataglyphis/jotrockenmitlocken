@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:jotrockenmitlocken/Navbar/mobile/drawer_item.dart';
-import 'package:jotrockenmitlocken/Navbar/mobile/drawer_items.dart';
 import 'package:jotrockenmitlocken/Navbar/mobile/navigation_drawer_change_notifier.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NavigationDrawerWidget extends StatefulWidget {
   const NavigationDrawerWidget({super.key});
@@ -67,18 +67,6 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
       case 1:
         Navigator.of(context).pushNamed('/quotes');
         break;
-      case 2:
-        Navigator.of(context).pushNamed('/books');
-        break;
-      case 3:
-        Navigator.of(context).pushNamed('/films');
-        break;
-      case 4:
-        Navigator.of(context).pushNamed('/docs');
-        break;
-      case 5:
-        Navigator.of(context).pushNamed('/blog');
-        break;
     }
   }
 
@@ -106,7 +94,15 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
     );
   }
 
-  buildList({required List<DrawerItem> items, required bool isCollapsed}) {
+  buildList({required BuildContext context, required bool isCollapsed}) {
+    List<DrawerItem> items = [
+      DrawerItem(
+          title: AppLocalizations.of(context)!.homepage,
+          icon: Icons.account_box_outlined),
+      DrawerItem(
+          title: AppLocalizations.of(context)!.aboutme,
+          icon: Icons.speaker_outlined),
+    ];
     return ListView.separated(
       shrinkWrap: true,
       primary: false,
@@ -142,7 +138,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
                   padding:
                       const EdgeInsets.symmetric(vertical: 24).add(safeArea),
                   child: buildHeader(isCollapsed)),
-              buildList(items: itemsFirst, isCollapsed: isCollapsed),
+              buildList(context: context, isCollapsed: isCollapsed),
               const Spacer(),
               buildCollapseIcon(context, isCollapsed),
               const SizedBox(

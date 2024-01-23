@@ -1,7 +1,3 @@
-// Copyright 2021 The Flutter team. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
-
 import 'package:flutter/material.dart';
 import 'package:jotrockenmitlocken/AboutMe/about_me_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -504,7 +500,6 @@ class _NavigationTransitionState extends State<NavigationTransition> {
         backgroundColor: colorScheme.surface,
         child: widget.navigationBar,
       ),
-      endDrawer: const NavigationDrawerSection(),
     );
   }
 }
