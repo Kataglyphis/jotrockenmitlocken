@@ -3,6 +3,7 @@ import 'package:jotrockenmitlocken/Decoration/decoration_helper.dart';
 import 'package:jotrockenmitlocken/Media/data.dart';
 import 'package:jotrockenmitlocken/Navbar/mobile/navigation_drawer_widget.dart';
 import 'package:jotrockenmitlocken/constants.dart';
+import 'package:jotrockenmitlocken/font_helper.dart';
 
 class MyDataTableSource extends DataTableSource {
   List<DataRow> dataRows;
@@ -111,7 +112,7 @@ abstract mixin class DataListState<T extends Data> {
                       child: Text(
                         getTitle(),
                         textAlign: TextAlign.center,
-                        style: getTextStyleHeadings(context),
+                        style: FontHelper.getTextStyleHeadings(context),
                       ),
                     ),
                     SizedBox(

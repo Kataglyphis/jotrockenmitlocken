@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jotrockenmitlocken/Charts/pie_chart_data_entry.dart';
 import 'package:jotrockenmitlocken/constants.dart';
+import 'package:jotrockenmitlocken/font_helper.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -30,7 +31,9 @@ class PerfectDay {
         (currentWith >= narrowScreenWidthThreshold) ? false : true;
     // https://help.syncfusion.com/flutter/circular-charts/overview
     return SfCircularChart(
-      title: ChartTitle(text: 'My perfect day'),
+      title: ChartTitle(
+          text: 'My perfect day',
+          textStyle: FontHelper.getTextStyleHeadings(context)),
       legend: Legend(
           width: '100%',
           overflowMode: LegendItemOverflowMode.wrap,
@@ -50,10 +53,11 @@ class PerfectDay {
             explodeIndex: 5,
             radius: (MediaQuery.of(context).size.width >=
                     narrowScreenWidthThreshold)
-                ? '100%'
+                ? '80%'
                 : '80%',
             innerRadius: '20%',
             dataLabelSettings: DataLabelSettings(
+              textStyle: FontHelper.getTextStyle(context),
               labelPosition: ChartDataLabelPosition.outside,
               isVisible: !enableSkillTableLegend,
               labelIntersectAction: LabelIntersectAction.shift,

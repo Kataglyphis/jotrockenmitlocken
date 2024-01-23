@@ -3,6 +3,7 @@ import 'package:jotrockenmitlocken/Decoration/decoration_helper.dart';
 import 'package:jotrockenmitlocken/DocumentPage/document_table.dart';
 import 'package:jotrockenmitlocken/Navbar/mobile/navigation_drawer_widget.dart';
 import 'package:jotrockenmitlocken/constants.dart';
+import 'package:jotrockenmitlocken/font_helper.dart';
 
 class DocsPage extends StatelessWidget {
   const DocsPage({super.key});
@@ -22,7 +23,7 @@ class DocsPage extends StatelessWidget {
                   child: Text(
                     'Documents',
                     textAlign: TextAlign.center,
-                    style: getTextStyleHeadings(context),
+                    style: FontHelper.getTextStyleHeadings(context),
                   ),
                 ),
                 SizedBox(height: 10),
@@ -47,7 +48,7 @@ class DocsPage extends StatelessWidget {
                   child: Text(
                     'Documents',
                     textAlign: TextAlign.center,
-                    style: getTextStyleHeadings(context),
+                    style: FontHelper.getTextStyleHeadings(context),
                   ),
                 ),
                 SizedBox(height: 10),

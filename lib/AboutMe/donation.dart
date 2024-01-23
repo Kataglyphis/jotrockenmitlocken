@@ -35,10 +35,7 @@ class Donation extends StatelessWidget {
             _launchInBrowser(toLaunch);
           },
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20),
-          child: Image.asset("assets/images/Paypal_QR_Code.png", width: 200),
-        ),
+        Image.asset("assets/images/Paypal_QR_Code.png", width: 200),
       ],
     );
   }

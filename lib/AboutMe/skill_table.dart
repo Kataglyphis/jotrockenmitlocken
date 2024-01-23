@@ -2,8 +2,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:jotrockenmitlocken/Decoration/decoration_helper.dart';
 import 'package:jotrockenmitlocken/constants.dart';
+import 'package:jotrockenmitlocken/font_helper.dart';
 
 class SkillTable extends StatefulWidget {
   const SkillTable({super.key, required this.useOtherLanguageMode});
@@ -20,14 +20,11 @@ class _SkillTableState extends State<SkillTable> {
   List<List<dynamic>> values = [];
   String aboutMeFileDe = 'assets/data/aboutme_de.json';
   String aboutMeFileEn = 'assets/data/aboutme_en.json';
-  late Locale _currentLanguage;
 
   void initCsvFuture(BuildContext context) {
     if (Localizations.localeOf(context) == const Locale('de')) {
-      _currentLanguage = const Locale('de');
       _readJson = readJson(aboutMeFileDe);
     } else {
-      _currentLanguage = const Locale('en');
       _readJson = readJson(aboutMeFileEn);
     }
   }
@@ -59,38 +56,24 @@ class _SkillTableState extends State<SkillTable> {
     return list;
   }
 
-  TextStyle getTextStyle() {
-    var currentWidth = MediaQuery.of(context).size.width;
-    if (currentWidth <= narrowScreenWidthThreshold) {
-      return const TextStyle(
-          fontSize: 14, fontWeight: FontWeight.normal); // , color: Colors.black
-    } else if (currentWidth <= largeWidthBreakpoint) {
-      return const TextStyle(
-          fontSize: 22, fontWeight: FontWeight.normal); // , color: Colors.black
-    } else {
-      return const TextStyle(
-          fontSize: 32, fontWeight: FontWeight.normal); // , color: Colors.black
-    }
-  }
-
   List<Widget> getSkillTableKeys(dynamic key) {
     // this means string contains sub informations
     if ((key.toString().contains("("))) {
       return <Widget>[
         Text(
           key.substring(0, key.toString().indexOf("(")).trim(),
-          style: getTextStyleSubHeadings(context),
+          style: FontHelper.getTextStyleSubHeadings(context),
         ),
         Text(
           key.substring(key.toString().indexOf("(")).trim(),
-          style: getTextStyle(),
+          style: FontHelper.getTextStyle(context),
         )
       ];
     } else {
       return [
         Text(
           key,
-          style: getTextStyleSubHeadings(context),
+          style: FontHelper.getTextStyleSubHeadings(context),
         ),
       ];
     }
@@ -128,7 +111,8 @@ class _SkillTableState extends State<SkillTable> {
                 TableCell(
                     child: Padding(
                   padding: EdgeInsets.fromLTRB(betweenColumnPadding, 8, 0, 0),
-                  child: Text(entryVal, style: getTextStyle()),
+                  child:
+                      Text(entryVal, style: FontHelper.getTextStyle(context)),
                 ))
               ]));
               skills.add(const TableRow(children: [

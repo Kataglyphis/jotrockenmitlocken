@@ -4,6 +4,7 @@ import 'package:jotrockenmitlocken/AboutMe/socialMedia/social_media_widgets.dart
 import 'package:jotrockenmitlocken/Decoration/decoration_helper.dart';
 import 'package:jotrockenmitlocken/constants.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:jotrockenmitlocken/font_helper.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -30,20 +31,6 @@ class AboutMeTableState extends State<AboutMeTable> {
   @override
   void initState() {
     super.initState();
-  }
-
-  TextStyle getTextStyle() {
-    var currentWidth = MediaQuery.of(context).size.width;
-    if (currentWidth <= narrowScreenWidthThreshold) {
-      return const TextStyle(
-          fontSize: 12, fontWeight: FontWeight.normal); //, color: Colors.black
-    } else if (currentWidth <= largeWidthBreakpoint) {
-      return const TextStyle(
-          fontSize: 22, fontWeight: FontWeight.normal); //, color: Colors.black
-    } else {
-      return const TextStyle(
-          fontSize: 22, fontWeight: FontWeight.normal); //, color: Colors.black
-    }
   }
 
   @override
@@ -94,7 +81,18 @@ class AboutMeTableState extends State<AboutMeTable> {
           Text(
             "Jonas Heinle",
             textAlign: TextAlign.center,
-            style: getTextStyleHeadings(context),
+            style: FontHelper.getTextStyleHeadings(context),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Text(
+            AppLocalizations.of(context)!.shortDescriptionTextMyPersona,
+            textAlign: TextAlign.center,
+            style: FontHelper.getTextStyle(context),
+          ),
+          const SizedBox(
+            height: 10,
           ),
           const SocialMediaWidgets(),
           const SizedBox(
@@ -127,40 +125,33 @@ class AboutMeTableState extends State<AboutMeTable> {
           Text(
             "cataglyphis@jotrockenmitlocken.de",
             textAlign: TextAlign.center,
-            style: getTextStyleHeadings(context),
+            style: FontHelper.getTextStyleHeadings(context),
           ),
           const SizedBox(height: 10),
           Text(
             "»As soon as it works, no-one calls it AI anymore.« (John McCarthy)",
             textAlign: TextAlign.center,
-            style: getTextStyle(),
+            style: FontHelper.getTextStyle(context),
           ),
           const SizedBox(
             height: 10,
           ),
-          Text(
-            AppLocalizations.of(context)!.shortDescriptionTextMyPersona,
-            textAlign: TextAlign.center,
-            style: getTextStyle(),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Donation(getTextStyleHeadings(context)),
+          Donation(FontHelper.getTextStyleHeadings(context)),
           const SizedBox(
             height: 10,
           ),
           Text(
             "I love to cURL",
             textAlign: TextAlign.center,
-            style: getTextStyleHeadings(context),
+            style: FontHelper.getTextStyleHeadings(context),
           ),
           IconButton(
             iconSize: 40,
             icon: const FaIcon(FontAwesomeIcons.dumbbell),
             // color: Colors.black,
             onPressed: () {},
-          )
+          ),
+          const SizedBox(height: 20),
         ],
       );
     });
