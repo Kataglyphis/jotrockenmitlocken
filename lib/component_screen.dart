@@ -4,7 +4,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:jotrockenmitlocken/home.dart';
 
 const rowDivider = SizedBox(width: 20);
 const colDivider = SizedBox(height: 10);
@@ -199,145 +199,8 @@ class Actions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const ComponentGroupDecoration(label: 'Actions', children: <Widget>[
-      Buttons(),
-    ]);
-  }
-}
-
-// class Navigation extends StatelessWidget {
-//   const Navigation({super.key, required this.scaffoldKey});
-
-//   final GlobalKey<ScaffoldState> scaffoldKey;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return const ComponentGroupDecoration(label: 'Navigation', children: [
-//       NavigationBars(
-//         selectedIndex: 0,
-//         isExampleBar: true,
-//       ),
-//     ]);
-//   }
-// }
-
-class Buttons extends StatefulWidget {
-  const Buttons({super.key});
-
-  @override
-  State<Buttons> createState() => _ButtonsState();
-}
-
-class _ButtonsState extends State<Buttons> {
-  @override
-  Widget build(BuildContext context) {
-    return const ComponentDecoration(
-      label: 'Common buttons',
-      tooltipMessage:
-          'Use ElevatedButton, FilledButton, FilledButton.tonal, OutlinedButton, or TextButton',
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            ButtonsWithoutIcon(isDisabled: false),
-            ButtonsWithIcon(),
-            ButtonsWithoutIcon(isDisabled: true),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class ButtonsWithoutIcon extends StatelessWidget {
-  final bool isDisabled;
-
-  const ButtonsWithoutIcon({super.key, required this.isDisabled});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 5.0),
-      child: IntrinsicWidth(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            ElevatedButton(
-              onPressed: isDisabled ? null : () {},
-              child: const Text('Elevated'),
-            ),
-            colDivider,
-            FilledButton(
-              onPressed: isDisabled ? null : () {},
-              child: const Text('Filled'),
-            ),
-            colDivider,
-            FilledButton.tonal(
-              onPressed: isDisabled ? null : () {},
-              child: const Text('Filled tonal'),
-            ),
-            colDivider,
-            OutlinedButton(
-              onPressed: isDisabled ? null : () {},
-              child: const Text('Outlined'),
-            ),
-            colDivider,
-            TextButton(
-              onPressed: isDisabled ? null : () {},
-              child: const Text('Text'),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class ButtonsWithIcon extends StatelessWidget {
-  const ButtonsWithIcon({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-      child: IntrinsicWidth(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            ElevatedButton.icon(
-              onPressed: () {},
-              icon: const Icon(Icons.add),
-              label: const Text('Icon'),
-            ),
-            colDivider,
-            FilledButton.icon(
-              onPressed: () {},
-              label: const Text('Icon'),
-              icon: const Icon(Icons.add),
-            ),
-            colDivider,
-            FilledButton.tonalIcon(
-              onPressed: () {},
-              label: const Text('Icon'),
-              icon: const Icon(Icons.add),
-            ),
-            colDivider,
-            OutlinedButton.icon(
-              onPressed: () {},
-              icon: const Icon(Icons.add),
-              label: const Text('Icon'),
-            ),
-            colDivider,
-            TextButton.icon(
-              onPressed: () {},
-              icon: const Icon(Icons.add),
-              label: const Text('Icon'),
-            )
-          ],
-        ),
-      ),
-    );
+    return const ComponentGroupDecoration(
+        label: 'Actions', children: <Widget>[]);
   }
 }
 
@@ -354,73 +217,6 @@ class _ClearButton extends StatelessWidget {
 }
 
 enum Value { first, second }
-
-// Expanded(child: LayoutBuilder(
-//     builder: (context, constraints) {
-//     })
-// AppLocalizations.of(context)!.homepage
-// const List<NavigationDestination> appBarDestinations = [
-//   NavigationDestination(
-//     tooltip: '',
-//     icon: Icon(Icons.widgets_outlined),
-//     label: "Components",
-//     selectedIcon: Icon(Icons.widgets),
-//   ),
-//   NavigationDestination(
-//     tooltip: '',
-//     icon: Icon(Icons.format_paint_outlined),
-//     label: 'Color',
-//     selectedIcon: Icon(Icons.format_paint),
-//   )
-// ];
-
-const List<Widget> exampleBarDestinations = [
-  NavigationDestination(
-    tooltip: '',
-    icon: Icon(Icons.explore_outlined),
-    label: 'Explore',
-    selectedIcon: Icon(Icons.explore),
-  ),
-  NavigationDestination(
-    tooltip: '',
-    icon: Icon(Icons.pets_outlined),
-    label: 'Pets',
-    selectedIcon: Icon(Icons.pets),
-  ),
-  NavigationDestination(
-    tooltip: '',
-    icon: Icon(Icons.account_box_outlined),
-    label: 'Account',
-    selectedIcon: Icon(Icons.account_box),
-  )
-];
-
-List<Widget> barWithBadgeDestinations = [
-  NavigationDestination(
-    tooltip: '',
-    icon: Badge.count(count: 1000, child: const Icon(Icons.mail_outlined)),
-    label: 'Mail',
-    selectedIcon: Badge.count(count: 1000, child: const Icon(Icons.mail)),
-  ),
-  const NavigationDestination(
-    tooltip: '',
-    icon: Badge(label: Text('10'), child: Icon(Icons.chat_bubble_outline)),
-    label: 'Chat',
-    selectedIcon: Badge(label: Text('10'), child: Icon(Icons.chat_bubble)),
-  ),
-  const NavigationDestination(
-    tooltip: '',
-    icon: Badge(child: Icon(Icons.group_outlined)),
-    label: 'Rooms',
-    selectedIcon: Badge(child: Icon(Icons.group_rounded)),
-  ),
-  NavigationDestination(
-    tooltip: '',
-    icon: Badge.count(count: 3, child: const Icon(Icons.videocam_outlined)),
-    label: 'Meet',
-    selectedIcon: Badge.count(count: 3, child: const Icon(Icons.videocam)),
-  )
-];
 
 class NavigationBars extends StatefulWidget {
   const NavigationBars({
@@ -461,8 +257,8 @@ class _NavigationBarsState extends State<NavigationBars> {
   Widget build(BuildContext context) {
     // App NavigationBar should get first focus.
     Widget navigationBar = Focus(
-      autofocus: !(widget.isExampleBar || widget.isBadgeExample),
-      child: NavigationBar(
+        autofocus: !(widget.isExampleBar || widget.isBadgeExample),
+        child: NavigationBar(
           selectedIndex: selectedIndex,
           onDestinationSelected: (index) {
             setState(() {
@@ -470,26 +266,8 @@ class _NavigationBarsState extends State<NavigationBars> {
             });
             if (!widget.isExampleBar) widget.onSelectItem!(index);
           },
-          destinations: widget.isExampleBar && widget.isBadgeExample
-              ? barWithBadgeDestinations
-              : widget.isExampleBar
-                  ? exampleBarDestinations
-                  //: appBarDestinations,
-                  : [
-                      NavigationDestination(
-                        tooltip: '',
-                        icon: const Icon(Icons.house_outlined),
-                        label: AppLocalizations.of(context)!.homepage,
-                        selectedIcon: const Icon(Icons.house),
-                      ),
-                      NavigationDestination(
-                        tooltip: '',
-                        icon: const Icon(Icons.person_outlined),
-                        label: AppLocalizations.of(context)!.aboutme,
-                        selectedIcon: const Icon(Icons.person),
-                      ),
-                    ]),
-    );
+          destinations: ScreenConfigurations.getAppBarDestinations(context),
+        ));
 
     if (widget.isExampleBar && widget.isBadgeExample) {
       navigationBar = ComponentDecoration(
@@ -504,122 +282,6 @@ class _NavigationBarsState extends State<NavigationBars> {
     }
 
     return navigationBar;
-  }
-}
-
-class NavigationDrawerSection extends StatefulWidget {
-  const NavigationDrawerSection({super.key});
-
-  @override
-  State<NavigationDrawerSection> createState() =>
-      _NavigationDrawerSectionState();
-}
-
-class _NavigationDrawerSectionState extends State<NavigationDrawerSection> {
-  int navDrawerIndex = 0;
-
-  @override
-  Widget build(BuildContext context) {
-    return NavigationDrawer(
-      onDestinationSelected: (selectedIndex) {
-        setState(() {
-          navDrawerIndex = selectedIndex;
-        });
-      },
-      selectedIndex: navDrawerIndex,
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.fromLTRB(28, 16, 16, 10),
-          child: Text(
-            'Mail',
-            style: Theme.of(context).textTheme.titleSmall,
-          ),
-        ),
-        ...destinations.map((destination) {
-          return NavigationDrawerDestination(
-            label: Text(destination.label),
-            icon: destination.icon,
-            selectedIcon: destination.selectedIcon,
-          );
-        }),
-        const Divider(indent: 28, endIndent: 28),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(28, 16, 16, 10),
-          child: Text(
-            'Labels',
-            style: Theme.of(context).textTheme.titleSmall,
-          ),
-        ),
-        ...labelDestinations.map((destination) {
-          return NavigationDrawerDestination(
-            label: Text(destination.label),
-            icon: destination.icon,
-            selectedIcon: destination.selectedIcon,
-          );
-        }),
-      ],
-    );
-  }
-}
-
-class ExampleDestination {
-  const ExampleDestination(this.label, this.icon, this.selectedIcon);
-
-  final String label;
-  final Widget icon;
-  final Widget selectedIcon;
-}
-
-const List<ExampleDestination> destinations = <ExampleDestination>[
-  ExampleDestination('Inbox', Icon(Icons.inbox_outlined), Icon(Icons.inbox)),
-  ExampleDestination('Outbox', Icon(Icons.send_outlined), Icon(Icons.send)),
-  ExampleDestination(
-      'Favorites', Icon(Icons.favorite_outline), Icon(Icons.favorite)),
-  ExampleDestination('Trash', Icon(Icons.delete_outline), Icon(Icons.delete)),
-];
-
-const List<ExampleDestination> labelDestinations = <ExampleDestination>[
-  ExampleDestination(
-      'Family', Icon(Icons.bookmark_border), Icon(Icons.bookmark)),
-  ExampleDestination(
-      'School', Icon(Icons.bookmark_border), Icon(Icons.bookmark)),
-  ExampleDestination('Work', Icon(Icons.bookmark_border), Icon(Icons.bookmark)),
-];
-
-class NavigationRailSection extends StatefulWidget {
-  const NavigationRailSection({super.key});
-
-  @override
-  State<NavigationRailSection> createState() => _NavigationRailSectionState();
-}
-
-class _NavigationRailSectionState extends State<NavigationRailSection> {
-  int navRailIndex = 0;
-
-  @override
-  Widget build(BuildContext context) {
-    return NavigationRail(
-      onDestinationSelected: (selectedIndex) {
-        setState(() {
-          navRailIndex = selectedIndex;
-        });
-      },
-      elevation: 4,
-      leading: FloatingActionButton(
-          child: const Icon(Icons.create), onPressed: () {}),
-      groupAlignment: 0.0,
-      selectedIndex: navRailIndex,
-      labelType: NavigationRailLabelType.selected,
-      destinations: <NavigationRailDestination>[
-        ...destinations.map((destination) {
-          return NavigationRailDestination(
-            label: Text(destination.label),
-            icon: destination.icon,
-            selectedIcon: destination.selectedIcon,
-          );
-        }),
-      ],
-    );
   }
 }
 
