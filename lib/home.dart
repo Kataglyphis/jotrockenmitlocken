@@ -140,6 +140,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         double paddingSkillTable = 5;
         List<Widget> childWidgetsRightPage = [
           PerfectDay.createMyPerfectDayPieChart(context),
+          const SizedBox(
+            height: 20,
+          ),
           SizedBox(
             //width: skillTableWidth,
             child: applyBoxDecoration(

@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:jotrockenmitlocken/Decoration/decoration_helper.dart';
 import 'package:jotrockenmitlocken/DocumentPage/document.dart';
+import 'package:jotrockenmitlocken/font_helper.dart';
 //import 'dart:html' as html;
 
 @immutable
@@ -30,7 +31,7 @@ class DownloadButton extends StatelessWidget {
       ),
       child: Text(
         "Open",
-        style: getTextStyleSubHeadings(context),
+        style: FontHelper.getTextStyleSubHeadings(context),
       ),
     );
   }

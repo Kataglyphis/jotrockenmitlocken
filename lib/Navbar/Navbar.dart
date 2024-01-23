@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:jotrockenmitlocken/Decoration/decoration_helper.dart';
 import 'package:jotrockenmitlocken/constants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -31,7 +30,7 @@ class DesktopNavbar extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Row(
@@ -39,7 +38,7 @@ class DesktopNavbar extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: createLogoAndName(),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -61,7 +60,7 @@ class DesktopNavbar extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: createLogoAndName(),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,

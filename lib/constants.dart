@@ -21,7 +21,6 @@ enum ColorSeed {
   baseColor('Green Accent', Colors.greenAccent),
   indigo('Indigo', Colors.indigo),
   blue('Blue', Colors.blue),
-  teal('Teal', Colors.teal),
   green('Green', Colors.green),
   yellow('Yellow', Colors.yellow),
   orange('Orange', Colors.orange),
