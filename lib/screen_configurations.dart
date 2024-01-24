@@ -24,6 +24,12 @@ class ScreenConfigurations {
         label: AppLocalizations.of(context)!.quotations,
         selectedIcon: const Icon(Icons.record_voice_over),
       ),
+      NavigationDestination(
+        tooltip: '',
+        icon: const Icon(Icons.description_outlined),
+        label: AppLocalizations.of(context)!.documents,
+        selectedIcon: const Icon(Icons.description),
+      )
     ];
     assert(result.length == ScreenSelected.values.length,
         'You must provide for each screen exact one app bar navigation!');

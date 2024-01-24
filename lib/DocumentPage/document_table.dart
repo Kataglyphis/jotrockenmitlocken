@@ -30,11 +30,11 @@ class AboutMeTableState extends State<DocumentTable> {
   TextStyle getTextStyle() {
     var currentWidth = MediaQuery.of(context).size.width;
     if (currentWidth <= narrowScreenWidthThreshold) {
-      return const TextStyle(fontSize: 12, fontWeight: FontWeight.normal);
+      return const TextStyle(fontSize: 12);
     } else if (currentWidth <= largeWidthBreakpoint) {
-      return const TextStyle(fontSize: 22, fontWeight: FontWeight.normal);
+      return const TextStyle(fontSize: 22);
     } else {
-      return const TextStyle(fontSize: 22, fontWeight: FontWeight.normal);
+      return const TextStyle(fontSize: 22);
     }
   }
 

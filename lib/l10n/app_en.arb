@@ -6,6 +6,7 @@
   "homepage": "Homepage",
   "aboutme": "About me",
   "quotations": "Quotations",
+  "documents": "Documents",
   "quotationsDescription": "Collection of various quotations I am inspired by or just can laugh about",
   "switchLang": "Switch (DE/EN)",
   "mailMe": "Mail Me",
@@ -23,5 +24,6 @@
   "aiPlayground": "AI Playground",
   "renderingPlayground": "Rendering Playground",
   "aiPlaygroundDescription": "Visit my ML/AI research",
-  "renderingPlaygroundDescription": "Visit my rendering playground"
+  "renderingPlaygroundDescription": "Visit my rendering playground",
+  "myPerfectDay": "My perfect Day"
 }

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:jotrockenmitlocken/Decoration/decoration_helper.dart';
 import 'package:jotrockenmitlocken/DocumentPage/document_table.dart';
 import 'package:jotrockenmitlocken/Navbar/mobile/navigation_drawer_widget.dart';
 import 'package:jotrockenmitlocken/constants.dart';
 import 'package:jotrockenmitlocken/font_helper.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DocsPage extends StatelessWidget {
   const DocsPage({super.key});
@@ -14,48 +14,38 @@ class DocsPage extends StatelessWidget {
       builder: (context, constraints) {
         Color selectedColor = Theme.of(context).primaryColor;
         if (constraints.maxWidth > narrowScreenWidthThreshold) {
-          return Scaffold(
-            body: Column(
-              children: <Widget>[
-                SizedBox(height: 10),
-                Container(
-                  alignment: Alignment.center,
-                  child: Text(
-                    'Documents',
-                    textAlign: TextAlign.center,
-                    style: FontHelper.getTextStyleHeadings(context),
-                  ),
+          return Column(
+            children: <Widget>[
+              SizedBox(height: 10),
+              Container(
+                alignment: Alignment.center,
+                child: Text(
+                  AppLocalizations.of(context)!.documents,
+                  textAlign: TextAlign.center,
+                  style: FontHelper.getTextStyleHeadings(context),
                 ),
-                SizedBox(height: 10),
-                const DocumentTable(),
-                SizedBox(height: 10),
-              ], //
-            ),
+              ),
+              SizedBox(height: 10),
+              const DocumentTable(),
+              SizedBox(height: 10),
+            ], //
           );
         } else {
-          return Scaffold(
-            drawer: const NavigationDrawerWidget(),
-            appBar: AppBar(
-              title: const Text(appName),
-              backgroundColor: selectedColor,
-              centerTitle: true,
-            ),
-            body: Column(
-              children: <Widget>[
-                SizedBox(height: 10),
-                Container(
-                  alignment: Alignment.center,
-                  child: Text(
-                    'Documents',
-                    textAlign: TextAlign.center,
-                    style: FontHelper.getTextStyleHeadings(context),
-                  ),
+          return Column(
+            children: <Widget>[
+              SizedBox(height: 10),
+              Container(
+                alignment: Alignment.center,
+                child: Text(
+                  AppLocalizations.of(context)!.documents,
+                  textAlign: TextAlign.center,
+                  style: FontHelper.getTextStyleHeadings(context),
                 ),
-                SizedBox(height: 10),
-                const DocumentTable(),
-                SizedBox(height: 10),
-              ],
-            ),
+              ),
+              SizedBox(height: 10),
+              const DocumentTable(),
+              SizedBox(height: 10),
+            ],
           );
         }
       },
