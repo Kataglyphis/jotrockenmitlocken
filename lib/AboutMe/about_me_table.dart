@@ -67,7 +67,7 @@ class AboutMeTableState extends State<AboutMeTable> {
                     placeholder: AssetImage(
                         "assets/images/Bewerbungsbilder/a95a64ca-min.jpg"),
                     image: AssetImage(
-                      "assets/images/Bewerbungsbilder/a95a64ca.jpg",
+                      "assets/images/Bewerbungsbilder/a95a64ca-min.jpg",
                     ),
                   ),
                 ),

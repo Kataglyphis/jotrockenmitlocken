@@ -39,32 +39,40 @@ class AIPlayground extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ComponentGroupDecoration(label: 'AI Playground', children: <Widget>[
-      IconButton(
-        iconSize: 50,
-        icon: const FaIcon(FontAwesomeIcons.github),
-        // color: Colors.black,
-        onPressed: () {
-          final Uri toLaunch = Uri(
-              scheme: 'https',
-              host: 'github.com',
-              path: 'Kataglyphis/MachineLearningAlgorithms');
-          BrowserHelper.launchInBrowser(toLaunch);
-        },
-      ),
-      colDivider,
-      applyBoxDecoration(
-          ClipRRect(
-            borderRadius: BorderRadius.circular(0),
-            child: Image.asset("assets/images/funny_programmer.gif"),
+    return ComponentGroupDecoration(
+        label: AppLocalizations.of(context)!.aiPlayground,
+        children: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              IconButton(
+                iconSize: 50,
+                icon: const FaIcon(FontAwesomeIcons.github),
+                // color: Colors.black,
+                onPressed: () {
+                  final Uri toLaunch = Uri(
+                      scheme: 'https',
+                      host: 'github.com',
+                      path: 'Kataglyphis/MachineLearningAlgorithms');
+                  BrowserHelper.launchInBrowser(toLaunch);
+                },
+              ),
+              Text(AppLocalizations.of(context)!.aiPlaygroundDescription)
+            ],
           ),
-          EdgeInsets.all(0),
-          0,
-          0,
-          5,
-          Colors.black),
-      colDivider
-    ]);
+          colDivider,
+          applyBoxDecoration(
+              ClipRRect(
+                borderRadius: BorderRadius.circular(0),
+                child: Image.asset("assets/images/funny_programmer.gif"),
+              ),
+              EdgeInsets.all(0),
+              0,
+              0,
+              5,
+              Colors.black),
+          colDivider
+        ]);
   }
 }
 
@@ -74,22 +82,27 @@ class RenderingPlayground extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ComponentGroupDecoration(
-        label: 'Rendering Playground',
+        label: AppLocalizations.of(context)!.renderingPlayground,
         children: <Widget>[
-          IconButton(
-            iconSize: 50,
-            icon: FaIcon(FontAwesomeIcons.github),
-            // color: Colors.black,
-            onPressed: () {
-              final Uri toLaunch = Uri(
-                  scheme: 'https',
-                  host: 'github.com',
-                  path: 'Kataglyphis/GraphicsEngineVulkan');
-              BrowserHelper.launchInBrowser(toLaunch);
-            },
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              IconButton(
+                iconSize: 50,
+                icon: FaIcon(FontAwesomeIcons.github),
+                // color: Colors.black,
+                onPressed: () {
+                  final Uri toLaunch = Uri(
+                      scheme: 'https',
+                      host: 'github.com',
+                      path: 'Kataglyphis/GraphicsEngineVulkan');
+                  BrowserHelper.launchInBrowser(toLaunch);
+                },
+              ),
+              Text(
+                  AppLocalizations.of(context)!.renderingPlaygroundDescription),
+            ],
           ),
-          Text('esefsgerg'),
-          colDivider,
           colDivider,
           applyBoxDecoration(
               ClipRRect(
@@ -221,27 +234,23 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         ];
         double marginSkillTable = 0;
         double paddingSkillTable = 5;
-        final double currentWidth = MediaQuery.of(context).size.width;
-        double skillTableWidth = currentWidth;
-        if (currentWidth >= mediumWidthBreakpoint) {
-          skillTableWidth *= 0.6;
-        }
+
         List<Widget> childWidgetsRightPage = [
           PerfectDay.createMyPerfectDayPieChart(context),
           const SizedBox(
             height: 40,
           ),
-          Container(
-            width: 200,
-            child: applyBoxDecoration(
-                SkillTable(
-                  useOtherLanguageMode: widget.useOtherLanguageMode,
-                ),
-                EdgeInsets.all(paddingSkillTable),
-                marginSkillTable,
-                30,
-                5,
-                widget.colorSelected.color),
+          applyBoxDecoration(
+              SkillTable(
+                useOtherLanguageMode: widget.useOtherLanguageMode,
+              ),
+              EdgeInsets.all(paddingSkillTable),
+              marginSkillTable,
+              30,
+              5,
+              widget.colorSelected.color),
+          const SizedBox(
+            height: 40,
           ),
         ];
         return createOneTwoTransisionWidget(
