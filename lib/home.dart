@@ -5,6 +5,7 @@ import 'package:jotrockenmitlocken/AboutMe/about_me_table.dart';
 import 'package:jotrockenmitlocken/AboutMe/perfect_day_chart.dart';
 import 'package:jotrockenmitlocken/AboutMe/skill_table.dart';
 import 'package:jotrockenmitlocken/Decoration/decoration_helper.dart';
+import 'package:jotrockenmitlocken/DocumentPage/docs_page.dart';
 import 'package:jotrockenmitlocken/Media/quotes_list.dart';
 import 'package:jotrockenmitlocken/browser_helper.dart';
 import 'Blog/blog.dart';
@@ -236,7 +237,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         double paddingSkillTable = 5;
 
         List<Widget> childWidgetsRightPage = [
-          PerfectDay.createMyPerfectDayPieChart(context),
+          PerfectDay(),
           const SizedBox(
             height: 40,
           ),
@@ -258,6 +259,10 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       case ScreenSelected.quotations:
         return const Expanded(
           child: QuotesList(),
+        );
+      case ScreenSelected.documents:
+        return const Expanded(
+          child: DocsPage(),
         );
     }
   }

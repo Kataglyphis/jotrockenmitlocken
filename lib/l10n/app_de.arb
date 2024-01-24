@@ -6,6 +6,7 @@
   "homepage": "Startseite",
   "aboutme": "Über mich",
   "quotations": "Zitate",
+  "documents": "Dokumente",
   "quotationsDescription": "Sammlung verschiedener Zitate, die mich inspirieren oder über die ich einfach lachen kann",
   "switchLang": "Wechsel (DE/EN)",
   "mailMe": "Schreib mir",
@@ -23,6 +24,7 @@
   "aiPlayground": "KI Spielwiese",
   "renderingPlayground": "Rendering Spielwiese",
   "aiPlaygroundDescription": "Besuchen Sie meine ML/AI-Forschung",
-  "renderingPlaygroundDescription": "Besuchen Sie meinen Rendering-Spielplatz"
+  "renderingPlaygroundDescription": "Besuchen Sie meinen Rendering-Spielplatz",
+  "myPerfectDay": "Mein perfekter Tag"
 
 }

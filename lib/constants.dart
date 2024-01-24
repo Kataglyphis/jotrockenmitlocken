@@ -35,7 +35,8 @@ enum ColorSeed {
 enum ScreenSelected {
   home(0),
   aboutMe(1),
-  quotations(2);
+  quotations(2),
+  documents(3);
 
   const ScreenSelected(this.value);
   final int value;
@@ -45,3 +46,6 @@ const supportedLanguages = [
   Locale('de'), // Deutsch
   Locale('en'), // English
 ];
+
+const baseDocumentDir =
+    'https://www.jotrockenmitlocken.de/assets/assets/documents/';
