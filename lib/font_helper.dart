@@ -9,10 +9,10 @@ class FontHelper {
           fontSize: 14, fontWeight: FontWeight.normal); // , color: Colors.black
     } else if (currentWidth <= largeWidthBreakpoint) {
       return const TextStyle(
-          fontSize: 22, fontWeight: FontWeight.normal); // , color: Colors.black
+          fontSize: 20, fontWeight: FontWeight.normal); // , color: Colors.black
     } else {
       return const TextStyle(
-          fontSize: 22, fontWeight: FontWeight.normal); // , color: Colors.black
+          fontSize: 20, fontWeight: FontWeight.normal); // , color: Colors.black
     }
   }
 
@@ -23,10 +23,10 @@ class FontHelper {
           fontSize: 22, fontWeight: FontWeight.bold); // , color: Colors.black
     } else if (currentWidth <= largeWidthBreakpoint) {
       return const TextStyle(
-          fontSize: 36, fontWeight: FontWeight.bold); // , color: Colors.black
+          fontSize: 34, fontWeight: FontWeight.bold); // , color: Colors.black
     } else {
       return const TextStyle(
-          fontSize: 36, fontWeight: FontWeight.bold); // , color: Colors.black
+          fontSize: 34, fontWeight: FontWeight.bold); // , color: Colors.black
     }
   }
 
@@ -37,10 +37,10 @@ class FontHelper {
           fontSize: 18, fontWeight: FontWeight.bold); // , color: Colors.black
     } else if (currentWidth <= largeWidthBreakpoint) {
       return const TextStyle(
-          fontSize: 22, fontWeight: FontWeight.bold); // , color: Colors.black
+          fontSize: 26, fontWeight: FontWeight.bold); // , color: Colors.black
     } else {
       return const TextStyle(
-          fontSize: 32, fontWeight: FontWeight.bold); // , color: Colors.black
+          fontSize: 26, fontWeight: FontWeight.bold); // , color: Colors.black
     }
   }
 }

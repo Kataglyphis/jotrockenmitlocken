@@ -8,15 +8,21 @@ class ScreenConfigurations {
     var result = [
       NavigationDestination(
         tooltip: '',
-        icon: const Icon(Icons.widgets_outlined),
+        icon: const Icon(Icons.house_outlined),
         label: AppLocalizations.of(context)!.homepage,
         selectedIcon: const Icon(Icons.house),
       ),
       NavigationDestination(
         tooltip: '',
-        icon: const Icon(Icons.format_paint_outlined),
+        icon: const Icon(Icons.person_outlined),
         label: AppLocalizations.of(context)!.aboutme,
         selectedIcon: const Icon(Icons.person),
+      ),
+      NavigationDestination(
+        tooltip: '',
+        icon: const Icon(Icons.record_voice_over_outlined),
+        label: AppLocalizations.of(context)!.quotations,
+        selectedIcon: const Icon(Icons.record_voice_over),
       ),
     ];
     assert(result.length == ScreenSelected.values.length,

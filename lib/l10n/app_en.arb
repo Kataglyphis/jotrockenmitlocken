@@ -5,6 +5,8 @@
   },
   "homepage": "Homepage",
   "aboutme": "About me",
+  "quotations": "Quotations",
+  "quotationsDescription": "Collection of various quotations I am inspired by or just can laugh about",
   "switchLang": "Switch (DE/EN)",
   "mailMe": "Mail Me",
   "shortDescriptionTextMyPersona": "Interested in many things. I love breathing life into artificial neurons.",
@@ -15,7 +17,7 @@
   "guitar": "Guitar",
   "familyFriends": "Family&Friends",
   "spendCoffe": "You can get me some coffee",
-  "toogleLanguage":"Toogle language",
-  "toogleBrightness": "Toogle brightness",
+  "toogleLanguage":"Toggle language",
+  "toogleBrightness": "Toggle brightness",
   "selectSeedColor": "Select a seed color"
 }
