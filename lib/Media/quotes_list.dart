@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:jotrockenmitlocken/Media/data_list.dart';
 import 'package:jotrockenmitlocken/Media/quote.dart';
 import 'package:jotrockenmitlocken/constants.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class QuotesList extends StatefulWidget {
   const QuotesList({super.key});
@@ -15,7 +16,12 @@ class QuotesList extends StatefulWidget {
 class _QuotesListState extends State<QuotesList> with DataListState<Quote> {
   @override
   String getTitle() {
-    return "Remarkable quotes";
+    return AppLocalizations.of(context)!.quotations;
+  }
+
+  @override
+  String getDescription() {
+    return AppLocalizations.of(context)!.quotationsDescription;
   }
 
   @override
@@ -27,9 +33,9 @@ class _QuotesListState extends State<QuotesList> with DataListState<Quote> {
   int getNumRowsForSimultaneousDisplay() {
     // for mobile devices we will need an larger height :)
     if (MediaQuery.of(context).size.width <= narrowScreenWidthThreshold) {
-      return 2;
+      return 10;
     } else {
-      return 6;
+      return 12;
     }
   }
 

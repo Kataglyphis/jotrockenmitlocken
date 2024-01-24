@@ -19,6 +19,11 @@ class _FilmsListState extends State<FilmsList> with DataListState<Film> {
   }
 
   @override
+  String getDescription() {
+    return "TODO: Implement";
+  }
+
+  @override
   int getNumRowsForSimultaneousDisplay() {
     // for mobile devices we will need an larger height :)
     if (MediaQuery.of(context).size.width <= narrowScreenWidthThreshold) {

@@ -34,7 +34,8 @@ enum ColorSeed {
 
 enum ScreenSelected {
   home(0),
-  aboutMe(1);
+  aboutMe(1),
+  quotations(2);
 
   const ScreenSelected(this.value);
   final int value;

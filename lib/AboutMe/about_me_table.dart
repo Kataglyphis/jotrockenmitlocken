@@ -74,7 +74,7 @@ class AboutMeTableState extends State<AboutMeTable> {
                 EdgeInsets.all(paddingPic),
                 marginPic,
                 borderRadiusPic,
-                10,
+                5,
                 widget.colorSelected.color),
           ),
           const SizedBox(height: 10),
@@ -125,7 +125,7 @@ class AboutMeTableState extends State<AboutMeTable> {
           Text(
             "cataglyphis@jotrockenmitlocken.de",
             textAlign: TextAlign.center,
-            style: FontHelper.getTextStyleHeadings(context),
+            style: FontHelper.getTextStyle(context),
           ),
           const SizedBox(height: 10),
           Text(
@@ -136,7 +136,7 @@ class AboutMeTableState extends State<AboutMeTable> {
           const SizedBox(
             height: 10,
           ),
-          Donation(FontHelper.getTextStyleHeadings(context)),
+          Donation(FontHelper.getTextStyle(context)),
           const SizedBox(
             height: 10,
           ),

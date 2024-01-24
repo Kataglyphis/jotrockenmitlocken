@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:jotrockenmitlocken/AboutMe/about_me_table.dart';
 import 'package:jotrockenmitlocken/AboutMe/perfect_day_chart.dart';
 import 'package:jotrockenmitlocken/AboutMe/skill_table.dart';
 import 'package:jotrockenmitlocken/Decoration/decoration_helper.dart';
+import 'package:jotrockenmitlocken/Media/quotes_list.dart';
+import 'package:jotrockenmitlocken/browser_helper.dart';
 import 'Blog/blog.dart';
 import 'constants.dart';
 import 'package:jotrockenmitlocken/screen_configurations.dart';
@@ -29,6 +32,78 @@ class Home extends StatefulWidget {
 
   @override
   State<Home> createState() => _HomeState();
+}
+
+class AIPlayground extends StatelessWidget {
+  const AIPlayground({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ComponentGroupDecoration(label: 'AI Playground', children: <Widget>[
+      IconButton(
+        iconSize: 50,
+        icon: const FaIcon(FontAwesomeIcons.github),
+        // color: Colors.black,
+        onPressed: () {
+          final Uri toLaunch = Uri(
+              scheme: 'https',
+              host: 'github.com',
+              path: 'Kataglyphis/MachineLearningAlgorithms');
+          BrowserHelper.launchInBrowser(toLaunch);
+        },
+      ),
+      colDivider,
+      applyBoxDecoration(
+          ClipRRect(
+            borderRadius: BorderRadius.circular(0),
+            child: Image.asset("assets/images/funny_programmer.gif"),
+          ),
+          EdgeInsets.all(0),
+          0,
+          0,
+          5,
+          Colors.black),
+      colDivider
+    ]);
+  }
+}
+
+class RenderingPlayground extends StatelessWidget {
+  const RenderingPlayground({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ComponentGroupDecoration(
+        label: 'Rendering Playground',
+        children: <Widget>[
+          IconButton(
+            iconSize: 50,
+            icon: FaIcon(FontAwesomeIcons.github),
+            // color: Colors.black,
+            onPressed: () {
+              final Uri toLaunch = Uri(
+                  scheme: 'https',
+                  host: 'github.com',
+                  path: 'Kataglyphis/GraphicsEngineVulkan');
+              BrowserHelper.launchInBrowser(toLaunch);
+            },
+          ),
+          Text('esefsgerg'),
+          colDivider,
+          colDivider,
+          applyBoxDecoration(
+              ClipRRect(
+                borderRadius: BorderRadius.circular(0),
+                child: Image.asset("assets/images/cat-computer.gif"),
+              ),
+              EdgeInsets.all(0),
+              0,
+              0,
+              5,
+              Colors.black),
+          colDivider
+        ]);
+  }
 }
 
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
@@ -126,8 +201,16 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       ColorSeed colorSelected, bool useOtherLanguageMode) {
     switch (screenSelected) {
       case ScreenSelected.home:
-        List<Widget> childWidgetsLeftPage = [colDivider];
-        List<Widget> childWidgetsRightPage = [colDivider];
+        List<Widget> childWidgetsLeftPage = [
+          colDivider,
+          AIPlayground(),
+          colDivider,
+        ];
+        List<Widget> childWidgetsRightPage = [
+          colDivider,
+          RenderingPlayground(),
+          colDivider,
+        ];
         return createOneTwoTransisionWidget(
             childWidgetsLeftPage, childWidgetsRightPage, showNavBarExample);
       case ScreenSelected.aboutMe:
@@ -138,13 +221,18 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         ];
         double marginSkillTable = 0;
         double paddingSkillTable = 5;
+        final double currentWidth = MediaQuery.of(context).size.width;
+        double skillTableWidth = currentWidth;
+        if (currentWidth >= mediumWidthBreakpoint) {
+          skillTableWidth *= 0.6;
+        }
         List<Widget> childWidgetsRightPage = [
           PerfectDay.createMyPerfectDayPieChart(context),
           const SizedBox(
-            height: 20,
+            height: 40,
           ),
-          SizedBox(
-            //width: skillTableWidth,
+          Container(
+            width: 200,
             child: applyBoxDecoration(
                 SkillTable(
                   useOtherLanguageMode: widget.useOtherLanguageMode,
@@ -152,12 +240,16 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                 EdgeInsets.all(paddingSkillTable),
                 marginSkillTable,
                 30,
-                10,
+                5,
                 widget.colorSelected.color),
           ),
         ];
         return createOneTwoTransisionWidget(
             childWidgetsLeftPage, childWidgetsRightPage, showNavBarExample);
+      case ScreenSelected.quotations:
+        return const Expanded(
+          child: QuotesList(),
+        );
     }
   }
 

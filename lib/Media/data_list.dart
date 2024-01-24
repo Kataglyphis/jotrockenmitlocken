@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jotrockenmitlocken/Decoration/decoration_helper.dart';
 import 'package:jotrockenmitlocken/Media/data.dart';
-import 'package:jotrockenmitlocken/Navbar/mobile/navigation_drawer_widget.dart';
 import 'package:jotrockenmitlocken/constants.dart';
 import 'package:jotrockenmitlocken/font_helper.dart';
 
@@ -47,6 +46,7 @@ abstract mixin class DataListState<T extends Data> {
   void onSortData(int columnIndex, bool ascending);
   Future<List<List<dynamic>>> _loadDataFromCSV();
   String getTitle();
+  String getDescription();
   // every data list gets an individual spacing
   List<double> getSpacing();
   // this sucks since it should dynamically adjust
@@ -85,45 +85,40 @@ abstract mixin class DataListState<T extends Data> {
         future: dataFuture,
         builder: (context, data) {
           Color selectedColor = Theme.of(context).primaryColor;
-          ThemeData lightTheme = ThemeData(
-            colorSchemeSeed: selectedColor,
-            brightness: Brightness.light,
-          );
-          ThemeData darkTheme = ThemeData(
-            colorSchemeSeed: selectedColor,
-            brightness: Brightness.dark,
-          );
           if (data.hasData) {
-            return LayoutBuilder(
-              builder: (BuildContext context, BoxConstraints constraints) {
-                double currentWidth = constraints.maxWidth;
-                double dataTableWidth = (currentWidth >= largeWidthBreakpoint)
-                    ? currentWidth * 0.6
-                    : currentWidth * 0.9;
-                final DataTableSource data =
-                    MyDataTableSource(getDataRows(Data, dataTableWidth * 0.9));
-                return Column(
+            double currentWidth = MediaQuery.of(context).size.width;
+            double dataTableWidth = (currentWidth >= largeWidthBreakpoint)
+                ? currentWidth * 0.7
+                : currentWidth * 0.9;
+            final DataTableSource data =
+                MyDataTableSource(getDataRows(Data, dataTableWidth));
+            return SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    SizedBox(
+                    Text(
+                      getTitle(),
+                      textAlign: TextAlign.center,
+                      style: FontHelper.getTextStyleHeadings(context),
+                    ),
+                    const SizedBox(
                       height: 10,
                     ),
-                    Container(
-                      alignment: Alignment.center,
-                      child: Text(
-                        getTitle(),
-                        textAlign: TextAlign.center,
-                        style: FontHelper.getTextStyleHeadings(context),
-                      ),
+                    Text(
+                      getDescription() + " \u{1F63A}",
+                      textAlign: TextAlign.center,
+                      style: FontHelper.getTextStyle(context),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
-                    Container(
-                      alignment: Alignment.center,
+                    SizedBox(
                       width: dataTableWidth,
                       child: applyBoxDecoration(
                           PaginatedDataTable(
-                            dataRowHeight: getDataRowHeight(),
+                            dataRowMaxHeight: double.infinity,
                             sortColumnIndex: sortColumnIndex,
                             sortAscending: isAscending,
                             columns: getDataColumns(dataCategories),
@@ -136,12 +131,7 @@ abstract mixin class DataListState<T extends Data> {
                           6,
                           selectedColor),
                     ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                  ],
-                );
-              },
+                  ]),
             );
           } else if (data.hasError) {
             return Center(child: Text("${data.error}"));
@@ -153,37 +143,7 @@ abstract mixin class DataListState<T extends Data> {
         });
   }
 
-  @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        Color selectedColor = Theme.of(context).primaryColor;
-        if (constraints.maxWidth > narrowScreenWidthThreshold) {
-          return Scaffold(
-            body: ListView(
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,
-                children: [
-                  buildDataTable(),
-                ]),
-          );
-        } else {
-          return Scaffold(
-            drawer: const NavigationDrawerWidget(),
-            appBar: AppBar(
-              title: const Text(appName),
-              backgroundColor: selectedColor,
-              centerTitle: true,
-            ),
-            body: ListView(
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,
-                children: [
-                  buildDataTable(),
-                ]),
-          );
-        }
-      },
-    );
+    return buildDataTable();
   }
 }

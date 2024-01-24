@@ -20,6 +20,11 @@ class _BooksListState extends State<BooksList> with DataListState<Book> {
   }
 
   @override
+  String getDescription() {
+    return "TODO: Implement";
+  }
+
+  @override
   void onSortData(int columnIndex, bool ascending) {
     setState(() {
       Sort(columnIndex, ascending);

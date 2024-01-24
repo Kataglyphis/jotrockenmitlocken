@@ -203,16 +203,6 @@ class BuildSlivers extends SliverChildBuilderDelegate {
   }
 }
 
-class Actions extends StatelessWidget {
-  const Actions({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const ComponentGroupDecoration(
-        label: 'Actions', children: <Widget>[]);
-  }
-}
-
 class _ClearButton extends StatelessWidget {
   const _ClearButton({required this.controller});
 
