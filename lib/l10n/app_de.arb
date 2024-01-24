@@ -19,6 +19,10 @@
   "spendCoffe": "Spendiere mir einen Kaffee",
   "toogleLanguage": "Wechsel Sprache",
   "toogleBrightness": "Wechsel Helligkeit",
-  "selectSeedColor": "Wähle eine Startfarbe"
+  "selectSeedColor": "Wähle eine Startfarbe",
+  "aiPlayground": "KI Spielwiese",
+  "renderingPlayground": "Rendering Spielwiese",
+  "aiPlaygroundDescription": "Besuchen Sie meine ML/AI-Forschung",
+  "renderingPlaygroundDescription": "Besuchen Sie meinen Rendering-Spielplatz"
 
 }

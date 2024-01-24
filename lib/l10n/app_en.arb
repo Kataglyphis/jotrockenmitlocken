@@ -19,5 +19,9 @@
   "spendCoffe": "You can get me some coffee",
   "toogleLanguage":"Toggle language",
   "toogleBrightness": "Toggle brightness",
-  "selectSeedColor": "Select a seed color"
+  "selectSeedColor": "Select a seed color",
+  "aiPlayground": "AI Playground",
+  "renderingPlayground": "Rendering Playground",
+  "aiPlaygroundDescription": "Visit my ML/AI research",
+  "renderingPlaygroundDescription": "Visit my rendering playground"
 }

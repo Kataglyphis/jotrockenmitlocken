@@ -124,9 +124,17 @@ class _SkillTableState extends State<SkillTable> {
                 ),
               ]));
             }
-            return Table(
-                defaultVerticalAlignment: TableCellVerticalAlignment.top,
-                children: skills);
+            final double currentWidth = MediaQuery.of(context).size.width;
+            double skillTableWidth = currentWidth;
+            if (currentWidth >= narrowScreenWidthThreshold) {
+              skillTableWidth = skillTableWidth * 0.3;
+            }
+            return SizedBox(
+              width: skillTableWidth,
+              child: Table(
+                  defaultVerticalAlignment: TableCellVerticalAlignment.top,
+                  children: skills),
+            );
           } else if (data.hasError) {
             return Center(child: Text("${data.error}"));
           } else {
