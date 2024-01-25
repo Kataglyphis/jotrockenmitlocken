@@ -126,8 +126,10 @@ class _SkillTableState extends State<SkillTable> {
             }
             final double currentWidth = MediaQuery.of(context).size.width;
             double skillTableWidth = currentWidth;
-            if (currentWidth >= narrowScreenWidthThreshold) {
+            if (currentWidth >= mediumWidthBreakpoint) {
               skillTableWidth = skillTableWidth * 0.3;
+            } else {
+              skillTableWidth = skillTableWidth * 0.9;
             }
             return SizedBox(
               width: skillTableWidth,

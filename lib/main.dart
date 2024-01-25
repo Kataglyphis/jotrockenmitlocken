@@ -64,7 +64,7 @@ class _AppState extends State<App> {
           GlobalCupertinoLocalizations.delegate,
         ],
         supportedLocales: supportedLanguages,
-        title: AppTitle,
+        title: appTitle,
         themeMode: themeMode,
         theme: ThemeData(
           colorSchemeSeed: colorSelected.color,

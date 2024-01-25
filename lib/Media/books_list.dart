@@ -15,6 +15,12 @@ class BooksList extends StatefulWidget {
 
 class _BooksListState extends State<BooksList> with DataListState<Book> {
   @override
+  ColorSeed getColorSeed() {
+    // TODO: implement getColorSeed
+    throw UnimplementedError();
+  }
+
+  @override
   String getTitle() {
     return "Books worth reading";
   }

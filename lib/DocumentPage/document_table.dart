@@ -4,12 +4,15 @@ import 'package:jotrockenmitlocken/DocumentPage/doc_icon.dart';
 import 'package:jotrockenmitlocken/DocumentPage/document.dart';
 import 'package:jotrockenmitlocken/DocumentPage/open_button.dart';
 import 'package:jotrockenmitlocken/constants.dart';
-
+import 'package:jotrockenmitlocken/font_helper.dart';
 // https://docs.flutter.dev/cookbook/effects/download-button
 
 class DocumentTable extends StatefulWidget {
-  const DocumentTable({super.key});
-
+  const DocumentTable({
+    super.key,
+    required this.colorSelected,
+  });
+  final ColorSeed colorSelected;
   @override
   AboutMeTableState createState() => AboutMeTableState();
 }
@@ -26,17 +29,6 @@ class AboutMeTableState extends State<DocumentTable> {
     ),
     Document('Bachelor_Thesis.pdf', '~33MB German')
   ];
-
-  TextStyle getTextStyle() {
-    var currentWidth = MediaQuery.of(context).size.width;
-    if (currentWidth <= narrowScreenWidthThreshold) {
-      return const TextStyle(fontSize: 12);
-    } else if (currentWidth <= largeWidthBreakpoint) {
-      return const TextStyle(fontSize: 22);
-    } else {
-      return const TextStyle(fontSize: 22);
-    }
-  }
 
   @override
   void initState() {
@@ -56,7 +48,6 @@ class AboutMeTableState extends State<DocumentTable> {
 
   @override
   Widget build(BuildContext context) {
-    Color selectedColor = Theme.of(context).primaryColor;
     var currentWidth = MediaQuery.of(context).size.width;
     // mobile version
     var tablePadding = 0.0;
@@ -67,21 +58,21 @@ class AboutMeTableState extends State<DocumentTable> {
     } else {
       tablePadding = 8;
     }
-    return Expanded(
-      child: SizedBox(
-          width: getDocumentTableWidth(),
-          child: applyBoxDecoration(
-              ListView.separated(
-                scrollDirection: Axis.vertical,
-                itemCount: docs.length,
-                separatorBuilder: (_, __) => const Divider(),
-                itemBuilder: _buildListItem,
-              ),
-              EdgeInsets.all(tablePadding),
-              0,
-              8,
-              6,
-              selectedColor)),
+    return SizedBox(
+      width: getDocumentTableWidth(),
+      child: applyBoxDecoration(
+          ListView.separated(
+            shrinkWrap: true,
+            scrollDirection: Axis.vertical,
+            itemCount: docs.length,
+            separatorBuilder: (_, __) => const Divider(),
+            itemBuilder: _buildListItem,
+          ),
+          EdgeInsets.all(tablePadding),
+          0,
+          8,
+          4,
+          widget.colorSelected.color),
     );
   }
 
@@ -93,12 +84,12 @@ class AboutMeTableState extends State<DocumentTable> {
           leading: DocIcon(document: currentDocument),
           title: Text(
             currentDocument.title,
-            style: getTextStyle(),
+            style: FontHelper.getTextStyle(context),
           ),
           subtitle: Text(
             currentDocument.additionalInfo,
             overflow: TextOverflow.ellipsis,
-            style: getTextStyle(),
+            style: FontHelper.getTextStyle(context),
           ),
           trailing: DownloadButton(
             document: currentDocument,

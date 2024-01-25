@@ -64,10 +64,11 @@ class AboutMeTableState extends State<AboutMeTable> {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(0),
                   child: const FadeInImage(
+                    filterQuality: FilterQuality.medium,
                     placeholder: AssetImage(
-                        "assets/images/Bewerbungsbilder/a95a64ca-min.jpg"),
+                        "assets/images/Bewerbungsbilder/a95a64ca_runterskaliert.jpg"),
                     image: AssetImage(
-                      "assets/images/Bewerbungsbilder/a95a64ca-min.jpg",
+                      "assets/images/Bewerbungsbilder/a95a64ca_runterskaliert.jpg",
                     ),
                   ),
                 ),
@@ -134,11 +135,13 @@ class AboutMeTableState extends State<AboutMeTable> {
             style: FontHelper.getTextStyle(context),
           ),
           const SizedBox(
-            height: 10,
+            height: 30,
           ),
-          Donation(FontHelper.getTextStyle(context)),
+          Donation(
+            colorSelected: widget.colorSelected,
+          ),
           const SizedBox(
-            height: 10,
+            height: 30,
           ),
           Text(
             "I love to cURL",

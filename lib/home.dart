@@ -35,9 +35,18 @@ class Home extends StatefulWidget {
   State<Home> createState() => _HomeState();
 }
 
-class AIPlayground extends StatelessWidget {
-  const AIPlayground({super.key});
+class AIPlayground extends StatefulWidget {
+  const AIPlayground({
+    super.key,
+    required this.colorSelected,
+  });
+  final ColorSeed colorSelected;
 
+  @override
+  State<AIPlayground> createState() => _AIPlaygroundState();
+}
+
+class _AIPlaygroundState extends State<AIPlayground> {
   @override
   Widget build(BuildContext context) {
     return ComponentGroupDecoration(
@@ -71,15 +80,24 @@ class AIPlayground extends StatelessWidget {
               0,
               0,
               5,
-              Colors.black),
+              widget.colorSelected.color),
           colDivider
         ]);
   }
 }
 
-class RenderingPlayground extends StatelessWidget {
-  const RenderingPlayground({super.key});
+class RenderingPlayground extends StatefulWidget {
+  const RenderingPlayground({
+    super.key,
+    required this.colorSelected,
+  });
+  final ColorSeed colorSelected;
 
+  @override
+  State<RenderingPlayground> createState() => _RenderingPlaygroundState();
+}
+
+class _RenderingPlaygroundState extends State<RenderingPlayground> {
   @override
   Widget build(BuildContext context) {
     return ComponentGroupDecoration(
@@ -114,7 +132,7 @@ class RenderingPlayground extends StatelessWidget {
               0,
               0,
               5,
-              Colors.black),
+              widget.colorSelected.color),
           colDivider
         ]);
   }
@@ -217,12 +235,16 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       case ScreenSelected.home:
         List<Widget> childWidgetsLeftPage = [
           colDivider,
-          AIPlayground(),
+          AIPlayground(
+            colorSelected: widget.colorSelected,
+          ),
           colDivider,
         ];
         List<Widget> childWidgetsRightPage = [
           colDivider,
-          RenderingPlayground(),
+          RenderingPlayground(
+            colorSelected: widget.colorSelected,
+          ),
           colDivider,
         ];
         return createOneTwoTransisionWidget(
@@ -257,12 +279,14 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         return createOneTwoTransisionWidget(
             childWidgetsLeftPage, childWidgetsRightPage, showNavBarExample);
       case ScreenSelected.quotations:
-        return const Expanded(
-          child: QuotesList(),
+        return Expanded(
+          child: QuotesList(
+            colorSelected: widget.colorSelected,
+          ),
         );
       case ScreenSelected.documents:
-        return const Expanded(
-          child: DocsPage(),
+        return Expanded(
+          child: DocsPage(colorSelected: widget.colorSelected),
         );
     }
   }

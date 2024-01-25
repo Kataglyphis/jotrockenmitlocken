@@ -14,6 +14,12 @@ class FilmsList extends StatefulWidget {
 
 class _FilmsListState extends State<FilmsList> with DataListState<Film> {
   @override
+  ColorSeed getColorSeed() {
+    // TODO: implement getColorSeed
+    throw UnimplementedError();
+  }
+
+  @override
   String getTitle() {
     return "Films/Series worth watching";
   }
