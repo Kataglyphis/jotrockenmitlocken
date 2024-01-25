@@ -4,7 +4,7 @@
 
 import 'package:flutter/material.dart';
 
-const String AppTitle = 'My awesome AI';
+const String appTitle = 'Artificial neurons are almost magic';
 
 // NavigationRail shows if the screen width is greater or equal to
 // narrowScreenWidthThreshold; otherwise, NavigationBar is used for navigation.

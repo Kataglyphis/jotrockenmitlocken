@@ -53,6 +53,7 @@ abstract mixin class DataListState<T extends Data> {
   double getDataRowHeight();
   // how many rows should me displayed
   int getNumRowsForSimultaneousDisplay();
+  ColorSeed getColorSeed();
 
   List<DataRow> getDataRows(List<T> rowData, double maxWidth) =>
       rowData.map((T data) {
@@ -84,7 +85,6 @@ abstract mixin class DataListState<T extends Data> {
     return FutureBuilder(
         future: dataFuture,
         builder: (context, data) {
-          Color selectedColor = Theme.of(context).primaryColor;
           if (data.hasData) {
             double currentWidth = MediaQuery.of(context).size.width;
             double dataTableWidth = (currentWidth >= largeWidthBreakpoint)
@@ -129,7 +129,7 @@ abstract mixin class DataListState<T extends Data> {
                           0,
                           8,
                           6,
-                          selectedColor),
+                          getColorSeed().color),
                     ),
                   ]),
             );
