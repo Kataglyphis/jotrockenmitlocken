@@ -137,8 +137,11 @@ class AboutMeTableState extends State<AboutMeTable> {
           const SizedBox(
             height: 30,
           ),
-          Donation(
-            colorSelected: widget.colorSelected,
+          SizedBox(
+            width: picWidth,
+            child: Donation(
+              colorSelected: widget.colorSelected,
+            ),
           ),
           const SizedBox(
             height: 30,
