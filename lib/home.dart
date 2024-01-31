@@ -146,7 +146,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   bool showMediumSizeLayout = false;
   bool showLargeSizeLayout = false;
 
-  int screenIndex = ScreenSelected.aboutMe.value;
+  int screenIndex = ScreenSelected.home.value;
 
   @override
   initState() {
