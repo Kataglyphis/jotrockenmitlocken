@@ -1,6 +1,6 @@
 {
-    "Programmiersprachen (umfangreiche Erfahrung in Projekten)":[ "C", "C++", "Python", "Java", "GLSL"],
-    "Programmiersprachen (Grundwissen und persönliche Erfahrung in Projekten)": ["C#", "Javascript", "Dart", "R", "PHP", "SQL", "TypeScript", "Pascal", "Bash/Shell"],
+    "Programmiersprachen (umfangreiche Erfahrung in Projekten)":["C++", "Python", "Java", "GLSL", "C"],
+    "Programmiersprachen (Grundwissen und persönliche Erfahrung in Projekten)": ["C#", "JavaScript", "Dart", "R", "PHP", "SQL", "TypeScript", "Pascal", "Bash/Shell"],
     "Programmiersprachen (Grundwissen)": ["Rust", "Haskell", "Prolog", "Matlab", "NoSQL", "PowerShell"],
     "Andere Sprachen":["LaTeX", "HTML", "CSS", "Markdown"],
     "Datenbanken (Grundwissen und persönliche Erfahrung in Projekten)": ["MySQL", "MariaDB", "SQLite", "Firebase Realtime Database"],
