@@ -51,7 +51,7 @@ class SocialMediaWidgets extends StatelessWidget {
       ),
       IconButton(
         iconSize: iconSize,
-        icon: const FaIcon(FontAwesomeIcons.twitter),
+        icon: const FaIcon(FontAwesomeIcons.xTwitter),
         // color: Colors.black,
         onPressed: () {
           final Uri toLaunch =
