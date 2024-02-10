@@ -8,6 +8,7 @@ import 'package:jotrockenmitlocken/Decoration/decoration_helper.dart';
 import 'package:jotrockenmitlocken/DocumentPage/docs_page.dart';
 import 'package:jotrockenmitlocken/Media/quotes_list.dart';
 import 'package:jotrockenmitlocken/browser_helper.dart';
+import 'package:jotrockenmitlocken/footer.dart';
 import 'Blog/blog.dart';
 import 'constants.dart';
 import 'package:jotrockenmitlocken/screen_configurations.dart';
@@ -354,6 +355,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               animation: controller,
               builder: (context, child) {
                 return NavigationTransition(
+                  showFooter: showLargeSizeLayout || showMediumSizeLayout,
                   scaffoldKey: scaffoldKey,
                   animationController: controller,
                   railAnimation: railAnimation,
@@ -615,7 +617,8 @@ class NavigationTransition extends StatefulWidget {
       required this.navigationRail,
       required this.navigationBar,
       required this.appBar,
-      required this.body});
+      required this.body,
+      required this.showFooter});
 
   final GlobalKey<ScaffoldState> scaffoldKey;
   final AnimationController animationController;
@@ -624,6 +627,7 @@ class NavigationTransition extends StatefulWidget {
   final Widget navigationBar;
   final PreferredSizeWidget appBar;
   final Widget body;
+  final bool showFooter;
 
   @override
   State<NavigationTransition> createState() => _NavigationTransitionState();
@@ -668,11 +672,14 @@ class _NavigationTransitionState extends State<NavigationTransition> {
           widget.body,
         ],
       ),
-      bottomNavigationBar: BarTransition(
-        animation: barAnimation,
-        backgroundColor: colorScheme.surface,
-        child: widget.navigationBar,
-      ),
+      bottomNavigationBar: widget.showFooter
+          ? Footer()
+          : BarTransition(
+              animation: barAnimation,
+              railAnimation: railAnimation,
+              backgroundColor: colorScheme.surface,
+              child: widget.navigationBar,
+            ),
     );
   }
 }
@@ -771,10 +778,12 @@ class BarTransition extends StatefulWidget {
   const BarTransition(
       {super.key,
       required this.animation,
+      required this.railAnimation,
       required this.backgroundColor,
       required this.child});
 
   final Animation<double> animation;
+  final CurvedAnimation railAnimation;
   final Color backgroundColor;
   final Widget child;
 
