@@ -26,5 +26,11 @@
   "aiPlaygroundDescription": "Besuchen Sie meine ML/AI-Forschung",
   "renderingPlaygroundDescription": "Besuchen Sie meinen Rendering-Spielplatz",
   "myPerfectDay": "Mein perfekter Tag",
-  "imprint": "Impressum"
+  "imprint": "Impressum",
+  "contact": "Kontakt",
+  "privacyPolicy": "Datenschutz",
+  "cookieStatement" : "Cookie Erklärung",
+  "declarationOnAccessibility": "Erklärung zur Barrierefreiheit",
+  "disclaimer": "Haftungsausschluss: Für die Inhalte externer Links übernehme ich keine Haftung.",
+  "copyright": "Copyright © 2024 Jonas Heinle. Alle Rechte vorbehalten."
 }

@@ -6,6 +6,7 @@ import 'package:jotrockenmitlocken/AboutMe/perfect_day_chart.dart';
 import 'package:jotrockenmitlocken/AboutMe/skill_table.dart';
 import 'package:jotrockenmitlocken/Decoration/decoration_helper.dart';
 import 'package:jotrockenmitlocken/DocumentPage/docs_page.dart';
+import 'package:jotrockenmitlocken/Media/markdown_page.dart';
 import 'package:jotrockenmitlocken/Media/quotes_list.dart';
 import 'package:jotrockenmitlocken/browser_helper.dart';
 import 'package:jotrockenmitlocken/footer.dart';
@@ -148,6 +149,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   bool showLargeSizeLayout = false;
 
   int screenIndex = ScreenSelected.home.value;
+  int screenIndexNonNavBar = NonNavBarScreenSelected.imprint.value;
+  bool nonNavBarScreenSelected = false;
 
   @override
   initState() {
@@ -207,6 +210,13 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     });
   }
 
+  void handleNoNavBarScreenChanged(int screenSelected) {
+    setState(() {
+      screenIndexNonNavBar = screenSelected;
+      nonNavBarScreenSelected = true;
+    });
+  }
+
   Widget createOneTwoTransisionWidget(
     List<Widget> childWidgetsLeftPage,
     List<Widget> childWidgetsRightPage,
@@ -230,65 +240,78 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     );
   }
 
-  Widget createScreenFor(ScreenSelected screenSelected, bool showNavBarExample,
-      ColorSeed colorSelected, bool useOtherLanguageMode) {
-    switch (screenSelected) {
-      case ScreenSelected.home:
-        List<Widget> childWidgetsLeftPage = [
-          colDivider,
-          AIPlayground(
-            colorSelected: widget.colorSelected,
-          ),
-          colDivider,
-        ];
-        List<Widget> childWidgetsRightPage = [
-          colDivider,
-          RenderingPlayground(
-            colorSelected: widget.colorSelected,
-          ),
-          colDivider,
-        ];
-        return createOneTwoTransisionWidget(
-            childWidgetsLeftPage, childWidgetsRightPage, showNavBarExample);
-      case ScreenSelected.aboutMe:
-        List<Widget> childWidgetsLeftPage = [
-          AboutMeTable(
-              useOtherLanguageMode: useOtherLanguageMode,
-              colorSelected: colorSelected)
-        ];
-        double marginSkillTable = 0;
-        double paddingSkillTable = 5;
+  Widget createScreenFor(
+      ScreenSelected screenSelected,
+      NonNavBarScreenSelected nonNavBarScreenSelected,
+      bool showNavBarExample,
+      ColorSeed colorSelected,
+      bool useOtherLanguageMode,
+      bool noAppBarEntryForScreenSelected) {
+    if (noAppBarEntryForScreenSelected) {
+      this.nonNavBarScreenSelected = false;
+      switch (nonNavBarScreenSelected) {
+        case NonNavBarScreenSelected.imprint:
+          return const Expanded(child: MarkdownFilePage());
+      }
+    } else {
+      switch (screenSelected) {
+        case ScreenSelected.home:
+          List<Widget> childWidgetsLeftPage = [
+            colDivider,
+            AIPlayground(
+              colorSelected: widget.colorSelected,
+            ),
+            colDivider,
+          ];
+          List<Widget> childWidgetsRightPage = [
+            colDivider,
+            RenderingPlayground(
+              colorSelected: widget.colorSelected,
+            ),
+            colDivider,
+          ];
+          return createOneTwoTransisionWidget(
+              childWidgetsLeftPage, childWidgetsRightPage, showNavBarExample);
+        case ScreenSelected.aboutMe:
+          List<Widget> childWidgetsLeftPage = [
+            AboutMeTable(
+                useOtherLanguageMode: useOtherLanguageMode,
+                colorSelected: colorSelected)
+          ];
+          double marginSkillTable = 0;
+          double paddingSkillTable = 5;
 
-        List<Widget> childWidgetsRightPage = [
-          const PerfectDay(),
-          const SizedBox(
-            height: 40,
-          ),
-          applyBoxDecoration(
-              SkillTable(
-                useOtherLanguageMode: widget.useOtherLanguageMode,
-              ),
-              EdgeInsets.all(paddingSkillTable),
-              marginSkillTable,
-              30,
-              5,
-              widget.colorSelected.color),
-          const SizedBox(
-            height: 40,
-          ),
-        ];
-        return createOneTwoTransisionWidget(
-            childWidgetsLeftPage, childWidgetsRightPage, showNavBarExample);
-      case ScreenSelected.quotations:
-        return Expanded(
-          child: QuotesList(
-            colorSelected: widget.colorSelected,
-          ),
-        );
-      case ScreenSelected.documents:
-        return Expanded(
-          child: DocsPage(colorSelected: widget.colorSelected),
-        );
+          List<Widget> childWidgetsRightPage = [
+            const PerfectDay(),
+            const SizedBox(
+              height: 40,
+            ),
+            applyBoxDecoration(
+                SkillTable(
+                  useOtherLanguageMode: widget.useOtherLanguageMode,
+                ),
+                EdgeInsets.all(paddingSkillTable),
+                marginSkillTable,
+                30,
+                5,
+                widget.colorSelected.color),
+            const SizedBox(
+              height: 40,
+            ),
+          ];
+          return createOneTwoTransisionWidget(
+              childWidgetsLeftPage, childWidgetsRightPage, showNavBarExample);
+        case ScreenSelected.quotations:
+          return Expanded(
+            child: QuotesList(
+              colorSelected: widget.colorSelected,
+            ),
+          );
+        case ScreenSelected.documents:
+          return Expanded(
+            child: DocsPage(colorSelected: widget.colorSelected),
+          );
+      }
     }
   }
 
@@ -355,16 +378,26 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               animation: controller,
               builder: (context, child) {
                 return NavigationTransition(
+                  selectedIndex: screenIndexNonNavBar,
+                  onSelectItem: (index) {
+                    setState(() {
+                      screenIndexNonNavBar = index;
+                      handleNoNavBarScreenChanged(screenIndexNonNavBar);
+                    });
+                  },
                   showFooter: showLargeSizeLayout || showMediumSizeLayout,
                   scaffoldKey: scaffoldKey,
                   animationController: controller,
                   railAnimation: railAnimation,
                   appBar: createAppBar(),
                   body: createScreenFor(
-                      ScreenSelected.values[screenIndex],
-                      controller.value == 1,
-                      widget.colorSelected,
-                      widget.useOtherLanguageMode),
+                    ScreenSelected.values[screenIndex],
+                    NonNavBarScreenSelected.values[screenIndexNonNavBar],
+                    controller.value == 1,
+                    widget.colorSelected,
+                    widget.useOtherLanguageMode,
+                    nonNavBarScreenSelected,
+                  ),
                   navigationRail: NavigationRail(
                     extended: showLargeSizeLayout,
                     destinations:
@@ -609,7 +642,7 @@ class _ExpandedColorSeedAction extends StatelessWidget {
 }
 
 class NavigationTransition extends StatefulWidget {
-  const NavigationTransition(
+  NavigationTransition(
       {super.key,
       required this.scaffoldKey,
       required this.animationController,
@@ -618,7 +651,9 @@ class NavigationTransition extends StatefulWidget {
       required this.navigationBar,
       required this.appBar,
       required this.body,
-      required this.showFooter});
+      required this.showFooter,
+      required this.onSelectItem,
+      required this.selectedIndex});
 
   final GlobalKey<ScaffoldState> scaffoldKey;
   final AnimationController animationController;
@@ -628,6 +663,8 @@ class NavigationTransition extends StatefulWidget {
   final PreferredSizeWidget appBar;
   final Widget body;
   final bool showFooter;
+  final void Function(int)? onSelectItem;
+  final int selectedIndex;
 
   @override
   State<NavigationTransition> createState() => _NavigationTransitionState();
@@ -639,10 +676,13 @@ class _NavigationTransitionState extends State<NavigationTransition> {
   late final ReverseAnimation barAnimation;
   bool controllerInitialized = false;
   bool showDivider = false;
+  late int selectedIndex;
 
   @override
   void initState() {
     super.initState();
+
+    selectedIndex = widget.selectedIndex;
 
     controller = widget.animationController;
     railAnimation = widget.railAnimation;
@@ -673,7 +713,15 @@ class _NavigationTransitionState extends State<NavigationTransition> {
         ],
       ),
       bottomNavigationBar: widget.showFooter
-          ? const Footer()
+          ? Footer(
+              selectedIndex: selectedIndex,
+              onSelectItem: (index) {
+                setState(() {
+                  selectedIndex = index;
+                  widget.onSelectItem!(index);
+                });
+              },
+            )
           : BarTransition(
               animation: barAnimation,
               railAnimation: railAnimation,

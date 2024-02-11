@@ -30,8 +30,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  path_provider: ^2.1.2
   url_launcher: ^6.1.8
-
+  flutter_markdown: ^0.6.18+3
   provider: ^6.1.1
   csv: ^5.1.1
   font_awesome_flutter: ^10.7.0
@@ -91,6 +92,8 @@ flutter:
     - assets/images/Bewerbungsbilder/
     - assets/documents/
     - assets/data/
+
+    - assets/images/VulkanRenderer/Engine_logo.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:

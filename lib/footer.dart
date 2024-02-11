@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:jotrockenmitlocken/AboutMe/socialMedia/social_media_widgets.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:jotrockenmitlocken/constants.dart';
 
 class Footer extends StatefulWidget {
-  const Footer({
-    super.key,
-  });
-
+  const Footer({super.key, this.onSelectItem, required this.selectedIndex});
+  final void Function(int)? onSelectItem;
+  final int selectedIndex;
   @override
   State<Footer> createState() => _Footer();
 }
 
 class _Footer extends State<Footer> {
+  late int selectedIndex;
   @override
   void initState() {
     super.initState();
+    selectedIndex = widget.selectedIndex;
   }
 
   @override
@@ -58,26 +60,31 @@ class _Footer extends State<Footer> {
                             style: TextButton.styleFrom(
                                 textStyle: const TextStyle(
                                     fontSize: 11, fontWeight: FontWeight.bold)),
-                            onPressed: () {},
+                            onPressed: () {
+                              if (widget.onSelectItem != null) {
+                                widget.onSelectItem!(
+                                    NonNavBarScreenSelected.imprint.value);
+                              }
+                            },
                             child: Text(
                               textAlign: TextAlign.center,
                               AppLocalizations.of(context)!.imprint,
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 11),
+                            ),
+                          ),
+                          TextButton(
+                            onPressed: () {},
+                            child: Text(
+                              AppLocalizations.of(context)!.contact,
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 11),
                             ),
                           ),
                           TextButton(
                             onPressed: () {},
-                            child: const Text(
-                              "Kontakt",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 11),
-                            ),
-                          ),
-                          TextButton(
-                            onPressed: () {},
-                            child: const Text(
-                              "Datenschutz",
+                            child: Text(
+                              AppLocalizations.of(context)!.privacyPolicy,
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 11),
                             ),
@@ -90,8 +97,8 @@ class _Footer extends State<Footer> {
                         children: [
                           TextButton(
                             onPressed: () {},
-                            child: const Text(
-                              "Cookie Erklärung",
+                            child: Text(
+                              AppLocalizations.of(context)!.cookieStatement,
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 11),
                             ),
@@ -104,18 +111,19 @@ class _Footer extends State<Footer> {
                           children: [
                             TextButton(
                               onPressed: () {},
-                              child: const Text(
-                                "Erklärung zur Barrierefreiheit",
+                              child: Text(
+                                AppLocalizations.of(context)!
+                                    .declarationOnAccessibility,
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold, fontSize: 11),
                               ),
                             ),
                           ])
                     ]),
-                SizedBox(
+                const SizedBox(
                   width: 30,
                 ),
-                const Column(
+                Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -124,9 +132,10 @@ class _Footer extends State<Footer> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          const Text(
-                            "Haftungsausschluss: Für die Inhalte externer Links übernehme ich keine Haftung.\n" +
-                                "Copyright © 2024 Jonas Heinle. Alle Rechte vorbehalten.",
+                          Text(
+                            AppLocalizations.of(context)!.disclaimer +
+                                "\n" +
+                                AppLocalizations.of(context)!.copyright,
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 11),
                           ),
