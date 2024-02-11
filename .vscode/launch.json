@@ -5,16 +5,6 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"name": "WEB ONLY jotrockenmitlocken (release mode)",
-			"type": "dart",
-			"request": "launch",
-			"program": "lib/main.dart",
-			"flutterMode": "release",
-			"args": ["--web-renderer canvaskit"]
-			// --web-renderer html
-		},
-
-		{
 			"name": "jotrockenmitlocken (debug mode)",
 			"request": "launch",
 			"type": "dart"

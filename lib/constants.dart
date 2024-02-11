@@ -42,6 +42,13 @@ enum ScreenSelected {
   final int value;
 }
 
+enum NonNavBarScreenSelected {
+  imprint(0);
+
+  const NonNavBarScreenSelected(this.value);
+  final int value;
+}
+
 const supportedLanguages = [
   Locale('de'), // Deutsch
   Locale('en'), // English
