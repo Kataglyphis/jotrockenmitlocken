@@ -77,7 +77,7 @@ class _AIPlaygroundState extends State<AIPlayground> {
                 borderRadius: BorderRadius.circular(0),
                 child: Image.asset("assets/images/funny_programmer.gif"),
               ),
-              EdgeInsets.all(0),
+              const EdgeInsets.all(0),
               0,
               0,
               5,
@@ -109,7 +109,7 @@ class _RenderingPlaygroundState extends State<RenderingPlayground> {
             children: [
               IconButton(
                 iconSize: 50,
-                icon: FaIcon(FontAwesomeIcons.github),
+                icon: const FaIcon(FontAwesomeIcons.github),
                 // color: Colors.black,
                 onPressed: () {
                   final Uri toLaunch = Uri(
@@ -129,7 +129,7 @@ class _RenderingPlaygroundState extends State<RenderingPlayground> {
                 borderRadius: BorderRadius.circular(0),
                 child: Image.asset("assets/images/cat-computer.gif"),
               ),
-              EdgeInsets.all(0),
+              const EdgeInsets.all(0),
               0,
               0,
               5,
@@ -260,7 +260,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         double paddingSkillTable = 5;
 
         List<Widget> childWidgetsRightPage = [
-          PerfectDay(),
+          const PerfectDay(),
           const SizedBox(
             height: 40,
           ),
@@ -673,7 +673,7 @@ class _NavigationTransitionState extends State<NavigationTransition> {
         ],
       ),
       bottomNavigationBar: widget.showFooter
-          ? Footer()
+          ? const Footer()
           : BarTransition(
               animation: barAnimation,
               railAnimation: railAnimation,

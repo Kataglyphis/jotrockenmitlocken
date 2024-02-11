@@ -24,7 +24,7 @@ class _DocsPageState extends State<DocsPage> {
             scrollDirection: Axis.vertical,
             child: Column(
               children: <Widget>[
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Container(
                   alignment: Alignment.center,
                   child: Text(
@@ -33,11 +33,11 @@ class _DocsPageState extends State<DocsPage> {
                     style: FontHelper.getTextStyleHeadings(context),
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 DocumentTable(
                   colorSelected: widget.colorSelected,
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
               ], //
             ));
       },

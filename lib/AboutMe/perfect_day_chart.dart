@@ -6,6 +6,8 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PerfectDay extends StatefulWidget {
+  const PerfectDay({super.key});
+
   @override
   PerfectDayState createState() => PerfectDayState();
 }

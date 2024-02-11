@@ -4,8 +4,9 @@ import 'package:jotrockenmitlocken/constants.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class SocialMediaWidgets extends StatelessWidget {
-  const SocialMediaWidgets({super.key});
+  const SocialMediaWidgets({super.key, required this.iconSize});
 
+  final double iconSize;
   List<Widget> buildSocialMediaChildren(double iconSize) {
     return [
       IconButton(
@@ -83,11 +84,11 @@ class SocialMediaWidgets extends StatelessWidget {
       if (constraints.maxWidth > largeWidthBreakpoint) {
         return Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: buildSocialMediaChildren(54));
+            children: buildSocialMediaChildren(iconSize));
       } else {
         return Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: buildSocialMediaChildren(40));
+            children: buildSocialMediaChildren(iconSize));
       }
     });
   }

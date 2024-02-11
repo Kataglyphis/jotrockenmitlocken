@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:jotrockenmitlocken/DocumentPage/document.dart';
 import 'package:jotrockenmitlocken/constants.dart';
 import 'package:jotrockenmitlocken/font_helper.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
 
 import 'download_stub.dart' if (dart.library.html) 'download_web.dart';
 
