@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jotrockenmitlocken/AboutMe/socialMedia/social_media_widgets.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Footer extends StatefulWidget {
   const Footer({
@@ -58,9 +59,9 @@ class _Footer extends State<Footer> {
                                 textStyle: const TextStyle(
                                     fontSize: 11, fontWeight: FontWeight.bold)),
                             onPressed: () {},
-                            child: const Text(
+                            child: Text(
                               textAlign: TextAlign.center,
-                              "Impressum",
+                              AppLocalizations.of(context)!.imprint,
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 11),
                             ),
