@@ -107,7 +107,7 @@ abstract mixin class DataListState<T extends Data> {
                       height: 10,
                     ),
                     Text(
-                      getDescription() + " \u{1F63A}",
+                      "${getDescription()} \u{1F63A}",
                       textAlign: TextAlign.center,
                       style: FontHelper.getTextStyle(context),
                     ),
