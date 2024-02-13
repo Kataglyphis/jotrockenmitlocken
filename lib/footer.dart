@@ -73,7 +73,12 @@ class _Footer extends State<Footer> {
                           ),
                         ),
                         TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            if (widget.onSelectItem != null) {
+                              widget.onSelectItem!(
+                                  NonNavBarScreenSelected.contact.value);
+                            }
+                          },
                           child: Text(
                             AppLocalizations.of(context)!.contact,
                             style: TextStyle(
@@ -81,7 +86,12 @@ class _Footer extends State<Footer> {
                           ),
                         ),
                         TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            if (widget.onSelectItem != null) {
+                              widget.onSelectItem!(
+                                  NonNavBarScreenSelected.privacyPolicy.value);
+                            }
+                          },
                           child: Text(
                             AppLocalizations.of(context)!.privacyPolicy,
                             style: TextStyle(

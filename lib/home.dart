@@ -257,6 +257,18 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
             filePathDe: 'assets/documents/footer/imprintDe.md',
             filePathEn: 'assets/documents/footer/imprintEn.md',
           ));
+        case NonNavBarScreenSelected.contact:
+          return VerticalScrollPage(
+              childWidget: MarkdownFilePage(
+            filePathDe: 'assets/documents/footer/contactDe.md',
+            filePathEn: 'assets/documents/footer/contactEn.md',
+          ));
+        case NonNavBarScreenSelected.privacyPolicy:
+          return VerticalScrollPage(
+              childWidget: MarkdownFilePage(
+            filePathDe: 'assets/documents/footer/privacyPolicyDe.md',
+            filePathEn: 'assets/documents/footer/privacyPolicyEn.md',
+          ));
       }
     } else {
       switch (screenSelected) {
@@ -307,18 +319,50 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           return createOneTwoTransisionWidget(
               childWidgetsLeftPage, childWidgetsRightPage, showNavBarExample);
         case ScreenSelected.quotations:
-          return Expanded(
-            child: QuotesList(
-              colorSelected: widget.colorSelected,
+          double currentWidth = MediaQuery.of(context).size.width;
+          double dataTableWidth = (currentWidth >= largeWidthBreakpoint)
+              ? currentWidth * 0.8
+              : currentWidth * 0.9;
+          return SizedBox(
+            width: dataTableWidth,
+            child: FirstComponentList(
+              showNavBottomBar: showNavBarExample,
+              scaffoldKey: scaffoldKey,
+              showSecondList: false,
+              childWidgetsLeftPage: [
+                colDivider,
+                QuotesList(
+                  colorSelected: widget.colorSelected,
+                ),
+                colDivider,
+              ],
+              childWidgetsRightPage: [],
             ),
           );
+
         case ScreenSelected.documents:
-          return Expanded(
-              child: VerticalScrollPage(
-                  childWidget:
-                      DocumentTable(colorSelected: widget.colorSelected))
-              //child: DocsPage(colorSelected: widget.colorSelected),
-              );
+          double currentWidth = MediaQuery.of(context).size.width;
+          double dataTableWidth = (currentWidth >= largeWidthBreakpoint)
+              ? currentWidth * 0.8
+              : currentWidth * 0.9;
+          return SizedBox(
+            width: dataTableWidth,
+            child: FirstComponentList(
+              showNavBottomBar: showNavBarExample,
+              scaffoldKey: scaffoldKey,
+              showSecondList: false,
+              childWidgetsLeftPage: [
+                colDivider,
+                DocumentTable(colorSelected: widget.colorSelected),
+                colDivider,
+              ],
+              childWidgetsRightPage: [
+                colDivider,
+              ],
+            ),
+          );
+
+        //child: DocsPage(colorSelected: widget.colorSelected),
       }
     }
   }

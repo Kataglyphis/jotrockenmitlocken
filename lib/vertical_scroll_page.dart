@@ -14,17 +14,20 @@ class _VerticalScrollPage extends State<VerticalScrollPage> {
     return LayoutBuilder(
       builder: (context, constraints) {
         return SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            child: Column(
-              children: <Widget>[
-                const SizedBox(height: 10),
-                widget.childWidget,
-                // DocumentTable(
-                //   colorSelected: widget.colorSelected,
-                // ),
-                const SizedBox(height: 10),
-              ], //
-            ));
+          scrollDirection: Axis.vertical,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              const SizedBox(height: 10),
+              widget.childWidget,
+              // DocumentTable(
+              //   colorSelected: widget.colorSelected,
+              // ),
+              const SizedBox(height: 10),
+            ], //
+          ),
+        );
       },
     );
   }
