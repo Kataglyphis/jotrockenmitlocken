@@ -91,6 +91,7 @@ flutter:
     - assets/images/
     - assets/images/Bewerbungsbilder/
     - assets/documents/
+    - assets/documents/footer/
     - assets/data/
 
     - assets/images/VulkanRenderer/Engine_logo.png
