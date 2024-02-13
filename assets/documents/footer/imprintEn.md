@@ -8,14 +8,8 @@ Elchwinkel 42
 12345 Bärstadt
 <!-- Phone: 030 18 305-0   -->
 
-## Links
-- [Overview](#) 
-- [Topic page](#)  
-
 ### E-Mail
 - for general inquiries: [Contact the citizen service](#)
-
-## Responsible in terms of the State Media Treaty:
 
 ## External Links
 - [family redlich](#)

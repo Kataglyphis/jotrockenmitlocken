@@ -92,47 +92,44 @@ abstract mixin class DataListState<T extends Data> {
                 : currentWidth * 0.9;
             final DataTableSource data =
                 MyDataTableSource(getDataRows(Data, dataTableWidth));
-            return SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      getTitle(),
-                      textAlign: TextAlign.center,
-                      style: FontHelper.getTextStyleHeadings(context),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      "${getDescription()} \u{1F63A}",
-                      textAlign: TextAlign.center,
-                      style: FontHelper.getTextStyle(context),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    SizedBox(
-                      width: dataTableWidth,
-                      child: applyBoxDecoration(
-                          PaginatedDataTable(
-                            dataRowMaxHeight: double.infinity,
-                            sortColumnIndex: sortColumnIndex,
-                            sortAscending: isAscending,
-                            columns: getDataColumns(dataCategories),
-                            rowsPerPage: getNumRowsForSimultaneousDisplay(),
-                            source: data,
-                          ),
-                          const EdgeInsets.all(0),
-                          0,
-                          8,
-                          6,
-                          getColorSeed().color),
-                    ),
-                  ]),
-            );
+            return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    getTitle(),
+                    textAlign: TextAlign.center,
+                    style: FontHelper.getTextStyleHeadings(context),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    "${getDescription()} \u{1F63A}",
+                    textAlign: TextAlign.center,
+                    style: FontHelper.getTextStyle(context),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  SizedBox(
+                    width: dataTableWidth,
+                    child: applyBoxDecoration(
+                        PaginatedDataTable(
+                          dataRowMaxHeight: double.infinity,
+                          sortColumnIndex: sortColumnIndex,
+                          sortAscending: isAscending,
+                          columns: getDataColumns(dataCategories),
+                          rowsPerPage: getNumRowsForSimultaneousDisplay(),
+                          source: data,
+                        ),
+                        const EdgeInsets.all(0),
+                        0,
+                        8,
+                        6,
+                        getColorSeed().color),
+                  ),
+                ]);
           } else if (data.hasError) {
             return Center(child: Text("${data.error}"));
           } else {

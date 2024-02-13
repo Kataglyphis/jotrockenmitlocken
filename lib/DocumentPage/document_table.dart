@@ -40,9 +40,9 @@ class AboutMeTableState extends State<DocumentTable> {
     if (currentWidth <= narrowScreenWidthThreshold) {
       return currentWidth * 0.9;
     } else if (currentWidth <= largeWidthBreakpoint) {
-      return currentWidth * 0.6;
+      return currentWidth * 0.9;
     } else {
-      return currentWidth * 0.4;
+      return currentWidth * 0.9;
     }
   }
 
@@ -59,32 +59,32 @@ class AboutMeTableState extends State<DocumentTable> {
       tablePadding = 8;
     }
 
-    return Column(children: [
-      Container(
-        alignment: Alignment.center,
-        child: Text(
-          AppLocalizations.of(context)!.documents,
-          textAlign: TextAlign.center,
-          style: FontHelper.getTextStyleHeadings(context),
-        ),
-      ),
-      SizedBox(
-        width: getDocumentTableWidth(),
-        child: applyBoxDecoration(
-            ListView.separated(
-              shrinkWrap: true,
-              scrollDirection: Axis.vertical,
-              itemCount: docs.length,
-              separatorBuilder: (_, __) => const Divider(),
-              itemBuilder: _buildListItem,
-            ),
-            EdgeInsets.all(tablePadding),
-            0,
-            8,
-            4,
-            widget.colorSelected.color),
-      )
-    ]);
+    return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            AppLocalizations.of(context)!.documents,
+            textAlign: TextAlign.center,
+            style: FontHelper.getTextStyleHeadings(context),
+          ),
+          SizedBox(
+            width: getDocumentTableWidth(),
+            child: applyBoxDecoration(
+                ListView.separated(
+                  shrinkWrap: true,
+                  scrollDirection: Axis.vertical,
+                  itemCount: docs.length,
+                  separatorBuilder: (_, __) => const Divider(),
+                  itemBuilder: _buildListItem,
+                ),
+                EdgeInsets.all(tablePadding),
+                0,
+                8,
+                4,
+                widget.colorSelected.color),
+          )
+        ]);
   }
 
   Widget _buildListItem(BuildContext context, int index) {
