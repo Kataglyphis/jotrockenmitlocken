@@ -5,7 +5,7 @@ import 'package:jotrockenmitlocken/DocumentPage/document.dart';
 import 'package:jotrockenmitlocken/DocumentPage/open_button.dart';
 import 'package:jotrockenmitlocken/constants.dart';
 import 'package:jotrockenmitlocken/font_helper.dart';
-// https://docs.flutter.dev/cookbook/effects/download-button
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DocumentTable extends StatefulWidget {
   const DocumentTable({
@@ -58,22 +58,33 @@ class AboutMeTableState extends State<DocumentTable> {
     } else {
       tablePadding = 8;
     }
-    return SizedBox(
-      width: getDocumentTableWidth(),
-      child: applyBoxDecoration(
-          ListView.separated(
-            shrinkWrap: true,
-            scrollDirection: Axis.vertical,
-            itemCount: docs.length,
-            separatorBuilder: (_, __) => const Divider(),
-            itemBuilder: _buildListItem,
-          ),
-          EdgeInsets.all(tablePadding),
-          0,
-          8,
-          4,
-          widget.colorSelected.color),
-    );
+
+    return Column(children: [
+      Container(
+        alignment: Alignment.center,
+        child: Text(
+          AppLocalizations.of(context)!.documents,
+          textAlign: TextAlign.center,
+          style: FontHelper.getTextStyleHeadings(context),
+        ),
+      ),
+      SizedBox(
+        width: getDocumentTableWidth(),
+        child: applyBoxDecoration(
+            ListView.separated(
+              shrinkWrap: true,
+              scrollDirection: Axis.vertical,
+              itemCount: docs.length,
+              separatorBuilder: (_, __) => const Divider(),
+              itemBuilder: _buildListItem,
+            ),
+            EdgeInsets.all(tablePadding),
+            0,
+            8,
+            4,
+            widget.colorSelected.color),
+      )
+    ]);
   }
 
   Widget _buildListItem(BuildContext context, int index) {

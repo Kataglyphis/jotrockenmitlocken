@@ -5,11 +5,12 @@ import 'package:jotrockenmitlocken/AboutMe/about_me_table.dart';
 import 'package:jotrockenmitlocken/AboutMe/perfect_day_chart.dart';
 import 'package:jotrockenmitlocken/AboutMe/skill_table.dart';
 import 'package:jotrockenmitlocken/Decoration/decoration_helper.dart';
-import 'package:jotrockenmitlocken/DocumentPage/docs_page.dart';
+import 'package:jotrockenmitlocken/DocumentPage/document_table.dart';
 import 'package:jotrockenmitlocken/Media/markdown_page.dart';
 import 'package:jotrockenmitlocken/Media/quotes_list.dart';
 import 'package:jotrockenmitlocken/browser_helper.dart';
 import 'package:jotrockenmitlocken/footer.dart';
+import 'package:jotrockenmitlocken/vertical_scroll_page.dart';
 import 'Blog/blog.dart';
 import 'constants.dart';
 import 'package:jotrockenmitlocken/screen_configurations.dart';
@@ -251,7 +252,11 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       this.nonNavBarScreenSelected = false;
       switch (nonNavBarScreenSelected) {
         case NonNavBarScreenSelected.imprint:
-          return const Expanded(child: MarkdownFilePage());
+          return VerticalScrollPage(
+              childWidget: MarkdownFilePage(
+            filePathDe: 'assets/documents/footer/imprintDe.md',
+            filePathEn: 'assets/documents/footer/imprintEn.md',
+          ));
       }
     } else {
       switch (screenSelected) {
@@ -309,8 +314,11 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           );
         case ScreenSelected.documents:
           return Expanded(
-            child: DocsPage(colorSelected: widget.colorSelected),
-          );
+              child: VerticalScrollPage(
+                  childWidget:
+                      DocumentTable(colorSelected: widget.colorSelected))
+              //child: DocsPage(colorSelected: widget.colorSelected),
+              );
       }
     }
   }
