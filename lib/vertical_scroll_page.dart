@@ -2,32 +2,41 @@ import 'package:flutter/material.dart';
 import 'package:jotrockenmitlocken/constants.dart';
 
 class VerticalScrollPage extends StatefulWidget {
-  VerticalScrollPage({super.key, required this.childWidget});
-  Widget childWidget;
+  VerticalScrollPage({super.key, required this.childWidgets});
+  List<Widget> childWidgets;
   @override
   State<VerticalScrollPage> createState() => _VerticalScrollPage();
 }
 
 class _VerticalScrollPage extends State<VerticalScrollPage> {
+  double getPageWidth() {
+    var currentWidth = MediaQuery.of(context).size.width;
+    if (currentWidth <= narrowScreenWidthThreshold) {
+      return currentWidth;
+    } else if (currentWidth <= mediumWidthBreakpoint) {
+      return currentWidth * 0.75;
+    } else {
+      return currentWidth * 0.75;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        return SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              const SizedBox(height: 10),
-              widget.childWidget,
-              // DocumentTable(
-              //   colorSelected: widget.colorSelected,
-              // ),
-              const SizedBox(height: 10),
-            ], //
+        // SizedBox(
+        //     width: getPageWidth(),
+        //     child:
+        return Row(children: <Widget>[
+          Flexible(
+            flex: mediumWidthBreakpoint.toInt(),
+            child: ListView(
+              scrollDirection: Axis.vertical,
+              children: widget.childWidgets,
+              shrinkWrap: true,
+            ),
           ),
-        );
+        ]);
       },
     );
   }

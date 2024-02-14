@@ -252,23 +252,32 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       this.nonNavBarScreenSelected = false;
       switch (nonNavBarScreenSelected) {
         case NonNavBarScreenSelected.imprint:
-          return VerticalScrollPage(
-              childWidget: MarkdownFilePage(
-            filePathDe: 'assets/documents/footer/imprintDe.md',
-            filePathEn: 'assets/documents/footer/imprintEn.md',
-          ));
+          return VerticalScrollPage(childWidgets: [
+            colDivider,
+            MarkdownFilePage(
+              filePathDe: 'assets/documents/footer/imprintDe.md',
+              filePathEn: 'assets/documents/footer/imprintEn.md',
+            ),
+            colDivider,
+          ]);
         case NonNavBarScreenSelected.contact:
-          return VerticalScrollPage(
-              childWidget: MarkdownFilePage(
-            filePathDe: 'assets/documents/footer/contactDe.md',
-            filePathEn: 'assets/documents/footer/contactEn.md',
-          ));
+          return VerticalScrollPage(childWidgets: [
+            colDivider,
+            MarkdownFilePage(
+              filePathDe: 'assets/documents/footer/contactDe.md',
+              filePathEn: 'assets/documents/footer/contactEn.md',
+            ),
+            colDivider,
+          ]);
         case NonNavBarScreenSelected.privacyPolicy:
-          return VerticalScrollPage(
-              childWidget: MarkdownFilePage(
-            filePathDe: 'assets/documents/footer/privacyPolicyDe.md',
-            filePathEn: 'assets/documents/footer/privacyPolicyEn.md',
-          ));
+          return VerticalScrollPage(childWidgets: [
+            colDivider,
+            MarkdownFilePage(
+              filePathDe: 'assets/documents/footer/privacyPolicyDe.md',
+              filePathEn: 'assets/documents/footer/privacyPolicyEn.md',
+            ),
+            colDivider,
+          ]);
       }
     } else {
       switch (screenSelected) {
@@ -319,48 +328,92 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           return createOneTwoTransisionWidget(
               childWidgetsLeftPage, childWidgetsRightPage, showNavBarExample);
         case ScreenSelected.quotations:
-          double currentWidth = MediaQuery.of(context).size.width;
-          double dataTableWidth = (currentWidth >= largeWidthBreakpoint)
-              ? currentWidth * 0.8
-              : currentWidth * 0.9;
-          return SizedBox(
-            width: dataTableWidth,
+          return Expanded(
             child: FirstComponentList(
               showNavBottomBar: showNavBarExample,
               scaffoldKey: scaffoldKey,
               showSecondList: false,
               childWidgetsLeftPage: [
-                colDivider,
-                QuotesList(
-                  colorSelected: widget.colorSelected,
-                ),
-                colDivider,
+                VerticalScrollPage(childWidgets: [
+                  colDivider,
+                  QuotesList(
+                    colorSelected: widget.colorSelected,
+                  ),
+                  colDivider,
+                ])
+              ],
+              childWidgetsRightPage: [],
+            ),
+          );
+        // double currentWidth = MediaQuery.of(context).size.width;
+        // double dataTableWidth = (currentWidth >= largeWidthBreakpoint)
+        //     ? currentWidth * 0.85
+        //     : currentWidth * 0.9;
+        // return VerticalScrollPage(childWidgets: [
+        //   colDivider,
+        //   QuotesList(
+        //     colorSelected: widget.colorSelected,
+        //   ),
+        //   colDivider,
+        // ]);
+        //     return SizedBox(
+        //   width: dataTableWidth,
+        //   child: SingleChildScrollView(
+        //     child: Column()
+        //     children: [
+        //       FirstComponentList(
+        //         showNavBottomBar: showNavBarExample,
+        //         scaffoldKey: scaffoldKey,
+        //         showSecondList: false,
+        //         childWidgetsLeftPage: [
+        // colDivider,
+        // QuotesList(
+        //   colorSelected: widget.colorSelected,
+        // ),
+        // colDivider,
+        //         ],
+        //         childWidgetsRightPage: [],
+        //       ),
+        //     ],
+        //   ),
+        // );
+
+        case ScreenSelected.documents:
+          return Expanded(
+            child: FirstComponentList(
+              showNavBottomBar: showNavBarExample,
+              scaffoldKey: scaffoldKey,
+              showSecondList: false,
+              childWidgetsLeftPage: [
+                VerticalScrollPage(childWidgets: [
+                  colDivider,
+                  DocumentTable(
+                    colorSelected: widget.colorSelected,
+                  ),
+                  colDivider,
+                ])
               ],
               childWidgetsRightPage: [],
             ),
           );
 
-        case ScreenSelected.documents:
-          double currentWidth = MediaQuery.of(context).size.width;
-          double dataTableWidth = (currentWidth >= largeWidthBreakpoint)
-              ? currentWidth * 0.8
-              : currentWidth * 0.9;
-          return SizedBox(
-            width: dataTableWidth,
-            child: FirstComponentList(
-              showNavBottomBar: showNavBarExample,
-              scaffoldKey: scaffoldKey,
-              showSecondList: false,
-              childWidgetsLeftPage: [
-                colDivider,
-                DocumentTable(colorSelected: widget.colorSelected),
-                colDivider,
-              ],
-              childWidgetsRightPage: [
-                colDivider,
-              ],
-            ),
-          );
+        // return Container(
+        //   width: dataTableWidth,
+        //   alignment: Alignment.center,
+        //   child: FirstComponentList(
+        //     showNavBottomBar: showNavBarExample,
+        //     scaffoldKey: scaffoldKey,
+        //     showSecondList: false,
+        //     childWidgetsLeftPage: [
+        //       colDivider,
+        //       DocumentTable(colorSelected: widget.colorSelected),
+        //       colDivider,
+        //     ],
+        //     childWidgetsRightPage: [
+        //       colDivider,
+        //     ],
+        //   ),
+        // );
 
         //child: DocsPage(colorSelected: widget.colorSelected),
       }

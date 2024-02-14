@@ -88,8 +88,8 @@ abstract mixin class DataListState<T extends Data> {
           if (data.hasData) {
             double currentWidth = MediaQuery.of(context).size.width;
             double dataTableWidth = (currentWidth >= largeWidthBreakpoint)
-                ? currentWidth * 0.7
-                : currentWidth * 0.9;
+                ? currentWidth * 0.8
+                : currentWidth;
             final DataTableSource data =
                 MyDataTableSource(getDataRows(Data, dataTableWidth));
             return Column(
