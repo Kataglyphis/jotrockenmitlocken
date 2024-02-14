@@ -247,7 +247,10 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       bool showNavBarExample,
       ColorSeed colorSelected,
       bool useOtherLanguageMode,
-      bool noAppBarEntryForScreenSelected) {
+      bool noAppBarEntryForScreenSelected,
+      final void Function(int)? onSelectItem,
+      final int selectedIndex) {
+    var currentWidth = MediaQuery.of(context).size.width;
     if (noAppBarEntryForScreenSelected) {
       this.nonNavBarScreenSelected = false;
       switch (nonNavBarScreenSelected) {
@@ -259,6 +262,12 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               filePathEn: 'assets/documents/footer/imprintEn.md',
             ),
             colDivider,
+            if (currentWidth < mediumWidthBreakpoint) ...[
+              Footer(
+                selectedIndex: selectedIndex,
+                onSelectItem: onSelectItem,
+              )
+            ]
           ]);
         case NonNavBarScreenSelected.contact:
           return VerticalScrollPage(scaffoldKey: scaffoldKey, childWidgets: [
@@ -268,6 +277,12 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               filePathEn: 'assets/documents/footer/contactEn.md',
             ),
             colDivider,
+            if (currentWidth < mediumWidthBreakpoint) ...[
+              Footer(
+                selectedIndex: selectedIndex,
+                onSelectItem: onSelectItem,
+              )
+            ]
           ]);
         case NonNavBarScreenSelected.privacyPolicy:
           return VerticalScrollPage(scaffoldKey: scaffoldKey, childWidgets: [
@@ -277,6 +292,12 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               filePathEn: 'assets/documents/footer/privacyPolicyEn.md',
             ),
             colDivider,
+            if (currentWidth < mediumWidthBreakpoint) ...[
+              Footer(
+                selectedIndex: selectedIndex,
+                onSelectItem: onSelectItem,
+              )
+            ]
           ]);
       }
     } else {
@@ -295,7 +316,14 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               colorSelected: widget.colorSelected,
             ),
             colDivider,
+            if (currentWidth < mediumWidthBreakpoint) ...[
+              Footer(
+                selectedIndex: selectedIndex,
+                onSelectItem: onSelectItem,
+              )
+            ]
           ];
+
           return createOneTwoTransisionWidget(
               childWidgetsLeftPage, childWidgetsRightPage, showNavBarExample);
         case ScreenSelected.aboutMe:
@@ -334,33 +362,13 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               colorSelected: widget.colorSelected,
             ),
             colDivider,
+            if (currentWidth < mediumWidthBreakpoint) ...[
+              Footer(
+                selectedIndex: selectedIndex,
+                onSelectItem: onSelectItem,
+              )
+            ]
           ]);
-        // return Expanded(
-        //   child: FirstComponentList(
-        //     showNavBottomBar: showNavBarExample,
-        //     scaffoldKey: scaffoldKey,
-        //     showSecondList: false,
-        //     childWidgetsLeftPage: [
-        //       Row(children: <Widget>[
-        //         Flexible(
-        //           flex: mediumWidthBreakpoint.toInt(),
-        //           child: ListView(
-        //             scrollDirection: Axis.vertical,
-        //             children: [
-        //               colDivider,
-        //               QuotesList(
-        //                 colorSelected: widget.colorSelected,
-        //               ),
-        //               colDivider,
-        //             ],
-        //             shrinkWrap: true,
-        //           ),
-        //         ),
-        //       ])
-        //     ],
-        //     childWidgetsRightPage: [],
-        //   ),
-        // );
         case ScreenSelected.documents:
           return VerticalScrollPage(scaffoldKey: scaffoldKey, childWidgets: [
             colDivider,
@@ -368,6 +376,12 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               colorSelected: widget.colorSelected,
             ),
             colDivider,
+            if (currentWidth < mediumWidthBreakpoint) ...[
+              Footer(
+                selectedIndex: selectedIndex,
+                onSelectItem: onSelectItem,
+              )
+            ]
           ]);
       }
     }
@@ -455,6 +469,13 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                     widget.colorSelected,
                     widget.useOtherLanguageMode,
                     nonNavBarScreenSelected,
+                    (index) {
+                      setState(() {
+                        screenIndexNonNavBar = index;
+                        handleNoNavBarScreenChanged(screenIndexNonNavBar);
+                      });
+                    },
+                    screenIndexNonNavBar,
                   ),
                   navigationRail: NavigationRail(
                     extended: showLargeSizeLayout,
