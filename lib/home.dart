@@ -252,7 +252,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       this.nonNavBarScreenSelected = false;
       switch (nonNavBarScreenSelected) {
         case NonNavBarScreenSelected.imprint:
-          return VerticalScrollPage(childWidgets: [
+          return VerticalScrollPage(scaffoldKey: scaffoldKey, childWidgets: [
             colDivider,
             MarkdownFilePage(
               filePathDe: 'assets/documents/footer/imprintDe.md',
@@ -261,7 +261,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
             colDivider,
           ]);
         case NonNavBarScreenSelected.contact:
-          return VerticalScrollPage(childWidgets: [
+          return VerticalScrollPage(scaffoldKey: scaffoldKey, childWidgets: [
             colDivider,
             MarkdownFilePage(
               filePathDe: 'assets/documents/footer/contactDe.md',
@@ -270,7 +270,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
             colDivider,
           ]);
         case NonNavBarScreenSelected.privacyPolicy:
-          return VerticalScrollPage(childWidgets: [
+          return VerticalScrollPage(scaffoldKey: scaffoldKey, childWidgets: [
             colDivider,
             MarkdownFilePage(
               filePathDe: 'assets/documents/footer/privacyPolicyDe.md',
@@ -328,41 +328,47 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           return createOneTwoTransisionWidget(
               childWidgetsLeftPage, childWidgetsRightPage, showNavBarExample);
         case ScreenSelected.quotations:
-          return Expanded(
-            child: FirstComponentList(
-              showNavBottomBar: showNavBarExample,
-              scaffoldKey: scaffoldKey,
-              showSecondList: false,
-              childWidgetsLeftPage: [
-                VerticalScrollPage(childWidgets: [
-                  colDivider,
-                  QuotesList(
-                    colorSelected: widget.colorSelected,
-                  ),
-                  colDivider,
-                ])
-              ],
-              childWidgetsRightPage: [],
+          return VerticalScrollPage(scaffoldKey: scaffoldKey, childWidgets: [
+            colDivider,
+            QuotesList(
+              colorSelected: widget.colorSelected,
             ),
-          );
+            colDivider,
+          ]);
+        // return Expanded(
+        //   child: FirstComponentList(
+        //     showNavBottomBar: showNavBarExample,
+        //     scaffoldKey: scaffoldKey,
+        //     showSecondList: false,
+        //     childWidgetsLeftPage: [
+        //       Row(children: <Widget>[
+        //         Flexible(
+        //           flex: mediumWidthBreakpoint.toInt(),
+        //           child: ListView(
+        //             scrollDirection: Axis.vertical,
+        //             children: [
+        //               colDivider,
+        //               QuotesList(
+        //                 colorSelected: widget.colorSelected,
+        //               ),
+        //               colDivider,
+        //             ],
+        //             shrinkWrap: true,
+        //           ),
+        //         ),
+        //       ])
+        //     ],
+        //     childWidgetsRightPage: [],
+        //   ),
+        // );
         case ScreenSelected.documents:
-          return Expanded(
-            child: FirstComponentList(
-              showNavBottomBar: showNavBarExample,
-              scaffoldKey: scaffoldKey,
-              showSecondList: false,
-              childWidgetsLeftPage: [
-                VerticalScrollPage(childWidgets: [
-                  colDivider,
-                  DocumentTable(
-                    colorSelected: widget.colorSelected,
-                  ),
-                  colDivider,
-                ])
-              ],
-              childWidgetsRightPage: [],
+          return VerticalScrollPage(scaffoldKey: scaffoldKey, childWidgets: [
+            colDivider,
+            DocumentTable(
+              colorSelected: widget.colorSelected,
             ),
-          );
+            colDivider,
+          ]);
       }
     }
   }

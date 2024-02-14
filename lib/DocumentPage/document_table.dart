@@ -61,8 +61,8 @@ class AboutMeTableState extends State<DocumentTable> {
     }
 
     return Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        crossAxisAlignment: CrossAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           colDivider,
           Text(

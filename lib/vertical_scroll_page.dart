@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:jotrockenmitlocken/Blog/blog.dart';
 import 'package:jotrockenmitlocken/constants.dart';
 
 class VerticalScrollPage extends StatefulWidget {
-  VerticalScrollPage({super.key, required this.childWidgets});
+  VerticalScrollPage(
+      {super.key, required this.childWidgets, required this.scaffoldKey});
   List<Widget> childWidgets;
+  final GlobalKey<ScaffoldState> scaffoldKey;
   @override
   State<VerticalScrollPage> createState() => _VerticalScrollPage();
 }
@@ -22,19 +25,25 @@ class _VerticalScrollPage extends State<VerticalScrollPage> {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return Row(children: <Widget>[
-          Flexible(
-            flex: mediumWidthBreakpoint.toInt(),
-            child: ListView(
-              scrollDirection: Axis.vertical,
-              children: widget.childWidgets,
-              shrinkWrap: true,
+    return Expanded(
+      child: FirstComponentList(
+        showNavBottomBar: false,
+        scaffoldKey: widget.scaffoldKey,
+        showSecondList: false,
+        childWidgetsLeftPage: [
+          Row(children: <Widget>[
+            Flexible(
+              flex: mediumWidthBreakpoint.toInt(),
+              child: ListView(
+                scrollDirection: Axis.vertical,
+                children: widget.childWidgets,
+                shrinkWrap: true,
+              ),
             ),
-          ),
-        ]);
-      },
+          ])
+        ],
+        childWidgetsRightPage: [],
+      ),
     );
   }
 }
