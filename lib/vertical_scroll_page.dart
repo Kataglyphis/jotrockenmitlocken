@@ -24,9 +24,6 @@ class _VerticalScrollPage extends State<VerticalScrollPage> {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        // SizedBox(
-        //     width: getPageWidth(),
-        //     child:
         return Row(children: <Widget>[
           Flexible(
             flex: mediumWidthBreakpoint.toInt(),

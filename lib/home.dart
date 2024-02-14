@@ -345,39 +345,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               childWidgetsRightPage: [],
             ),
           );
-        // double currentWidth = MediaQuery.of(context).size.width;
-        // double dataTableWidth = (currentWidth >= largeWidthBreakpoint)
-        //     ? currentWidth * 0.85
-        //     : currentWidth * 0.9;
-        // return VerticalScrollPage(childWidgets: [
-        //   colDivider,
-        //   QuotesList(
-        //     colorSelected: widget.colorSelected,
-        //   ),
-        //   colDivider,
-        // ]);
-        //     return SizedBox(
-        //   width: dataTableWidth,
-        //   child: SingleChildScrollView(
-        //     child: Column()
-        //     children: [
-        //       FirstComponentList(
-        //         showNavBottomBar: showNavBarExample,
-        //         scaffoldKey: scaffoldKey,
-        //         showSecondList: false,
-        //         childWidgetsLeftPage: [
-        // colDivider,
-        // QuotesList(
-        //   colorSelected: widget.colorSelected,
-        // ),
-        // colDivider,
-        //         ],
-        //         childWidgetsRightPage: [],
-        //       ),
-        //     ],
-        //   ),
-        // );
-
         case ScreenSelected.documents:
           return Expanded(
             child: FirstComponentList(
@@ -396,26 +363,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               childWidgetsRightPage: [],
             ),
           );
-
-        // return Container(
-        //   width: dataTableWidth,
-        //   alignment: Alignment.center,
-        //   child: FirstComponentList(
-        //     showNavBottomBar: showNavBarExample,
-        //     scaffoldKey: scaffoldKey,
-        //     showSecondList: false,
-        //     childWidgetsLeftPage: [
-        //       colDivider,
-        //       DocumentTable(colorSelected: widget.colorSelected),
-        //       colDivider,
-        //     ],
-        //     childWidgetsRightPage: [
-        //       colDivider,
-        //     ],
-        //   ),
-        // );
-
-        //child: DocsPage(colorSelected: widget.colorSelected),
       }
     }
   }
