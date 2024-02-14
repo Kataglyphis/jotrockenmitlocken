@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jotrockenmitlocken/Blog/blog.dart';
 import 'package:jotrockenmitlocken/Decoration/decoration_helper.dart';
 import 'package:jotrockenmitlocken/DocumentPage/doc_icon.dart';
 import 'package:jotrockenmitlocken/DocumentPage/document.dart';
@@ -38,11 +39,11 @@ class AboutMeTableState extends State<DocumentTable> {
   double getDocumentTableWidth() {
     var currentWidth = MediaQuery.of(context).size.width;
     if (currentWidth <= narrowScreenWidthThreshold) {
-      return currentWidth * 0.9;
+      return currentWidth;
     } else if (currentWidth <= largeWidthBreakpoint) {
       return currentWidth * 0.9;
     } else {
-      return currentWidth * 0.9;
+      return currentWidth * 0.8;
     }
   }
 
@@ -60,14 +61,16 @@ class AboutMeTableState extends State<DocumentTable> {
     }
 
     return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
+          colDivider,
           Text(
             AppLocalizations.of(context)!.documents,
             textAlign: TextAlign.center,
             style: FontHelper.getTextStyleHeadings(context),
           ),
+          colDivider,
           SizedBox(
             width: getDocumentTableWidth(),
             child: applyBoxDecoration(
@@ -83,13 +86,14 @@ class AboutMeTableState extends State<DocumentTable> {
                 8,
                 4,
                 widget.colorSelected.color),
-          )
+          ),
         ]);
   }
 
   Widget _buildListItem(BuildContext context, int index) {
     Document currentDocument = docs.elementAt(index);
     return Container(
+        alignment: Alignment.center,
         padding: const EdgeInsets.all(0),
         child: ListTile(
           leading: DocIcon(document: currentDocument),
