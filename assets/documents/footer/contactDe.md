@@ -6,4 +6,3 @@ Hier haben Sie die Möglichkeit, konkrete Fragen an mich zu richten. Ihre Anlieg
 
 - **Bitte beachten Sie,**  
   - dass ich Wert auf einen respektvollen Umgang miteinander lege. Anfragen mit Beleidigungen, vulgärer Wortwahl oder menschenverachtenden Äußerungen beantworte ich nicht.
-  - dass ich keine Rechtsauskünfte geben und keine individuellen Beratungen leisten kann.

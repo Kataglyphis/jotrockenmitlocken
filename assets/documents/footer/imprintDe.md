@@ -1,7 +1,6 @@
 # Impressum
 
-> **_NOTE:_** Das Impressum befindet sich in einer experimentellen Phase und beinhaltet
-derzeit unvollständige/dummy Daten.
+> **_NOTE:_** Das Impressum befindet sich in einer experimentellen Phase und beinhaltet derzeit unvollständige/dummy Daten.
 
 ## Anbieter
 Jonas Heinle
@@ -12,10 +11,10 @@ Elchwinkel 42
 ## Links
 
 ### E-Mail
-- für allgemeine Anfragen: [Kontakt zum Bürgerservice](#)
+- für allgemeine Anfragen: [Kontakt zu mir](#)
 
 ## Externe Links
-- [familie redlich](#)
-- [CPS](#)
+- [philoclopedia.de](#)
+- [johannes-heinle.de](#)
 
 Stand: 13.02.2024

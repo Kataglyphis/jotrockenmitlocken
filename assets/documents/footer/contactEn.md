@@ -8,4 +8,3 @@ Please check there first to see if you can find answers on the website to your q
 
 - **Please note,**  
   - that we value a respectful interaction. Inquiries containing insults, vulgar language, or degrading statements will not be answered.
-  - that I cannot provide legal advice or offer individual consultations.

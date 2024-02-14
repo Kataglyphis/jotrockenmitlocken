@@ -9,10 +9,10 @@ Elchwinkel 42
 <!-- Phone: 030 18 305-0   -->
 
 ### E-Mail
-- for general inquiries: [Contact the citizen service](#)
+- for general inquiries: [Contact me](#)
 
 ## External Links
-- [family redlich](#)
-- [CPS](#)
+- [philoclopedia.de](#)
+- [johannes-heinle.de](#)
 
 Date: 13.02.2024
