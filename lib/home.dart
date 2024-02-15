@@ -299,6 +299,38 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               )
             ]
           ]);
+        case NonNavBarScreenSelected.cookieDeclaration:
+          return VerticalScrollPage(scaffoldKey: scaffoldKey, childWidgets: [
+            colDivider,
+            MarkdownFilePage(
+              filePathDe: 'assets/documents/footer/cookieDeclarationDe.md',
+              filePathEn: 'assets/documents/footer/cookieDeclarationEn.md',
+            ),
+            colDivider,
+            if (currentWidth < mediumWidthBreakpoint) ...[
+              Footer(
+                selectedIndex: selectedIndex,
+                onSelectItem: onSelectItem,
+              )
+            ]
+          ]);
+        case NonNavBarScreenSelected.declarationOnAccessibility:
+          return VerticalScrollPage(scaffoldKey: scaffoldKey, childWidgets: [
+            colDivider,
+            MarkdownFilePage(
+              filePathDe:
+                  'assets/documents/footer/declarationOnAccessibilityDe.md',
+              filePathEn:
+                  'assets/documents/footer/declarationOnAccessibilityEn.md',
+            ),
+            colDivider,
+            if (currentWidth < mediumWidthBreakpoint) ...[
+              Footer(
+                selectedIndex: selectedIndex,
+                onSelectItem: onSelectItem,
+              )
+            ]
+          ]);
       }
     } else {
       switch (screenSelected) {
@@ -330,7 +362,13 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           List<Widget> childWidgetsLeftPage = [
             AboutMeTable(
                 useOtherLanguageMode: useOtherLanguageMode,
-                colorSelected: colorSelected)
+                colorSelected: colorSelected),
+            if (currentWidth < mediumWidthBreakpoint) ...[
+              Footer(
+                selectedIndex: selectedIndex,
+                onSelectItem: onSelectItem,
+              )
+            ]
           ];
           double marginSkillTable = 0;
           double paddingSkillTable = 5;

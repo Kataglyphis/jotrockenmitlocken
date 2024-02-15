@@ -72,14 +72,25 @@ Rechte:
 	Das Recht auf Berichtigung beinhaltet die Möglichkeit für Sie, unrichtige Sie betreffende personenbezogene Daten ändern zu lassen. 
 
 3.	Recht auf Löschung nach Artikel 17 DSGVO
-4.
-5.
-6.
-7.
+	Das Recht auf Löschung beinhaltet die Möglichkeit für Sie Daten löschen zu lassen. Dies ist allerdings nur dann möglich, wenn die Sie betreffenden personenbezogenen Daten nicht mehr notwendig sind, rechtswidrig verarbeitet werden oder eine diesbezügliche Einwilligung widerrufen wurde. Es gelten die in Paragraf 35 BDSG geregelten Ausnahmen von diesem Recht.
 
-## VII. Beschwerderecht bei der Aufsichtsbehörde
+4. 	Recht auf Einschränkung der Verarbeitung nach Artikel 18 DSGVO
+	Das Recht auf Einschränkung der Verarbeitung beinhaltet die Möglichkeit für Sie, eine weitere Verarbeitung der Sie betreffenden personenbezogenen Daten vorerst zu verhindern. Eine Einschränkung tritt vor allem in der Prüfungsphase anderer Rechtewahrnehmungen durch Sie ein. 
 
-Sofern personenbezogene Daten durch mich verarbeitet werden, steht Ihnen ein Beschwerderecht bei der datenschutzrechtlichen Aufsichtsbehörde zu. Zuständige Aufsichtsbehörde ist:
+5.	Recht auf Datenübertragbarkeit nach Artikel 20 DSGVO
+	Das Recht auf Datenübertragbarkeit beinhaltet die Möglichkeit für Sie, die Sie betreffenden personenbezogenen Daten in einem gängigen, maschinenlesbaren Format, beispielsweise als PDF-Dokument, vom Verantwortlichen zu erhalten, um diese wenn nötig an einen anderen Verantwortlichen weiterleiten zu lassen.
+
+6.	Recht auf Widerspruch nach Artikel 21 DSGVO
+	Das Recht auf Widerspruch beinhaltet die Möglichkeit für Sie, in einer besonderen Situation der weiteren Verarbeitung Ihrer personenbezogenen Daten zu widersprechen, soweit diese durch die Wahrnehmung öffentlicher Aufgaben oder öffentlicher sowie privater Interessen gerechtfertigt ist. Das Recht gilt gemäß Paragraf 36 BDSG nicht, wenn eine öffentliche Stelle durch Rechtsvorschrift zur Verarbeitung verpflichtet ist.
+
+7.	Recht auf Widerruf der Einwilligung nach Artikel 7 Absatz 3 
+	Sie haben jederzeit das Recht, eine erteilte Einwilligung mit Wirkung für die Zukunft zu widerrufen. Eine entsprechende Widerrufsmöglichkeit finden Sie jeweils bei dem entsprechenden Internetangebot für den Ihre Einwilligung eingeholt wurde.
+
+Die Wahrnehmung dieser Rechte ist für Sie unentgeltlich und wird auf Antrag im Rahmen Ihres Informationsinteresses gewährt.
+
+## VII. Beschwerderecht bei mir
+
+Sofern personenbezogene Daten durch mich verarbeitet werden, steht Ihnen ein Beschwerderecht bei mir zu. Zuständige Aufsichtsbehörde ist:
 
 Der Bundesbeauftragte für den Datenschutz und die Informationsfreiheit
 Husarenstraße 30

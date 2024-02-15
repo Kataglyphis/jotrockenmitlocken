@@ -41,7 +41,9 @@ enum ScreenSelected {
 enum NonNavBarScreenSelected {
   imprint(0),
   contact(1),
-  privacyPolicy(2);
+  privacyPolicy(2),
+  cookieDeclaration(3),
+  declarationOnAccessibility(4);
 
   const NonNavBarScreenSelected(this.value);
   final int value;
