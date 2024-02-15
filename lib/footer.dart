@@ -79,7 +79,12 @@ class _Footer extends State<Footer> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  if (widget.onSelectItem != null) {
+                    widget.onSelectItem!(
+                        NonNavBarScreenSelected.cookieDeclaration.value);
+                  }
+                },
                 child: Text(
                   AppLocalizations.of(context)!.cookieStatement,
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11),
@@ -92,7 +97,12 @@ class _Footer extends State<Footer> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    if (widget.onSelectItem != null) {
+                      widget.onSelectItem!(NonNavBarScreenSelected
+                          .declarationOnAccessibility.value);
+                    }
+                  },
                   child: Text(
                     AppLocalizations.of(context)!.declarationOnAccessibility,
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11),
