@@ -75,6 +75,21 @@ class SocialMediaWidgets extends StatelessWidget {
           BrowserHelper.launchInBrowser(toLaunch);
         },
       ),
+      SizedBox(
+        width: iconSize / 2,
+      ),
+      IconButton(
+        iconSize: iconSize,
+        icon: const FaIcon(FontAwesomeIcons.instagram),
+        // color: Colors.black,
+        onPressed: () {
+          final Uri toLaunch = Uri(
+              scheme: 'https',
+              host: 'instagram.com',
+              path: 'jotrockenmitlocken');
+          BrowserHelper.launchInBrowser(toLaunch);
+        },
+      ),
     ];
   }
 

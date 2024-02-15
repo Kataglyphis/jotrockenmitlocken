@@ -22,7 +22,7 @@ class _Footer extends State<Footer> {
   Widget createTextButtons() {
     var currentWidth = MediaQuery.of(context).size.width;
     var align = MainAxisAlignment.start;
-    if (currentWidth < narrowScreenWidthThreshold) {
+    if (currentWidth < mediumWidthBreakpoint) {
       align = MainAxisAlignment.center;
     }
     return Column(
@@ -115,14 +115,14 @@ class _Footer extends State<Footer> {
   Widget createSocialIconsAndLiabilityWidgets() {
     var currentWidth = MediaQuery.of(context).size.width;
     var align = MainAxisAlignment.start;
-    if (currentWidth < narrowScreenWidthThreshold) {
+    if (currentWidth < mediumWidthBreakpoint) {
       align = MainAxisAlignment.center;
     }
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: align,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        SocialMediaWidgets(iconSize: 20),
+        SocialMediaWidgets(iconSize: 14),
         Row(
             mainAxisAlignment: align,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -142,7 +142,7 @@ class _Footer extends State<Footer> {
   Widget build(BuildContext context) {
     var currentWidth = MediaQuery.of(context).size.width;
     TextStyle textStyleFooter = const TextStyle(fontSize: 11);
-    if (currentWidth < narrowScreenWidthThreshold) {
+    if (currentWidth < mediumWidthBreakpoint) {
       return Column(
         children: [
           const SizedBox(

@@ -1,6 +1,7 @@
 # Imprint
 
-> **_NOTE:_** The imprint is in an experimental phase and currently contains incomplete/dummy data.
+> **_NOTE:_** The imprint is in an experimental phase and 
+currently contains incomplete/dummy data.
 
 ## Provider
 Jonas Heinle  
