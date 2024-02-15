@@ -96,7 +96,7 @@ class AboutMeTableState extends State<AboutMeTable> {
             height: 10,
           ),
           const SocialMediaWidgets(
-            iconSize: 35,
+            iconSize: 28,
           ),
           const SizedBox(
             height: 10,

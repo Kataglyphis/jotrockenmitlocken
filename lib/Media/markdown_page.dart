@@ -86,10 +86,10 @@ To calculate the area of an equilateral triangle using trigonometric functions, 
     var currentWidth = MediaQuery.of(context).size.width;
     if (currentWidth <= narrowScreenWidthThreshold) {
       return currentWidth * 0.9;
-    } else if (currentWidth <= largeWidthBreakpoint) {
-      return currentWidth * 0.8;
+    } else if (currentWidth <= mediumWidthBreakpoint) {
+      return currentWidth * 0.7;
     } else {
-      return currentWidth * 0.8;
+      return currentWidth * 0.6;
     }
   }
 

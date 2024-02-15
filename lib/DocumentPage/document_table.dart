@@ -39,11 +39,11 @@ class AboutMeTableState extends State<DocumentTable> {
   double getDocumentTableWidth() {
     var currentWidth = MediaQuery.of(context).size.width;
     if (currentWidth <= narrowScreenWidthThreshold) {
-      return currentWidth;
-    } else if (currentWidth <= largeWidthBreakpoint) {
       return currentWidth * 0.9;
-    } else {
+    } else if (currentWidth <= mediumWidthBreakpoint) {
       return currentWidth * 0.8;
+    } else {
+      return currentWidth * 0.5;
     }
   }
 

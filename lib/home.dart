@@ -363,12 +363,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
             AboutMeTable(
                 useOtherLanguageMode: useOtherLanguageMode,
                 colorSelected: colorSelected),
-            if (currentWidth < mediumWidthBreakpoint) ...[
-              Footer(
-                selectedIndex: selectedIndex,
-                onSelectItem: onSelectItem,
-              )
-            ]
           ];
           double marginSkillTable = 0;
           double paddingSkillTable = 5;
@@ -390,6 +384,12 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
             const SizedBox(
               height: 40,
             ),
+            if (currentWidth < mediumWidthBreakpoint) ...[
+              Footer(
+                selectedIndex: selectedIndex,
+                onSelectItem: onSelectItem,
+              )
+            ]
           ];
           return createOneTwoTransisionWidget(
               childWidgetsLeftPage, childWidgetsRightPage, showNavBarExample);
