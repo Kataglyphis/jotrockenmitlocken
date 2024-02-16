@@ -34,11 +34,12 @@ class _VerticalScrollPage extends State<VerticalScrollPage> {
           Row(children: <Widget>[
             Flexible(
               flex: mediumWidthBreakpoint.toInt(),
-              child: ListView(
-                scrollDirection: Axis.vertical,
-                children: widget.childWidgets,
-                shrinkWrap: true,
-              ),
+              child: SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
+                  child: Column(
+                    children: widget.childWidgets,
+                    //shrinkWrap: false, //true,
+                  )),
             ),
           ])
         ],

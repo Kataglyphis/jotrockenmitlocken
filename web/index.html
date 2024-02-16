@@ -54,6 +54,24 @@
       transform: translate(-50%, -50%);
     }
     
+	#loading-message {
+        color: #000000;
+        font-size: 24px;
+        margin-left: 15px;
+    }
+	/* #69f0ae */
+    #background-animation {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        background: linear-gradient(45deg, #ffffff, #69f0ae, #ffffff, #69f0ae);
+        background-size: 400% 400%;
+        animation: gradientAnimation 15s ease infinite;
+    }
+
     .loader {
       border: 16px solid #f3f3f3;
       border-radius: 50%;
@@ -68,6 +86,14 @@
       animation: spin 2s linear infinite;
     }
     
+	#bird {
+		position: absolute;
+		top: 50%;
+		left: -100px;
+		animation: flyBird 5s linear infinite;
+		transform-origin: center;
+	}
+	
     @-webkit-keyframes spin {
       0% {
         -webkit-transform: rotate(0deg);
@@ -85,11 +111,26 @@
         transform: rotate(360deg);
       }
     }
+
+	@keyframes gradientAnimation {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+	@keyframes flyBird {
+        0% { transform: translateX(-100px) rotate(0deg); }
+        50% { transform: translateX(calc(100vw + 100px)) rotate(180deg); }
+        100% { transform: translateX(-100px) rotate(360deg); }
+    }
   </style>
 </head>
 <body>
+  <div id="background-animation"></div>
   <div class="loading">
-	<div class="loader"></div>
+	<div class="loader"></div></br>
+	<div id="loading-message">You will be there soon ... </div>
+	<img id="bird" width="300" src="favicon.png" alt="Barbell">
   </div>
   <script>
     window.addEventListener('load', function(ev) {
