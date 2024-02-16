@@ -31,17 +31,21 @@ class _VerticalScrollPage extends State<VerticalScrollPage> {
         scaffoldKey: widget.scaffoldKey,
         showSecondList: false,
         childWidgetsLeftPage: [
-          Row(children: <Widget>[
-            Flexible(
-              flex: mediumWidthBreakpoint.toInt(),
-              child: SingleChildScrollView(
-                  scrollDirection: Axis.vertical,
-                  child: Column(
-                    children: widget.childWidgets,
-                    //shrinkWrap: false, //true,
-                  )),
-            ),
-          ])
+          Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Flexible(
+                  flex: mediumWidthBreakpoint.toInt(),
+                  child: SingleChildScrollView(
+                      scrollDirection: Axis.vertical,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: widget.childWidgets,
+                      )),
+                ),
+              ])
         ],
         childWidgetsRightPage: [],
       ),
