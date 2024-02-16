@@ -77,6 +77,8 @@ class _MarkdownFilePage extends State<MarkdownFilePage> {
   Widget build(BuildContext context) {
     loadMarkupFile();
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         const SizedBox(height: 10),
         SizedBox(
