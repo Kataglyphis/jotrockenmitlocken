@@ -89,6 +89,7 @@ class _MarkdownFilePage extends State<MarkdownFilePage> {
               data: _markupContent,
               styleSheet: MarkdownStyleSheet(
                   h1: TextStyle(fontWeight: FontWeight.bold),
+                  h2: TextStyle(fontWeight: FontWeight.bold),
                   h1Align: WrapAlignment.end,
                   //h1Padding: EdgeInsets.fromViewPadding(padding, devicePixelRatio),
                   h2Align: WrapAlignment.center),
