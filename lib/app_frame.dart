@@ -110,26 +110,29 @@ class _AppFrameState extends State<AppFrame>
     }
   }
 
-  Widget createSinglePage(BuildContext context, List<Widget> children) {
-    var currentWidth = MediaQuery.of(context).size.width;
+  Widget createSinglePage(List<Widget> children, bool showMediumSizeLayout,
+      bool showLargeSizeLayout) {
     const colDivider = SizedBox(height: 10);
     return Row(
       children: [
-        VerticalScrollPage(scaffoldKey: scaffoldKey, childWidgets: [
+        VerticalScrollPage(childWidgets: [
           colDivider,
           ...children,
           colDivider,
-          if (currentWidth < mediumWidthBreakpoint) ...[Footer()]
+          if (!showMediumSizeLayout && !showLargeSizeLayout) ...[Footer()]
         ]),
       ],
     );
   }
 
-  Widget createOneTwoTransisionWidget(List<Widget> childWidgetsLeftPage,
-      List<Widget> childWidgetsRightPage, double currentWidth) {
+  Widget createOneTwoTransisionWidget(
+      List<Widget> childWidgetsLeftPage,
+      List<Widget> childWidgetsRightPage,
+      bool showMediumSizeLayout,
+      bool showLargeSizeLayout) {
     childWidgetsRightPage += [
       colDivider,
-      if (currentWidth < mediumWidthBreakpoint) ...[Footer()]
+      if (!showMediumSizeLayout && !showLargeSizeLayout) ...[Footer()]
     ];
     return Row(
       children: [
@@ -137,7 +140,6 @@ class _AppFrameState extends State<AppFrame>
           child: OneTwoTransition(
             animation: railAnimation,
             one: FirstComponentList(
-              scaffoldKey: scaffoldKey,
               showSecondList: showMediumSizeLayout || showLargeSizeLayout,
               childWidgetsLeftPage: childWidgetsLeftPage,
               childWidgetsRightPage: childWidgetsRightPage,
@@ -209,41 +211,42 @@ class _AppFrameState extends State<AppFrame>
     return [childWidgetsLeftPage, childWidgetsRightPage];
   }
 
-  List<StatefulShellBranch> createFooterBranches(double currentWidth) {
-    var imprint = createSinglePage(context, [
+  List<StatefulShellBranch> createFooterBranches(
+      bool showMediumSizeLayout, bool showLargeSizeLayout) {
+    var imprint = createSinglePage([
       MarkdownFilePage(
         filePathDe: 'assets/documents/footer/imprintDe.md',
         filePathEn: 'assets/documents/footer/imprintEn.md',
       )
-    ]);
+    ], showMediumSizeLayout, showLargeSizeLayout);
 
-    var contact = createSinglePage(context, [
+    var contact = createSinglePage([
       MarkdownFilePage(
         filePathDe: 'assets/documents/footer/contactDe.md',
         filePathEn: 'assets/documents/footer/contactEn.md',
       )
-    ]);
+    ], showMediumSizeLayout, showLargeSizeLayout);
 
-    var privacyPolicy = createSinglePage(context, [
+    var privacyPolicy = createSinglePage([
       MarkdownFilePage(
         filePathDe: 'assets/documents/footer/privacyPolicyDe.md',
         filePathEn: 'assets/documents/footer/privacyPolicyEn.md',
       )
-    ]);
+    ], showMediumSizeLayout, showLargeSizeLayout);
 
-    var cookieStatement = createSinglePage(context, [
+    var cookieStatement = createSinglePage([
       MarkdownFilePage(
         filePathDe: 'assets/documents/footer/cookieDeclarationDe.md',
         filePathEn: 'assets/documents/footer/cookieDeclarationEn.md',
       )
-    ]);
+    ], showMediumSizeLayout, showLargeSizeLayout);
 
-    var declarationOnAccessibility = createSinglePage(context, [
+    var declarationOnAccessibility = createSinglePage([
       MarkdownFilePage(
         filePathDe: 'assets/documents/footer/declarationOnAccessibilityDe.md',
         filePathEn: 'assets/documents/footer/declarationOnAccessibilityEn.md',
       )
-    ]);
+    ], showMediumSizeLayout, showLargeSizeLayout);
     return [
       StatefulShellBranch(
         routes: <RouteBase>[
@@ -274,7 +277,8 @@ class _AppFrameState extends State<AppFrame>
     ];
   }
 
-  List<StatefulShellBranch> createNavBarBranches(double currentWidth) {
+  List<StatefulShellBranch> createNavBarBranches(
+      bool showMediumSizeLayout, bool showLargeSizeLayout) {
     var aboutMePagesLeftRight = createAboutMeChildPages(context);
     var homePagesLeftRight = createHomeChildPages(context);
     // The route branch for the first tab of the bottom navigation bar.
@@ -285,29 +289,32 @@ class _AppFrameState extends State<AppFrame>
           buildGoRouteForSPA(
               '/home',
               createOneTwoTransisionWidget(
-                  homePagesLeftRight[0], homePagesLeftRight[1], currentWidth)),
+                  homePagesLeftRight[0],
+                  homePagesLeftRight[1],
+                  showMediumSizeLayout,
+                  showLargeSizeLayout)),
         ],
       ),
       StatefulShellBranch(
         routes: <RouteBase>[
           buildGoRouteForSPA(
               '/aboutMe',
-              createOneTwoTransisionWidget(aboutMePagesLeftRight[0],
-                  aboutMePagesLeftRight[1], currentWidth)),
+              createOneTwoTransisionWidget(
+                  aboutMePagesLeftRight[0],
+                  aboutMePagesLeftRight[1],
+                  showMediumSizeLayout,
+                  showLargeSizeLayout)),
         ],
       ),
       StatefulShellBranch(
         routes: <RouteBase>[
           buildGoRouteForSPA(
               '/quotations',
-              createSinglePage(
-                context,
-                [
-                  QuotesList(
-                    colorSelected: widget.colorSelected,
-                  ),
-                ],
-              )),
+              createSinglePage([
+                QuotesList(
+                  colorSelected: widget.colorSelected,
+                ),
+              ], showMediumSizeLayout, showLargeSizeLayout)),
         ],
       ),
       StatefulShellBranch(
@@ -316,14 +323,11 @@ class _AppFrameState extends State<AppFrame>
         routes: <RouteBase>[
           buildGoRouteForSPA(
               '/documents',
-              createSinglePage(
-                context,
-                [
-                  DocumentTable(
-                    colorSelected: widget.colorSelected,
-                  )
-                ],
-              )),
+              createSinglePage([
+                DocumentTable(
+                  colorSelected: widget.colorSelected,
+                )
+              ], showMediumSizeLayout, showLargeSizeLayout)),
         ],
       ),
     ];
@@ -331,7 +335,6 @@ class _AppFrameState extends State<AppFrame>
 
   @override
   Widget build(BuildContext context) {
-    var currentWidth = MediaQuery.of(context).size.width;
     final GoRouter _routerConfig = GoRouter(
         navigatorKey: _rootNavigatorKey,
         initialLocation: '/home',
@@ -358,8 +361,9 @@ class _AppFrameState extends State<AppFrame>
                 navigationShell: navigationShell,
               );
             },
-            branches: createNavBarBranches(currentWidth) +
-                createFooterBranches(currentWidth),
+            branches: createNavBarBranches(
+                    showMediumSizeLayout, showLargeSizeLayout) +
+                createFooterBranches(showMediumSizeLayout, showLargeSizeLayout),
           )
         ]);
 

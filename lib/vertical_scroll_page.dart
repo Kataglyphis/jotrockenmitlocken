@@ -3,10 +3,8 @@ import 'package:jotrockenmitlocken/Blog/blog.dart';
 import 'package:jotrockenmitlocken/constants.dart';
 
 class VerticalScrollPage extends StatefulWidget {
-  VerticalScrollPage(
-      {super.key, required this.childWidgets, required this.scaffoldKey});
+  VerticalScrollPage({super.key, required this.childWidgets});
   List<Widget> childWidgets;
-  final GlobalKey<ScaffoldState> scaffoldKey;
   @override
   State<VerticalScrollPage> createState() => _VerticalScrollPage();
 }
@@ -27,7 +25,6 @@ class _VerticalScrollPage extends State<VerticalScrollPage> {
   Widget build(BuildContext context) {
     return Expanded(
       child: FirstComponentList(
-        scaffoldKey: widget.scaffoldKey,
         showSecondList: false,
         childWidgetsLeftPage: [
           Row(
