@@ -5,12 +5,10 @@
 import 'package:flutter/material.dart';
 
 import 'package:jotrockenmitlocken/app_frame.dart';
-import 'package:jotrockenmitlocken/navigation_state.dart';
 
-import 'constants.dart';
+import 'package:jotrockenmitlocken/constants.dart';
 
 void main() {
-  //usePathUrlStrategy();
   runApp(
     const App(),
   );
@@ -58,11 +56,6 @@ class _AppState extends State<App> {
     });
   }
 
-  NavigationState navigationState = NavigationState(
-      screenIndex: ScreenSelected.documents.value,
-      screenIndexNonNavBar: NonNavBarScreenSelected.imprint.value,
-      nonNavBarScreenSelected: false);
-
   @override
   Widget build(BuildContext context) {
     return AppFrame(
@@ -73,15 +66,5 @@ class _AppState extends State<App> {
         handleColorSelect: handleColorSelect,
         colorSelected: colorSelected,
         themeMode: themeMode);
-
-    // home: SelectionArea(
-    //     child: Home(
-    //   useLightMode: useLightMode,
-    //   useOtherLanguageMode: useOtherLanguageMode,
-    //   handleBrightnessChange: handleBrightnessChange,
-    //   handleLanguageChange: handleLanguageChange,
-    //   handleColorSelect: handleColorSelect,
-    //   colorSelected: colorSelected,
-    // )));
   }
 }
