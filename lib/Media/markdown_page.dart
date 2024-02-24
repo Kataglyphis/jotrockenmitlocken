@@ -1,8 +1,6 @@
-import 'dart:html';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:jotrockenmitlocken/font_helper.dart';
 import 'package:flutter_markdown_latex/flutter_markdown_latex.dart';
 import 'package:markdown/markdown.dart' as md;
 import 'package:flutter/services.dart' show rootBundle;
@@ -88,8 +86,8 @@ class _MarkdownFilePage extends State<MarkdownFilePage> {
               selectable: true,
               data: _markupContent,
               styleSheet: MarkdownStyleSheet(
-                  h1: TextStyle(fontWeight: FontWeight.bold),
-                  h2: TextStyle(fontWeight: FontWeight.bold),
+                  h1: const TextStyle(fontWeight: FontWeight.bold),
+                  h2: const TextStyle(fontWeight: FontWeight.bold),
                   h1Align: WrapAlignment.end,
                   //h1Padding: EdgeInsets.fromViewPadding(padding, devicePixelRatio),
                   h2Align: WrapAlignment.center),

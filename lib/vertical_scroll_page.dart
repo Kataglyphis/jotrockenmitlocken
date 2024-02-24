@@ -47,7 +47,7 @@ class _VerticalScrollPage extends State<VerticalScrollPage> {
                 ),
               ])
         ],
-        childWidgetsRightPage: [],
+        childWidgetsRightPage: const [],
       ),
     );
   }
