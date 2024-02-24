@@ -8,13 +8,14 @@ import 'package:jotrockenmitlocken/AboutMe/skill_table.dart';
 import 'package:jotrockenmitlocken/Blog/blog.dart';
 import 'package:jotrockenmitlocken/Decoration/decoration_helper.dart';
 import 'package:jotrockenmitlocken/DocumentPage/document_table.dart';
+import 'package:jotrockenmitlocken/Layout/layout_manager.dart';
 import 'package:jotrockenmitlocken/Media/markdown_page.dart';
 import 'package:jotrockenmitlocken/Media/quotes_list.dart';
 
 import 'package:jotrockenmitlocken/footer.dart';
 import 'package:jotrockenmitlocken/home.dart';
 import 'package:jotrockenmitlocken/constants.dart';
-import 'package:jotrockenmitlocken/vertical_scroll_page.dart';
+import 'package:jotrockenmitlocken/Layout/vertical_scroll_page.dart';
 
 class AppFrame extends StatefulWidget {
   const AppFrame({
@@ -110,50 +111,6 @@ class _AppFrameState extends State<AppFrame>
     }
   }
 
-  Widget createSinglePage(List<Widget> children, bool showMediumSizeLayout,
-      bool showLargeSizeLayout) {
-    const colDivider = SizedBox(height: 10);
-    return Row(
-      children: [
-        VerticalScrollPage(childWidgets: [
-          colDivider,
-          ...children,
-          colDivider,
-          if (!showMediumSizeLayout && !showLargeSizeLayout) ...[Footer()]
-        ]),
-      ],
-    );
-  }
-
-  Widget createOneTwoTransisionWidget(
-      List<Widget> childWidgetsLeftPage,
-      List<Widget> childWidgetsRightPage,
-      bool showMediumSizeLayout,
-      bool showLargeSizeLayout) {
-    childWidgetsRightPage += [
-      colDivider,
-      if (!showMediumSizeLayout && !showLargeSizeLayout) ...[Footer()]
-    ];
-    return Row(
-      children: [
-        Expanded(
-          child: OneTwoTransition(
-            animation: railAnimation,
-            one: FirstComponentList(
-              showSecondList: showMediumSizeLayout || showLargeSizeLayout,
-              childWidgetsLeftPage: childWidgetsLeftPage,
-              childWidgetsRightPage: childWidgetsRightPage,
-            ),
-            two: SecondComponentList(
-              scaffoldKey: scaffoldKey,
-              childWidgets: childWidgetsRightPage,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
   GoRoute buildGoRouteForSPA(String path, Widget child) {
     return GoRoute(
         path: path,
@@ -164,30 +121,32 @@ class _AppFrameState extends State<AppFrame>
         });
   }
 
-  List<List<Widget>> createHomeChildPages(BuildContext context) {
+  List<List<Widget>> createHomeChildPages(
+      bool useOtherLanguageMode, ColorSeed colorSelected) {
     const colDivider = SizedBox(height: 10);
     List<Widget> childWidgetsLeftPage = [
       colDivider,
       AIPlayground(
-        colorSelected: widget.colorSelected,
+        colorSelected: colorSelected,
       ),
       colDivider,
     ];
     List<Widget> childWidgetsRightPage = [
       colDivider,
       RenderingPlayground(
-        colorSelected: widget.colorSelected,
+        colorSelected: colorSelected,
       ),
     ];
     return [childWidgetsLeftPage, childWidgetsRightPage];
   }
 
-  List<List<Widget>> createAboutMeChildPages(BuildContext context) {
+  List<List<Widget>> createAboutMeChildPages(
+      bool useOtherLanguageMode, ColorSeed colorSelected) {
     const colDivider = SizedBox(height: 10);
     List<Widget> childWidgetsLeftPage = [
       AboutMeTable(
-          useOtherLanguageMode: widget.useOtherLanguageMode,
-          colorSelected: widget.colorSelected),
+          useOtherLanguageMode: useOtherLanguageMode,
+          colorSelected: colorSelected),
     ];
     double marginSkillTable = 0;
     double paddingSkillTable = 5;
@@ -199,13 +158,13 @@ class _AppFrameState extends State<AppFrame>
       ),
       applyBoxDecoration(
           SkillTable(
-            useOtherLanguageMode: widget.useOtherLanguageMode,
+            useOtherLanguageMode: useOtherLanguageMode,
           ),
           EdgeInsets.all(paddingSkillTable),
           marginSkillTable,
           30,
           5,
-          widget.colorSelected.color),
+          colorSelected.color),
     ];
 
     return [childWidgetsLeftPage, childWidgetsRightPage];
@@ -213,35 +172,35 @@ class _AppFrameState extends State<AppFrame>
 
   List<StatefulShellBranch> createFooterBranches(
       bool showMediumSizeLayout, bool showLargeSizeLayout) {
-    var imprint = createSinglePage([
+    var imprint = LayoutManager.createSinglePage([
       MarkdownFilePage(
         filePathDe: 'assets/documents/footer/imprintDe.md',
         filePathEn: 'assets/documents/footer/imprintEn.md',
       )
     ], showMediumSizeLayout, showLargeSizeLayout);
 
-    var contact = createSinglePage([
+    var contact = LayoutManager.createSinglePage([
       MarkdownFilePage(
         filePathDe: 'assets/documents/footer/contactDe.md',
         filePathEn: 'assets/documents/footer/contactEn.md',
       )
     ], showMediumSizeLayout, showLargeSizeLayout);
 
-    var privacyPolicy = createSinglePage([
+    var privacyPolicy = LayoutManager.createSinglePage([
       MarkdownFilePage(
         filePathDe: 'assets/documents/footer/privacyPolicyDe.md',
         filePathEn: 'assets/documents/footer/privacyPolicyEn.md',
       )
     ], showMediumSizeLayout, showLargeSizeLayout);
 
-    var cookieStatement = createSinglePage([
+    var cookieStatement = LayoutManager.createSinglePage([
       MarkdownFilePage(
         filePathDe: 'assets/documents/footer/cookieDeclarationDe.md',
         filePathEn: 'assets/documents/footer/cookieDeclarationEn.md',
       )
     ], showMediumSizeLayout, showLargeSizeLayout);
 
-    var declarationOnAccessibility = createSinglePage([
+    var declarationOnAccessibility = LayoutManager.createSinglePage([
       MarkdownFilePage(
         filePathDe: 'assets/documents/footer/declarationOnAccessibilityDe.md',
         filePathEn: 'assets/documents/footer/declarationOnAccessibilityEn.md',
@@ -279,8 +238,10 @@ class _AppFrameState extends State<AppFrame>
 
   List<StatefulShellBranch> createNavBarBranches(
       bool showMediumSizeLayout, bool showLargeSizeLayout) {
-    var aboutMePagesLeftRight = createAboutMeChildPages(context);
-    var homePagesLeftRight = createHomeChildPages(context);
+    var aboutMePagesLeftRight = createAboutMeChildPages(
+        widget.useOtherLanguageMode, widget.colorSelected);
+    var homePagesLeftRight =
+        createHomeChildPages(widget.useOtherLanguageMode, widget.colorSelected);
     // The route branch for the first tab of the bottom navigation bar.
     return [
       StatefulShellBranch(
@@ -288,29 +249,31 @@ class _AppFrameState extends State<AppFrame>
         routes: <RouteBase>[
           buildGoRouteForSPA(
               '/home',
-              createOneTwoTransisionWidget(
+              LayoutManager.createOneTwoTransisionWidget(
                   homePagesLeftRight[0],
                   homePagesLeftRight[1],
                   showMediumSizeLayout,
-                  showLargeSizeLayout)),
+                  showLargeSizeLayout,
+                  railAnimation)),
         ],
       ),
       StatefulShellBranch(
         routes: <RouteBase>[
           buildGoRouteForSPA(
               '/aboutMe',
-              createOneTwoTransisionWidget(
+              LayoutManager.createOneTwoTransisionWidget(
                   aboutMePagesLeftRight[0],
                   aboutMePagesLeftRight[1],
                   showMediumSizeLayout,
-                  showLargeSizeLayout)),
+                  showLargeSizeLayout,
+                  railAnimation)),
         ],
       ),
       StatefulShellBranch(
         routes: <RouteBase>[
           buildGoRouteForSPA(
               '/quotations',
-              createSinglePage([
+              LayoutManager.createSinglePage([
                 QuotesList(
                   colorSelected: widget.colorSelected,
                 ),
@@ -323,7 +286,7 @@ class _AppFrameState extends State<AppFrame>
         routes: <RouteBase>[
           buildGoRouteForSPA(
               '/documents',
-              createSinglePage([
+              LayoutManager.createSinglePage([
                 DocumentTable(
                   colorSelected: widget.colorSelected,
                 )
