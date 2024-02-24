@@ -111,109 +111,169 @@
         50% { background-position: 100% 50%; }
         100% { background-position: 0% 50%; }
     }
+
+	#cookie-notice {
+		background-color: #fff;
+		bottom: 0;
+		box-shadow: 0px 8px 24px rgba(0, 0, 0, .25);
+		-webkit-box-direction: normal;
+		-webkit-font-smoothing: antialiased;
+		display: none;
+		left: 0;
+		opacity: 0;
+		padding: 40px 0;
+		position: fixed;
+		width: 100%;
+		z-index: 11;
+	}
+	
+	#cookie-notice.show {
+	animation-delay: .2s;
+	animation-duration: .5s;
+	animation-fill-mode: forwards;
+	animation-iteration-count: 1;
+	animation-name: fadein;
+	animation-timing-function: cubic-bezier(.27, .89, .39, .95);
+	display: block;
+	}
+	
+	@keyframes fadein {
+	0% {
+		opacity: 0
+	}
+
+	to {
+		opacity: 1
+	}
+	}
+	
+	.container {
+	align-items: center;
+	display: flex;
+	justify-content: space-between;
+	position: relative;
+	top: 1px;
+	margin: 0 auto;
+	max-width: calc(1280px - 100px);
+	width: calc(100% - 24px*2);
+	}
+	
+		.container p {
+		max-width: 1200px;
+		margin: 0;
+		margin-right: 50px;
+		color: #4a4a4a;
+		font-size: 16px;
+		font-family: "Roboto", sans-serif;
+		line-height: 1.5;
+
+		}
+
+		p a {
+		color: #0468d7;
+		text-decoration: none;
+		}
+
+		button {
+		background-color: #0468d7;
+		color: #fff;
+		align-items: center;
+		justify-content: center;
+		border: 0 solid;
+		border-radius: 24px;
+		cursor: pointer;
+		display: inline-flex;
+		font-family: "Google Sans", sans-serif;
+		font-size: 14px;
+		font-weight: 700;
+		height: 40px;
+		padding: 0 32px;
+		text-align: center;
+		line-height: 1.15;
+		}
   </style>
 </head>
 <body>
+	<div>
+	<!-- Cookie notice -->
+	<section id="cookie-notice">
+		<div class="container">
+		<div id="message"></div>
+		<button id="cookie-consent">Okay</button>
+		</div>
+	</section>
+	</div>
+	<script>
+		function _setCookie(name, value) {
+		  const expires = "; expires=2147483647"; // ~2038 i.e. until user clears cookies
+		  document.cookie = name + "=" + (value || "") + expires + "; SameSite=Strict";
+		}
+	
+		function _getCookie(name) {
+		  var nameEQ = name + "=";
+		  var ca = document.cookie.split(';');
+		  for (var i = 0; i < ca.length; i++) {
+			var c = ca[i];
+			while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+			if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+		  }
+		  return null;
+		}
+	
+		function initCookieNotice() {
+		  const notice = document.getElementById('cookie-notice');
+		  const consentBtn = document.getElementById('cookie-consent');
+		  const cookieKey = 'cookie-consent';
+		  const cookieConsentValue = 'true'
+		  const activeClass = 'show';
+		  if (_getCookie(cookieKey) === cookieConsentValue) {
+			return;
+		  }
+		  notice.classList.add(activeClass);
+		  consentBtn.classList.add(activeClass);
+		  consentBtn.addEventListener('click', (e) => {
+			e.preventDefault();
+			_setCookie(cookieKey, cookieConsentValue);
+			notice.classList.remove(activeClass);
+			consentBtn.classList.add(activeClass);
+		  });
+		}
+
+		var userLanguage = navigator.language || navigator.userLanguage;
+
+        // Function to set message based on language
+        function setMessage(language) {
+            var messageElement = document.getElementById("message");
+            var message = "";
+
+            switch (language) {
+				case "de":
+					message = `Ich verwende technisch notwendige Cookies, 
+					um Dienstleistungen zu erbringen. Weitere informationen finden Sie in der Cookie 
+					Erklärung im unteren Teil der Website. Viel Spaß :)`;
+					break;
+                case "en":
+                    message = `I use technically necessary cookies to provide services.
+					 Further information can be found in the cookie statement at
+					the bottom of the website. Have fun :)`;
+                    break;
+                // Add more cases for other languages as needed
+                default:
+                    message = "Hello! (Default)";
+            }
+
+            // Set the message content
+            messageElement.textContent = message;
+		}
+		setMessage(userLanguage.substring(0, 2));
+		initCookieNotice();
+	  </script>
   <div id="background-animation"></div>
   <div class="loading">
 	<div class="loader"></div>
 	<div id="loading-message">You will be there soon ... </div>
-	 <!-- Cookie notice -->
-	 <div>
-		<style>
-		  #cookie-notice {
-			background-color: #fff;
-			bottom: 0;
-			box-shadow: 0px 8px 24px rgba(0, 0, 0, .25);
-			-webkit-box-direction: normal;
-			-webkit-font-smoothing: antialiased;
-			display: none;
-			left: 0;
-			opacity: 0;
-			padding: 40px 0;
-			position: fixed;
-			width: 100%;
-			z-index: 11;
-		  }
-	
-		  #cookie-notice.show {
-			animation-delay: .2s;
-			animation-duration: .5s;
-			animation-fill-mode: forwards;
-			animation-iteration-count: 1;
-			animation-name: fadein;
-			animation-timing-function: cubic-bezier(.27, .89, .39, .95);
-			display: block;
-		  }
-	
-		  @keyframes fadein {
-			0% {
-			  opacity: 0
-			}
-	
-			to {
-			  opacity: 1
-			}
-		  }
-	
-		  .container {
-			align-items: center;
-			display: flex;
-			justify-content: space-between;
-			position: relative;
-			top: 1px;
-			margin: 0 auto;
-			max-width: calc(1280px - 100px);
-			width: calc(100% - 24px*2);
-		  }
-	
-		  .container p {
-			max-width: 1200px;
-			margin: 0;
-			margin-right: 50px;
-			color: #4a4a4a;
-			font-size: 16px;
-			font-family: "Roboto", sans-serif;
-			line-height: 1.5;
-	
-		  }
-	
-		  p a {
-			color: #0468d7;
-			text-decoration: none;
-		  }
-	
-		  button {
-			background-color: #0468d7;
-			color: #fff;
-			align-items: center;
-			justify-content: center;
-			border: 0 solid;
-			border-radius: 24px;
-			cursor: pointer;
-			display: inline-flex;
-			font-family: "Google Sans", sans-serif;
-			font-size: 14px;
-			font-weight: 700;
-			height: 40px;
-			padding: 0 32px;
-			text-align: center;
-			line-height: 1.15;
-		  }
-		</style>
-		<section id="cookie-notice">
-		  <div class="container">
-			<p>Google uses cookies to deliver its services, to personalize ads, and to analyze traffic. You can
-			  adjust your privacy controls anytime in your
-			  <a href="https://myaccount.google.com/data-and-personalization" target="_blank" rel="noopener">Google
-				settings</a>.
-			  <a href="https://policies.google.com/technologies/cookies" target="_blank" rel="noopener">Learn more</a>.
-			</p>
-			<button id="cookie-consent">Okay</button>
-		  </div>
-		</section>
-	  </div>
-  </div>
+	 
+  <!-- </div> -->
   <script>
     window.addEventListener('load', function(ev) {
       // Download main.dart.js
@@ -228,6 +288,7 @@
         }
       });
     });
+
   </script>
 </body>
 </html>
