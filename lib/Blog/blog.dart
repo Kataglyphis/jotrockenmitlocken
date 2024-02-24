@@ -17,13 +17,11 @@ const double widthConstraint = 450;
 class FirstComponentList extends StatefulWidget {
   FirstComponentList({
     super.key,
-    required this.scaffoldKey,
     required this.showSecondList,
     required this.childWidgetsLeftPage,
     required this.childWidgetsRightPage,
   });
 
-  final GlobalKey<ScaffoldState> scaffoldKey;
   final bool showSecondList;
   List<Widget> childWidgetsLeftPage;
   List<Widget> childWidgetsRightPage;
