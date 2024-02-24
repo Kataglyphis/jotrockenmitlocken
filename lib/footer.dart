@@ -1,22 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:jotrockenmitlocken/AboutMe/socialMedia/social_media_widgets.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:jotrockenmitlocken/constants.dart';
 
 class Footer extends StatefulWidget {
-  const Footer({super.key, this.onSelectItem, required this.selectedIndex});
-  final void Function(int)? onSelectItem;
-  final int selectedIndex;
+  const Footer({
+    super.key,
+    //required this.navigationShell,
+  });
+  //final StatefulNavigationShell navigationShell;
   @override
   State<Footer> createState() => _Footer();
 }
 
 class _Footer extends State<Footer> {
-  late int selectedIndex;
   @override
   void initState() {
     super.initState();
-    selectedIndex = widget.selectedIndex;
+    //selectedIndex = widget.selectedIndex;
   }
 
   Widget createTextButtons() {
@@ -38,9 +40,7 @@ class _Footer extends State<Footer> {
                     textStyle: const TextStyle(
                         fontSize: 11, fontWeight: FontWeight.bold)),
                 onPressed: () {
-                  if (widget.onSelectItem != null) {
-                    widget.onSelectItem!(NonNavBarScreenSelected.imprint.value);
-                  }
+                  context.go('/imprint');
                 },
                 child: Text(
                   textAlign: TextAlign.center,
@@ -51,25 +51,22 @@ class _Footer extends State<Footer> {
               ),
               TextButton(
                 onPressed: () {
-                  if (widget.onSelectItem != null) {
-                    widget.onSelectItem!(NonNavBarScreenSelected.contact.value);
-                  }
+                  context.go('/contact');
                 },
                 child: Text(
                   AppLocalizations.of(context)!.contact,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11),
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 11),
                 ),
               ),
               TextButton(
                 onPressed: () {
-                  if (widget.onSelectItem != null) {
-                    widget.onSelectItem!(
-                        NonNavBarScreenSelected.privacyPolicy.value);
-                  }
+                  context.go('/privacyPolicy');
                 },
                 child: Text(
                   AppLocalizations.of(context)!.privacyPolicy,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11),
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 11),
                 ),
               ),
             ],
@@ -80,14 +77,12 @@ class _Footer extends State<Footer> {
             children: [
               TextButton(
                 onPressed: () {
-                  if (widget.onSelectItem != null) {
-                    widget.onSelectItem!(
-                        NonNavBarScreenSelected.cookieDeclaration.value);
-                  }
+                  context.go('/cookieStatement');
                 },
                 child: Text(
                   AppLocalizations.of(context)!.cookieStatement,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11),
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 11),
                 ),
               ),
             ],
@@ -98,14 +93,12 @@ class _Footer extends State<Footer> {
               children: [
                 TextButton(
                   onPressed: () {
-                    if (widget.onSelectItem != null) {
-                      widget.onSelectItem!(NonNavBarScreenSelected
-                          .declarationOnAccessibility.value);
-                    }
+                    context.go('/declarationOnAccessibility');
                   },
                   child: Text(
                     AppLocalizations.of(context)!.declarationOnAccessibility,
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11),
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 11),
                   ),
                 ),
               ])
@@ -122,16 +115,15 @@ class _Footer extends State<Footer> {
       mainAxisAlignment: align,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        SocialMediaWidgets(iconSize: 14),
+        const SocialMediaWidgets(iconSize: 14),
         Row(
             mainAxisAlignment: align,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                AppLocalizations.of(context)!.disclaimer +
-                    "\n" +
-                    AppLocalizations.of(context)!.copyright,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11),
+                "${AppLocalizations.of(context)!.disclaimer}\n${AppLocalizations.of(context)!.copyright}",
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 11),
               ),
             ])
       ],

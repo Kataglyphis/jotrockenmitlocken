@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:jotrockenmitlocken/AboutMe/about_me_table.dart';
 import 'package:jotrockenmitlocken/AboutMe/perfect_day_chart.dart';
 import 'package:jotrockenmitlocken/AboutMe/skill_table.dart';
@@ -10,33 +11,15 @@ import 'package:jotrockenmitlocken/Media/markdown_page.dart';
 import 'package:jotrockenmitlocken/Media/quotes_list.dart';
 import 'package:jotrockenmitlocken/browser_helper.dart';
 import 'package:jotrockenmitlocken/footer.dart';
+import 'package:jotrockenmitlocken/navigation_state.dart';
 import 'package:jotrockenmitlocken/vertical_scroll_page.dart';
 import 'Blog/blog.dart';
 import 'constants.dart';
 import 'package:jotrockenmitlocken/screen_configurations.dart';
 
-class Home extends StatefulWidget {
-  const Home({
-    super.key,
-    required this.useLightMode,
-    required this.useOtherLanguageMode,
-    required this.colorSelected,
-    required this.handleBrightnessChange,
-    required this.handleLanguageChange,
-    required this.handleColorSelect,
-  });
-
-  final bool useLightMode;
-  final bool useOtherLanguageMode;
-  final ColorSeed colorSelected;
-
-  final void Function() handleLanguageChange;
-  final void Function(bool useLightMode) handleBrightnessChange;
-  final void Function(int value) handleColorSelect;
-
-  @override
-  State<Home> createState() => _HomeState();
-}
+// You can pass any object to the arguments parameter.
+// In this example, create a class that contains both
+// a customizable title and message.
 
 class AIPlayground extends StatefulWidget {
   const AIPlayground({
@@ -141,294 +124,65 @@ class _RenderingPlaygroundState extends State<RenderingPlayground> {
   }
 }
 
-class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
-  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+class Home extends StatefulWidget {
+  Home(
+      {super.key,
+      required this.useLightMode,
+      required this.useOtherLanguageMode,
+      required this.colorSelected,
+      required this.handleBrightnessChange,
+      required this.handleLanguageChange,
+      required this.handleColorSelect,
+      required this.showMediumSizeLayout,
+      required this.showLargeSizeLayout,
+      required this.controller,
+      required this.railAnimation,
+      required this.scaffoldKey,
+      required this.navigationShell});
+
+  final bool useLightMode;
+  final bool useOtherLanguageMode;
+  final bool showMediumSizeLayout;
+  final bool showLargeSizeLayout;
+
+  final ColorSeed colorSelected;
+
   late final AnimationController controller;
   late final CurvedAnimation railAnimation;
-  bool controllerInitialized = false;
-  bool showMediumSizeLayout = false;
-  bool showLargeSizeLayout = false;
 
-  int screenIndex = ScreenSelected.home.value;
-  int screenIndexNonNavBar = NonNavBarScreenSelected.imprint.value;
-  bool nonNavBarScreenSelected = false;
+  late final GlobalKey<ScaffoldState> scaffoldKey;
+  late final StatefulNavigationShell navigationShell;
+
+  final void Function() handleLanguageChange;
+  final void Function(bool useLightMode) handleBrightnessChange;
+  final void Function(int value) handleColorSelect;
+
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  int currentNavBarIndex = 0;
 
   @override
   initState() {
     super.initState();
-    controller = AnimationController(
-      duration: Duration(milliseconds: transitionLength.toInt() * 2),
-      value: 0,
-      vsync: this,
-    );
-    railAnimation = CurvedAnimation(
-      parent: controller,
-      curve: const Interval(0.5, 1.0),
-    );
   }
 
   @override
   void dispose() {
-    controller.dispose();
     super.dispose();
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-
-    final double width = MediaQuery.of(context).size.width;
-    final AnimationStatus status = controller.status;
-    if (width > mediumWidthBreakpoint) {
-      if (width > largeWidthBreakpoint) {
-        showMediumSizeLayout = false;
-        showLargeSizeLayout = true;
-      } else {
-        showMediumSizeLayout = true;
-        showLargeSizeLayout = false;
-      }
-      if (status != AnimationStatus.forward &&
-          status != AnimationStatus.completed) {
-        controller.forward();
-      }
-    } else {
-      showMediumSizeLayout = false;
-      showLargeSizeLayout = false;
-      if (status != AnimationStatus.reverse &&
-          status != AnimationStatus.dismissed) {
-        controller.reverse();
-      }
-    }
-    if (!controllerInitialized) {
-      controllerInitialized = true;
-      controller.value = width > mediumWidthBreakpoint ? 1 : 0;
-    }
-  }
-
-  void handleScreenChanged(int screenSelected) {
-    setState(() {
-      screenIndex = screenSelected;
-    });
-  }
-
-  void handleNoNavBarScreenChanged(int screenSelected) {
-    setState(() {
-      screenIndexNonNavBar = screenSelected;
-      nonNavBarScreenSelected = true;
-    });
-  }
-
-  Widget createOneTwoTransisionWidget(
-    List<Widget> childWidgetsLeftPage,
-    List<Widget> childWidgetsRightPage,
-    bool showNavBarExample,
-  ) {
-    return Expanded(
-      child: OneTwoTransition(
-        animation: railAnimation,
-        one: FirstComponentList(
-          showNavBottomBar: showNavBarExample,
-          scaffoldKey: scaffoldKey,
-          showSecondList: showMediumSizeLayout || showLargeSizeLayout,
-          childWidgetsLeftPage: childWidgetsLeftPage,
-          childWidgetsRightPage: childWidgetsRightPage,
-        ),
-        two: SecondComponentList(
-          scaffoldKey: scaffoldKey,
-          childWidgets: childWidgetsRightPage,
-        ),
-      ),
-    );
-  }
-
-  Widget createScreenFor(
-      ScreenSelected screenSelected,
-      NonNavBarScreenSelected nonNavBarScreenSelected,
-      bool showNavBarExample,
-      ColorSeed colorSelected,
-      bool useOtherLanguageMode,
-      bool noAppBarEntryForScreenSelected,
-      final void Function(int)? onSelectItem,
-      final int selectedIndex) {
-    var currentWidth = MediaQuery.of(context).size.width;
-    if (noAppBarEntryForScreenSelected) {
-      this.nonNavBarScreenSelected = false;
-      switch (nonNavBarScreenSelected) {
-        case NonNavBarScreenSelected.imprint:
-          return VerticalScrollPage(scaffoldKey: scaffoldKey, childWidgets: [
-            colDivider,
-            MarkdownFilePage(
-              filePathDe: 'assets/documents/footer/imprintDe.md',
-              filePathEn: 'assets/documents/footer/imprintEn.md',
-            ),
-            colDivider,
-            if (currentWidth < mediumWidthBreakpoint) ...[
-              Footer(
-                selectedIndex: selectedIndex,
-                onSelectItem: onSelectItem,
-              )
-            ]
-          ]);
-        case NonNavBarScreenSelected.contact:
-          return VerticalScrollPage(scaffoldKey: scaffoldKey, childWidgets: [
-            colDivider,
-            MarkdownFilePage(
-              filePathDe: 'assets/documents/footer/contactDe.md',
-              filePathEn: 'assets/documents/footer/contactEn.md',
-            ),
-            colDivider,
-            if (currentWidth < mediumWidthBreakpoint) ...[
-              Footer(
-                selectedIndex: selectedIndex,
-                onSelectItem: onSelectItem,
-              )
-            ]
-          ]);
-        case NonNavBarScreenSelected.privacyPolicy:
-          return VerticalScrollPage(scaffoldKey: scaffoldKey, childWidgets: [
-            colDivider,
-            MarkdownFilePage(
-              filePathDe: 'assets/documents/footer/privacyPolicyDe.md',
-              filePathEn: 'assets/documents/footer/privacyPolicyEn.md',
-            ),
-            colDivider,
-            if (currentWidth < mediumWidthBreakpoint) ...[
-              Footer(
-                selectedIndex: selectedIndex,
-                onSelectItem: onSelectItem,
-              )
-            ]
-          ]);
-        case NonNavBarScreenSelected.cookieDeclaration:
-          return VerticalScrollPage(scaffoldKey: scaffoldKey, childWidgets: [
-            colDivider,
-            MarkdownFilePage(
-              filePathDe: 'assets/documents/footer/cookieDeclarationDe.md',
-              filePathEn: 'assets/documents/footer/cookieDeclarationEn.md',
-            ),
-            colDivider,
-            if (currentWidth < mediumWidthBreakpoint) ...[
-              Footer(
-                selectedIndex: selectedIndex,
-                onSelectItem: onSelectItem,
-              )
-            ]
-          ]);
-        case NonNavBarScreenSelected.declarationOnAccessibility:
-          return VerticalScrollPage(scaffoldKey: scaffoldKey, childWidgets: [
-            colDivider,
-            MarkdownFilePage(
-              filePathDe:
-                  'assets/documents/footer/declarationOnAccessibilityDe.md',
-              filePathEn:
-                  'assets/documents/footer/declarationOnAccessibilityEn.md',
-            ),
-            colDivider,
-            if (currentWidth < mediumWidthBreakpoint) ...[
-              Footer(
-                selectedIndex: selectedIndex,
-                onSelectItem: onSelectItem,
-              )
-            ]
-          ]);
-      }
-    } else {
-      switch (screenSelected) {
-        case ScreenSelected.home:
-          List<Widget> childWidgetsLeftPage = [
-            colDivider,
-            AIPlayground(
-              colorSelected: widget.colorSelected,
-            ),
-            colDivider,
-          ];
-          List<Widget> childWidgetsRightPage = [
-            colDivider,
-            RenderingPlayground(
-              colorSelected: widget.colorSelected,
-            ),
-            colDivider,
-            if (currentWidth < mediumWidthBreakpoint) ...[
-              Footer(
-                selectedIndex: selectedIndex,
-                onSelectItem: onSelectItem,
-              )
-            ]
-          ];
-
-          return createOneTwoTransisionWidget(
-              childWidgetsLeftPage, childWidgetsRightPage, showNavBarExample);
-        case ScreenSelected.aboutMe:
-          List<Widget> childWidgetsLeftPage = [
-            AboutMeTable(
-                useOtherLanguageMode: useOtherLanguageMode,
-                colorSelected: colorSelected),
-          ];
-          double marginSkillTable = 0;
-          double paddingSkillTable = 5;
-
-          List<Widget> childWidgetsRightPage = [
-            const PerfectDay(),
-            const SizedBox(
-              height: 40,
-            ),
-            applyBoxDecoration(
-                SkillTable(
-                  useOtherLanguageMode: widget.useOtherLanguageMode,
-                ),
-                EdgeInsets.all(paddingSkillTable),
-                marginSkillTable,
-                30,
-                5,
-                widget.colorSelected.color),
-            const SizedBox(
-              height: 40,
-            ),
-            if (currentWidth < mediumWidthBreakpoint) ...[
-              Footer(
-                selectedIndex: selectedIndex,
-                onSelectItem: onSelectItem,
-              )
-            ]
-          ];
-          return createOneTwoTransisionWidget(
-              childWidgetsLeftPage, childWidgetsRightPage, showNavBarExample);
-        case ScreenSelected.quotations:
-          return VerticalScrollPage(scaffoldKey: scaffoldKey, childWidgets: [
-            colDivider,
-            QuotesList(
-              colorSelected: widget.colorSelected,
-            ),
-            colDivider,
-            if (currentWidth < mediumWidthBreakpoint) ...[
-              Footer(
-                selectedIndex: selectedIndex,
-                onSelectItem: onSelectItem,
-              )
-            ]
-          ]);
-        case ScreenSelected.documents:
-          return VerticalScrollPage(scaffoldKey: scaffoldKey, childWidgets: [
-            colDivider,
-            DocumentTable(
-              colorSelected: widget.colorSelected,
-            ),
-            colDivider,
-            if (currentWidth < mediumWidthBreakpoint) ...[
-              Footer(
-                selectedIndex: selectedIndex,
-                onSelectItem: onSelectItem,
-              )
-            ]
-          ]);
-      }
-    }
   }
 
   PreferredSizeWidget createAppBar() {
     return AppBar(
       title: const Text(appName),
-      actions: !showMediumSizeLayout && !showLargeSizeLayout
+      actions: !widget.showMediumSizeLayout && !widget.showLargeSizeLayout
           ? [
               _LanguageButton(
                 handleLanguageChange: widget.handleLanguageChange,
@@ -483,53 +237,37 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         // will pass the updated BuildContext to the new widget.
         child: Builder(
           builder: (context) {
-            // A toy example for an internationalized Material widget.
             return AnimatedBuilder(
-              animation: controller,
+              animation: widget.controller,
               builder: (context, child) {
                 return NavigationTransition(
-                  selectedIndex: screenIndexNonNavBar,
-                  onSelectItem: (index) {
-                    setState(() {
-                      screenIndexNonNavBar = index;
-                      handleNoNavBarScreenChanged(screenIndexNonNavBar);
-                    });
-                  },
-                  showFooter: showLargeSizeLayout || showMediumSizeLayout,
-                  scaffoldKey: scaffoldKey,
-                  animationController: controller,
-                  railAnimation: railAnimation,
+                  navigationShell: widget.navigationShell,
+                  showFooter:
+                      widget.showLargeSizeLayout || widget.showMediumSizeLayout,
+                  scaffoldKey: widget.scaffoldKey,
+                  animationController: widget.controller,
+                  railAnimation: widget.railAnimation,
                   appBar: createAppBar(),
-                  body: createScreenFor(
-                    ScreenSelected.values[screenIndex],
-                    NonNavBarScreenSelected.values[screenIndexNonNavBar],
-                    controller.value == 1,
-                    widget.colorSelected,
-                    widget.useOtherLanguageMode,
-                    nonNavBarScreenSelected,
-                    (index) {
-                      setState(() {
-                        screenIndexNonNavBar = index;
-                        handleNoNavBarScreenChanged(screenIndexNonNavBar);
-                      });
-                    },
-                    screenIndexNonNavBar,
+                  body: Flexible(
+                    child: widget.navigationShell,
                   ),
                   navigationRail: NavigationRail(
-                    extended: showLargeSizeLayout,
+                    extended: widget.showLargeSizeLayout,
                     destinations:
                         ScreenConfigurations.getNavRailDestinations(context),
-                    selectedIndex: screenIndex,
+                    selectedIndex: (widget.navigationShell.currentIndex <
+                            ScreenConfigurations.getAppBarDestinations(context)
+                                .length)
+                        ? widget.navigationShell.currentIndex
+                        : currentNavBarIndex,
                     onDestinationSelected: (index) {
-                      setState(() {
-                        screenIndex = index;
-                        handleScreenChanged(screenIndex);
-                      });
+                      currentNavBarIndex = index;
+                      widget.navigationShell.goBranch(index);
                     },
                     trailing: Expanded(
                       child: Padding(
                         padding: const EdgeInsets.only(bottom: 20),
-                        child: showLargeSizeLayout
+                        child: widget.showLargeSizeLayout
                             ? _ExpandedTrailingActions(
                                 useLightMode: widget.useLightMode,
                                 useOtherLanguageMode:
@@ -546,15 +284,15 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                     ),
                   ),
                   navigationBar: NavigationBars(
-                    onSelectItem: (index) {
-                      setState(() {
-                        screenIndex = index;
-                        handleScreenChanged(screenIndex);
-                      });
-                    },
-                    selectedIndex: screenIndex,
-                    isExampleBar: false,
-                  ),
+                      //onSelectItem: (index) {
+                      // setState(() {
+                      //   navigationState.screenIndex = index;
+                      //   handleScreenChanged(navigationState.screenIndex);
+                      // });
+                      //},
+                      // selectedIndex: navigationState.screenIndex,
+                      // isExampleBar: false,
+                      ),
                 );
               },
             );
@@ -759,7 +497,7 @@ class _ExpandedColorSeedAction extends StatelessWidget {
 }
 
 class NavigationTransition extends StatefulWidget {
-  NavigationTransition(
+  const NavigationTransition(
       {super.key,
       required this.scaffoldKey,
       required this.animationController,
@@ -769,8 +507,7 @@ class NavigationTransition extends StatefulWidget {
       required this.appBar,
       required this.body,
       required this.showFooter,
-      required this.onSelectItem,
-      required this.selectedIndex});
+      required this.navigationShell});
 
   final GlobalKey<ScaffoldState> scaffoldKey;
   final AnimationController animationController;
@@ -780,8 +517,7 @@ class NavigationTransition extends StatefulWidget {
   final PreferredSizeWidget appBar;
   final Widget body;
   final bool showFooter;
-  final void Function(int)? onSelectItem;
-  final int selectedIndex;
+  final StatefulNavigationShell navigationShell;
 
   @override
   State<NavigationTransition> createState() => _NavigationTransitionState();
@@ -799,8 +535,6 @@ class _NavigationTransitionState extends State<NavigationTransition> {
   void initState() {
     super.initState();
 
-    selectedIndex = widget.selectedIndex;
-
     controller = widget.animationController;
     railAnimation = widget.railAnimation;
 
@@ -815,30 +549,24 @@ class _NavigationTransitionState extends State<NavigationTransition> {
   @override
   Widget build(BuildContext context) {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
-
+    var currentWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      key: widget.scaffoldKey,
+      //key: widget.scaffoldKey,
       appBar: widget.appBar,
-      body: Row(
-        children: <Widget>[
-          RailTransition(
-            animation: railAnimation,
-            backgroundColor: colorScheme.surface,
-            child: widget.navigationRail,
-          ),
-          widget.body,
-        ],
+      body: Container(
+        child: Row(
+          children: <Widget>[
+            RailTransition(
+              animation: railAnimation,
+              backgroundColor: colorScheme.surface,
+              child: widget.navigationRail,
+            ),
+            widget.body,
+          ],
+        ),
       ),
       bottomNavigationBar: widget.showFooter
-          ? Footer(
-              selectedIndex: selectedIndex,
-              onSelectItem: (index) {
-                setState(() {
-                  selectedIndex = index;
-                  widget.onSelectItem!(index);
-                });
-              },
-            )
+          ? Footer()
           : BarTransition(
               animation: barAnimation,
               railAnimation: railAnimation,

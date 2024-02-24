@@ -3,13 +3,14 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import 'package:jotrockenmitlocken/app_frame.dart';
+import 'package:jotrockenmitlocken/navigation_state.dart';
 
 import 'constants.dart';
-import 'home.dart';
 
 void main() {
+  //usePathUrlStrategy();
   runApp(
     const App(),
   );
@@ -57,38 +58,30 @@ class _AppState extends State<App> {
     });
   }
 
+  NavigationState navigationState = NavigationState(
+      screenIndex: ScreenSelected.documents.value,
+      screenIndexNonNavBar: NonNavBarScreenSelected.imprint.value,
+      nonNavBarScreenSelected: false);
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        localizationsDelegates: const [
-          AppLocalizations.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        supportedLocales: supportedLanguages,
-        title: appTitle,
-        themeMode: themeMode,
-        theme: ThemeData(
-          colorSchemeSeed: colorSelected.color,
-          colorScheme: null,
-          useMaterial3: true,
-          brightness: Brightness.light,
-        ),
-        darkTheme: ThemeData(
-          colorSchemeSeed: colorSelected.color,
-          useMaterial3: true,
-          brightness: Brightness.dark,
-        ),
-        home: SelectionArea(
-            child: Home(
-          useLightMode: useLightMode,
-          useOtherLanguageMode: useOtherLanguageMode,
-          handleBrightnessChange: handleBrightnessChange,
-          handleLanguageChange: handleLanguageChange,
-          handleColorSelect: handleColorSelect,
-          colorSelected: colorSelected,
-        )));
+    return AppFrame(
+        useLightMode: useLightMode,
+        useOtherLanguageMode: useOtherLanguageMode,
+        handleBrightnessChange: handleBrightnessChange,
+        handleLanguageChange: handleLanguageChange,
+        handleColorSelect: handleColorSelect,
+        colorSelected: colorSelected,
+        themeMode: themeMode);
+
+    // home: SelectionArea(
+    //     child: Home(
+    //   useLightMode: useLightMode,
+    //   useOtherLanguageMode: useOtherLanguageMode,
+    //   handleBrightnessChange: handleBrightnessChange,
+    //   handleLanguageChange: handleLanguageChange,
+    //   handleColorSelect: handleColorSelect,
+    //   colorSelected: colorSelected,
+    // )));
   }
 }
