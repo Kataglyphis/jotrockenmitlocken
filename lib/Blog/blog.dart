@@ -71,11 +71,9 @@ class _FirstComponentListState extends State<FirstComponentList> {
 class SecondComponentList extends StatefulWidget {
   SecondComponentList({
     super.key,
-    required this.scaffoldKey,
     required this.childWidgets,
   });
 
-  final GlobalKey<ScaffoldState> scaffoldKey;
   List<Widget> childWidgets;
 
   @override
