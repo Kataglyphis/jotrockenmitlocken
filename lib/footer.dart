@@ -7,9 +7,7 @@ import 'package:jotrockenmitlocken/constants.dart';
 class Footer extends StatefulWidget {
   const Footer({
     super.key,
-    //required this.navigationShell,
   });
-  //final StatefulNavigationShell navigationShell;
   @override
   State<Footer> createState() => _Footer();
 }
@@ -18,7 +16,6 @@ class _Footer extends State<Footer> {
   @override
   void initState() {
     super.initState();
-    //selectedIndex = widget.selectedIndex;
   }
 
   Widget createTextButtons() {
