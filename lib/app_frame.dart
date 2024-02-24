@@ -110,61 +110,59 @@ class _AppFrameState extends State<AppFrame>
     }
   }
 
+  Widget createSinglePage(BuildContext context, List<Widget> children) {
+    var currentWidth = MediaQuery.of(context).size.width;
+    const colDivider = SizedBox(height: 10);
+    return Row(
+      children: [
+        VerticalScrollPage(scaffoldKey: scaffoldKey, childWidgets: [
+          colDivider,
+          ...children,
+          colDivider,
+          if (currentWidth < mediumWidthBreakpoint) ...[Footer()]
+        ]),
+      ],
+    );
+  }
+
   Widget createOneTwoTransisionWidget(List<Widget> childWidgetsLeftPage,
       List<Widget> childWidgetsRightPage, double currentWidth) {
     childWidgetsRightPage += [
       colDivider,
       if (currentWidth < mediumWidthBreakpoint) ...[Footer()]
     ];
-    return Expanded(
-      child: OneTwoTransition(
-        animation: railAnimation,
-        one: FirstComponentList(
-          scaffoldKey: scaffoldKey,
-          showSecondList: showMediumSizeLayout || showLargeSizeLayout,
-          childWidgetsLeftPage: childWidgetsLeftPage,
-          childWidgetsRightPage: childWidgetsRightPage,
+    return Row(
+      children: [
+        Expanded(
+          child: OneTwoTransition(
+            animation: railAnimation,
+            one: FirstComponentList(
+              scaffoldKey: scaffoldKey,
+              showSecondList: showMediumSizeLayout || showLargeSizeLayout,
+              childWidgetsLeftPage: childWidgetsLeftPage,
+              childWidgetsRightPage: childWidgetsRightPage,
+            ),
+            two: SecondComponentList(
+              scaffoldKey: scaffoldKey,
+              childWidgets: childWidgetsRightPage,
+            ),
+          ),
         ),
-        two: SecondComponentList(
-          scaffoldKey: scaffoldKey,
-          childWidgets: childWidgetsRightPage,
-        ),
-      ),
+      ],
     );
   }
 
   GoRoute buildGoRouteForSPA(String path, Widget child) {
-    var wrappedChild = Row(
-      children: [
-        child,
-      ],
-    );
     return GoRoute(
         path: path,
         pageBuilder: (context, state) {
           return NoTransitionPage(
-            child: wrappedChild,
+            child: child,
           );
         });
   }
 
-  Widget buildDeEnLangMarkdownPage(
-      {required String filePathDe,
-      required String filePathEn,
-      required double currentWidth}) {
-    return VerticalScrollPage(scaffoldKey: scaffoldKey, childWidgets: [
-      colDivider,
-      MarkdownFilePage(
-        filePathDe: filePathDe,
-        filePathEn: filePathEn,
-      ),
-      colDivider,
-      if (currentWidth < mediumWidthBreakpoint) ...[Footer()]
-    ]);
-  }
-
-  Widget createLandingPage(BuildContext context) {
-    var currentWidth = MediaQuery.of(context).size.width;
+  List<List<Widget>> createHomeChildPages(BuildContext context) {
     const colDivider = SizedBox(height: 10);
     List<Widget> childWidgetsLeftPage = [
       colDivider,
@@ -178,17 +176,13 @@ class _AppFrameState extends State<AppFrame>
       RenderingPlayground(
         colorSelected: widget.colorSelected,
       ),
-      // colDivider,
-      // if (currentWidth < mediumWidthBreakpoint) ...[Footer()]
     ];
-    return createOneTwoTransisionWidget(
-        childWidgetsLeftPage, childWidgetsRightPage, currentWidth);
+    return [childWidgetsLeftPage, childWidgetsRightPage];
   }
 
-  Widget createAboutMePage(BuildContext context) {
-    var currentWidth = MediaQuery.of(context).size.width;
+  List<List<Widget>> createAboutMeChildPages(BuildContext context) {
     const colDivider = SizedBox(height: 10);
-    List<Widget> childWidgetsLeftPageAboutMePage = [
+    List<Widget> childWidgetsLeftPage = [
       AboutMeTable(
           useOtherLanguageMode: widget.useOtherLanguageMode,
           colorSelected: widget.colorSelected),
@@ -196,7 +190,7 @@ class _AppFrameState extends State<AppFrame>
     double marginSkillTable = 0;
     double paddingSkillTable = 5;
 
-    List<Widget> childWidgetsRightPageAboutMePage = [
+    List<Widget> childWidgetsRightPage = [
       const PerfectDay(),
       const SizedBox(
         height: 40,
@@ -212,46 +206,44 @@ class _AppFrameState extends State<AppFrame>
           widget.colorSelected.color),
     ];
 
-    return createOneTwoTransisionWidget(childWidgetsLeftPageAboutMePage,
-        childWidgetsRightPageAboutMePage, currentWidth);
-  }
-
-  Widget createSinglePage(BuildContext context, List<Widget> children) {
-    var currentWidth = MediaQuery.of(context).size.width;
-    const colDivider = SizedBox(height: 10);
-    return VerticalScrollPage(scaffoldKey: scaffoldKey, childWidgets: [
-      colDivider,
-      ...children,
-      colDivider,
-      if (currentWidth < mediumWidthBreakpoint) ...[Footer()]
-    ]);
+    return [childWidgetsLeftPage, childWidgetsRightPage];
   }
 
   List<StatefulShellBranch> createFooterBranches(double currentWidth) {
-    var imprint = buildDeEnLangMarkdownPage(
+    var imprint = createSinglePage(context, [
+      MarkdownFilePage(
         filePathDe: 'assets/documents/footer/imprintDe.md',
         filePathEn: 'assets/documents/footer/imprintEn.md',
-        currentWidth: currentWidth);
+      )
+    ]);
 
-    var contact = buildDeEnLangMarkdownPage(
+    var contact = createSinglePage(context, [
+      MarkdownFilePage(
         filePathDe: 'assets/documents/footer/contactDe.md',
         filePathEn: 'assets/documents/footer/contactEn.md',
-        currentWidth: currentWidth);
+      )
+    ]);
 
-    var privacyPolicy = buildDeEnLangMarkdownPage(
+    var privacyPolicy = createSinglePage(context, [
+      MarkdownFilePage(
         filePathDe: 'assets/documents/footer/privacyPolicyDe.md',
         filePathEn: 'assets/documents/footer/privacyPolicyEn.md',
-        currentWidth: currentWidth);
+      )
+    ]);
 
-    var cookieStatement = buildDeEnLangMarkdownPage(
+    var cookieStatement = createSinglePage(context, [
+      MarkdownFilePage(
         filePathDe: 'assets/documents/footer/cookieDeclarationDe.md',
         filePathEn: 'assets/documents/footer/cookieDeclarationEn.md',
-        currentWidth: currentWidth);
+      )
+    ]);
 
-    var declarationOnAccessibility = buildDeEnLangMarkdownPage(
+    var declarationOnAccessibility = createSinglePage(context, [
+      MarkdownFilePage(
         filePathDe: 'assets/documents/footer/declarationOnAccessibilityDe.md',
         filePathEn: 'assets/documents/footer/declarationOnAccessibilityEn.md',
-        currentWidth: currentWidth);
+      )
+    ]);
     return [
       StatefulShellBranch(
         routes: <RouteBase>[
@@ -282,10 +274,64 @@ class _AppFrameState extends State<AppFrame>
     ];
   }
 
+  List<StatefulShellBranch> createNavBarBranches(double currentWidth) {
+    var aboutMePagesLeftRight = createAboutMeChildPages(context);
+    var homePagesLeftRight = createHomeChildPages(context);
+    // The route branch for the first tab of the bottom navigation bar.
+    return [
+      StatefulShellBranch(
+        navigatorKey: _sectionNavigatorKey,
+        routes: <RouteBase>[
+          buildGoRouteForSPA(
+              '/home',
+              createOneTwoTransisionWidget(
+                  homePagesLeftRight[0], homePagesLeftRight[1], currentWidth)),
+        ],
+      ),
+      StatefulShellBranch(
+        routes: <RouteBase>[
+          buildGoRouteForSPA(
+              '/aboutMe',
+              createOneTwoTransisionWidget(aboutMePagesLeftRight[0],
+                  aboutMePagesLeftRight[1], currentWidth)),
+        ],
+      ),
+      StatefulShellBranch(
+        routes: <RouteBase>[
+          buildGoRouteForSPA(
+              '/quotations',
+              createSinglePage(
+                context,
+                [
+                  QuotesList(
+                    colorSelected: widget.colorSelected,
+                  ),
+                ],
+              )),
+        ],
+      ),
+      StatefulShellBranch(
+        // It's not necessary to provide a navigatorKey if it isn't also
+        // needed elsewhere. If not provided, a default key will be used.
+        routes: <RouteBase>[
+          buildGoRouteForSPA(
+              '/documents',
+              createSinglePage(
+                context,
+                [
+                  DocumentTable(
+                    colorSelected: widget.colorSelected,
+                  )
+                ],
+              )),
+        ],
+      ),
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
     var currentWidth = MediaQuery.of(context).size.width;
-
     final GoRouter _routerConfig = GoRouter(
         navigatorKey: _rootNavigatorKey,
         initialLocation: '/home',
@@ -312,51 +358,7 @@ class _AppFrameState extends State<AppFrame>
                 navigationShell: navigationShell,
               );
             },
-            branches: <StatefulShellBranch>[
-                  // The route branch for the first tab of the bottom navigation bar.
-                  StatefulShellBranch(
-                    navigatorKey: _sectionNavigatorKey,
-                    routes: <RouteBase>[
-                      buildGoRouteForSPA('/home', createLandingPage(context)),
-                    ],
-                  ),
-                  StatefulShellBranch(
-                    routes: <RouteBase>[
-                      buildGoRouteForSPA(
-                          '/aboutMe', createAboutMePage(context)),
-                    ],
-                  ),
-                  StatefulShellBranch(
-                    routes: <RouteBase>[
-                      buildGoRouteForSPA(
-                          '/quotations',
-                          createSinglePage(
-                            context,
-                            [
-                              QuotesList(
-                                colorSelected: widget.colorSelected,
-                              ),
-                            ],
-                          )),
-                    ],
-                  ),
-                  StatefulShellBranch(
-                    // It's not necessary to provide a navigatorKey if it isn't also
-                    // needed elsewhere. If not provided, a default key will be used.
-                    routes: <RouteBase>[
-                      buildGoRouteForSPA(
-                          '/documents',
-                          createSinglePage(
-                            context,
-                            [
-                              DocumentTable(
-                                colorSelected: widget.colorSelected,
-                              )
-                            ],
-                          )),
-                    ],
-                  ),
-                ] +
+            branches: createNavBarBranches(currentWidth) +
                 createFooterBranches(currentWidth),
           )
         ]);

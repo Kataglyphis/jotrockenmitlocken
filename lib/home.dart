@@ -2,19 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
-import 'package:jotrockenmitlocken/AboutMe/about_me_table.dart';
-import 'package:jotrockenmitlocken/AboutMe/perfect_day_chart.dart';
-import 'package:jotrockenmitlocken/AboutMe/skill_table.dart';
 import 'package:jotrockenmitlocken/Decoration/decoration_helper.dart';
-import 'package:jotrockenmitlocken/DocumentPage/document_table.dart';
-import 'package:jotrockenmitlocken/Media/markdown_page.dart';
-import 'package:jotrockenmitlocken/Media/quotes_list.dart';
 import 'package:jotrockenmitlocken/browser_helper.dart';
 import 'package:jotrockenmitlocken/footer.dart';
-import 'package:jotrockenmitlocken/navigation_state.dart';
-import 'package:jotrockenmitlocken/vertical_scroll_page.dart';
-import 'Blog/blog.dart';
-import 'constants.dart';
+import 'package:jotrockenmitlocken/Blog/blog.dart';
+import 'package:jotrockenmitlocken/constants.dart';
 import 'package:jotrockenmitlocken/screen_configurations.dart';
 
 // You can pass any object to the arguments parameter.
@@ -563,7 +555,7 @@ class _NavigationTransitionState extends State<NavigationTransition> {
         ),
       ),
       bottomNavigationBar: widget.showFooter
-          ? Footer()
+          ? const Footer()
           : BarTransition(
               animation: barAnimation,
               railAnimation: railAnimation,
