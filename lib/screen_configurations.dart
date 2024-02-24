@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:go_router/go_router.dart';
 import 'constants.dart';
 
 class ScreenConfigurations {
+  // static List<StatefulShellBranch> getNavRailRoutes() {
+
+  // }
+
   static List<NavigationDestination> getAppBarDestinations(
       BuildContext context) {
     var result = [

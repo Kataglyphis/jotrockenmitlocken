@@ -27,7 +27,6 @@ class _VerticalScrollPage extends State<VerticalScrollPage> {
   Widget build(BuildContext context) {
     return Expanded(
       child: FirstComponentList(
-        showNavBottomBar: false,
         scaffoldKey: widget.scaffoldKey,
         showSecondList: false,
         childWidgetsLeftPage: [

@@ -110,16 +110,16 @@ class _AppFrameState extends State<AppFrame>
     }
   }
 
-  Widget createOneTwoTransisionWidget(
-    List<Widget> childWidgetsLeftPage,
-    List<Widget> childWidgetsRightPage,
-    bool showNavBarExample,
-  ) {
+  Widget createOneTwoTransisionWidget(List<Widget> childWidgetsLeftPage,
+      List<Widget> childWidgetsRightPage, double currentWidth) {
+    childWidgetsRightPage += [
+      colDivider,
+      if (currentWidth < mediumWidthBreakpoint) ...[Footer()]
+    ];
     return Expanded(
       child: OneTwoTransition(
         animation: railAnimation,
         one: FirstComponentList(
-          showNavBottomBar: showNavBarExample,
           scaffoldKey: scaffoldKey,
           showSecondList: showMediumSizeLayout || showLargeSizeLayout,
           childWidgetsLeftPage: childWidgetsLeftPage,
@@ -178,11 +178,53 @@ class _AppFrameState extends State<AppFrame>
       RenderingPlayground(
         colorSelected: widget.colorSelected,
       ),
-      colDivider,
-      if (currentWidth < mediumWidthBreakpoint) ...[Footer()]
+      // colDivider,
+      // if (currentWidth < mediumWidthBreakpoint) ...[Footer()]
     ];
     return createOneTwoTransisionWidget(
-        childWidgetsLeftPage, childWidgetsRightPage, true);
+        childWidgetsLeftPage, childWidgetsRightPage, currentWidth);
+  }
+
+  Widget createAboutMePage(BuildContext context) {
+    var currentWidth = MediaQuery.of(context).size.width;
+    const colDivider = SizedBox(height: 10);
+    List<Widget> childWidgetsLeftPageAboutMePage = [
+      AboutMeTable(
+          useOtherLanguageMode: widget.useOtherLanguageMode,
+          colorSelected: widget.colorSelected),
+    ];
+    double marginSkillTable = 0;
+    double paddingSkillTable = 5;
+
+    List<Widget> childWidgetsRightPageAboutMePage = [
+      const PerfectDay(),
+      const SizedBox(
+        height: 40,
+      ),
+      applyBoxDecoration(
+          SkillTable(
+            useOtherLanguageMode: widget.useOtherLanguageMode,
+          ),
+          EdgeInsets.all(paddingSkillTable),
+          marginSkillTable,
+          30,
+          5,
+          widget.colorSelected.color),
+    ];
+
+    return createOneTwoTransisionWidget(childWidgetsLeftPageAboutMePage,
+        childWidgetsRightPageAboutMePage, currentWidth);
+  }
+
+  Widget createSinglePage(BuildContext context, List<Widget> children) {
+    var currentWidth = MediaQuery.of(context).size.width;
+    const colDivider = SizedBox(height: 10);
+    return VerticalScrollPage(scaffoldKey: scaffoldKey, childWidgets: [
+      colDivider,
+      ...children,
+      colDivider,
+      if (currentWidth < mediumWidthBreakpoint) ...[Footer()]
+    ]);
   }
 
   List<StatefulShellBranch> createFooterBranches(double currentWidth) {
@@ -243,81 +285,6 @@ class _AppFrameState extends State<AppFrame>
   @override
   Widget build(BuildContext context) {
     var currentWidth = MediaQuery.of(context).size.width;
-    const colDivider = SizedBox(height: 10);
-    // List<Widget> childWidgetsLeftPage = [
-    //   colDivider,
-    //   AIPlayground(
-    //     colorSelected: widget.colorSelected,
-    //   ),
-    //   colDivider,
-    // ];
-    // List<Widget> childWidgetsRightPage = [
-    //   colDivider,
-    //   RenderingPlayground(
-    //     colorSelected: widget.colorSelected,
-    //   ),
-    //   colDivider,
-    //   if (currentWidth < mediumWidthBreakpoint) ...[
-    //     Footer(
-    //         // selectedIndex: selectedIndex,
-    //         // onSelectItem: onSelectItem,
-    //         )
-    //   ]
-    // ];
-    // var landingPage = createOneTwoTransisionWidget(
-    //     childWidgetsLeftPage, childWidgetsRightPage, true);
-
-    var documents = VerticalScrollPage(scaffoldKey: scaffoldKey, childWidgets: [
-      colDivider,
-      DocumentTable(
-        colorSelected: widget.colorSelected,
-      ),
-      colDivider,
-      if (currentWidth < mediumWidthBreakpoint) ...[Footer()]
-    ]);
-
-    List<Widget> childWidgetsLeftPageAboutMePage = [
-      AboutMeTable(
-          useOtherLanguageMode: widget.useOtherLanguageMode,
-          colorSelected: widget.colorSelected),
-    ];
-    double marginSkillTable = 0;
-    double paddingSkillTable = 5;
-
-    List<Widget> childWidgetsRightPageAboutMePage = [
-      const PerfectDay(),
-      const SizedBox(
-        height: 40,
-      ),
-      applyBoxDecoration(
-          SkillTable(
-            useOtherLanguageMode: widget.useOtherLanguageMode,
-          ),
-          EdgeInsets.all(paddingSkillTable),
-          marginSkillTable,
-          30,
-          5,
-          widget.colorSelected.color),
-      const SizedBox(
-        height: 40,
-      ),
-      if (currentWidth < mediumWidthBreakpoint) ...[Footer()]
-    ];
-
-    var aboutMePage = createOneTwoTransisionWidget(
-        childWidgetsLeftPageAboutMePage,
-        childWidgetsRightPageAboutMePage,
-        false);
-
-    var quotations =
-        VerticalScrollPage(scaffoldKey: scaffoldKey, childWidgets: [
-      colDivider,
-      QuotesList(
-        colorSelected: widget.colorSelected,
-      ),
-      colDivider,
-      if (currentWidth < mediumWidthBreakpoint) ...[Footer()]
-    ]);
 
     final GoRouter _routerConfig = GoRouter(
         navigatorKey: _rootNavigatorKey,
@@ -354,20 +321,39 @@ class _AppFrameState extends State<AppFrame>
                     ],
                   ),
                   StatefulShellBranch(
+                    routes: <RouteBase>[
+                      buildGoRouteForSPA(
+                          '/aboutMe', createAboutMePage(context)),
+                    ],
+                  ),
+                  StatefulShellBranch(
+                    routes: <RouteBase>[
+                      buildGoRouteForSPA(
+                          '/quotations',
+                          createSinglePage(
+                            context,
+                            [
+                              QuotesList(
+                                colorSelected: widget.colorSelected,
+                              ),
+                            ],
+                          )),
+                    ],
+                  ),
+                  StatefulShellBranch(
                     // It's not necessary to provide a navigatorKey if it isn't also
                     // needed elsewhere. If not provided, a default key will be used.
                     routes: <RouteBase>[
-                      buildGoRouteForSPA('/documents', documents),
-                    ],
-                  ),
-                  StatefulShellBranch(
-                    routes: <RouteBase>[
-                      buildGoRouteForSPA('/aboutMe', aboutMePage),
-                    ],
-                  ),
-                  StatefulShellBranch(
-                    routes: <RouteBase>[
-                      buildGoRouteForSPA('/quotations', quotations),
+                      buildGoRouteForSPA(
+                          '/documents',
+                          createSinglePage(
+                            context,
+                            [
+                              DocumentTable(
+                                colorSelected: widget.colorSelected,
+                              )
+                            ],
+                          )),
                     ],
                   ),
                 ] +

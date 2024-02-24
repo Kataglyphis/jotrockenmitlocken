@@ -5,6 +5,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:jotrockenmitlocken/screen_configurations.dart';
+import 'package:go_router/go_router.dart';
 
 const rowDivider = SizedBox(width: 20);
 const colDivider = SizedBox(height: 10);
@@ -16,14 +17,12 @@ const double widthConstraint = 450;
 class FirstComponentList extends StatefulWidget {
   FirstComponentList({
     super.key,
-    required this.showNavBottomBar,
     required this.scaffoldKey,
     required this.showSecondList,
     required this.childWidgetsLeftPage,
     required this.childWidgetsRightPage,
   });
 
-  final bool showNavBottomBar;
   final GlobalKey<ScaffoldState> scaffoldKey;
   final bool showSecondList;
   List<Widget> childWidgetsLeftPage;
@@ -218,67 +217,45 @@ class _ClearButton extends StatelessWidget {
 enum Value { first, second }
 
 class NavigationBars extends StatefulWidget {
-  const NavigationBars({
+  NavigationBars({
     super.key,
-    // this.onSelectItem,
-    // required this.selectedIndex,
-    // required this.isExampleBar,
-    // this.isBadgeExample = false,
+    required this.navigationShell,
+    required this.currentNavBarIndex,
+    required this.handleChangedNavBarIndex,
   });
 
-  //final void Function(int)? onSelectItem;
-  //final int selectedIndex;
-  //final bool isExampleBar;
-  //final bool isBadgeExample;
+  int currentNavBarIndex;
+  StatefulNavigationShell navigationShell;
+  final void Function(int value) handleChangedNavBarIndex;
 
   @override
   State<NavigationBars> createState() => _NavigationBarsState();
 }
 
 class _NavigationBarsState extends State<NavigationBars> {
-  //late int selectedIndex;
-
   @override
   void initState() {
     super.initState();
-    //selectedIndex = widget.selectedIndex;
   }
 
   @override
   void didUpdateWidget(covariant NavigationBars oldWidget) {
     super.didUpdateWidget(oldWidget);
-    // if (widget.selectedIndex != oldWidget.selectedIndex) {
-    //   selectedIndex = widget.selectedIndex;
-    // }
   }
 
   @override
   Widget build(BuildContext context) {
     // App NavigationBar should get first focus.
     Widget navigationBar = Focus(
-        autofocus: false, //!(widget.isExampleBar || widget.isBadgeExample),
+        autofocus: true,
         child: NavigationBar(
-          selectedIndex: 0, // selectedIndex,
+          selectedIndex: widget.currentNavBarIndex,
           onDestinationSelected: (index) {
-            setState(() {
-              //selectedIndex = index;
-            });
-            //if (!widget.isExampleBar) widget.onSelectItem!(index);
+            widget.handleChangedNavBarIndex(index);
+            widget.navigationShell.goBranch(index);
           },
           destinations: ScreenConfigurations.getAppBarDestinations(context),
         ));
-
-    // if (widget.isExampleBar && widget.isBadgeExample) {
-    //   navigationBar = ComponentDecoration(
-    //       label: 'Badges',
-    //       tooltipMessage: 'Use Badge or Badge.count',
-    //       child: navigationBar);
-    // } else if (widget.isExampleBar) {
-    //   navigationBar = ComponentDecoration(
-    //       label: 'Navigation bar',
-    //       tooltipMessage: 'Use NavigationBar',
-    //       child: navigationBar);
-    // }
 
     return navigationBar;
   }

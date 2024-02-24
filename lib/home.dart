@@ -284,15 +284,12 @@ class _HomeState extends State<Home> {
                     ),
                   ),
                   navigationBar: NavigationBars(
-                      //onSelectItem: (index) {
-                      // setState(() {
-                      //   navigationState.screenIndex = index;
-                      //   handleScreenChanged(navigationState.screenIndex);
-                      // });
-                      //},
-                      // selectedIndex: navigationState.screenIndex,
-                      // isExampleBar: false,
-                      ),
+                    currentNavBarIndex: currentNavBarIndex,
+                    navigationShell: widget.navigationShell,
+                    handleChangedNavBarIndex: (index) {
+                      currentNavBarIndex = index;
+                    },
+                  ),
                 );
               },
             );
