@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-  <!--
+	<!--
     If you are serving your web app in a path other than the root, change the
     href value below to reflect the base path you are serving from.
 
@@ -14,281 +15,90 @@
     This is a placeholder for base href that will be replaced by the value of
     the `--base-href` argument provided to `flutter build`.
   -->
-  <base href="$FLUTTER_BASE_HREF">
+	<base href="$FLUTTER_BASE_HREF">
 
-  <meta charset="UTF-8">
-  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="Personal website by Jonas Heinle.">
+	<meta charset="UTF-8">
+	<meta content="IE=Edge" http-equiv="X-UA-Compatible">
+	<meta name="description" content="Personal website by Jonas Heinle.">
 
-  <!-- iOS meta tags & icons -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="jotrockenmitlocken">
-  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+	<!-- iOS meta tags & icons -->
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-title" content="jotrockenmitlocken">
+	<link rel="apple-touch-icon" href="icons/Icon-192.png">
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png"/>
+	<!-- Favicon -->
+	<link rel="icon" type="image/png" href="favicon.png" />
 
-  <title>jotrockenmitlocken</title>
-  <link rel="manifest" href="manifest.json">
+	<title>jotrockenmitlocken</title>
+	<link rel="manifest" href="manifest.json">
 
-  <script>
-    // The value below is injected by flutter build, do not touch.
-    const serviceWorkerVersion = null;
-  </script>
-  <!-- This script adds the flutter initialization JS code -->
-  <script src="flutter.js" defer></script>
-  <style>
-    :root {
-    --kPrimaryColor: rgb(105,240,174);
-    }
-    .loading {
-      display: flex;
-	  flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      margin: 0;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      -ms-transform: translate(-50%, -50%);
-      transform: translate(-50%, -50%);
-    }
+	<script>
+		// The value below is injected by flutter build, do not touch.
+		const serviceWorkerVersion = null;
+	</script>
+	<!-- This script adds the flutter initialization JS code -->
+	<script src="flutter.js" defer></script>
 
-	#loading-message {
-        color: #000000;
-        font-size: 24px;
-        margin-left: 15px;
-    }
-	/* #69f0ae */
-    #background-animation {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: -1;
-        background: linear-gradient(45deg, #ffffff, #69f0ae);
-        background-size: 400% 400%;
-        animation: gradientAnimation 5s ease infinite;
-    }
-	/* #ffffff, #69f0ae */
-    .loader {
-      border: 16px solid #f3f3f3;
-      border-radius: 50%;
-      border: 15px solid ;
-      border-top: 16px solid var(--kPrimaryColor);
-      border-right: 16px solid white;
-      border-bottom: 16px solid var(--kPrimaryColor);
-      border-left: 16px solid white;
-      width: 120px;
-      height: 120px;
-      -webkit-animation: spin 2s linear infinite;
-      animation: spin 2s linear infinite;
-	  margin: 10px 0;
-    }
-
-    @-webkit-keyframes spin {
-      0% {
-        -webkit-transform: rotate(0deg);
-      }
-      100% {
-        -webkit-transform: rotate(360deg);
-      }
-    }
-
-    @keyframes spin {
-      0% {
-        transform: rotate(0deg);
-      }
-      100% {
-        transform: rotate(360deg);
-      }
-    }
-
-	@keyframes gradientAnimation {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
-    }
-
-	#cookie-notice {
-		background-color: #fff;
-		bottom: 0;
-		box-shadow: 0px 8px 24px rgba(0, 0, 0, .25);
-		-webkit-box-direction: normal;
-		-webkit-font-smoothing: antialiased;
-		display: none;
-		left: 0;
-		opacity: 0;
-		padding: 40px 0;
-		position: fixed;
-		width: 100%;
-		z-index: 11;
-	}
-	
-	#cookie-notice.show {
-	animation-delay: .2s;
-	animation-duration: .5s;
-	animation-fill-mode: forwards;
-	animation-iteration-count: 1;
-	animation-name: fadein;
-	animation-timing-function: cubic-bezier(.27, .89, .39, .95);
-	display: block;
-	}
-	
-	@keyframes fadein {
-	0% {
-		opacity: 0
-	}
-
-	to {
-		opacity: 1
-	}
-	}
-	
-	.container {
-	align-items: center;
-	display: flex;
-	justify-content: space-between;
-	position: relative;
-	top: 1px;
-	margin: 0 auto;
-	max-width: calc(1280px - 100px);
-	width: calc(100% - 24px*2);
-	}
-	
-		.container p {
-		max-width: 1200px;
-		margin: 0;
-		margin-right: 50px;
-		color: #4a4a4a;
-		font-size: 16px;
-		font-family: "Roboto", sans-serif;
-		line-height: 1.5;
-
+	<link rel="stylesheet" type="text/css" href="css/cookie.css">
+	<link rel="stylesheet" type="text/css" href="css/loading_animation.css">
+	<style>
+		:root {
+			--kPrimaryColor: rgb(105, 240, 174);
 		}
-
-		p a {
-		color: #0468d7;
-		text-decoration: none;
-		}
-
-		button {
-		background-color: #0468d7;
-		color: #fff;
-		align-items: center;
-		justify-content: center;
-		border: 0 solid;
-		border-radius: 24px;
-		cursor: pointer;
-		display: inline-flex;
-		font-family: "Google Sans", sans-serif;
-		font-size: 14px;
-		font-weight: 700;
-		height: 40px;
-		padding: 0 32px;
-		text-align: center;
-		line-height: 1.15;
-		}
-  </style>
+	</style>
 </head>
+
 <body>
 	<div>
-	<!-- Cookie notice -->
-	<section id="cookie-notice">
-		<div class="container">
-		<div id="message"></div>
-		<button id="cookie-consent">Okay</button>
-		</div>
-	</section>
+		<!-- Cookie notice -->
+		<section id="cookie-notice">
+			<div class="container">
+				<div id="message"></div>
+				<button id="cookie-consent">Okay</button>
+			</div>
+		</section>
 	</div>
+	<script src="javascript/utils.js"></script>
+	<script src="javascript/cookies.js"></script>
 	<script>
-		function _setCookie(name, value) {
-		  const expires = "; expires=2147483647"; // ~2038 i.e. until user clears cookies
-		  document.cookie = name + "=" + (value || "") + expires + "; SameSite=Strict";
-		}
-	
-		function _getCookie(name) {
-		  var nameEQ = name + "=";
-		  var ca = document.cookie.split(';');
-		  for (var i = 0; i < ca.length; i++) {
-			var c = ca[i];
-			while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-			if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
-		  }
-		  return null;
-		}
-	
-		function initCookieNotice() {
-		  const notice = document.getElementById('cookie-notice');
-		  const consentBtn = document.getElementById('cookie-consent');
-		  const cookieKey = 'cookie-consent';
-		  const cookieConsentValue = 'true'
-		  const activeClass = 'show';
-		  if (_getCookie(cookieKey) === cookieConsentValue) {
-			return;
-		  }
-		  notice.classList.add(activeClass);
-		  consentBtn.classList.add(activeClass);
-		  consentBtn.addEventListener('click', (e) => {
-			e.preventDefault();
-			_setCookie(cookieKey, cookieConsentValue);
-			notice.classList.remove(activeClass);
-			consentBtn.classList.add(activeClass);
-		  });
-		}
-
 		var userLanguage = navigator.language || navigator.userLanguage;
+		var messageEn = `I only use technically necessary cookies to provide services.\n
+			Further information can be found in the cookie statement at
+			the bottom of the website.\n Have fun :)`;
+		var messageDe = `Ich verwende ausschließlich technisch notwendige Cookies, um Dienstleistungen zu erbringen.
+			Weitere informationen finden Sie in der Cookie Erklärung im unteren Teil der Website. Viel Spaß :)`;
+		setMessage(userLanguage.substring(0, 2), 'message', messageDe, messageEn);
+		setMessage(userLanguage.substring(0, 2), 'loading-message', messageDe, messageEn);
 
-        // Function to set message based on language
-        function setMessage(language) {
-            var messageElement = document.getElementById("message");
-            var message = "";
-
-            switch (language) {
-				case "de":
-					message = `Ich verwende technisch notwendige Cookies, 
-					um Dienstleistungen zu erbringen. Weitere informationen finden Sie in der Cookie 
-					Erklärung im unteren Teil der Website. Viel Spaß :)`;
-					break;
-                case "en":
-                    message = `I use technically necessary cookies to provide services.
-					 Further information can be found in the cookie statement at
-					the bottom of the website. Have fun :)`;
-                    break;
-                // Add more cases for other languages as needed
-                default:
-                    message = "Hello! (Default)";
-            }
-
-            // Set the message content
-            messageElement.textContent = message;
-		}
-		setMessage(userLanguage.substring(0, 2));
 		initCookieNotice();
-	  </script>
-  <div id="background-animation"></div>
-  <div class="loading">
-	<div class="loader"></div>
-	<div id="loading-message">You will be there soon ... </div>
-	 
-  <!-- </div> -->
-  <script>
-    window.addEventListener('load', function(ev) {
-      // Download main.dart.js
-      _flutter.loader.loadEntrypoint({
-        serviceWorker: {
-          serviceWorkerVersion: serviceWorkerVersion,
-        },
-        onEntrypointLoaded: function(engineInitializer) {
-          engineInitializer.initializeEngine().then(function(appRunner) {
-            appRunner.runApp();
-          });
-        }
-      });
-    });
+	</script>
+	<div id="background-animation"></div>
+	<div class="loading">
+		<div class="loader"></div>
+		<div id="loading-message">You will be there soon ... </div>
+		<script>
+			var messageEn = `You will be there soon ...`;
+			var messageDe = `Noch etwas Geduld ... `;
+			setMessage(userLanguage.substring(0, 2), 'loading-message', messageDe, messageEn);
+		</script>
+		<!-- </div> -->
+		<script>
+			window.addEventListener('load', function (ev) {
+				// Download main.dart.js
+				_flutter.loader.loadEntrypoint({
+					serviceWorker: {
+						serviceWorkerVersion: serviceWorkerVersion,
+					},
+					onEntrypointLoaded: function (engineInitializer) {
+						engineInitializer.initializeEngine().then(function (appRunner) {
+							appRunner.runApp();
+						});
+					}
+				});
+			});
 
-  </script>
+		</script>
 </body>
+
 </html>
