@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:jotrockenmitlocken/Blog/blog.dart';
+import 'package:jotrockenmitlocken/Layout/Widgets/Transitions/one_two_transition.dart';
+import 'package:jotrockenmitlocken/Layout/Widgets/first_component_list.dart';
+import 'package:jotrockenmitlocken/Layout/Widgets/second_component_list.dart';
 import 'package:jotrockenmitlocken/Layout/vertical_scroll_page.dart';
-import 'package:jotrockenmitlocken/footer.dart';
-import 'package:jotrockenmitlocken/home.dart';
+import 'package:jotrockenmitlocken/Pages/Footer/footer.dart';
 
 class LayoutManager {
   static Widget createSinglePage(List<Widget> children,
@@ -26,6 +27,7 @@ class LayoutManager {
       bool showMediumSizeLayout,
       bool showLargeSizeLayout,
       CurvedAnimation railAnimation) {
+    var colDivider = SizedBox(height: 10);
     childWidgetsRightPage += [
       colDivider,
       if (!showMediumSizeLayout && !showLargeSizeLayout) ...[Footer()]

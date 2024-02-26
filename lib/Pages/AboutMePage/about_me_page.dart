@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:jotrockenmitlocken/AboutMe/about_me_table.dart';
-import 'package:jotrockenmitlocken/AboutMe/perfect_day_chart.dart';
-import 'package:jotrockenmitlocken/AboutMe/skill_table.dart';
-import 'package:jotrockenmitlocken/Decoration/decoration_helper.dart';
+import 'package:jotrockenmitlocken/Pages/AboutMePage/Widgets/about_me_table.dart';
+import 'package:jotrockenmitlocken/Pages/AboutMePage/Widgets/perfect_day_chart.dart';
+import 'package:jotrockenmitlocken/Pages/AboutMePage/Widgets/skill_table.dart';
+import 'package:jotrockenmitlocken/Widgets/Decoration/decoration_helper.dart';
 import 'package:jotrockenmitlocken/Layout/layout_manager.dart';
 import 'package:jotrockenmitlocken/Pages/app_frame_attributes.dart';
 import 'package:jotrockenmitlocken/Pages/nav_bar_pages_factory.dart';
