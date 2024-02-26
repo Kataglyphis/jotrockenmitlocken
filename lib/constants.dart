@@ -28,27 +28,6 @@ enum ColorSeed {
   final Color color;
 }
 
-enum ScreenSelected {
-  home(0),
-  aboutMe(1),
-  quotations(2),
-  documents(3);
-
-  const ScreenSelected(this.value);
-  final int value;
-}
-
-enum NonNavBarScreenSelected {
-  imprint(0),
-  contact(1),
-  privacyPolicy(2),
-  cookieDeclaration(3),
-  declarationOnAccessibility(4);
-
-  const NonNavBarScreenSelected(this.value);
-  final int value;
-}
-
 const supportedLanguages = [
   Locale('de'), // Deutsch
   Locale('en'), // English

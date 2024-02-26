@@ -3,13 +3,10 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:jotrockenmitlocken/Pages/app_frame_attributes.dart';
-import 'package:jotrockenmitlocken/Pages/navbar_pages_config.dart';
-import 'package:jotrockenmitlocken/screen_configurations.dart';
-import 'package:jotrockenmitlocken/Layout/layout_manager.dart';
-import 'package:jotrockenmitlocken/Media/markdown_page.dart';
 
-import 'package:jotrockenmitlocken/home.dart';
+import 'package:jotrockenmitlocken/Pages/Home/home.dart';
 import 'package:jotrockenmitlocken/constants.dart';
+import 'package:jotrockenmitlocken/routing/router_creater.dart';
 
 class AppFrame extends StatefulWidget {
   const AppFrame({
@@ -105,106 +102,6 @@ class _AppFrameState extends State<AppFrame>
     }
   }
 
-  GoRoute buildGoRouteForSPA(String path, Widget child) {
-    return GoRoute(
-        path: path,
-        pageBuilder: (context, state) {
-          return NoTransitionPage(
-            child: child,
-          );
-        });
-  }
-
-  List<StatefulShellBranch> createFooterBranches(
-      bool showMediumSizeLayout, bool showLargeSizeLayout) {
-    var imprint = LayoutManager.createSinglePage([
-      MarkdownFilePage(
-        filePathDe: 'assets/documents/footer/imprintDe.md',
-        filePathEn: 'assets/documents/footer/imprintEn.md',
-      )
-    ], showMediumSizeLayout, showLargeSizeLayout);
-
-    var contact = LayoutManager.createSinglePage([
-      MarkdownFilePage(
-        filePathDe: 'assets/documents/footer/contactDe.md',
-        filePathEn: 'assets/documents/footer/contactEn.md',
-      )
-    ], showMediumSizeLayout, showLargeSizeLayout);
-
-    var privacyPolicy = LayoutManager.createSinglePage([
-      MarkdownFilePage(
-        filePathDe: 'assets/documents/footer/privacyPolicyDe.md',
-        filePathEn: 'assets/documents/footer/privacyPolicyEn.md',
-      )
-    ], showMediumSizeLayout, showLargeSizeLayout);
-
-    var cookieStatement = LayoutManager.createSinglePage([
-      MarkdownFilePage(
-        filePathDe: 'assets/documents/footer/cookieDeclarationDe.md',
-        filePathEn: 'assets/documents/footer/cookieDeclarationEn.md',
-      )
-    ], showMediumSizeLayout, showLargeSizeLayout);
-
-    var declarationOnAccessibility = LayoutManager.createSinglePage([
-      MarkdownFilePage(
-        filePathDe: 'assets/documents/footer/declarationOnAccessibilityDe.md',
-        filePathEn: 'assets/documents/footer/declarationOnAccessibilityEn.md',
-      )
-    ], showMediumSizeLayout, showLargeSizeLayout);
-    return [
-      StatefulShellBranch(
-        routes: <RouteBase>[
-          buildGoRouteForSPA('/imprint', imprint),
-        ],
-      ),
-      StatefulShellBranch(
-        routes: <RouteBase>[
-          buildGoRouteForSPA('/contact', contact),
-        ],
-      ),
-      StatefulShellBranch(
-        routes: <RouteBase>[
-          buildGoRouteForSPA('/privacyPolicy', privacyPolicy),
-        ],
-      ),
-      StatefulShellBranch(
-        routes: <RouteBase>[
-          buildGoRouteForSPA('/cookieStatement', cookieStatement),
-        ],
-      ),
-      StatefulShellBranch(
-        routes: <RouteBase>[
-          buildGoRouteForSPA(
-              '/declarationOnAccessibility', declarationOnAccessibility),
-        ],
-      ),
-    ];
-  }
-
-  List<StatefulShellBranch> createNavBarBranches(
-    AppFrameAttributes appFrameAttributes,
-    GlobalKey<NavigatorState> sectionNavigatorKey,
-  ) {
-    List<NavBarPagesConfig> navRailPagesConfigs =
-        ScreenConfigurations.getNavRailPagesConfig();
-    List<StatefulShellBranch> navBarBranches = [];
-    for (int i = 0; i < navRailPagesConfigs.length; i++) {
-      final pageConfig = navRailPagesConfigs[i];
-      navBarBranches.add(
-        StatefulShellBranch(
-          navigatorKey: (i == 0) ? sectionNavigatorKey : null,
-          routes: <RouteBase>[
-            buildGoRouteForSPA(
-              pageConfig.routingName,
-              pageConfig.pagesCreator.createPage(appFrameAttributes),
-            )
-          ],
-        ),
-      );
-    }
-    return navBarBranches;
-  }
-
   @override
   Widget build(BuildContext context) {
     AppFrameAttributes appFrameAttributes = AppFrameAttributes(
@@ -239,9 +136,10 @@ class _AppFrameState extends State<AppFrame>
                 navigationShell: navigationShell,
               );
             },
-            branches: createNavBarBranches(
+            branches: RoutesCreator.createNavBarBranches(
                     appFrameAttributes, _sectionNavigatorKey) +
-                createFooterBranches(showMediumSizeLayout, showLargeSizeLayout),
+                RoutesCreator.createFooterBranches(appFrameAttributes,
+                    showMediumSizeLayout, showLargeSizeLayout),
           )
         ]);
 

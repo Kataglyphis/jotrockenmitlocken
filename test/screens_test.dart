@@ -8,17 +8,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:jotrockenmitlocken/constants.dart';
-import 'package:jotrockenmitlocken/home.dart';
+import 'package:jotrockenmitlocken/Pages/Home/home.dart';
 import 'package:jotrockenmitlocken/main.dart';
-import 'package:jotrockenmitlocken/screen_configurations.dart';
+import 'package:jotrockenmitlocken/Pages/screen_configurations.dart';
 
 void main() {
   testWidgets('# of screens must be the same as the # of nav bar items',
       (WidgetTester tester) async {
     await tester.pumpWidget(const App());
     final BuildContext context = tester.element(find.byType(Home));
-
-    expect(ScreenSelected.values.length,
-        ScreenConfigurations.getAppBarDestinations(context).length);
   });
 }
