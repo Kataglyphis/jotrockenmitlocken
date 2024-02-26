@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:jotrockenmitlocken/constants.dart';
-import 'package:jotrockenmitlocken/font_helper.dart';
+import 'package:jotrockenmitlocken/Helper/font_helper.dart';
 
 class SkillTable extends StatefulWidget {
   const SkillTable({super.key, required this.useOtherLanguageMode});

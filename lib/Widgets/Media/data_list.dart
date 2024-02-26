@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:jotrockenmitlocken/Widgets/Decoration/decoration_helper.dart';
 import 'package:jotrockenmitlocken/Widgets/Media/data.dart';
 import 'package:jotrockenmitlocken/constants.dart';
-import 'package:jotrockenmitlocken/font_helper.dart';
+import 'package:jotrockenmitlocken/Helper/font_helper.dart';
 
 class MyDataTableSource extends DataTableSource {
   List<DataRow> dataRows;

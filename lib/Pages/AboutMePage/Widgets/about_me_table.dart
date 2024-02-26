@@ -4,7 +4,7 @@ import 'package:jotrockenmitlocken/Pages/AboutMePage/Widgets/socialMedia/social_
 import 'package:jotrockenmitlocken/Widgets/Decoration/decoration_helper.dart';
 import 'package:jotrockenmitlocken/constants.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:jotrockenmitlocken/font_helper.dart';
+import 'package:jotrockenmitlocken/Helper/font_helper.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
