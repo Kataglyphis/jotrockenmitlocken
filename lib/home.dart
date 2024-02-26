@@ -9,10 +9,6 @@ import 'package:jotrockenmitlocken/Blog/blog.dart';
 import 'package:jotrockenmitlocken/constants.dart';
 import 'package:jotrockenmitlocken/screen_configurations.dart';
 
-// You can pass any object to the arguments parameter.
-// In this example, create a class that contains both
-// a customizable title and message.
-
 class AIPlayground extends StatefulWidget {
   const AIPlayground({
     super.key,

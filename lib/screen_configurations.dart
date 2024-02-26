@@ -1,40 +1,39 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:jotrockenmitlocken/Pages/AboutMePage/about_me_page.dart';
+import 'package:jotrockenmitlocken/Pages/DocumentsPage/documents_page.dart';
+import 'package:jotrockenmitlocken/Pages/LandingPage/landing_page.dart';
+import 'package:jotrockenmitlocken/Pages/QuotesPage/quotes_page.dart';
+import 'package:jotrockenmitlocken/Pages/navbar_pages_config.dart';
 import 'constants.dart';
 
 class ScreenConfigurations {
-  // static List<StatefulShellBranch> getNavRailRoutes() {
-
-  // }
+  static List<NavBarPagesConfig> getNavRailPagesConfig() {
+    var aboutMe = "aboutMe";
+    return [
+      NavBarPagesConfig(
+        routingName: "/home",
+        pagesCreator: LandingPage(),
+      ),
+      NavBarPagesConfig(
+        routingName: "/aboutMe",
+        pagesCreator: AboutMePage(),
+      ),
+      NavBarPagesConfig(
+        routingName: "/quotations",
+        pagesCreator: QuotesPage(),
+      ),
+      NavBarPagesConfig(
+        routingName: "/documents",
+        pagesCreator: DocumentPage(),
+      ),
+    ];
+  }
 
   static List<NavigationDestination> getAppBarDestinations(
       BuildContext context) {
-    var result = [
-      NavigationDestination(
-        tooltip: '',
-        icon: const Icon(Icons.house_outlined),
-        label: AppLocalizations.of(context)!.homepage,
-        selectedIcon: const Icon(Icons.house),
-      ),
-      NavigationDestination(
-        tooltip: '',
-        icon: const Icon(Icons.person_outlined),
-        label: AppLocalizations.of(context)!.aboutme,
-        selectedIcon: const Icon(Icons.person),
-      ),
-      NavigationDestination(
-        tooltip: '',
-        icon: const Icon(Icons.record_voice_over_outlined),
-        label: AppLocalizations.of(context)!.quotations,
-        selectedIcon: const Icon(Icons.record_voice_over),
-      ),
-      NavigationDestination(
-        tooltip: '',
-        icon: const Icon(Icons.description_outlined),
-        label: AppLocalizations.of(context)!.documents,
-        selectedIcon: const Icon(Icons.description),
-      ),
-    ];
+    var result = getNavRailPagesConfig()
+        .map((config) => config.pagesCreator.getNavigationDestination(context))
+        .toList();
     assert(result.length == ScreenSelected.values.length,
         'You must provide for each screen exact one app bar navigation!');
     return result;
