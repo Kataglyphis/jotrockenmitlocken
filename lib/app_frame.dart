@@ -2,20 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
-import 'package:jotrockenmitlocken/AboutMe/about_me_table.dart';
-import 'package:jotrockenmitlocken/AboutMe/perfect_day_chart.dart';
-import 'package:jotrockenmitlocken/AboutMe/skill_table.dart';
-import 'package:jotrockenmitlocken/Blog/blog.dart';
-import 'package:jotrockenmitlocken/Decoration/decoration_helper.dart';
-import 'package:jotrockenmitlocken/DocumentPage/document_table.dart';
+import 'package:jotrockenmitlocken/Pages/app_frame_attributes.dart';
+import 'package:jotrockenmitlocken/Pages/navbar_pages_config.dart';
+import 'package:jotrockenmitlocken/screen_configurations.dart';
 import 'package:jotrockenmitlocken/Layout/layout_manager.dart';
 import 'package:jotrockenmitlocken/Media/markdown_page.dart';
-import 'package:jotrockenmitlocken/Media/quotes_list.dart';
 
-import 'package:jotrockenmitlocken/footer.dart';
 import 'package:jotrockenmitlocken/home.dart';
 import 'package:jotrockenmitlocken/constants.dart';
-import 'package:jotrockenmitlocken/Layout/vertical_scroll_page.dart';
 
 class AppFrame extends StatefulWidget {
   const AppFrame({
@@ -121,55 +115,6 @@ class _AppFrameState extends State<AppFrame>
         });
   }
 
-  List<List<Widget>> createHomeChildPages(
-      bool useOtherLanguageMode, ColorSeed colorSelected) {
-    const colDivider = SizedBox(height: 10);
-    List<Widget> childWidgetsLeftPage = [
-      colDivider,
-      AIPlayground(
-        colorSelected: colorSelected,
-      ),
-      colDivider,
-    ];
-    List<Widget> childWidgetsRightPage = [
-      colDivider,
-      RenderingPlayground(
-        colorSelected: colorSelected,
-      ),
-    ];
-    return [childWidgetsLeftPage, childWidgetsRightPage];
-  }
-
-  List<List<Widget>> createAboutMeChildPages(
-      bool useOtherLanguageMode, ColorSeed colorSelected) {
-    const colDivider = SizedBox(height: 10);
-    List<Widget> childWidgetsLeftPage = [
-      AboutMeTable(
-          useOtherLanguageMode: useOtherLanguageMode,
-          colorSelected: colorSelected),
-    ];
-    double marginSkillTable = 0;
-    double paddingSkillTable = 5;
-
-    List<Widget> childWidgetsRightPage = [
-      const PerfectDay(),
-      const SizedBox(
-        height: 40,
-      ),
-      applyBoxDecoration(
-          SkillTable(
-            useOtherLanguageMode: useOtherLanguageMode,
-          ),
-          EdgeInsets.all(paddingSkillTable),
-          marginSkillTable,
-          30,
-          5,
-          colorSelected.color),
-    ];
-
-    return [childWidgetsLeftPage, childWidgetsRightPage];
-  }
-
   List<StatefulShellBranch> createFooterBranches(
       bool showMediumSizeLayout, bool showLargeSizeLayout) {
     var imprint = LayoutManager.createSinglePage([
@@ -237,67 +182,37 @@ class _AppFrameState extends State<AppFrame>
   }
 
   List<StatefulShellBranch> createNavBarBranches(
-      bool showMediumSizeLayout, bool showLargeSizeLayout) {
-    var aboutMePagesLeftRight = createAboutMeChildPages(
-        widget.useOtherLanguageMode, widget.colorSelected);
-    var homePagesLeftRight =
-        createHomeChildPages(widget.useOtherLanguageMode, widget.colorSelected);
-    // The route branch for the first tab of the bottom navigation bar.
-    return [
-      StatefulShellBranch(
-        navigatorKey: _sectionNavigatorKey,
-        routes: <RouteBase>[
-          buildGoRouteForSPA(
-              '/home',
-              LayoutManager.createOneTwoTransisionWidget(
-                  homePagesLeftRight[0],
-                  homePagesLeftRight[1],
-                  showMediumSizeLayout,
-                  showLargeSizeLayout,
-                  railAnimation)),
-        ],
-      ),
-      StatefulShellBranch(
-        routes: <RouteBase>[
-          buildGoRouteForSPA(
-              '/aboutMe',
-              LayoutManager.createOneTwoTransisionWidget(
-                  aboutMePagesLeftRight[0],
-                  aboutMePagesLeftRight[1],
-                  showMediumSizeLayout,
-                  showLargeSizeLayout,
-                  railAnimation)),
-        ],
-      ),
-      StatefulShellBranch(
-        routes: <RouteBase>[
-          buildGoRouteForSPA(
-              '/quotations',
-              LayoutManager.createSinglePage([
-                QuotesList(
-                  colorSelected: widget.colorSelected,
-                ),
-              ], showMediumSizeLayout, showLargeSizeLayout)),
-        ],
-      ),
-      StatefulShellBranch(
-        // It's not necessary to provide a navigatorKey if it isn't also
-        // needed elsewhere. If not provided, a default key will be used.
-        routes: <RouteBase>[
-          buildGoRouteForSPA(
-              '/documents',
-              LayoutManager.createSinglePage([
-                DocumentTable(
-                  colorSelected: widget.colorSelected,
-                )
-              ], showMediumSizeLayout, showLargeSizeLayout)),
-        ],
-      ),
-    ];
+    AppFrameAttributes appFrameAttributes,
+    GlobalKey<NavigatorState> sectionNavigatorKey,
+  ) {
+    List<NavBarPagesConfig> navRailPagesConfigs =
+        ScreenConfigurations.getNavRailPagesConfig();
+    List<StatefulShellBranch> navBarBranches = [];
+    for (int i = 0; i < navRailPagesConfigs.length; i++) {
+      final pageConfig = navRailPagesConfigs[i];
+      navBarBranches.add(
+        StatefulShellBranch(
+          navigatorKey: (i == 0) ? sectionNavigatorKey : null,
+          routes: <RouteBase>[
+            buildGoRouteForSPA(
+              pageConfig.routingName,
+              pageConfig.pagesCreator.createPage(appFrameAttributes),
+            )
+          ],
+        ),
+      );
+    }
+    return navBarBranches;
   }
 
   @override
   Widget build(BuildContext context) {
+    AppFrameAttributes appFrameAttributes = AppFrameAttributes(
+        railAnimation: railAnimation,
+        showMediumSizeLayout: showMediumSizeLayout,
+        showLargeSizeLayout: showLargeSizeLayout,
+        useOtherLanguageMode: widget.useOtherLanguageMode,
+        colorSelected: widget.colorSelected);
     final GoRouter _routerConfig = GoRouter(
         navigatorKey: _rootNavigatorKey,
         initialLocation: '/home',
@@ -325,7 +240,7 @@ class _AppFrameState extends State<AppFrame>
               );
             },
             branches: createNavBarBranches(
-                    showMediumSizeLayout, showLargeSizeLayout) +
+                    appFrameAttributes, _sectionNavigatorKey) +
                 createFooterBranches(showMediumSizeLayout, showLargeSizeLayout),
           )
         ]);

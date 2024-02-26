@@ -39,6 +39,8 @@
 	</script>
 	<!-- This script adds the flutter initialization JS code -->
 	<script src="flutter.js" defer></script>
+	<script src="javascript/utils.js"></script>
+	<script src="javascript/cookies.js"></script>
 
 	<link rel="stylesheet" type="text/css" href="css/cookie.css">
 	<link rel="stylesheet" type="text/css" href="css/loading_animation.css">
@@ -59,8 +61,7 @@
 			</div>
 		</section>
 	</div>
-	<script src="javascript/utils.js"></script>
-	<script src="javascript/cookies.js"></script>
+
 	<script>
 		var userLanguage = navigator.language || navigator.userLanguage;
 		var messageEn = `I only use technically necessary cookies to provide services.\n
@@ -70,9 +71,9 @@
 			Weitere informationen finden Sie in der Cookie Erklärung im unteren Teil der Website. Viel Spaß :)`;
 		setMessage(userLanguage.substring(0, 2), 'message', messageDe, messageEn);
 		setMessage(userLanguage.substring(0, 2), 'loading-message', messageDe, messageEn);
-
 		initCookieNotice();
 	</script>
+
 	<div id="background-animation"></div>
 	<div class="loading">
 		<div class="loader"></div>

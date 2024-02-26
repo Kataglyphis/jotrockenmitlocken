@@ -54,5 +54,4 @@ const supportedLanguages = [
   Locale('en'), // English
 ];
 
-const baseDocumentDir =
-    'https://www.jotrockenmitlocken.de/assets/assets/documents/';
+const baseDocumentDir = 'https://www.jonasheinle.de/assets/assets/documents/';
