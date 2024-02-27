@@ -18,6 +18,29 @@ class RoutesCreator {
         });
   }
 
+  static List<StatefulShellBranch> getErrorPageRouting(
+      AppFrameAttributes appFrameAttributes,
+      bool showMediumSizeLayout,
+      bool showLargeSizeLayout) {
+    List<PagesConfig> errorPageConfig =
+        ScreenConfigurations.getErrorPagesConfig();
+    List<StatefulShellBranch> errorBranches = [];
+    for (int i = 0; i < errorPageConfig.length; i++) {
+      final pageConfig = errorPageConfig[i];
+      errorBranches.add(
+        StatefulShellBranch(
+          routes: <RouteBase>[
+            buildGoRouteForSPA(
+              pageConfig.routingName,
+              pageConfig.pagesCreator.createPage(appFrameAttributes),
+            )
+          ],
+        ),
+      );
+    }
+    return errorBranches;
+  }
+
   static List<StatefulShellBranch> createFooterBranches(
       AppFrameAttributes appFrameAttributes,
       bool showMediumSizeLayout,

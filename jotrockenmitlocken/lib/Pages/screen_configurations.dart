@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jotrockenmitlocken/Pages/AboutMePage/about_me_page.dart';
 import 'package:jotrockenmitlocken/Pages/DocumentsPage/documents_page.dart';
+import 'package:jotrockenmitlocken/Pages/ErrorPage/error_page.dart';
 import 'package:jotrockenmitlocken/Pages/Footer/contact.dart';
 import 'package:jotrockenmitlocken/Pages/Footer/cookie_declaration.dart';
 import 'package:jotrockenmitlocken/Pages/Footer/declaration_on_accessibility.dart';
@@ -12,6 +13,24 @@ import 'package:jotrockenmitlocken/Pages/navbar_pages_config.dart';
 import 'package:jotrockenmitlocken/Pages/pages_config.dart';
 
 class ScreenConfigurations {
+  static List<String> getAllValidRoutes() {
+    List<String> allValidRoutes = [];
+    for (NavBarPagesConfig navRailPageConfig in getNavRailPagesConfig()) {
+      allValidRoutes.add(navRailPageConfig.routingName);
+    }
+    for (PagesConfig navRailPageConfig in getFooterPagesConfig()) {
+      allValidRoutes.add(navRailPageConfig.routingName);
+    }
+    for (PagesConfig navRailPageConfig in getErrorPagesConfig()) {
+      allValidRoutes.add(navRailPageConfig.routingName);
+    }
+    return allValidRoutes;
+  }
+
+  static List<PagesConfig> getErrorPagesConfig() {
+    return [PagesConfig(routingName: '/error', pagesCreator: ErrorPage())];
+  }
+
   static List<NavBarPagesConfig> getNavRailPagesConfig() {
     return [
       NavBarPagesConfig(
