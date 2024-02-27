@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
+import 'package:jotrockenmitlocken/Pages/ErrorPage/error_page.dart';
 import 'package:jotrockenmitlocken/Pages/app_frame_attributes.dart';
 
 import 'package:jotrockenmitlocken/Pages/Home/home.dart';
@@ -52,6 +53,7 @@ class _AppFrameState extends State<AppFrame>
   bool showMediumSizeLayout = false;
   bool showLargeSizeLayout = false;
   int currentNavBarIndex = 0;
+  List<String> allValidRoutes = [];
 
   @override
   initState() {
@@ -65,6 +67,8 @@ class _AppFrameState extends State<AppFrame>
       parent: controller,
       curve: const Interval(0.5, 1.0),
     );
+
+    allValidRoutes = ScreenConfigurations.getAllValidRoutes();
   }
 
   @override
@@ -120,43 +124,53 @@ class _AppFrameState extends State<AppFrame>
         useOtherLanguageMode: widget.useOtherLanguageMode,
         colorSelected: widget.colorSelected);
     final GoRouter _routerConfig = GoRouter(
-        navigatorKey: _rootNavigatorKey,
-        initialLocation: getInitialLocation(),
-        routes: <RouteBase>[
-          StatefulShellRoute.indexedStack(
-            builder: (BuildContext context, GoRouterState state,
-                StatefulNavigationShell navigationShell) {
-              // Return the widget that implements the custom shell (in this case
-              // using a BottomNavigationBar). The StatefulNavigationShell is passed
-              // to be able access the state of the shell and to navigate to other
-              // branches in a stateful way.
-              return Home(
-                useLightMode: widget.useLightMode,
-                useOtherLanguageMode: widget.useOtherLanguageMode,
-                handleBrightnessChange: widget.handleBrightnessChange,
-                handleLanguageChange: widget.handleLanguageChange,
-                handleColorSelect: widget.handleColorSelect,
-                colorSelected: widget.colorSelected,
-                showMediumSizeLayout: showMediumSizeLayout,
-                showLargeSizeLayout: showLargeSizeLayout,
-                controller: controller,
-                railAnimation: railAnimation,
-                scaffoldKey: scaffoldKey,
-                navigationShell: navigationShell,
-                currentNavBarIndex: currentNavBarIndex,
-                handleChangedNavBarIndex: (index) {
-                  currentNavBarIndex = index;
-                },
-              );
-            },
-            branches: RoutesCreator.createNavBarBranches(
-                  appFrameAttributes,
-                )
-                /**_sectionNavigatorKey*/ +
-                RoutesCreator.createFooterBranches(appFrameAttributes,
-                    showMediumSizeLayout, showLargeSizeLayout),
-          )
-        ]);
+      navigatorKey: _rootNavigatorKey,
+      initialLocation: getInitialLocation(),
+      routes: <RouteBase>[
+        StatefulShellRoute.indexedStack(
+          builder: (BuildContext context, GoRouterState state,
+              StatefulNavigationShell navigationShell) {
+            // Return the widget that implements the custom shell (in this case
+            // using a BottomNavigationBar). The StatefulNavigationShell is passed
+            // to be able access the state of the shell and to navigate to other
+            // branches in a stateful way.
+            return Home(
+              useLightMode: widget.useLightMode,
+              useOtherLanguageMode: widget.useOtherLanguageMode,
+              handleBrightnessChange: widget.handleBrightnessChange,
+              handleLanguageChange: widget.handleLanguageChange,
+              handleColorSelect: widget.handleColorSelect,
+              colorSelected: widget.colorSelected,
+              showMediumSizeLayout: showMediumSizeLayout,
+              showLargeSizeLayout: showLargeSizeLayout,
+              controller: controller,
+              railAnimation: railAnimation,
+              scaffoldKey: scaffoldKey,
+              navigationShell: navigationShell,
+              currentNavBarIndex: currentNavBarIndex,
+              handleChangedNavBarIndex: (index) {
+                currentNavBarIndex = index;
+              },
+            );
+          },
+          branches: RoutesCreator.createNavBarBranches(
+                appFrameAttributes,
+              )
+              /**_sectionNavigatorKey*/ +
+              RoutesCreator.createFooterBranches(appFrameAttributes,
+                  showMediumSizeLayout, showLargeSizeLayout) +
+              RoutesCreator.getErrorPageRouting(appFrameAttributes,
+                  showMediumSizeLayout, showLargeSizeLayout),
+        )
+      ],
+      redirect: (BuildContext context, GoRouterState state) {
+        if (!allValidRoutes.contains(state.fullPath)) {
+          return '/error';
+        }
+        // no need to redirect at all
+        return null;
+      },
+    );
 
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
