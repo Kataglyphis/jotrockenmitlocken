@@ -7,19 +7,22 @@
 		{
 			"name": "jotrockenmitlocken (debug mode)",
 			"request": "launch",
-			"type": "dart"
+			"type": "dart",
+			"program": "jotrockenmitlocken/lib/main.dart"
 		},
 		{
 			"name": "jotrockenmitlocken (profile mode)",
 			"request": "launch",
 			"type": "dart",
-			"flutterMode": "profile"
+			"flutterMode": "profile",
+			"program": "jotrockenmitlocken/lib/main.dart"
 		},
 		{
 			"name": "jotrockenmitlocken (release mode)",
 			"request": "launch",
 			"type": "dart",
-			"flutterMode": "release"
+			"flutterMode": "release",
+			"program": "jotrockenmitlocken/lib/main.dart"
 		}
 	]
 }
