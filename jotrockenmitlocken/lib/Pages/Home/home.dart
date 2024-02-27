@@ -126,75 +126,79 @@ class _HomeState extends State<Home> {
         // Using a Builder to get the correct BuildContext.
         // Alternatively, you can create a new widget and Localizations.override
         // will pass the updated BuildContext to the new widget.
-        child: Builder(
-          builder: (context) {
-            return AnimatedBuilder(
-              animation: widget.controller,
-              builder: (context, child) {
-                return NavigationTransition(
-                  navigationShell: widget.navigationShell,
-                  showFooter:
-                      widget.showLargeSizeLayout || widget.showMediumSizeLayout,
-                  scaffoldKey: widget.scaffoldKey,
-                  animationController: widget.controller,
-                  railAnimation: widget.railAnimation,
-                  appBar: _createAppBar(),
-                  body: Flexible(
-                    child: widget.navigationShell,
-                  ),
-                  navigationRail: NavigationRail(
-                    extended: widget.showLargeSizeLayout,
-                    destinations:
-                        ScreenConfigurations.getNavRailDestinations(context),
-                    selectedIndex: (widget.navigationShell.currentIndex <
-                            ScreenConfigurations.getAppBarDestinations(context)
-                                .length)
-                        ? widget.navigationShell.currentIndex
-                        : widget.currentNavBarIndex,
-                    onDestinationSelected: (index) {
-                      widget.currentNavBarIndex = index;
-                      widget
-                          .handleChangedNavBarIndex(widget.currentNavBarIndex);
-                      widget.navigationShell
-                          .goBranch(widget.currentNavBarIndex);
-                    },
-                    trailing: Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.only(bottom: 20),
-                        child: widget.showLargeSizeLayout
-                            ? ExpandedTrailingActions(
-                                useLightMode: widget.useLightMode,
-                                useOtherLanguageMode:
-                                    widget.useOtherLanguageMode,
-                                handleLanguageChange:
-                                    widget.handleLanguageChange,
-                                handleBrightnessChange:
-                                    widget.handleBrightnessChange,
-                                handleColorSelect: widget.handleColorSelect,
-                                colorSelected: widget.colorSelected,
-                              )
-                            : _trailingActions(),
+        child: SelectionArea(
+          child: Builder(
+            builder: (context) {
+              return AnimatedBuilder(
+                animation: widget.controller,
+                builder: (context, child) {
+                  return NavigationTransition(
+                    navigationShell: widget.navigationShell,
+                    showFooter: widget.showLargeSizeLayout ||
+                        widget.showMediumSizeLayout,
+                    scaffoldKey: widget.scaffoldKey,
+                    animationController: widget.controller,
+                    railAnimation: widget.railAnimation,
+                    appBar: _createAppBar(),
+                    body: Flexible(
+                      child: widget.navigationShell,
+                    ),
+                    navigationRail: NavigationRail(
+                      extended: widget.showLargeSizeLayout,
+                      destinations:
+                          ScreenConfigurations.getNavRailDestinations(context),
+                      selectedIndex: (widget.navigationShell.currentIndex <
+                              ScreenConfigurations.getAppBarDestinations(
+                                      context)
+                                  .length)
+                          ? widget.navigationShell.currentIndex
+                          : widget.currentNavBarIndex,
+                      onDestinationSelected: (index) {
+                        widget.currentNavBarIndex = index;
+                        widget.handleChangedNavBarIndex(
+                            widget.currentNavBarIndex);
+                        widget.navigationShell
+                            .goBranch(widget.currentNavBarIndex);
+                      },
+                      trailing: Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(bottom: 20),
+                          child: widget.showLargeSizeLayout
+                              ? ExpandedTrailingActions(
+                                  useLightMode: widget.useLightMode,
+                                  useOtherLanguageMode:
+                                      widget.useOtherLanguageMode,
+                                  handleLanguageChange:
+                                      widget.handleLanguageChange,
+                                  handleBrightnessChange:
+                                      widget.handleBrightnessChange,
+                                  handleColorSelect: widget.handleColorSelect,
+                                  colorSelected: widget.colorSelected,
+                                )
+                              : _trailingActions(),
+                        ),
                       ),
                     ),
-                  ),
-                  navigationBar: NavigationBars(
-                    currentNavBarIndex: (widget.navigationShell.currentIndex <
-                            ScreenConfigurations.getAppBarDestinations(context)
-                                .length)
-                        ? widget.navigationShell.currentIndex
-                        : widget.currentNavBarIndex,
-                    navigationShell: widget.navigationShell,
-                    handleChangedNavBarIndex: (index) {
-                      widget.currentNavBarIndex = index;
-                      widget
-                          .handleChangedNavBarIndex(widget.currentNavBarIndex);
-                      widget.navigationShell.goBranch(index);
-                    },
-                  ),
-                );
-              },
-            );
-          },
+                    navigationBar: NavigationBars(
+                      currentNavBarIndex: (widget.navigationShell.currentIndex <
+                              ScreenConfigurations.getAppBarDestinations(
+                                      context)
+                                  .length)
+                          ? widget.navigationShell.currentIndex
+                          : widget.currentNavBarIndex,
+                      navigationShell: widget.navigationShell,
+                      handleChangedNavBarIndex: (index) {
+                        widget.currentNavBarIndex = index;
+                        widget.handleChangedNavBarIndex(
+                            widget.currentNavBarIndex);
+                        widget.navigationShell.goBranch(index);
+                      },
+                    ),
+                  );
+                },
+              );
+            },
+          ),
         ));
   }
 }
