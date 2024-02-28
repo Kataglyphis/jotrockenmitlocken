@@ -26,6 +26,9 @@ class ScreenConfigurations {
     for (PagesConfig navRailPageConfig in getErrorPagesConfig()) {
       allValidRoutes.add(navRailPageConfig.routingName);
     }
+    for (PagesConfig blogPageConfig in getBlogPagesConfig()) {
+      allValidRoutes.add(blogPageConfig.routingName);
+    }
     return allValidRoutes;
   }
 
@@ -57,11 +60,11 @@ class ScreenConfigurations {
   static List<PagesConfig> getBlogPagesConfig() {
     return [
       PagesConfig(
-        routingName: "/aiblog",
+        routingName: "/aiBlog",
         pagesCreator: AiBlogPage(),
       ),
       PagesConfig(
-        routingName: "/renderingblog",
+        routingName: "/renderingBlog",
         pagesCreator: RenderingBlogPage(),
       ),
     ];

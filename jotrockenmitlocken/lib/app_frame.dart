@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
-import 'package:jotrockenmitlocken/Pages/ErrorPage/error_page.dart';
 import 'package:jotrockenmitlocken/Pages/app_frame_attributes.dart';
 
 import 'package:jotrockenmitlocken/Pages/Home/home.dart';
@@ -160,6 +159,9 @@ class _AppFrameState extends State<AppFrame>
                 appFrameAttributes,
               ) +
               RoutesCreator.getErrorPageRouting(
+                appFrameAttributes,
+              ) +
+              RoutesCreator.createBlogBranches(
                 appFrameAttributes,
               ),
         )

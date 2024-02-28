@@ -50,7 +50,7 @@ class _AIPlaygroundState extends State<AIPlayground> {
                 onPressed: isDisabled
                     ? null
                     : () {
-                        context.go('/aiblog');
+                        context.go('/aiBlog');
                       },
                 child: Text(AppLocalizations.of(context)!.visitBlogEntry),
               ),
