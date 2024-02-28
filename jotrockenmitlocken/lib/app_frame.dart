@@ -51,7 +51,7 @@ class _AppFrameState extends State<AppFrame>
   bool controllerInitialized = false;
   bool showMediumSizeLayout = false;
   bool showLargeSizeLayout = false;
-  int currentNavBarIndex = 0;
+  int currentPageIndex = 0;
   List<String> allValidRoutes = [];
 
   @override
@@ -108,10 +108,8 @@ class _AppFrameState extends State<AppFrame>
     }
   }
 
-  String getInitialLocation() {
-    List<NavBarPagesConfig> navBarPagesConfig =
-        ScreenConfigurations.getNavRailPagesConfig();
-    return navBarPagesConfig[currentNavBarIndex].routingName;
+  String _getInitialLocation() {
+    return allValidRoutes[currentPageIndex];
   }
 
   @override
@@ -124,7 +122,7 @@ class _AppFrameState extends State<AppFrame>
         colorSelected: widget.colorSelected);
     final GoRouter _routerConfig = GoRouter(
       navigatorKey: _rootNavigatorKey,
-      initialLocation: getInitialLocation(),
+      initialLocation: _getInitialLocation(),
       routes: <RouteBase>[
         StatefulShellRoute.indexedStack(
           builder: (BuildContext context, GoRouterState state,
@@ -146,9 +144,8 @@ class _AppFrameState extends State<AppFrame>
               railAnimation: railAnimation,
               scaffoldKey: scaffoldKey,
               navigationShell: navigationShell,
-              currentNavBarIndex: currentNavBarIndex,
-              handleChangedNavBarIndex: (index) {
-                currentNavBarIndex = index;
+              handleChangedPageIndex: (index) {
+                currentPageIndex = index;
               },
             );
           },
@@ -158,10 +155,10 @@ class _AppFrameState extends State<AppFrame>
               RoutesCreator.createFooterBranches(
                 appFrameAttributes,
               ) +
-              RoutesCreator.getErrorPageRouting(
+              RoutesCreator.createBlogBranches(
                 appFrameAttributes,
               ) +
-              RoutesCreator.createBlogBranches(
+              RoutesCreator.getErrorPageRouting(
                 appFrameAttributes,
               ),
         )
