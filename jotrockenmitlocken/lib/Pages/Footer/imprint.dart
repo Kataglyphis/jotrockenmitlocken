@@ -9,8 +9,8 @@ class ImprintPage extends PagesFactory {
   Widget createPage(AppFrameAttributes appFrameAttributes) {
     return LayoutManager.createSinglePage([
       MarkdownFilePage(
-        filePathDe: 'assets/documents/footer/contactDe.md',
-        filePathEn: 'assets/documents/footer/contactEn.md',
+        filePathDe: 'assets/documents/footer/imprintDe.md',
+        filePathEn: 'assets/documents/footer/imprintEn.md',
       )
     ], appFrameAttributes.showMediumSizeLayout,
         appFrameAttributes.showLargeSizeLayout);

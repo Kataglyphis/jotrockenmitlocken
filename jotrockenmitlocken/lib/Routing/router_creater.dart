@@ -6,6 +6,7 @@ import 'package:jotrockenmitlocken/Pages/app_frame_attributes.dart';
 import 'package:jotrockenmitlocken/Pages/navbar_pages_config.dart';
 import 'package:jotrockenmitlocken/Pages/pages_config.dart';
 import 'package:jotrockenmitlocken/Pages/screen_configurations.dart';
+import 'package:jotrockenmitlocken/Routing/stateful_branch_info_provider.dart';
 
 class RoutesCreator {
   static GoRoute buildGoRouteForSPA(String path, Widget child) {
@@ -18,73 +19,47 @@ class RoutesCreator {
         });
   }
 
-  static List<StatefulShellBranch> getErrorPageRouting(
-      AppFrameAttributes appFrameAttributes,
-      bool showMediumSizeLayout,
-      bool showLargeSizeLayout) {
-    List<PagesConfig> errorPageConfig =
-        ScreenConfigurations.getErrorPagesConfig();
-    List<StatefulShellBranch> errorBranches = [];
-    for (int i = 0; i < errorPageConfig.length; i++) {
-      final pageConfig = errorPageConfig[i];
-      errorBranches.add(
+  static List<StatefulShellBranch> createStatefulShellBranches(
+    AppFrameAttributes appFrameAttributes,
+    List<StatefulBranchInfoProvider> configs,
+  ) {
+    List<StatefulShellBranch> branches = [];
+    for (int i = 0; i < configs.length; i++) {
+      final pageConfig = configs[i];
+      branches.add(
         StatefulShellBranch(
           routes: <RouteBase>[
             buildGoRouteForSPA(
-              pageConfig.routingName,
-              pageConfig.pagesCreator.createPage(appFrameAttributes),
+              pageConfig.getRoutingName(),
+              pageConfig.getPagesFactory().createPage(appFrameAttributes),
             )
           ],
         ),
       );
     }
-    return errorBranches;
+    return branches;
+  }
+
+  static List<StatefulShellBranch> getErrorPageRouting(
+    AppFrameAttributes appFrameAttributes,
+  ) {
+    List<PagesConfig> errorPageConfig =
+        ScreenConfigurations.getErrorPagesConfig();
+    return createStatefulShellBranches(appFrameAttributes, errorPageConfig);
   }
 
   static List<StatefulShellBranch> createFooterBranches(
-      AppFrameAttributes appFrameAttributes,
-      bool showMediumSizeLayout,
-      bool showLargeSizeLayout) {
+      AppFrameAttributes appFrameAttributes) {
     List<PagesConfig> footerPagesConfigs =
         ScreenConfigurations.getFooterPagesConfig();
-    List<StatefulShellBranch> footerBranches = [];
-    for (int i = 0; i < footerPagesConfigs.length; i++) {
-      final pageConfig = footerPagesConfigs[i];
-      footerBranches.add(
-        StatefulShellBranch(
-          routes: <RouteBase>[
-            buildGoRouteForSPA(
-              pageConfig.routingName,
-              pageConfig.pagesCreator.createPage(appFrameAttributes),
-            )
-          ],
-        ),
-      );
-    }
-    return footerBranches;
+    return createStatefulShellBranches(appFrameAttributes, footerPagesConfigs);
   }
 
   static List<StatefulShellBranch> createNavBarBranches(
     AppFrameAttributes appFrameAttributes,
-    //GlobalKey<NavigatorState> sectionNavigatorKey,
   ) {
     List<NavBarPagesConfig> navRailPagesConfigs =
         ScreenConfigurations.getNavRailPagesConfig();
-    List<StatefulShellBranch> navBarBranches = [];
-    for (int i = 0; i < navRailPagesConfigs.length; i++) {
-      final pageConfig = navRailPagesConfigs[i];
-      navBarBranches.add(
-        StatefulShellBranch(
-          //navigatorKey: (i == 0) ? sectionNavigatorKey : null,
-          routes: <RouteBase>[
-            buildGoRouteForSPA(
-              pageConfig.routingName,
-              pageConfig.pagesCreator.createPage(appFrameAttributes),
-            )
-          ],
-        ),
-      );
-    }
-    return navBarBranches;
+    return createStatefulShellBranches(appFrameAttributes, navRailPagesConfigs);
   }
 }

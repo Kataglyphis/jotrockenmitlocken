@@ -1,4 +1,5 @@
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:jotrockenmitlocken/Widgets/Decoration/decoration_helper.dart';
 import 'package:jotrockenmitlocken/Widgets/component_group_decoration.dart';
 import 'package:jotrockenmitlocken/Helper/browser_helper.dart';
@@ -7,17 +8,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AIPlayground extends StatefulWidget {
-  const AIPlayground({
+  AIPlayground({
     super.key,
     required this.colorSelected,
   });
   final ColorSeed colorSelected;
-
   @override
   State<AIPlayground> createState() => _AIPlaygroundState();
 }
 
 class _AIPlaygroundState extends State<AIPlayground> {
+  bool isDisabled = false;
   @override
   Widget build(BuildContext context) {
     const colDivider = SizedBox(height: 10);
@@ -40,6 +41,19 @@ class _AIPlaygroundState extends State<AIPlayground> {
                 },
               ),
               Text(AppLocalizations.of(context)!.aiPlaygroundDescription)
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              FilledButton.tonal(
+                onPressed: isDisabled
+                    ? null
+                    : () {
+                        context.go('/aiblog');
+                      },
+                child: Text(AppLocalizations.of(context)!.visitBlogEntry),
+              ),
             ],
           ),
           colDivider,

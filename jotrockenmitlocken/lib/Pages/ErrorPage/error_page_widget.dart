@@ -24,21 +24,7 @@ class _ErrorPageWidget extends State<ErrorPageWidget> {
     return ComponentGroupDecoration(label: 'Error 404', children: <Widget>[
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          IconButton(
-            iconSize: 50,
-            icon: const FaIcon(FontAwesomeIcons.github),
-            // color: Colors.black,
-            onPressed: () {
-              final Uri toLaunch = Uri(
-                  scheme: 'https',
-                  host: 'github.com',
-                  path: 'Kataglyphis/MachineLearningAlgorithms');
-              BrowserHelper.launchInBrowser(toLaunch);
-            },
-          ),
-          Text(AppLocalizations.of(context)!.aiPlaygroundDescription)
-        ],
+        children: [Text(AppLocalizations.of(context)!.aiPlaygroundDescription)],
       ),
       colDivider,
       applyBoxDecoration(

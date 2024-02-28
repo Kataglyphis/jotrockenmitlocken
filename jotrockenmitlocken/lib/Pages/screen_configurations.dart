@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jotrockenmitlocken/Pages/AboutMePage/about_me_page.dart';
+import 'package:jotrockenmitlocken/Pages/Blog/ai_blog_page.dart';
+import 'package:jotrockenmitlocken/Pages/Blog/rendering_blog_page.dart';
 import 'package:jotrockenmitlocken/Pages/DocumentsPage/documents_page.dart';
 import 'package:jotrockenmitlocken/Pages/ErrorPage/error_page.dart';
 import 'package:jotrockenmitlocken/Pages/Footer/contact.dart';
@@ -48,6 +50,19 @@ class ScreenConfigurations {
       NavBarPagesConfig(
         routingName: "/documents",
         pagesCreator: DocumentPage(),
+      ),
+    ];
+  }
+
+  static List<PagesConfig> getBlogPagesConfig() {
+    return [
+      PagesConfig(
+        routingName: "/aiblog",
+        pagesCreator: AiBlogPage(),
+      ),
+      PagesConfig(
+        routingName: "/renderingblog",
+        pagesCreator: RenderingBlogPage(),
       ),
     ];
   }
