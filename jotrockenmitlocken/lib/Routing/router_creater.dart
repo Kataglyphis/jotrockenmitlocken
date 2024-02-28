@@ -62,4 +62,12 @@ class RoutesCreator {
         ScreenConfigurations.getNavRailPagesConfig();
     return createStatefulShellBranches(appFrameAttributes, navRailPagesConfigs);
   }
+
+  static List<StatefulShellBranch> createBlogBranches(
+    AppFrameAttributes appFrameAttributes,
+  ) {
+    List<PagesConfig> blogPagesConfigs =
+        ScreenConfigurations.getBlogPagesConfig();
+    return createStatefulShellBranches(appFrameAttributes, blogPagesConfigs);
+  }
 }

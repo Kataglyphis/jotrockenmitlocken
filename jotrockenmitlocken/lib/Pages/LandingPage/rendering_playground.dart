@@ -53,7 +53,7 @@ class _RenderingPlaygroundState extends State<RenderingPlayground> {
                 onPressed: isDisabled
                     ? null
                     : () {
-                        context.go('/renderingblog');
+                        context.go('/renderingBlog');
                       },
                 child: Text(AppLocalizations.of(context)!.visitBlogEntry),
               ),

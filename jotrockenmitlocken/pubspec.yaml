@@ -61,6 +61,7 @@ flutter:
     - assets/images/Bewerbungsbilder/
     - assets/documents/
     - assets/documents/footer/
+    - assets/documents/blog/
     - assets/data/
 
 fonts:
