@@ -1,4 +1,5 @@
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:jotrockenmitlocken/Widgets/Decoration/decoration_helper.dart';
 import 'package:jotrockenmitlocken/Widgets/component_group_decoration.dart';
 import 'package:jotrockenmitlocken/Helper/browser_helper.dart';
@@ -18,6 +19,7 @@ class RenderingPlayground extends StatefulWidget {
 }
 
 class _RenderingPlaygroundState extends State<RenderingPlayground> {
+  bool isDisabled = false;
   @override
   Widget build(BuildContext context) {
     const colDivider = SizedBox(height: 10);
@@ -41,6 +43,20 @@ class _RenderingPlaygroundState extends State<RenderingPlayground> {
               ),
               Text(
                   AppLocalizations.of(context)!.renderingPlaygroundDescription),
+            ],
+          ),
+          colDivider,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              FilledButton.tonal(
+                onPressed: isDisabled
+                    ? null
+                    : () {
+                        context.go('/renderingblog');
+                      },
+                child: Text(AppLocalizations.of(context)!.visitBlogEntry),
+              ),
             ],
           ),
           colDivider,

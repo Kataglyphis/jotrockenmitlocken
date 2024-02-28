@@ -41,8 +41,8 @@ class _AppFrameState extends State<AppFrame>
   // Create keys for `root` & `section` navigator avoiding unnecessary rebuilds
   final _rootNavigatorKey =
       GlobalKey<NavigatorState>(debugLabel: "_rootNavigatorKey");
-  final _sectionNavigatorKey =
-      GlobalKey<NavigatorState>(debugLabel: "_sectionNavigatorKey");
+  // final _sectionNavigatorKey =
+  //     GlobalKey<NavigatorState>(debugLabel: "_sectionNavigatorKey");
 
   final GlobalKey<ScaffoldState> scaffoldKey =
       GlobalKey<ScaffoldState>(debugLabel: "scaffoldKey");
@@ -155,12 +155,13 @@ class _AppFrameState extends State<AppFrame>
           },
           branches: RoutesCreator.createNavBarBranches(
                 appFrameAttributes,
-              )
-              /**_sectionNavigatorKey*/ +
-              RoutesCreator.createFooterBranches(appFrameAttributes,
-                  showMediumSizeLayout, showLargeSizeLayout) +
-              RoutesCreator.getErrorPageRouting(appFrameAttributes,
-                  showMediumSizeLayout, showLargeSizeLayout),
+              ) +
+              RoutesCreator.createFooterBranches(
+                appFrameAttributes,
+              ) +
+              RoutesCreator.getErrorPageRouting(
+                appFrameAttributes,
+              ),
         )
       ],
       redirect: (BuildContext context, GoRouterState state) {

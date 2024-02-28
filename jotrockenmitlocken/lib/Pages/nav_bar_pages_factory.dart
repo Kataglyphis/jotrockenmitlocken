@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:jotrockenmitlocken/Pages/app_frame_attributes.dart';
+import 'package:jotrockenmitlocken/Pages/pages_factory.dart';
 
-abstract class NavBarPagesFactory {
-  Widget createPage(AppFrameAttributes appFrameAttributes);
+abstract class NavBarPagesFactory extends PagesFactory {
   NavigationDestination getNavigationDestination(BuildContext context);
 }
