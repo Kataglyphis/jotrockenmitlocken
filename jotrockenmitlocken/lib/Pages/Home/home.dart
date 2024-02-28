@@ -27,8 +27,7 @@ class Home extends StatefulWidget {
       required this.railAnimation,
       required this.scaffoldKey,
       required this.navigationShell,
-      required this.currentNavBarIndex,
-      required this.handleChangedNavBarIndex});
+      required this.handleChangedPageIndex});
 
   final bool useLightMode;
   final bool useOtherLanguageMode;
@@ -47,14 +46,15 @@ class Home extends StatefulWidget {
   final void Function(bool useLightMode) handleBrightnessChange;
   final void Function(int value) handleColorSelect;
 
-  final void Function(int value) handleChangedNavBarIndex;
-  int currentNavBarIndex;
+  final void Function(int value) handleChangedPageIndex;
 
   @override
   State<Home> createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
+  int currentNavBarIndex = 0;
+
   @override
   initState() {
     super.initState();
@@ -68,6 +68,11 @@ class _HomeState extends State<Home> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+  }
+
+  @override
+  void didUpdateWidget(Widget oldWidget) {
+    widget.handleChangedPageIndex(widget.navigationShell.currentIndex);
   }
 
   PreferredSizeWidget _createAppBar() {
@@ -152,13 +157,10 @@ class _HomeState extends State<Home> {
                                       context)
                                   .length)
                           ? widget.navigationShell.currentIndex
-                          : widget.currentNavBarIndex,
+                          : currentNavBarIndex,
                       onDestinationSelected: (index) {
-                        widget.currentNavBarIndex = index;
-                        widget.handleChangedNavBarIndex(
-                            widget.currentNavBarIndex);
-                        widget.navigationShell
-                            .goBranch(widget.currentNavBarIndex);
+                        currentNavBarIndex = index;
+                        widget.navigationShell.goBranch(currentNavBarIndex);
                       },
                       trailing: Expanded(
                         child: Padding(
@@ -185,12 +187,11 @@ class _HomeState extends State<Home> {
                                       context)
                                   .length)
                           ? widget.navigationShell.currentIndex
-                          : widget.currentNavBarIndex,
+                          : currentNavBarIndex,
                       navigationShell: widget.navigationShell,
                       handleChangedNavBarIndex: (index) {
-                        widget.currentNavBarIndex = index;
-                        widget.handleChangedNavBarIndex(
-                            widget.currentNavBarIndex);
+                        currentNavBarIndex = index;
+
                         widget.navigationShell.goBranch(index);
                       },
                     ),

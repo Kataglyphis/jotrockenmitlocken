@@ -23,11 +23,11 @@ class ScreenConfigurations {
     for (PagesConfig navRailPageConfig in getFooterPagesConfig()) {
       allValidRoutes.add(navRailPageConfig.routingName);
     }
-    for (PagesConfig navRailPageConfig in getErrorPagesConfig()) {
-      allValidRoutes.add(navRailPageConfig.routingName);
-    }
     for (PagesConfig blogPageConfig in getBlogPagesConfig()) {
       allValidRoutes.add(blogPageConfig.routingName);
+    }
+    for (PagesConfig navRailPageConfig in getErrorPagesConfig()) {
+      allValidRoutes.add(navRailPageConfig.routingName);
     }
     return allValidRoutes;
   }
