@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:jotrockenmitlocken/Widgets/Decoration/decoration_helper.dart';
-import 'package:jotrockenmitlocken/Widgets/Media/data.dart';
-import 'package:jotrockenmitlocken/constants.dart';
-import 'package:jotrockenmitlocken/Helper/font_helper.dart';
+import 'package:jotrockenmitlockenrepo/Decoration/decoration_helper.dart';
+import 'package:jotrockenmitlockenrepo/Media/data.dart';
+import 'package:jotrockenmitlockenrepo/constants.dart';
+import 'package:jotrockenmitlockenrepo/Helper/font_helper.dart';
 
 class MyDataTableSource extends DataTableSource {
   List<DataRow> dataRows;
@@ -49,10 +49,6 @@ abstract mixin class DataListState<T extends Data> {
   String getDescription();
   // every data list gets an individual spacing
   List<double> getSpacing();
-  // this sucks since it should dynamically adjust
-  double getDataRowHeight();
-  // how many rows should me displayed
-  int getNumRowsForSimultaneousDisplay();
   ColorSeed getColorSeed();
 
   List<DataRow> getDataRows(List<T> rowData, double maxWidth) =>
@@ -89,7 +85,7 @@ abstract mixin class DataListState<T extends Data> {
             double currentWidth = MediaQuery.of(context).size.width;
             double dataTableWidth = (currentWidth >= largeWidthBreakpoint)
                 ? currentWidth * 0.8
-                : currentWidth;
+                : currentWidth * 0.9;
             final DataTableSource data =
                 MyDataTableSource(getDataRows(Data, dataTableWidth));
             return Column(
@@ -120,7 +116,6 @@ abstract mixin class DataListState<T extends Data> {
                           sortColumnIndex: sortColumnIndex,
                           sortAscending: isAscending,
                           columns: getDataColumns(dataCategories),
-                          rowsPerPage: getNumRowsForSimultaneousDisplay(),
                           source: data,
                         ),
                         const EdgeInsets.all(0),

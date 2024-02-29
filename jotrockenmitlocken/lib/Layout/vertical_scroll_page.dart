@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jotrockenmitlocken/Layout/Widgets/first_component_list.dart';
-import 'package:jotrockenmitlocken/constants.dart';
+import 'package:jotrockenmitlockenrepo/constants.dart';
 
 class VerticalScrollPage extends StatefulWidget {
   VerticalScrollPage({super.key, required this.childWidgets});

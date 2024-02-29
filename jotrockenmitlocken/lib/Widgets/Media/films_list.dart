@@ -1,9 +1,9 @@
 import 'package:csv/csv.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:jotrockenmitlocken/Widgets/Media/data_list.dart';
+import 'package:jotrockenmitlockenrepo/Media/data_list.dart';
 import 'package:jotrockenmitlocken/Widgets/Media/film.dart';
-import 'package:jotrockenmitlocken/constants.dart';
+import 'package:jotrockenmitlockenrepo/constants.dart';
 
 class FilmsList extends StatefulWidget {
   const FilmsList({super.key});
@@ -30,28 +30,8 @@ class _FilmsListState extends State<FilmsList> with DataListState<Film> {
   }
 
   @override
-  int getNumRowsForSimultaneousDisplay() {
-    // for mobile devices we will need an larger height :)
-    if (MediaQuery.of(context).size.width <= narrowScreenWidthThreshold) {
-      return 3;
-    } else {
-      return 6;
-    }
-  }
-
-  @override
   List<double> getSpacing() {
     return [0.33, 0.33, 0.33];
-  }
-
-  @override
-  double getDataRowHeight() {
-    // for mobile devices we will need an larger height :)
-    if (MediaQuery.of(context).size.width >= largeWidthBreakpoint) {
-      return 80;
-    } else {
-      return 120;
-    }
   }
 
   @override
@@ -70,8 +50,8 @@ class _FilmsListState extends State<FilmsList> with DataListState<Film> {
         .getRange(1, listData.length)
         .toList()
         .map((List e) => Film(
-              e.elementAt(0),
-              e.elementAt(1),
+              title: e.elementAt(0),
+              ISAN: e.elementAt(1),
             ))
         .toList();
     return listData;

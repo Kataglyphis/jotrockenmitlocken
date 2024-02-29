@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 import 'package:jotrockenmitlocken/app_frame.dart';
 
-import 'package:jotrockenmitlocken/constants.dart';
+import 'package:jotrockenmitlockenrepo/constants.dart';
 
 void main() {
   runApp(

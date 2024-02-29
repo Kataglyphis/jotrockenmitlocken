@@ -9,6 +9,7 @@ import 'package:jotrockenmitlocken/Pages/Home/Widgets/color_seed_button.dart';
 import 'package:jotrockenmitlocken/Pages/Home/Widgets/language_button.dart';
 
 import 'package:jotrockenmitlocken/Widgets/Navigation/navigation_bars.dart';
+import 'package:jotrockenmitlockenrepo/constants.dart';
 import 'package:jotrockenmitlocken/constants.dart';
 import 'package:jotrockenmitlocken/Pages/screen_configurations.dart';
 
@@ -191,7 +192,6 @@ class _HomeState extends State<Home> {
                       navigationShell: widget.navigationShell,
                       handleChangedNavBarIndex: (index) {
                         currentNavBarIndex = index;
-
                         widget.navigationShell.goBranch(index);
                       },
                     ),

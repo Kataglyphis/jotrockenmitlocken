@@ -2,8 +2,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:jotrockenmitlocken/constants.dart';
-import 'package:jotrockenmitlocken/Helper/font_helper.dart';
+import 'package:jotrockenmitlockenrepo/constants.dart';
+import 'package:jotrockenmitlockenrepo/Helper/font_helper.dart';
 
 class SkillTable extends StatefulWidget {
   const SkillTable({super.key, required this.useOtherLanguageMode});
@@ -127,7 +127,7 @@ class _SkillTableState extends State<SkillTable> {
             final double currentWidth = MediaQuery.of(context).size.width;
             double skillTableWidth = currentWidth;
             if (currentWidth >= mediumWidthBreakpoint) {
-              skillTableWidth = skillTableWidth * 0.3;
+              skillTableWidth = skillTableWidth * 0.4;
             } else {
               skillTableWidth = skillTableWidth * 0.9;
             }

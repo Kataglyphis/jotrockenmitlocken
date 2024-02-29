@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jotrockenmitlocken/Pages/AboutMePage/Charts/pie_chart_data_entry.dart';
-import 'package:jotrockenmitlocken/constants.dart';
-import 'package:jotrockenmitlocken/Helper/font_helper.dart';
+import 'package:jotrockenmitlockenrepo/constants.dart';
+import 'package:jotrockenmitlockenrepo/Helper/font_helper.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 

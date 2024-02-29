@@ -1,9 +1,9 @@
 import 'package:csv/csv.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:jotrockenmitlocken/Widgets/Media/data_list.dart';
-import 'package:jotrockenmitlocken/Widgets/Media/quote.dart';
-import 'package:jotrockenmitlocken/constants.dart';
+import 'package:jotrockenmitlockenrepo/Media/data_list.dart';
+import 'package:jotrockenmitlocken/Pages/QuotesPage/quote.dart';
+import 'package:jotrockenmitlockenrepo/constants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class QuotesList extends StatefulWidget {
@@ -34,27 +34,7 @@ class _QuotesListState extends State<QuotesList> with DataListState<Quote> {
 
   @override
   List<double> getSpacing() {
-    return [0.3, 0.7];
-  }
-
-  @override
-  int getNumRowsForSimultaneousDisplay() {
-    // for mobile devices we will need an larger height :)
-    if (MediaQuery.of(context).size.width <= narrowScreenWidthThreshold) {
-      return 10;
-    } else {
-      return 12;
-    }
-  }
-
-  @override
-  double getDataRowHeight() {
-    // for mobile devices we will need an larger height :)
-    if (MediaQuery.of(context).size.width <= narrowScreenWidthThreshold) {
-      return 140;
-    } else {
-      return 80;
-    }
+    return [0.2, 0.65];
   }
 
   @override
@@ -77,8 +57,8 @@ class _QuotesListState extends State<QuotesList> with DataListState<Quote> {
         .getRange(1, listData.length)
         .toList()
         .map((List e) => Quote(
-              e.elementAt(0).toString(),
-              formatQuote(e.elementAt(1).toString()),
+              author: e.elementAt(0).toString(),
+              content: formatQuote(e.elementAt(1).toString()),
             ))
         .toList();
     return listData;

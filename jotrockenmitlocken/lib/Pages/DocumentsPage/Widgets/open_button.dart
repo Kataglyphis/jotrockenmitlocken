@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:jotrockenmitlocken/Pages/DocumentsPage/Widgets/document.dart';
 import 'package:jotrockenmitlocken/constants.dart';
-import 'package:jotrockenmitlocken/Helper/font_helper.dart';
+import 'package:jotrockenmitlockenrepo/Helper/font_helper.dart';
 
 import 'download_stub.dart' if (dart.library.html) 'download_web.dart';
 
