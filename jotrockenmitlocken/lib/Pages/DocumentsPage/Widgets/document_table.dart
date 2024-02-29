@@ -98,12 +98,12 @@ class AboutMeTableState extends State<DocumentTable> {
           leading: DocIcon(document: currentDocument),
           title: Text(
             currentDocument.title,
-            style: FontHelper.getTextStyle(context),
+            //style: FontHelper.getTextStyle(context),
           ),
           subtitle: Text(
             currentDocument.additionalInfo,
             overflow: TextOverflow.ellipsis,
-            style: FontHelper.getTextStyle(context),
+            //style: FontHelper.getTextStyle(context),
           ),
           trailing: DownloadButton(
             document: currentDocument,
