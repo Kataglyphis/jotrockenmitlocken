@@ -1,10 +1,9 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_markdown_latex/flutter_markdown_latex.dart';
 import 'package:markdown/markdown.dart' as md;
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:jotrockenmitlocken/constants.dart';
+import 'package:jotrockenmitlockenrepo/constants.dart';
 
 class MarkdownFilePage extends StatefulWidget {
   MarkdownFilePage(

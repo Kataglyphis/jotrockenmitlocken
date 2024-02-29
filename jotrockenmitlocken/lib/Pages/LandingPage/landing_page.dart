@@ -4,7 +4,7 @@ import 'package:jotrockenmitlocken/Pages/LandingPage/ai_playground.dart';
 import 'package:jotrockenmitlocken/Pages/LandingPage/rendering_playground.dart';
 import 'package:jotrockenmitlocken/Pages/app_frame_attributes.dart';
 import 'package:jotrockenmitlocken/Pages/nav_bar_pages_factory.dart';
-import 'package:jotrockenmitlocken/constants.dart';
+import 'package:jotrockenmitlockenrepo/constants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LandingPage extends NavBarPagesFactory {

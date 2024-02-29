@@ -2,9 +2,9 @@ import 'package:csv/csv.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:jotrockenmitlocken/Widgets/Media/book.dart';
-import 'package:jotrockenmitlocken/constants.dart';
+import 'package:jotrockenmitlockenrepo/constants.dart';
 
-import 'data_list.dart';
+import 'package:jotrockenmitlockenrepo/Media/data_list.dart';
 
 class BooksList extends StatefulWidget {
   const BooksList({super.key});
@@ -38,26 +38,6 @@ class _BooksListState extends State<BooksList> with DataListState<Book> {
   }
 
   @override
-  int getNumRowsForSimultaneousDisplay() {
-    // for mobile devices we will need an larger height :)
-    if (MediaQuery.of(context).size.width <= narrowScreenWidthThreshold) {
-      return 3;
-    } else {
-      return 6;
-    }
-  }
-
-  @override
-  double getDataRowHeight() {
-    // for mobile devices we will need an larger height :)
-    if (MediaQuery.of(context).size.width >= largeWidthBreakpoint) {
-      return 80;
-    } else {
-      return 120;
-    }
-  }
-
-  @override
   List<double> getSpacing() {
     return [0.25, 0.25, 0.25, 0.25];
   }
@@ -72,9 +52,9 @@ class _BooksListState extends State<BooksList> with DataListState<Book> {
         .getRange(1, listData.length)
         .toList()
         .map((List e) => Book(
-              e.elementAt(0),
-              e.elementAt(1),
-              e.elementAt(2),
+              title: e.elementAt(0),
+              author: e.elementAt(1),
+              ISBN: e.elementAt(2),
             ))
         .toList();
     return listData;

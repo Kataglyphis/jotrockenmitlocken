@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:jotrockenmitlocken/Helper/browser_helper.dart';
-import 'package:jotrockenmitlocken/constants.dart';
+import 'package:jotrockenmitlockenrepo/Helper/browser_helper.dart';
+import 'package:jotrockenmitlockenrepo/constants.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class SocialMediaWidgets extends StatelessWidget {

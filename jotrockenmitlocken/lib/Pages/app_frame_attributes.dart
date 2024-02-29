@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jotrockenmitlocken/constants.dart';
+import 'package:jotrockenmitlockenrepo/constants.dart';
 
 class AppFrameAttributes {
   CurvedAnimation railAnimation;

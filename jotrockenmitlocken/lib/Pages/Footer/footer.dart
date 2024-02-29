@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:jotrockenmitlocken/Pages/AboutMePage/Widgets/socialMedia/social_media_widgets.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:jotrockenmitlocken/constants.dart';
+import 'package:jotrockenmitlockenrepo/constants.dart';
 
 class Footer extends StatefulWidget {
   const Footer({

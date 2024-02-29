@@ -4,7 +4,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:jotrockenmitlocken/Pages/Home/Widgets/expanded_color_seed_action.dart';
 
-import 'package:jotrockenmitlocken/constants.dart';
+import 'package:jotrockenmitlockenrepo/constants.dart';
 
 class ExpandedTrailingActions extends StatelessWidget {
   const ExpandedTrailingActions({
