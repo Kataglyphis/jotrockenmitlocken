@@ -1,15 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:flutter_markdown_latex/flutter_markdown_latex.dart';
+import 'package:jotrockenmitlocken/Widgets/Media/Markdown/ElementBuilder/code_element_builder.dart';
+import 'package:jotrockenmitlocken/Widgets/Media/Markdown/ElementBuilder/latex_element_builder.dart';
+import 'package:jotrockenmitlocken/Widgets/Media/Markdown/ElementBuilder/latex_inline_syntax.dart';
 import 'package:markdown/markdown.dart' as md;
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:jotrockenmitlockenrepo/constants.dart';
 
+import 'ElementBuilder/centered_head_builder.dart';
+
 class MarkdownFilePage extends StatefulWidget {
   MarkdownFilePage(
-      {super.key, required this.filePathDe, required this.filePathEn});
+      {super.key,
+      required this.filePathDe,
+      required this.filePathEn,
+      this.imageDirectory = 'assets/images/',
+      required this.colorSelected});
   String filePathDe;
   String filePathEn;
+  String imageDirectory;
+  ColorSeed colorSelected;
 
   @override
   _MarkdownFilePage createState() => _MarkdownFilePage();
@@ -64,9 +74,9 @@ class _MarkdownFilePage extends State<MarkdownFilePage> {
     if (currentWidth <= narrowScreenWidthThreshold) {
       return currentWidth * 0.9;
     } else if (currentWidth <= mediumWidthBreakpoint) {
-      return currentWidth * 0.7;
+      return currentWidth * 0.9;
     } else {
-      return currentWidth * 0.6;
+      return currentWidth * 0.7;
     }
   }
 
@@ -85,21 +95,25 @@ class _MarkdownFilePage extends State<MarkdownFilePage> {
               selectable: true,
               data: _markupContent,
               styleSheet: MarkdownStyleSheet(
-                  h1: const TextStyle(fontWeight: FontWeight.bold),
-                  h2: const TextStyle(fontWeight: FontWeight.bold),
-                  h1Align: WrapAlignment.end,
-                  //h1Padding: EdgeInsets.fromViewPadding(padding, devicePixelRatio),
-                  h2Align: WrapAlignment.center),
+                h1: const TextStyle(fontWeight: FontWeight.bold),
+                h2: const TextStyle(fontWeight: FontWeight.bold),
+                h1Align: WrapAlignment.center,
+                //h1Padding: EdgeInsets.fromViewPadding(padding, devicePixelRatio),
+                h2Align: WrapAlignment.center,
+              ),
               styleSheetTheme: MarkdownStyleSheetBaseTheme.material,
-              imageDirectory: 'assets/images/',
-              builders: {
+              imageDirectory: widget.imageDirectory,
+              builders: <String, MarkdownElementBuilder>{
                 'latex': LatexElementBuilder(
-                  textStyle: const TextStyle(color: Colors.blue),
+                  textScaleFactor: 1.2,
+                  //textStyle: const TextStyle(color: Colors.black),
                 ),
+                'h1': CenteredHeaderBuilder(),
+                'code': CodeElementBuilder(colorSelected: widget.colorSelected),
               },
               extensionSet: md.ExtensionSet(
                 <md.BlockSyntax>[
-                  LatexBlockSyntax(),
+                  ...md.ExtensionSet.gitHubFlavored.blockSyntaxes,
                   ...md.ExtensionSet.gitHubWeb.blockSyntaxes,
                 ],
                 <md.InlineSyntax>[

@@ -61,7 +61,7 @@ class AboutMeTableState extends State<AboutMeTable> {
           SizedBox(
             width: picWidth,
             child: applyBoxDecoration(
-                ClipRRect(
+                child: ClipRRect(
                   borderRadius: BorderRadius.circular(0),
                   child: const FadeInImage(
                     filterQuality: FilterQuality.medium,
@@ -72,11 +72,11 @@ class AboutMeTableState extends State<AboutMeTable> {
                     ),
                   ),
                 ),
-                EdgeInsets.all(paddingPic),
-                marginPic,
-                borderRadiusPic,
-                5,
-                widget.colorSelected.color),
+                insets: EdgeInsets.all(paddingPic),
+                margin: marginPic,
+                borderRadius: borderRadiusPic,
+                borderWidth: 5,
+                color: widget.colorSelected.color),
           ),
           const SizedBox(height: 10),
           Text(

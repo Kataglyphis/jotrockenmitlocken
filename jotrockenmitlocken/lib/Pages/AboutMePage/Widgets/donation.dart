@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jotrockenmitlockenrepo/Decoration/decoration_helper.dart';
+import 'package:jotrockenmitlockenrepo/Helper/browser_helper.dart';
 import 'package:jotrockenmitlockenrepo/constants.dart';
 import 'package:jotrockenmitlockenrepo/Helper/font_helper.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -21,14 +22,14 @@ class Donation extends StatefulWidget {
 }
 
 class _DonationState extends State<Donation> {
-  Future<void> _launchInBrowser(Uri url) async {
-    if (!await launchUrl(
-      url,
-      mode: LaunchMode.externalApplication,
-    )) {
-      throw 'Could not launch $url';
-    }
-  }
+  // Future<void> _launchInBrowser(Uri url) async {
+  //   if (!await launchUrl(
+  //     url,
+  //     mode: LaunchMode.externalApplication,
+  //   )) {
+  //     throw 'Could not launch $url';
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +38,7 @@ class _DonationState extends State<Donation> {
     return LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
       return applyBoxDecoration(
-          Column(
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -49,7 +50,7 @@ class _DonationState extends State<Donation> {
                 onPressed: () {
                   final Uri toLaunch = Uri(
                       scheme: 'https', host: 'paypal.me', path: '/JonasHeinle');
-                  _launchInBrowser(toLaunch);
+                  BrowserHelper.launchInBrowser(toLaunch);
                 },
               ),
               Row(
@@ -77,11 +78,11 @@ class _DonationState extends State<Donation> {
               ),
             ],
           ),
-          EdgeInsets.all(paddingPic),
-          marginPic,
-          10,
-          5,
-          widget.colorSelected.color);
+          insets: EdgeInsets.all(paddingPic),
+          margin: marginPic,
+          borderRadius: 10,
+          borderWidth: 5,
+          color: widget.colorSelected.color);
     });
   }
 }

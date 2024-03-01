@@ -1,13 +1,3 @@
-This is inline latex: $f(x) = \sum_{i=0}^{n} \frac{a_i}{1+x}$
-latex: $c = \pm\sqrt{a^2 + b^2}$
-This is block level latex:
-
-$
-c = \pm\sqrt{a^2 + b^2}
-$
-
-This is inline latex with displayMode: $$f(x) = \sum_{i=0}^{n} \frac{a_i}{1+x}$$
-
 # Impressum
 
 > **_NOTE:_** Das Impressum befindet sich in einer experimentellen Phase und 

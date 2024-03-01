@@ -1,7 +1,5 @@
 # Datenschutzerklärung
 
-![Clouds](Coffee-removebg.png)
-
 Ich, Jonas Heinle, nehme den Schutz Ihrer personenbezogenen Daten sehr ernst. 
 Um mein Internetangebot vollständig nutzen zu können, ist es erforderlich,  
 bestimmte Informationen zu erfassen, wenn Sie meine Website besuchen. 

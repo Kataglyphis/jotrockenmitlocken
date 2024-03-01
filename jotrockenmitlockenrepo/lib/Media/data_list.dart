@@ -111,18 +111,16 @@ abstract mixin class DataListState<T extends Data> {
                   SizedBox(
                     width: dataTableWidth,
                     child: applyBoxDecoration(
-                        PaginatedDataTable(
+                        child: PaginatedDataTable(
                           dataRowMaxHeight: double.infinity,
                           sortColumnIndex: sortColumnIndex,
                           sortAscending: isAscending,
                           columns: getDataColumns(dataCategories),
                           source: data,
                         ),
-                        const EdgeInsets.all(0),
-                        0,
-                        8,
-                        6,
-                        getColorSeed().color),
+                        borderRadius: 8,
+                        borderWidth: 6,
+                        color: getColorSeed().color),
                   ),
                 ]);
           } else if (data.hasError) {

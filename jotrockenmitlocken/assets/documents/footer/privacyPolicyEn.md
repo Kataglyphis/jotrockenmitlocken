@@ -1,12 +1,3 @@
-<style>
-  h1 {
-   text-align: center;
-}
-.red {color: red}
-</style>
-
-<p class="red">red text</p>
-
 # Privacy Policy
 
 I, Jonas Heinle, take the protection of your personal data very seriously.  
