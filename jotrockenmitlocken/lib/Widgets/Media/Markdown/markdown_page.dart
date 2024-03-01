@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:jotrockenmitlocken/Widgets/Media/Markdown/ElementBuilder/centered_image_builder.dart';
 import 'package:jotrockenmitlocken/Widgets/Media/Markdown/ElementBuilder/code_element_builder.dart';
 import 'package:jotrockenmitlocken/Widgets/Media/Markdown/ElementBuilder/latex_element_builder.dart';
 import 'package:jotrockenmitlocken/Widgets/Media/Markdown/ElementBuilder/latex_inline_syntax.dart';
@@ -108,6 +109,9 @@ class _MarkdownFilePage extends State<MarkdownFilePage> {
                   textScaleFactor: 1.2,
                   //textStyle: const TextStyle(color: Colors.black),
                 ),
+                'img': CenteredImageBuilder(
+                    colorSelected: widget.colorSelected,
+                    imageDir: widget.imageDirectory),
                 'h1': CenteredHeaderBuilder(),
                 'code': CodeElementBuilder(colorSelected: widget.colorSelected),
               },

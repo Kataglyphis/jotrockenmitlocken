@@ -146,6 +146,24 @@ class _Footer extends State<Footer> {
               ),
             ],
           ),
+          Row(
+            mainAxisAlignment: align,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              TextButton(
+                onPressed: () {
+                  final Uri toLaunch =
+                      Uri(scheme: 'https', host: 'dom-wuest.de', path: '');
+                  BrowserHelper.launchInBrowser(toLaunch);
+                },
+                child: Text(
+                  'dom-wuest.de.de',
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 11),
+                ),
+              ),
+            ],
+          ),
         ]);
   }
 
