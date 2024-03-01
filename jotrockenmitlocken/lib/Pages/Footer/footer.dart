@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:jotrockenmitlocken/Pages/AboutMePage/Widgets/socialMedia/social_media_widgets.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:jotrockenmitlockenrepo/Helper/browser_helper.dart';
 import 'package:jotrockenmitlockenrepo/constants.dart';
 
 class Footer extends StatefulWidget {
@@ -102,6 +103,52 @@ class _Footer extends State<Footer> {
         ]);
   }
 
+  Widget createTextButtonsForExternalLinks() {
+    var currentWidth = MediaQuery.of(context).size.width;
+    var align = MainAxisAlignment.center;
+    if (currentWidth < mediumWidthBreakpoint) {
+      align = MainAxisAlignment.center;
+    }
+    return Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            height: 10,
+          ),
+          Row(
+            mainAxisAlignment: align,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(
+                textAlign: TextAlign.center,
+                AppLocalizations.of(context)!.externalLinks,
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: align,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              TextButton(
+                onPressed: () {
+                  final Uri toLaunch = Uri(
+                      scheme: 'https', host: 'johannes-heinle.de', path: '');
+                  BrowserHelper.launchInBrowser(toLaunch);
+                },
+                child: Text(
+                  'johannes-heinle.de',
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 11),
+                ),
+              ),
+            ],
+          ),
+        ]);
+  }
+
   Widget createSocialIconsAndLiabilityWidgets() {
     var currentWidth = MediaQuery.of(context).size.width;
     var align = MainAxisAlignment.start;
@@ -145,6 +192,10 @@ class _Footer extends State<Footer> {
           const SizedBox(
             height: 30,
           ),
+          createTextButtonsForExternalLinks(),
+          const SizedBox(
+            height: 30,
+          ),
         ],
       );
     } else {
@@ -177,7 +228,14 @@ class _Footer extends State<Footer> {
                   width: 30,
                 ),
                 createTextButtons(),
+                const SizedBox(
+                  width: 30,
+                ),
                 createSocialIconsAndLiabilityWidgets(),
+                const SizedBox(
+                  width: 30,
+                ),
+                createTextButtonsForExternalLinks(),
               ],
             ),
             // const Expanded(

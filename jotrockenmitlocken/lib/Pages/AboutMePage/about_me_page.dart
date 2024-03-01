@@ -27,14 +27,14 @@ class AboutMePage extends NavBarPagesFactory {
         height: 40,
       ),
       applyBoxDecoration(
-          SkillTable(
+          child: SkillTable(
             useOtherLanguageMode: useOtherLanguageMode,
           ),
-          EdgeInsets.all(paddingSkillTable),
-          marginSkillTable,
-          30,
-          5,
-          colorSelected.color),
+          insets: EdgeInsets.all(paddingSkillTable),
+          margin: marginSkillTable,
+          borderRadius: 30,
+          borderWidth: 5,
+          color: colorSelected.color),
     ];
 
     return [childWidgetsLeftPage, childWidgetsRightPage];

@@ -58,15 +58,13 @@ class _AIPlaygroundState extends State<AIPlayground> {
           ),
           colDivider,
           applyBoxDecoration(
-              ClipRRect(
+              child: ClipRRect(
                 borderRadius: BorderRadius.circular(0),
                 child: Image.asset("assets/images/funny_programmer.gif"),
               ),
-              const EdgeInsets.all(0),
-              0,
-              0,
-              5,
-              widget.colorSelected.color),
+              borderRadius: 0,
+              borderWidth: 5,
+              color: widget.colorSelected.color),
           colDivider
         ]);
   }
