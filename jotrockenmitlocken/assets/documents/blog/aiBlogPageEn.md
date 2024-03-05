@@ -4,7 +4,8 @@ Right now this is my playground for integrating markdown into flutter.
 
 # AI Blog
 
-![Clouds](Coffee-removebg.png)
+![Clouds](ScreenshotWorleyNoise.png)
+*image_caption*d
 
 
 This is inline latex: $f(x) = \sum_{i=0}^{n} \frac{a_i}{1+x}$
