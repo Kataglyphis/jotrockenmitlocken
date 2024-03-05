@@ -12,6 +12,7 @@ class CookieDeclarationPage extends PagesFactory {
         colorSelected: appFrameAttributes.colorSelected,
         filePathDe: 'assets/documents/footer/cookieDeclarationDe.md',
         filePathEn: 'assets/documents/footer/cookieDeclarationEn.md',
+        useLightMode: appFrameAttributes.useLightMode,
       )
     ], appFrameAttributes.showMediumSizeLayout,
         appFrameAttributes.showLargeSizeLayout);

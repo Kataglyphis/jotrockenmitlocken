@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:jotrockenmitlocken/Pages/DocumentsPage/Widgets/document.dart';
 import 'package:jotrockenmitlocken/constants.dart';
-import 'package:jotrockenmitlockenrepo/Helper/font_helper.dart';
 
 import 'download_stub.dart' if (dart.library.html) 'download_web.dart';
 
@@ -32,7 +31,7 @@ class DownloadButton extends StatelessWidget {
       ),
       child: Text(
         "Open",
-        style: FontHelper.getTextStyleSubHeadings(context),
+        style: Theme.of(context).textTheme.titleMedium,
       ),
     );
   }

@@ -12,6 +12,7 @@ class PrivacyPolicyPage extends PagesFactory {
         colorSelected: appFrameAttributes.colorSelected,
         filePathDe: 'assets/documents/footer/privacyPolicyDe.md',
         filePathEn: 'assets/documents/footer/privacyPolicyEn.md',
+        useLightMode: appFrameAttributes.useLightMode,
       )
     ], appFrameAttributes.showMediumSizeLayout,
         appFrameAttributes.showLargeSizeLayout);

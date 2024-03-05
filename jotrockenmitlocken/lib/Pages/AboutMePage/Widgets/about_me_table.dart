@@ -4,7 +4,6 @@ import 'package:jotrockenmitlocken/Pages/AboutMePage/Widgets/socialMedia/social_
 import 'package:jotrockenmitlockenrepo/Decoration/decoration_helper.dart';
 import 'package:jotrockenmitlockenrepo/constants.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:jotrockenmitlockenrepo/Helper/font_helper.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -82,7 +81,7 @@ class AboutMeTableState extends State<AboutMeTable> {
           Text(
             "Jonas Heinle",
             textAlign: TextAlign.center,
-            style: FontHelper.getTextStyleHeadings(context),
+            style: Theme.of(context).textTheme.headlineLarge,
           ),
           const SizedBox(
             height: 10,
@@ -90,7 +89,7 @@ class AboutMeTableState extends State<AboutMeTable> {
           Text(
             AppLocalizations.of(context)!.shortDescriptionTextMyPersona,
             textAlign: TextAlign.center,
-            style: FontHelper.getTextStyle(context),
+            style: Theme.of(context).textTheme.titleMedium,
           ),
           const SizedBox(
             height: 10,
@@ -128,13 +127,13 @@ class AboutMeTableState extends State<AboutMeTable> {
           Text(
             "cataglyphis@jotrockenmitlocken.de",
             textAlign: TextAlign.center,
-            style: FontHelper.getTextStyle(context),
+            style: Theme.of(context).textTheme.titleMedium,
           ),
           const SizedBox(height: 10),
           Text(
             "»As soon as it works, no-one calls it AI anymore.« (John McCarthy)",
             textAlign: TextAlign.center,
-            style: FontHelper.getTextStyle(context),
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
           const SizedBox(
             height: 30,
@@ -151,7 +150,7 @@ class AboutMeTableState extends State<AboutMeTable> {
           Text(
             "I love to cURL",
             textAlign: TextAlign.center,
-            style: FontHelper.getTextStyleHeadings(context),
+            style: Theme.of(context).textTheme.titleMedium,
           ),
           IconButton(
             iconSize: 40,

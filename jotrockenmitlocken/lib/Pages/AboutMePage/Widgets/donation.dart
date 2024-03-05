@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:jotrockenmitlockenrepo/Decoration/decoration_helper.dart';
 import 'package:jotrockenmitlockenrepo/Helper/browser_helper.dart';
 import 'package:jotrockenmitlockenrepo/constants.dart';
-import 'package:jotrockenmitlockenrepo/Helper/font_helper.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -43,7 +42,7 @@ class _DonationState extends State<Donation> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(AppLocalizations.of(context)!.spendCoffe,
-                  style: FontHelper.getTextStyle(context)),
+                  style: Theme.of(context).textTheme.bodyMedium),
               IconButton(
                 iconSize: 57,
                 icon: const FaIcon(FontAwesomeIcons.paypal),

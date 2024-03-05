@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:jotrockenmitlockenrepo/constants.dart';
-import 'package:jotrockenmitlockenrepo/Helper/font_helper.dart';
 
 class SkillTable extends StatefulWidget {
   const SkillTable({super.key, required this.useOtherLanguageMode});
@@ -62,18 +61,18 @@ class _SkillTableState extends State<SkillTable> {
       return <Widget>[
         Text(
           key.substring(0, key.toString().indexOf("(")).trim(),
-          style: FontHelper.getTextStyleSubHeadings(context),
+          style: Theme.of(context).textTheme.titleLarge,
         ),
         Text(
           key.substring(key.toString().indexOf("(")).trim(),
-          style: FontHelper.getTextStyle(context),
+          style: Theme.of(context).textTheme.titleMedium,
         )
       ];
     } else {
       return [
         Text(
           key,
-          style: FontHelper.getTextStyleSubHeadings(context),
+          style: Theme.of(context).textTheme.titleLarge,
         ),
       ];
     }
@@ -111,8 +110,8 @@ class _SkillTableState extends State<SkillTable> {
                 TableCell(
                     child: Padding(
                   padding: EdgeInsets.fromLTRB(betweenColumnPadding, 8, 0, 0),
-                  child:
-                      Text(entryVal, style: FontHelper.getTextStyle(context)),
+                  child: Text(entryVal,
+                      style: Theme.of(context).textTheme.titleMedium),
                 ))
               ]));
               skills.add(const TableRow(children: [

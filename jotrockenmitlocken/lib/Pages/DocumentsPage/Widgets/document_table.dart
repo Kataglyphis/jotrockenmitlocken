@@ -4,7 +4,6 @@ import 'package:jotrockenmitlocken/Pages/DocumentsPage/Widgets/doc_icon.dart';
 import 'package:jotrockenmitlocken/Pages/DocumentsPage/Widgets/document.dart';
 import 'package:jotrockenmitlocken/Pages/DocumentsPage/Widgets/open_button.dart';
 import 'package:jotrockenmitlockenrepo/constants.dart';
-import 'package:jotrockenmitlockenrepo/Helper/font_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DocumentTable extends StatefulWidget {
@@ -67,7 +66,7 @@ class AboutMeTableState extends State<DocumentTable> {
           Text(
             AppLocalizations.of(context)!.documents,
             textAlign: TextAlign.center,
-            style: FontHelper.getTextStyleHeadings(context),
+            style: Theme.of(context).textTheme.headlineLarge,
           ),
           colDivider,
           SizedBox(
@@ -97,12 +96,12 @@ class AboutMeTableState extends State<DocumentTable> {
           leading: DocIcon(document: currentDocument),
           title: Text(
             currentDocument.title,
-            //style: FontHelper.getTextStyle(context),
+            style: Theme.of(context).textTheme.titleMedium,
           ),
           subtitle: Text(
             currentDocument.additionalInfo,
             overflow: TextOverflow.ellipsis,
-            //style: FontHelper.getTextStyle(context),
+            style: Theme.of(context).textTheme.titleMedium,
           ),
           trailing: DownloadButton(
             document: currentDocument,
