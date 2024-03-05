@@ -12,6 +12,7 @@ class ImprintPage extends PagesFactory {
         colorSelected: appFrameAttributes.colorSelected,
         filePathDe: 'assets/documents/footer/imprintDe.md',
         filePathEn: 'assets/documents/footer/imprintEn.md',
+        useLightMode: appFrameAttributes.useLightMode,
       )
     ], appFrameAttributes.showMediumSizeLayout,
         appFrameAttributes.showLargeSizeLayout);

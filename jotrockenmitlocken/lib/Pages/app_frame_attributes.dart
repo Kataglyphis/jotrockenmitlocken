@@ -6,11 +6,13 @@ class AppFrameAttributes {
   bool showMediumSizeLayout;
   bool showLargeSizeLayout;
   bool useOtherLanguageMode;
+  bool useLightMode;
   ColorSeed colorSelected;
   AppFrameAttributes(
       {required this.railAnimation,
       required this.showMediumSizeLayout,
       required this.showLargeSizeLayout,
       required this.useOtherLanguageMode,
-      required this.colorSelected});
+      required this.colorSelected,
+      required this.useLightMode});
 }

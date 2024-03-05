@@ -8,21 +8,24 @@
 			"name": "jotrockenmitlocken (debug mode)",
 			"request": "launch",
 			"type": "dart",
-			"program": "jotrockenmitlocken/lib/main.dart"
+			"program": "jotrockenmitlocken/lib/main.dart",
+			"args": ["--web-renderer canvaskit"]
 		},
 		{
 			"name": "jotrockenmitlocken (profile mode)",
 			"request": "launch",
 			"type": "dart",
 			"flutterMode": "profile",
-			"program": "jotrockenmitlocken/lib/main.dart"
+			"program": "jotrockenmitlocken/lib/main.dart",
+			"args": ["--web-renderer canvaskit"]
 		},
 		{
 			"name": "jotrockenmitlocken (release mode)",
 			"request": "launch",
 			"type": "dart",
 			"flutterMode": "release",
-			"program": "jotrockenmitlocken/lib/main.dart"
+			"program": "jotrockenmitlocken/lib/main.dart",
+			"args": ["--web-renderer canvaskit"]
 		}
 	]
 }

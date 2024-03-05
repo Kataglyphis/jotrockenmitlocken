@@ -16,11 +16,13 @@ class MarkdownFilePage extends StatefulWidget {
       required this.filePathDe,
       required this.filePathEn,
       this.imageDirectory = 'assets/images/',
-      required this.colorSelected});
+      required this.colorSelected,
+      required this.useLightMode});
   String filePathDe;
   String filePathEn;
   String imageDirectory;
   ColorSeed colorSelected;
+  bool useLightMode;
 
   @override
   _MarkdownFilePage createState() => _MarkdownFilePage();
@@ -96,9 +98,10 @@ class _MarkdownFilePage extends State<MarkdownFilePage> {
               selectable: true,
               data: _markupContent,
               styleSheet: MarkdownStyleSheet(
-                  h1: const TextStyle(fontWeight: FontWeight.bold),
+                  h1: Theme.of(context).textTheme.headlineLarge,
                   h2: const TextStyle(fontWeight: FontWeight.bold),
                   h1Align: WrapAlignment.center,
+                  code: Theme.of(context).textTheme.bodyMedium,
                   //h1Padding: EdgeInsets.fromViewPadding(padding, devicePixelRatio),
                   h2Align: WrapAlignment.center,
                   img: TextStyle(fontStyle: FontStyle.italic)),
@@ -114,7 +117,9 @@ class _MarkdownFilePage extends State<MarkdownFilePage> {
                     imageDir: widget.imageDirectory,
                     currentPageWidth: getMarkdownPageWidth()),
                 'h1': CenteredHeaderBuilder(),
-                'code': CodeElementBuilder(colorSelected: widget.colorSelected),
+                'code': CodeElementBuilder(
+                    colorSelected: widget.colorSelected,
+                    useLightMode: widget.useLightMode),
               },
               extensionSet: md.ExtensionSet(
                 <md.BlockSyntax>[

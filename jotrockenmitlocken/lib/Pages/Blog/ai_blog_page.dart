@@ -13,6 +13,7 @@ class AiBlogPage extends PagesFactory {
         filePathDe: '',
         filePathEn: 'assets/documents/blog/aiBlogPageEn.md',
         imageDirectory: 'assets/images/aiBlog',
+        useLightMode: appFrameAttributes.useLightMode,
       )
     ], appFrameAttributes.showMediumSizeLayout,
         appFrameAttributes.showLargeSizeLayout);

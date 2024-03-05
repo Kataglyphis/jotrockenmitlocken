@@ -119,6 +119,7 @@ class _AppFrameState extends State<AppFrame>
         showMediumSizeLayout: showMediumSizeLayout,
         showLargeSizeLayout: showLargeSizeLayout,
         useOtherLanguageMode: widget.useOtherLanguageMode,
+        useLightMode: widget.useLightMode,
         colorSelected: widget.colorSelected);
     final GoRouter _routerConfig = GoRouter(
       navigatorKey: _rootNavigatorKey,
@@ -184,6 +185,7 @@ class _AppFrameState extends State<AppFrame>
       title: appTitle,
       themeMode: widget.themeMode,
       theme: ThemeData(
+        fontFamily: 'Montserrat',
         colorSchemeSeed: widget.colorSelected.color,
         colorScheme: null,
         useMaterial3: true,

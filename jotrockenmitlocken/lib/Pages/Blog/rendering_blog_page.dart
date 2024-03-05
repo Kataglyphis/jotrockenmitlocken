@@ -13,6 +13,7 @@ class RenderingBlogPage extends PagesFactory {
         filePathDe: '',
         filePathEn: 'assets/documents/blog/renderingBlogPageEn.md',
         imageDirectory: 'assets/images/aiBlog',
+        useLightMode: appFrameAttributes.useLightMode,
       )
     ], appFrameAttributes.showMediumSizeLayout,
         appFrameAttributes.showLargeSizeLayout);

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jotrockenmitlocken/Pages/AboutMePage/Charts/pie_chart_data_entry.dart';
 import 'package:jotrockenmitlockenrepo/constants.dart';
-import 'package:jotrockenmitlockenrepo/Helper/font_helper.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -41,7 +40,7 @@ class PerfectDayState extends State {
     return SfCircularChart(
       title: ChartTitle(
           text: AppLocalizations.of(context)!.myPerfectDay,
-          textStyle: FontHelper.getTextStyleHeadings(context)),
+          textStyle: Theme.of(context).textTheme.headlineLarge),
       legend: Legend(
           width: '100%',
           overflowMode: LegendItemOverflowMode.wrap,
@@ -65,7 +64,7 @@ class PerfectDayState extends State {
                 : '80%',
             innerRadius: '20%',
             dataLabelSettings: DataLabelSettings(
-              textStyle: FontHelper.getTextStyle(context),
+              textStyle: Theme.of(context).textTheme.bodyLarge,
               labelPosition: ChartDataLabelPosition.outside,
               isVisible: !enableSkillTableLegend,
               labelIntersectAction: LabelIntersectAction.shift,

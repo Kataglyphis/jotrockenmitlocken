@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:jotrockenmitlockenrepo/Decoration/decoration_helper.dart';
 import 'package:jotrockenmitlockenrepo/Media/data.dart';
 import 'package:jotrockenmitlockenrepo/constants.dart';
-import 'package:jotrockenmitlockenrepo/Helper/font_helper.dart';
 
 class MyDataTableSource extends DataTableSource {
   List<DataRow> dataRows;
@@ -95,7 +94,7 @@ abstract mixin class DataListState<T extends Data> {
                   Text(
                     getTitle(),
                     textAlign: TextAlign.center,
-                    style: FontHelper.getTextStyleHeadings(context),
+                    style: Theme.of(context).textTheme.headlineLarge,
                   ),
                   const SizedBox(
                     height: 10,
@@ -103,7 +102,7 @@ abstract mixin class DataListState<T extends Data> {
                   Text(
                     "${getDescription()} \u{1F63A}",
                     textAlign: TextAlign.center,
-                    style: FontHelper.getTextStyle(context),
+                    style: Theme.of(context).textTheme.titleLarge,
                   ),
                   const SizedBox(
                     height: 10,

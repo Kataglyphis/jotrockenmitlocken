@@ -7,13 +7,17 @@ import 'package:jotrockenmitlocken/Pages/pages_factory.dart';
 class ContactPage extends PagesFactory {
   @override
   Widget createPage(AppFrameAttributes appFrameAttributes) {
-    return LayoutManager.createSinglePage([
-      MarkdownFilePage(
-        colorSelected: appFrameAttributes.colorSelected,
-        filePathDe: 'assets/documents/footer/contactDe.md',
-        filePathEn: 'assets/documents/footer/contactEn.md',
-      )
-    ], appFrameAttributes.showMediumSizeLayout,
-        appFrameAttributes.showLargeSizeLayout);
+    return LayoutManager.createSinglePage(
+      [
+        MarkdownFilePage(
+          colorSelected: appFrameAttributes.colorSelected,
+          filePathDe: 'assets/documents/footer/contactDe.md',
+          filePathEn: 'assets/documents/footer/contactEn.md',
+          useLightMode: appFrameAttributes.useLightMode,
+        )
+      ],
+      appFrameAttributes.showMediumSizeLayout,
+      appFrameAttributes.showLargeSizeLayout,
+    );
   }
 }

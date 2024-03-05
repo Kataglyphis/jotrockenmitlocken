@@ -12,6 +12,7 @@ class DeclarationOnAccessibilityPage extends PagesFactory {
         colorSelected: appFrameAttributes.colorSelected,
         filePathDe: 'assets/documents/footer/declarationOnAccessibilityDe.md',
         filePathEn: 'assets/documents/footer/declarationOnAccessibilityEn.md',
+        useLightMode: appFrameAttributes.useLightMode,
       )
     ], appFrameAttributes.showMediumSizeLayout,
         appFrameAttributes.showLargeSizeLayout);
