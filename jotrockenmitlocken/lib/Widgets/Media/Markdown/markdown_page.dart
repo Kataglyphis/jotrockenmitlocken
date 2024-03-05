@@ -96,12 +96,12 @@ class _MarkdownFilePage extends State<MarkdownFilePage> {
               selectable: true,
               data: _markupContent,
               styleSheet: MarkdownStyleSheet(
-                h1: const TextStyle(fontWeight: FontWeight.bold),
-                h2: const TextStyle(fontWeight: FontWeight.bold),
-                h1Align: WrapAlignment.center,
-                //h1Padding: EdgeInsets.fromViewPadding(padding, devicePixelRatio),
-                h2Align: WrapAlignment.center,
-              ),
+                  h1: const TextStyle(fontWeight: FontWeight.bold),
+                  h2: const TextStyle(fontWeight: FontWeight.bold),
+                  h1Align: WrapAlignment.center,
+                  //h1Padding: EdgeInsets.fromViewPadding(padding, devicePixelRatio),
+                  h2Align: WrapAlignment.center,
+                  img: TextStyle(fontStyle: FontStyle.italic)),
               styleSheetTheme: MarkdownStyleSheetBaseTheme.material,
               imageDirectory: widget.imageDirectory,
               builders: <String, MarkdownElementBuilder>{
@@ -111,7 +111,8 @@ class _MarkdownFilePage extends State<MarkdownFilePage> {
                 ),
                 'img': CenteredImageBuilder(
                     colorSelected: widget.colorSelected,
-                    imageDir: widget.imageDirectory),
+                    imageDir: widget.imageDirectory,
+                    currentPageWidth: getMarkdownPageWidth()),
                 'h1': CenteredHeaderBuilder(),
                 'code': CodeElementBuilder(colorSelected: widget.colorSelected),
               },

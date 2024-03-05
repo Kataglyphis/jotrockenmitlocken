@@ -157,7 +157,7 @@ class _Footer extends State<Footer> {
                   BrowserHelper.launchInBrowser(toLaunch);
                 },
                 child: Text(
-                  'dom-wuest.de.de',
+                  'dom-wuest.de',
                   style: const TextStyle(
                       fontWeight: FontWeight.bold, fontSize: 11),
                 ),
