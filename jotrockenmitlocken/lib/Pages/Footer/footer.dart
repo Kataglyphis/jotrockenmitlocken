@@ -35,8 +35,7 @@ class _Footer extends State<Footer> {
             children: [
               TextButton(
                 style: TextButton.styleFrom(
-                    textStyle: const TextStyle(
-                        fontSize: 11, fontWeight: FontWeight.bold)),
+                    textStyle: Theme.of(context).textTheme.bodyMedium),
                 onPressed: () {
                   context.go('/imprint');
                 },
@@ -123,8 +122,7 @@ class _Footer extends State<Footer> {
               Text(
                 textAlign: TextAlign.center,
                 AppLocalizations.of(context)!.externalLinks,
-                style:
-                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                style: Theme.of(context).textTheme.titleMedium,
               ),
             ],
           ),
@@ -138,6 +136,7 @@ class _Footer extends State<Footer> {
                       scheme: 'https', host: 'johannes-heinle.de', path: '');
                   BrowserHelper.launchInBrowser(toLaunch);
                 },
+                style: Theme.of(context).textButtonTheme.style,
                 child: Text(
                   'johannes-heinle.de',
                   style: const TextStyle(
@@ -184,8 +183,7 @@ class _Footer extends State<Footer> {
             children: [
               Text(
                 "${AppLocalizations.of(context)!.disclaimer}\n${AppLocalizations.of(context)!.copyright}",
-                style:
-                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 11),
+                style: Theme.of(context).textTheme.labelSmall,
               ),
             ])
       ],
@@ -195,7 +193,6 @@ class _Footer extends State<Footer> {
   @override
   Widget build(BuildContext context) {
     var currentWidth = MediaQuery.of(context).size.width;
-    TextStyle textStyleFooter = const TextStyle(fontSize: 11);
     if (currentWidth < mediumWidthBreakpoint) {
       return Column(
         children: [

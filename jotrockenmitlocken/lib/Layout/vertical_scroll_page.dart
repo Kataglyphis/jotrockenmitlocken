@@ -32,15 +32,20 @@ class _VerticalScrollPage extends State<VerticalScrollPage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Flexible(
-                  flex: mediumWidthBreakpoint.toInt(),
-                  child: SingleChildScrollView(
+                    flex: mediumWidthBreakpoint.toInt(),
+                    child: ListView(
                       scrollDirection: Axis.vertical,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: widget.childWidgets,
-                      )),
-                ),
+                      shrinkWrap: true,
+                      children: [...widget.childWidgets],
+                    )
+                    // child: SingleChildScrollView(
+                    //     scrollDirection: Axis.vertical,
+                    //     child: Column(
+                    //       mainAxisAlignment: MainAxisAlignment.center,
+                    //       crossAxisAlignment: CrossAxisAlignment.center,
+                    //       children: widget.childWidgets,
+                    //     )),
+                    ),
               ])
         ],
         childWidgetsRightPage: const [],

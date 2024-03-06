@@ -8,11 +8,9 @@ import 'package:jotrockenmitlocken/Pages/nav_bar_pages_factory.dart';
 class DocumentPage extends NavBarPagesFactory {
   @override
   Widget createPage(AppFrameAttributes appFrameAttributes) {
-    return LayoutManager.createSinglePage([
-      DocumentTable(
-        colorSelected: appFrameAttributes.colorSelected,
-      )
-    ], appFrameAttributes.showMediumSizeLayout,
+    return LayoutManager.createSinglePage(
+        [const DocumentTable()],
+        appFrameAttributes.showMediumSizeLayout,
         appFrameAttributes.showLargeSizeLayout);
   }
 

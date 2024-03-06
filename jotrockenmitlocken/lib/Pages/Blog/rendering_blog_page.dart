@@ -9,7 +9,6 @@ class RenderingBlogPage extends PagesFactory {
   Widget createPage(AppFrameAttributes appFrameAttributes) {
     return LayoutManager.createSinglePage([
       MarkdownFilePage(
-        colorSelected: appFrameAttributes.colorSelected,
         filePathDe: '',
         filePathEn: 'assets/documents/blog/renderingBlogPageEn.md',
         imageDirectory: 'assets/images/aiBlog',

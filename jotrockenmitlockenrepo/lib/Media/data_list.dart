@@ -48,7 +48,6 @@ abstract mixin class DataListState<T extends Data> {
   String getDescription();
   // every data list gets an individual spacing
   List<double> getSpacing();
-  ColorSeed getColorSeed();
 
   List<DataRow> getDataRows(List<T> rowData, double maxWidth) =>
       rowData.map((T data) {
@@ -119,7 +118,7 @@ abstract mixin class DataListState<T extends Data> {
                         ),
                         borderRadius: 8,
                         borderWidth: 6,
-                        color: getColorSeed().color),
+                        color: Theme.of(context).colorScheme.primary),
                   ),
                 ]);
           } else if (data.hasError) {

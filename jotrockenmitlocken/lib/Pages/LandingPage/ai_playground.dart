@@ -10,9 +10,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class AIPlayground extends StatefulWidget {
   AIPlayground({
     super.key,
-    required this.colorSelected,
   });
-  final ColorSeed colorSelected;
   @override
   State<AIPlayground> createState() => _AIPlaygroundState();
 }
@@ -40,7 +38,10 @@ class _AIPlaygroundState extends State<AIPlayground> {
                   BrowserHelper.launchInBrowser(toLaunch);
                 },
               ),
-              Text(AppLocalizations.of(context)!.aiPlaygroundDescription)
+              Text(
+                AppLocalizations.of(context)!.aiPlaygroundDescription,
+                style: Theme.of(context).textTheme.titleSmall,
+              )
             ],
           ),
           Row(
@@ -52,7 +53,10 @@ class _AIPlaygroundState extends State<AIPlayground> {
                     : () {
                         context.go('/aiBlog');
                       },
-                child: Text(AppLocalizations.of(context)!.visitBlogEntry),
+                child: Text(
+                  AppLocalizations.of(context)!.visitBlogEntry,
+                  style: Theme.of(context).textTheme.titleSmall,
+                ),
               ),
             ],
           ),
@@ -64,7 +68,7 @@ class _AIPlaygroundState extends State<AIPlayground> {
               ),
               borderRadius: 0,
               borderWidth: 5,
-              color: widget.colorSelected.color),
+              color: Theme.of(context).colorScheme.primary),
           colDivider
         ]);
   }

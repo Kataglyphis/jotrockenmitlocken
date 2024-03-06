@@ -16,12 +16,11 @@ class MarkdownFilePage extends StatefulWidget {
       required this.filePathDe,
       required this.filePathEn,
       this.imageDirectory = 'assets/images/',
-      required this.colorSelected,
       required this.useLightMode});
+
   String filePathDe;
   String filePathEn;
   String imageDirectory;
-  ColorSeed colorSelected;
   bool useLightMode;
 
   @override
@@ -99,7 +98,7 @@ class _MarkdownFilePage extends State<MarkdownFilePage> {
               data: _markupContent,
               styleSheet: MarkdownStyleSheet(
                   h1: Theme.of(context).textTheme.headlineLarge,
-                  h2: const TextStyle(fontWeight: FontWeight.bold),
+                  h2: Theme.of(context).textTheme.headlineMedium,
                   h1Align: WrapAlignment.center,
                   code: Theme.of(context).textTheme.bodyMedium,
                   //h1Padding: EdgeInsets.fromViewPadding(padding, devicePixelRatio),
@@ -110,15 +109,20 @@ class _MarkdownFilePage extends State<MarkdownFilePage> {
               builders: <String, MarkdownElementBuilder>{
                 'latex': LatexElementBuilder(
                   textScaleFactor: 1.2,
-                  //textStyle: const TextStyle(color: Colors.black),
                 ),
                 'img': CenteredImageBuilder(
-                    colorSelected: widget.colorSelected,
+                    colorSelected: Theme.of(context)
+                        .colorScheme
+                        .surfaceVariant
+                        .withOpacity(0.3),
                     imageDir: widget.imageDirectory,
                     currentPageWidth: getMarkdownPageWidth()),
                 'h1': CenteredHeaderBuilder(),
                 'code': CodeElementBuilder(
-                    colorSelected: widget.colorSelected,
+                    colorSelected: Theme.of(context)
+                        .colorScheme
+                        .surfaceVariant
+                        .withOpacity(0.3),
                     useLightMode: widget.useLightMode),
               },
               extensionSet: md.ExtensionSet(

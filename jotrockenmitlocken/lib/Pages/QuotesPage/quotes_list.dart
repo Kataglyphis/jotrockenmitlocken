@@ -3,25 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:jotrockenmitlockenrepo/Media/data_list.dart';
 import 'package:jotrockenmitlocken/Pages/QuotesPage/quote.dart';
-import 'package:jotrockenmitlockenrepo/constants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class QuotesList extends StatefulWidget {
   const QuotesList({
     super.key,
-    required this.colorSelected,
   });
-  final ColorSeed colorSelected;
   @override
   State<QuotesList> createState() => _QuotesListState();
 }
 
 class _QuotesListState extends State<QuotesList> with DataListState<Quote> {
-  @override
-  ColorSeed getColorSeed() {
-    return widget.colorSelected;
-  }
-
   @override
   String getTitle() {
     return AppLocalizations.of(context)!.quotations;

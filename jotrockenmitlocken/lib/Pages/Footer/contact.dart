@@ -10,7 +10,6 @@ class ContactPage extends PagesFactory {
     return LayoutManager.createSinglePage(
       [
         MarkdownFilePage(
-          colorSelected: appFrameAttributes.colorSelected,
           filePathDe: 'assets/documents/footer/contactDe.md',
           filePathEn: 'assets/documents/footer/contactEn.md',
           useLightMode: appFrameAttributes.useLightMode,

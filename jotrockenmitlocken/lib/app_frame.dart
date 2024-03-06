@@ -185,7 +185,7 @@ class _AppFrameState extends State<AppFrame>
       title: appTitle,
       themeMode: widget.themeMode,
       theme: ThemeData(
-        fontFamily: 'Montserrat',
+        //fontFamily: 'Montserrat',
         colorSchemeSeed: widget.colorSelected.color,
         colorScheme: null,
         useMaterial3: true,

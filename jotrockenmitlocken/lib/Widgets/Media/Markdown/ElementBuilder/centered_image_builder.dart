@@ -9,7 +9,7 @@ class CenteredImageBuilder extends MarkdownElementBuilder {
       {required this.colorSelected,
       required this.imageDir,
       required this.currentPageWidth});
-  ColorSeed colorSelected;
+  Color colorSelected;
   String imageDir;
   double currentPageWidth;
 
@@ -50,7 +50,7 @@ class CenteredImageBuilder extends MarkdownElementBuilder {
                     image: AssetImage(displayedImage),
                   ),
                 ),
-                color: colorSelected.color.withAlpha(60),
+                color: colorSelected,
               ),
             ),
             Text(

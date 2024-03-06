@@ -10,9 +10,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class RenderingPlayground extends StatefulWidget {
   const RenderingPlayground({
     super.key,
-    required this.colorSelected,
   });
-  final ColorSeed colorSelected;
 
   @override
   State<RenderingPlayground> createState() => _RenderingPlaygroundState();
@@ -67,7 +65,7 @@ class _RenderingPlaygroundState extends State<RenderingPlayground> {
               ),
               borderRadius: 0,
               borderWidth: 5,
-              color: widget.colorSelected.color),
+              color: Theme.of(context).colorScheme.primary),
           colDivider
         ]);
   }

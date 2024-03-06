@@ -12,9 +12,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class Donation extends StatefulWidget {
   const Donation({
     super.key,
-    required this.colorSelected,
   });
-  final ColorSeed colorSelected;
 
   @override
   State<Donation> createState() => _DonationState();
@@ -81,7 +79,7 @@ class _DonationState extends State<Donation> {
           margin: marginPic,
           borderRadius: 10,
           borderWidth: 5,
-          color: widget.colorSelected.color);
+          color: Theme.of(context).colorScheme.primary);
     });
   }
 }
