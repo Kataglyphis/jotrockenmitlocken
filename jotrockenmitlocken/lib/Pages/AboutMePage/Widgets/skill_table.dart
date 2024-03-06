@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:jotrockenmitlockenrepo/Decoration/decoration_helper.dart';
 import 'package:jotrockenmitlockenrepo/constants.dart';
 
 class SkillTable extends StatefulWidget {
@@ -86,63 +87,66 @@ class _SkillTableState extends State<SkillTable> {
 
     initCsvFuture(context);
 
-    return FutureBuilder(
-        future: _readJson,
-        builder: (context, data) {
-          if (data.hasData) {
-            List<TableRow> skills = [];
-            for (int i = 0; i < keys.length; i++) {
-              String entryVal = "";
-              var entryList = values[i];
-              for (int j = 0; j < entryList.length; j++) {
-                entryVal += "${"• " + entryList[j]}\n";
+    return applyBoxDecoration(
+        child: FutureBuilder(
+            future: _readJson,
+            builder: (context, data) {
+              if (data.hasData) {
+                List<TableRow> skills = [];
+                for (int i = 0; i < keys.length; i++) {
+                  String entryVal = "";
+                  var entryList = values[i];
+                  for (int j = 0; j < entryList.length; j++) {
+                    entryVal += "${"• " + entryList[j]}\n";
+                  }
+                  skills.add(TableRow(children: [
+                    TableCell(
+                        child: Padding(
+                      padding: const EdgeInsets.fromLTRB(8, 8, 0, 0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: getSkillTableKeys(keys[i]),
+                      ),
+                    )),
+                    TableCell(
+                        child: Padding(
+                      padding:
+                          EdgeInsets.fromLTRB(betweenColumnPadding, 8, 0, 0),
+                      child: Text(entryVal,
+                          style: Theme.of(context).textTheme.titleMedium),
+                    ))
+                  ]));
+                  skills.add(const TableRow(children: [
+                    SizedBox(
+                      height: 16,
+                    ),
+                    SizedBox(
+                      height: 16,
+                    ),
+                  ]));
+                }
+                final double currentWidth = MediaQuery.of(context).size.width;
+                double skillTableWidth = currentWidth;
+                if (currentWidth >= mediumWidthBreakpoint) {
+                  skillTableWidth = skillTableWidth * 0.4;
+                } else {
+                  skillTableWidth = skillTableWidth * 0.9;
+                }
+                return SizedBox(
+                  width: skillTableWidth,
+                  child: Table(
+                      defaultVerticalAlignment: TableCellVerticalAlignment.top,
+                      children: skills),
+                );
+              } else if (data.hasError) {
+                return Center(child: Text("${data.error}"));
+              } else {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
               }
-              skills.add(TableRow(children: [
-                TableCell(
-                    child: Padding(
-                  padding: const EdgeInsets.fromLTRB(8, 8, 0, 0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: getSkillTableKeys(keys[i]),
-                  ),
-                )),
-                TableCell(
-                    child: Padding(
-                  padding: EdgeInsets.fromLTRB(betweenColumnPadding, 8, 0, 0),
-                  child: Text(entryVal,
-                      style: Theme.of(context).textTheme.titleMedium),
-                ))
-              ]));
-              skills.add(const TableRow(children: [
-                SizedBox(
-                  height: 16,
-                ),
-                SizedBox(
-                  height: 16,
-                ),
-              ]));
-            }
-            final double currentWidth = MediaQuery.of(context).size.width;
-            double skillTableWidth = currentWidth;
-            if (currentWidth >= mediumWidthBreakpoint) {
-              skillTableWidth = skillTableWidth * 0.4;
-            } else {
-              skillTableWidth = skillTableWidth * 0.9;
-            }
-            return SizedBox(
-              width: skillTableWidth,
-              child: Table(
-                  defaultVerticalAlignment: TableCellVerticalAlignment.top,
-                  children: skills),
-            );
-          } else if (data.hasError) {
-            return Center(child: Text("${data.error}"));
-          } else {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-        });
+            }),
+        color: Theme.of(context).colorScheme.primary);
   }
 }

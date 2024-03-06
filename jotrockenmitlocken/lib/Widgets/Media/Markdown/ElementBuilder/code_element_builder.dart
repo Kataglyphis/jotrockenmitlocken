@@ -7,7 +7,6 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_math_fork/flutter_math.dart';
 import 'package:jotrockenmitlockenrepo/Decoration/decoration_helper.dart';
 import 'package:markdown/markdown.dart' as md;
-import 'package:jotrockenmitlockenrepo/constants.dart';
 
 class CodeElementBuilder extends MarkdownElementBuilder {
   CodeElementBuilder({required this.colorSelected, required this.useLightMode});
@@ -16,20 +15,20 @@ class CodeElementBuilder extends MarkdownElementBuilder {
     if (useLightMode) {
       lightThemeCodeStyle['root'] = TextStyle(
         //fontWeight: FontWeight.w100,
-        backgroundColor: colorSelected.color.withAlpha(10),
+        backgroundColor: colorSelected,
       );
       return lightThemeCodeStyle;
     } else {
       darkThemeCodeStyle['root'] = TextStyle(
         //fontWeight: FontWeight.w100,
-        backgroundColor: colorSelected.color.withAlpha(10),
+        backgroundColor: colorSelected,
       );
       return darkThemeCodeStyle;
     }
   }
 
   bool useLightMode;
-  ColorSeed colorSelected;
+  Color colorSelected;
   Map<String, TextStyle> lightThemeCodeStyle = {...githubTheme};
   Map<String, TextStyle> darkThemeCodeStyle = {...draculaTheme};
 
@@ -44,15 +43,17 @@ class CodeElementBuilder extends MarkdownElementBuilder {
 
     if (language == 'math') {
       return Center(
-        child: applyBoxDecoration(
-            child: SelectableMath.tex(
-              element.textContent,
-              textStyle: preferredStyle,
-              // mathStyle: mathStyle,
-              textScaleFactor: 1.6,
-            ),
-            color: colorSelected.color.withAlpha(10)),
-      );
+          child: applyBoxDecoration(
+              child: Container(
+                color: colorSelected,
+                child: SelectableMath.tex(
+                  element.textContent,
+                  textStyle: preferredStyle,
+                  // mathStyle: mathStyle,
+                  textScaleFactor: 1.6,
+                ),
+              ),
+              color: colorSelected));
     }
     return Center(
       child: applyBoxDecoration(
@@ -67,7 +68,7 @@ class CodeElementBuilder extends MarkdownElementBuilder {
             // Specify padding
             padding: const EdgeInsets.all(8),
           ),
-          color: colorSelected.color.withAlpha(10)),
+          color: colorSelected),
     );
   }
 }

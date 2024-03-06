@@ -8,21 +8,16 @@ import 'package:jotrockenmitlockenrepo/constants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LandingPage extends NavBarPagesFactory {
-  List<List<Widget>> _createLandingPageChildWidgets(
-      bool useOtherLanguageMode, ColorSeed colorSelected) {
+  List<List<Widget>> _createLandingPageChildWidgets(bool useOtherLanguageMode) {
     const colDivider = SizedBox(height: 10);
     List<Widget> childWidgetsLeftPage = [
       colDivider,
-      AIPlayground(
-        colorSelected: colorSelected,
-      ),
+      AIPlayground(),
       colDivider,
     ];
     List<Widget> childWidgetsRightPage = [
       colDivider,
-      RenderingPlayground(
-        colorSelected: colorSelected,
-      ),
+      const RenderingPlayground(),
     ];
     return [childWidgetsLeftPage, childWidgetsRightPage];
   }
@@ -30,8 +25,8 @@ class LandingPage extends NavBarPagesFactory {
   @override
   Widget createPage(AppFrameAttributes appFrameAttributes) {
     var homePagesLeftRight = _createLandingPageChildWidgets(
-        appFrameAttributes.useOtherLanguageMode,
-        appFrameAttributes.colorSelected);
+      appFrameAttributes.useOtherLanguageMode,
+    );
     return LayoutManager.createOneTwoTransisionWidget(
         homePagesLeftRight[0],
         homePagesLeftRight[1],

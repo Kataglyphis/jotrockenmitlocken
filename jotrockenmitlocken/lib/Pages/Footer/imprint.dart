@@ -9,7 +9,6 @@ class ImprintPage extends PagesFactory {
   Widget createPage(AppFrameAttributes appFrameAttributes) {
     return LayoutManager.createSinglePage([
       MarkdownFilePage(
-        colorSelected: appFrameAttributes.colorSelected,
         filePathDe: 'assets/documents/footer/imprintDe.md',
         filePathEn: 'assets/documents/footer/imprintEn.md',
         useLightMode: appFrameAttributes.useLightMode,

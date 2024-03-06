@@ -21,7 +21,7 @@ class ComponentGroupDecoration extends StatelessWidget {
           child: Center(
             child: Column(
               children: [
-                Text(label, style: Theme.of(context).textTheme.titleLarge),
+                Text(label, style: Theme.of(context).textTheme.headlineSmall),
                 colDivider,
                 ...children
               ],

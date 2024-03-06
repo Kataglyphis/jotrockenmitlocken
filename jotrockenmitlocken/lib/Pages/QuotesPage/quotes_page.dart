@@ -9,9 +9,7 @@ class QuotesPage extends NavBarPagesFactory {
   @override
   Widget createPage(AppFrameAttributes appFrameAttributes) {
     return LayoutManager.createSinglePage([
-      QuotesList(
-        colorSelected: appFrameAttributes.colorSelected,
-      ),
+      QuotesList(),
     ], appFrameAttributes.showMediumSizeLayout,
         appFrameAttributes.showLargeSizeLayout);
   }

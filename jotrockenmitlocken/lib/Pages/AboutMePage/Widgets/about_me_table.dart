@@ -12,10 +12,8 @@ class AboutMeTable extends StatefulWidget {
   const AboutMeTable({
     super.key,
     required this.useOtherLanguageMode,
-    required this.colorSelected,
   });
 
-  final ColorSeed colorSelected;
   final bool useOtherLanguageMode;
 
   @override
@@ -60,22 +58,23 @@ class AboutMeTableState extends State<AboutMeTable> {
           SizedBox(
             width: picWidth,
             child: applyBoxDecoration(
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(0),
-                  child: const FadeInImage(
-                    filterQuality: FilterQuality.medium,
-                    placeholder: AssetImage(
-                        "assets/images/Bewerbungsbilder/a95a64ca_runterskaliert.jpg"),
-                    image: AssetImage(
-                      "assets/images/Bewerbungsbilder/a95a64ca_runterskaliert.jpg",
-                    ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(0),
+                child: const FadeInImage(
+                  filterQuality: FilterQuality.medium,
+                  placeholder: AssetImage(
+                      "assets/images/Bewerbungsbilder/a95a64ca_runterskaliert.jpg"),
+                  image: AssetImage(
+                    "assets/images/Bewerbungsbilder/a95a64ca_runterskaliert.jpg",
                   ),
                 ),
-                insets: EdgeInsets.all(paddingPic),
-                margin: marginPic,
-                borderRadius: borderRadiusPic,
-                borderWidth: 5,
-                color: widget.colorSelected.color),
+              ),
+              insets: EdgeInsets.all(paddingPic),
+              margin: marginPic,
+              borderRadius: borderRadiusPic,
+              borderWidth: 5,
+              color: Theme.of(context).colorScheme.primary,
+            ),
           ),
           const SizedBox(height: 10),
           Text(
@@ -140,9 +139,7 @@ class AboutMeTableState extends State<AboutMeTable> {
           ),
           SizedBox(
             width: picWidth,
-            child: Donation(
-              colorSelected: widget.colorSelected,
-            ),
+            child: const Donation(),
           ),
           const SizedBox(
             height: 30,

@@ -9,7 +9,6 @@ class CookieDeclarationPage extends PagesFactory {
   Widget createPage(AppFrameAttributes appFrameAttributes) {
     return LayoutManager.createSinglePage([
       MarkdownFilePage(
-        colorSelected: appFrameAttributes.colorSelected,
         filePathDe: 'assets/documents/footer/cookieDeclarationDe.md',
         filePathEn: 'assets/documents/footer/cookieDeclarationEn.md',
         useLightMode: appFrameAttributes.useLightMode,

@@ -9,9 +9,7 @@ class ErrorPage extends PagesFactory {
   Widget createPage(AppFrameAttributes appFrameAttributes) {
     const colDivider = SizedBox(height: 10);
     return LayoutManager.createSinglePage([
-      ErrorPageWidget(
-        colorSelected: appFrameAttributes.colorSelected,
-      ),
+      ErrorPageWidget(),
     ], appFrameAttributes.showMediumSizeLayout,
         appFrameAttributes.showLargeSizeLayout);
   }

@@ -1,15 +1,12 @@
 import 'package:jotrockenmitlockenrepo/Decoration/decoration_helper.dart';
 import 'package:jotrockenmitlocken/Widgets/component_group_decoration.dart';
-import 'package:jotrockenmitlockenrepo/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ErrorPageWidget extends StatefulWidget {
   const ErrorPageWidget({
     super.key,
-    required this.colorSelected,
   });
-  final ColorSeed colorSelected;
 
   @override
   State<ErrorPageWidget> createState() => _ErrorPageWidget();
@@ -32,7 +29,7 @@ class _ErrorPageWidget extends State<ErrorPageWidget> {
           ),
           borderRadius: 0,
           borderWidth: 5,
-          color: widget.colorSelected.color),
+          color: Theme.of(context).colorScheme.primary),
       colDivider
     ]);
   }

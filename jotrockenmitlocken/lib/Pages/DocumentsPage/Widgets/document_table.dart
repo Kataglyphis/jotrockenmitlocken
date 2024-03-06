@@ -9,9 +9,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class DocumentTable extends StatefulWidget {
   const DocumentTable({
     super.key,
-    required this.colorSelected,
   });
-  final ColorSeed colorSelected;
   @override
   AboutMeTableState createState() => AboutMeTableState();
 }
@@ -82,7 +80,7 @@ class AboutMeTableState extends State<DocumentTable> {
                 insets: EdgeInsets.all(tablePadding),
                 borderRadius: 8,
                 borderWidth: 4,
-                color: widget.colorSelected.color),
+                color: Theme.of(context).colorScheme.primary),
           ),
         ]);
   }
