@@ -34,6 +34,8 @@ class _FirstComponentListState extends State<FirstComponentList> {
     // Fully traverse this list before moving on.
     return FocusTraversalGroup(
       child: CustomScrollView(
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
         slivers: [
           SliverPadding(
             padding: widget.showSecondList
