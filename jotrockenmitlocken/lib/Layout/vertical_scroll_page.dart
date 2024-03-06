@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:jotrockenmitlocken/Layout/Widgets/first_component_list.dart';
 import 'package:jotrockenmitlockenrepo/constants.dart';
@@ -27,37 +26,7 @@ class _VerticalScrollPage extends State<VerticalScrollPage> {
     return Expanded(
       child: FirstComponentList(
         showSecondList: false,
-        childWidgetsLeftPage: [
-          ...widget.childWidgets
-          // Row(
-          //     mainAxisAlignment: MainAxisAlignment.center,
-          //     crossAxisAlignment: CrossAxisAlignment.center,
-          //     children: <Widget>[
-          //       Flexible(
-          //         flex: mediumWidthBreakpoint.toInt(),
-          //         child: ScrollConfiguration(
-          //             behavior: ScrollConfiguration.of(context).copyWith(
-          //               dragDevices: {
-          //                 PointerDeviceKind.touch,
-          //                 PointerDeviceKind.mouse,
-          //               },
-          //             ),
-          //             child: ListView(
-          //               physics: const AlwaysScrollableScrollPhysics(),
-          //               scrollDirection: Axis.vertical,
-          //               shrinkWrap: true,
-          //               children: [...widget.childWidgets],
-          //             )),
-          //         // child: SingleChildScrollView(
-          //         //     scrollDirection: Axis.vertical,
-          //         //     child: Column(
-          //         //       mainAxisAlignment: MainAxisAlignment.center,
-          //         //       crossAxisAlignment: CrossAxisAlignment.center,
-          //         //       children: widget.childWidgets,
-          //         //     )),
-          //       ),
-          //     ])
-        ],
+        childWidgetsLeftPage: [...widget.childWidgets],
         childWidgetsRightPage: const [],
       ),
     );
