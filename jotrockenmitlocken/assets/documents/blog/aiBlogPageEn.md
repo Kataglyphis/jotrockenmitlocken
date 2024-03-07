@@ -1,10 +1,10 @@
-> **_NOTE:_** For now the following content has no deeper meaning. 
-Right now this is my playground for integrating markdown into flutter.
-
+> **_NOTE_** : For now the following content has no deeper meaning.
+> Right now this is my playground for integrating markdown into flutter.
+> 
 
 # AI Blog
 
-![Clouds](ScreenshotWorleyNoise.png)
+![Clouds](ScreenshotWorleyNoise.png)dsvsdgvsgv
 *image_caption*d
 
 

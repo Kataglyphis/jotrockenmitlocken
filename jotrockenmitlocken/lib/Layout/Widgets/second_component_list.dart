@@ -23,6 +23,8 @@ class _SecondComponentListState extends State<SecondComponentList> {
     // Fully traverse this list before moving on.
     return FocusTraversalGroup(
       child: CustomScrollView(
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
         slivers: [
           SliverPadding(
             padding: const EdgeInsetsDirectional.only(end: smallSpacing),

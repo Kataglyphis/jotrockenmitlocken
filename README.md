@@ -140,6 +140,14 @@ Contributions are what make the open source community such an amazing place to b
 <!-- LICENSE -->
 ## License
 
+## Known Issues
+flutter_highlighter needs and update in line 94 from RichText to Text.rich to make it
+selectable. The developer just dont want to integrate the feature ...
+flutter_markdown is not in a very stable version. I had to manually edit 
+the blockquote section for centering it. At the time of writing this 
+they have an open issue on not being able to build and MarkdownBuilder for a 
+blockquote. 
+
 <!-- CONTACT -->
 ## Contact
 

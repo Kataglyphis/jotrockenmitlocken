@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:jotrockenmitlocken/Widgets/Media/Markdown/ElementBuilder/centered_blockquoute_builder.dart';
 import 'package:jotrockenmitlocken/Widgets/Media/Markdown/ElementBuilder/centered_image_builder.dart';
 import 'package:jotrockenmitlocken/Widgets/Media/Markdown/ElementBuilder/code_element_builder.dart';
 import 'package:jotrockenmitlocken/Widgets/Media/Markdown/ElementBuilder/latex_element_builder.dart';
@@ -97,18 +98,26 @@ class _MarkdownFilePage extends State<MarkdownFilePage> {
               selectable: true,
               data: _markupContent,
               styleSheet: MarkdownStyleSheet(
+                  blockquoteAlign: WrapAlignment.start,
+                  blockquotePadding: EdgeInsets.fromLTRB(20, 2, 2, 2),
+                  blockquoteDecoration: BoxDecoration(
+                      border: BorderDirectional(
+                        start: BorderSide(
+                            width: 12, color: Colors.blueAccent.shade100),
+                      ),
+                      color: Colors.blueAccent,
+                      borderRadius: BorderRadius.all(Radius.circular(8))),
                   h1: Theme.of(context).textTheme.headlineLarge,
                   h2: Theme.of(context).textTheme.headlineMedium,
-                  h1Align: WrapAlignment.center,
                   code: Theme.of(context).textTheme.bodyMedium,
                   //h1Padding: EdgeInsets.fromViewPadding(padding, devicePixelRatio),
                   h2Align: WrapAlignment.center,
-                  img: TextStyle(fontStyle: FontStyle.italic)),
+                  img: Theme.of(context).textTheme.labelLarge),
               styleSheetTheme: MarkdownStyleSheetBaseTheme.material,
               imageDirectory: widget.imageDirectory,
               builders: <String, MarkdownElementBuilder>{
                 'latex': LatexElementBuilder(
-                  textScaleFactor: 1.2,
+                  textScaleFactor: 1.4,
                 ),
                 'img': CenteredImageBuilder(
                     colorSelected: Theme.of(context)
@@ -118,6 +127,8 @@ class _MarkdownFilePage extends State<MarkdownFilePage> {
                     imageDir: widget.imageDirectory,
                     currentPageWidth: getMarkdownPageWidth()),
                 'h1': CenteredHeaderBuilder(),
+                'blockquote': CenteredBlockQuoteBuilder(
+                    useLightMode: widget.useLightMode),
                 'code': CodeElementBuilder(
                     colorSelected: Theme.of(context)
                         .colorScheme

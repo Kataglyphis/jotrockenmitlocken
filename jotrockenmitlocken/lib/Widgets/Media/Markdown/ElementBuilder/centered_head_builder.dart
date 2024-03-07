@@ -9,6 +9,9 @@ class CenteredHeaderBuilder extends MarkdownElementBuilder {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Text(text.text, style: preferredStyle),
+        const SizedBox(
+          height: 80,
+        )
       ],
     );
   }
