@@ -33,7 +33,8 @@ class CodeElementBuilder extends MarkdownElementBuilder {
   Map<String, TextStyle> darkThemeCodeStyle = {...draculaTheme};
 
   @override
-  Widget? visitElementAfter(md.Element element, TextStyle? preferredStyle) {
+  Widget visitElementAfterWithContext(BuildContext context, md.Element element,
+      TextStyle? preferredStyle, TextStyle? parentStyle) {
     var language = '';
 
     if (element.attributes['class'] != null) {
@@ -43,21 +44,32 @@ class CodeElementBuilder extends MarkdownElementBuilder {
 
     if (language == 'math') {
       return Center(
-          child: applyBoxDecoration(
-              child: Container(
-                color: colorSelected,
-                child: SelectableMath.tex(
-                  element.textContent,
-                  textStyle: preferredStyle,
-                  // mathStyle: mathStyle,
-                  textScaleFactor: 1.6,
+          child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Column(
+          children: [
+            applyBoxDecoration(
+                child: Container(
+                  color: colorSelected,
+                  child: Math.tex(
+                    element.textContent,
+                    textStyle: preferredStyle,
+
+                    // mathStyle: mathStyle,
+                    textScaleFactor: 1.6,
+                  ),
                 ),
-              ),
-              color: colorSelected));
+                insets: EdgeInsets.all(2),
+                borderWidth: 1),
+          ],
+        ),
+      ));
     }
-    return Center(
-      child: applyBoxDecoration(
+    return SelectionArea(
+      child: Center(
+        child: applyBoxDecoration(
           child: HighlightView(
+            tabSize: 4,
             // The original code to be highlighted
             element.textContent,
             // Specify language
@@ -68,7 +80,8 @@ class CodeElementBuilder extends MarkdownElementBuilder {
             // Specify padding
             padding: const EdgeInsets.all(8),
           ),
-          color: colorSelected),
+        ),
+      ),
     );
   }
 }
