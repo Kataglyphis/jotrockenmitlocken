@@ -241,85 +241,13 @@ static inline void get_css_set(struct css_set *cset)
 {
 	refcount_inc(&cset->refcount);
 }
-
-bool cgroup_ssid_enabled(int ssid);
-bool cgroup_on_dfl(const struct cgroup *cgrp);
-
-struct cgroup_root *cgroup_root_from_kf(struct kernfs_root *kf_root);
-struct cgroup *task_cgroup_from_root(struct task_struct *task,
-				     struct cgroup_root *root);
-struct cgroup *cgroup_kn_lock_live(struct kernfs_node *kn, bool drain_offline);
-void cgroup_kn_unlock(struct kernfs_node *kn);
-int cgroup_path_ns_locked(struct cgroup *cgrp, char *buf, size_t buflen,
-			  struct cgroup_namespace *ns);
-
-void cgroup_favor_dynmods(struct cgroup_root *root, bool favor);
-void cgroup_free_root(struct cgroup_root *root);
-void init_cgroup_root(struct cgroup_fs_context *ctx);
-int cgroup_setup_root(struct cgroup_root *root, u16 ss_mask);
-int rebind_subsystems(struct cgroup_root *dst_root, u16 ss_mask);
-int cgroup_do_get_tree(struct fs_context *fc);
-
-int cgroup_migrate_vet_dst(struct cgroup *dst_cgrp);
-void cgroup_migrate_finish(struct cgroup_mgctx *mgctx);
-void cgroup_migrate_add_src(struct css_set *src_cset, struct cgroup *dst_cgrp,
-			    struct cgroup_mgctx *mgctx);
-int cgroup_migrate_prepare_dst(struct cgroup_mgctx *mgctx);
-int cgroup_migrate(struct task_struct *leader, bool threadgroup,
-		   struct cgroup_mgctx *mgctx);
-
-int cgroup_attach_task(struct cgroup *dst_cgrp, struct task_struct *leader,
-		       bool threadgroup);
-void cgroup_attach_lock(bool lock_threadgroup);
-void cgroup_attach_unlock(bool lock_threadgroup);
-struct task_struct *cgroup_procs_write_start(char *buf, bool threadgroup,
-					     bool *locked)
-	__acquires(&cgroup_threadgroup_rwsem);
-void cgroup_procs_write_finish(struct task_struct *task, bool locked)
-	__releases(&cgroup_threadgroup_rwsem);
-
-void cgroup_lock_and_drain_offline(struct cgroup *cgrp);
-
-int cgroup_mkdir(struct kernfs_node *parent_kn, const char *name, umode_t mode);
-int cgroup_rmdir(struct kernfs_node *kn);
-int cgroup_show_path(struct seq_file *sf, struct kernfs_node *kf_node,
-		     struct kernfs_root *kf_root);
-
-int __cgroup_task_count(const struct cgroup *cgrp);
-int cgroup_task_count(const struct cgroup *cgrp);
-
-/*
- * rstat.c
- */
-int cgroup_rstat_init(struct cgroup *cgrp);
-void cgroup_rstat_exit(struct cgroup *cgrp);
-void cgroup_rstat_boot(void);
-void cgroup_base_stat_cputime_show(struct seq_file *seq);
-
-/*
- * namespace.c
- */
-extern const struct proc_ns_operations cgroupns_operations;
-
-/*
- * cgroup-v1.c
- */
-extern struct cftype cgroup1_base_files[];
-extern struct kernfs_syscall_ops cgroup1_kf_syscall_ops;
-extern const struct fs_parameter_spec cgroup1_fs_parameters[];
-
-int proc_cgroupstats_show(struct seq_file *m, void *v);
-bool cgroup1_ssid_disabled(int ssid);
-void cgroup1_pidlist_destroy_all(struct cgroup *cgrp);
-void cgroup1_release_agent(struct work_struct *work);
-void cgroup1_check_for_release(struct cgroup *cgrp);
-int cgroup1_parse_param(struct fs_context *fc, struct fs_parameter *param);
-int cgroup1_get_tree(struct fs_context *fc);
-int cgroup1_reconfigure(struct fs_context *ctx);
-
 #endif /* __CGROUP_INTERNAL_H */
 ```
 
+| Command      | Description                                   |
+|--------      | ---------------------------------             |
+| `git status` | List all new or modified files                |
+| `git-diff`   | Show file differences that haven't been staged|
 
 > **_NOTE:_** Das Impressum befindet sich in einer experimentellen Phase und 
 beinhaltet derzeit unvollständige/dummy Daten.
