@@ -16,7 +16,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-         fetch-depth: 0
 
       - name: Setup Flutter SDK
         uses: flutter-actions/setup-flutter@v2.3  
@@ -66,12 +65,11 @@ jobs:
         run: | 
           cd jotrockenmitlocken
           flutter build web --web-renderer=canvaskit --release
-      - name: "Deploy"
-        uses: milanmk/actions-file-deployer@master
+
+      - name: 📂 Sync files
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-            remote-protocol: "ftp"
-            remote-host: ${{ secrets.SERVER }}
-            remote-user: ${{ secrets.USERNAME }}
-            remote-password: ${{ secrets.PW }}
-            local-path: "./jotrockenmitlocken/build/web/"
-            remote-path: "./"
+          server: ${{ secrets.SERVER }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PW }}
+          local-dir: "./jotrockenmitlocken/build/web/"
