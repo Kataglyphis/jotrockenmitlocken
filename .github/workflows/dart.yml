@@ -64,5 +64,12 @@ jobs:
         run: | 
           cd jotrockenmitlocken
           flutter build web --web-renderer=canvaskit --release
-      - name: deploy
-        run: wput "./jotrockenmitlocken/build/web" ftp://${{ secrets.USERNAME }}:${{ secrets.PW }}@${{ secrets.SERVER }}
+      - name: "Deploy"
+        uses: milanmk/actions-file-deployer@master
+        with:
+            remote-protocol: "ftp"
+            remote-host: ${{ secrets.SERVER }}
+            remote-user: ${{ secrets.USERNAME }}
+            remote-password: ${{ secrets.PW }}
+            local-path: "./jotrockenmitlocken/build/web/"
+            remote-path: "./"
