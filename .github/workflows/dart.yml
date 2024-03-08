@@ -58,8 +58,12 @@ jobs:
           flutter test
 
       - name: Enable flutter web
-        run: flutter config --enable-web
+        run: |
+          cd jotrockenmitlocken
+          flutter config --enable-web
       - name: 'Build Web App'
-        run: flutter build web --web-renderer=canvaskit --release
+        run: | 
+          cd jotrockenmitlocken
+          flutter build web --web-renderer=canvaskit --release
       - name: deploy
-        run: filezilla ftp://${{ secrets.KAS_INK_USERNAME }}:${{ secrets.KAS_INK_PW }}@${{ secrets.KAS_INK_SERVER }} --local="./build/web"
+        run: filezilla ftp://${{ secrets.KAS_INK_USERNAME }}:${{ secrets.KAS_INK_PW }}@${{ secrets.KAS_INK_SERVER }} --local="./jotrockenmitlocken/build/web"
