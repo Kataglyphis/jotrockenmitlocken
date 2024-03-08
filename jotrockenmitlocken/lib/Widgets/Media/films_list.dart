@@ -37,16 +37,17 @@ class _FilmsListState extends State<FilmsList> with DataListState<Film> {
   @override
   void onSortData(int columnIndex, bool ascending) {
     setState(() {
-      Sort(columnIndex, ascending);
+      sort(columnIndex, ascending);
     });
   }
 
   Future<List<List<dynamic>>> _loadFilmsFromCSV() async {
     final rawData = await rootBundle.loadString("assets/data/Filmliste.csv");
-    List<List<dynamic>> listData = const CsvToListConverter().convert(rawData);
+    List<List<dynamic>> csvListData =
+        const CsvToListConverter().convert(rawData);
 
-    dataCategories = List<String>.from(listData.first);
-    Data = listData
+    dataCategories = List<String>.from(csvListData.first);
+    listData = csvListData
         .getRange(1, listData.length)
         .toList()
         .map((List e) => Film(
@@ -54,7 +55,7 @@ class _FilmsListState extends State<FilmsList> with DataListState<Film> {
               ISAN: e.elementAt(1),
             ))
         .toList();
-    return listData;
+    return csvListData;
   }
 
   @override

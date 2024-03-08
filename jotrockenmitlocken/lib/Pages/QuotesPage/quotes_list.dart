@@ -32,7 +32,7 @@ class _QuotesListState extends State<QuotesList> with DataListState<Quote> {
   @override
   void onSortData(int columnIndex, bool ascending) {
     setState(() {
-      Sort(columnIndex, ascending);
+      sort(columnIndex, ascending);
     });
   }
 
@@ -40,20 +40,22 @@ class _QuotesListState extends State<QuotesList> with DataListState<Quote> {
     return "»$unformattedQuote«";
   }
 
+  @override
   Future<List<List<dynamic>>> _loadFilmsFromCSV() async {
     final rawData = await rootBundle.loadString("assets/data/Zitate.csv");
-    List<List<dynamic>> listData = const CsvToListConverter().convert(rawData);
+    List<List<dynamic>> csvListData =
+        const CsvToListConverter().convert(rawData);
 
-    dataCategories = List<String>.from(listData.first);
-    Data = listData
-        .getRange(1, listData.length)
+    dataCategories = List<String>.from(csvListData.first);
+    listData = csvListData
+        .getRange(1, csvListData.length)
         .toList()
         .map((List e) => Quote(
               author: e.elementAt(0).toString(),
               content: formatQuote(e.elementAt(1).toString()),
             ))
         .toList();
-    return listData;
+    return csvListData;
   }
 
   @override
