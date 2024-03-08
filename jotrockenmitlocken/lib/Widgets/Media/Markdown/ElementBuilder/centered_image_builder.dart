@@ -48,8 +48,11 @@ class CenteredImageBuilder extends MarkdownElementBuilder {
         SelectionArea(
           child: Column(
             children: [
-              SizedBox(
-                width: getImageWidth(currentPageWidth),
+              Container(
+                constraints: BoxConstraints(
+                  maxWidth: getImageWidth(currentPageWidth),
+                ),
+                //width:
                 child: applyBoxDecoration(
                   child: Stack(children: [
                     ClipRRect(
