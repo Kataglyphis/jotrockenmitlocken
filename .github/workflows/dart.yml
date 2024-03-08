@@ -65,4 +65,4 @@ jobs:
           cd jotrockenmitlocken
           flutter build web --web-renderer=canvaskit --release
       - name: deploy
-        run: sshpass -p ${{ secrets.PW }} scp -r ${{ secrets.USERNAME }}@${{ secrets.SERVER }}:/ "./jotrockenmitlocken/build/web"
+        run: sshpass -p ${{ secrets.PW }} scp -r ${{ secrets.USERNAME }}@${{ secrets.SERVER }}:/jonasheinle.de/ "./jotrockenmitlocken/build/web"
