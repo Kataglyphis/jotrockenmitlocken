@@ -15,7 +15,7 @@ class LayoutManager {
           colDivider,
           ...children,
           colDivider,
-          if (!showMediumSizeLayout && !showLargeSizeLayout) ...[Footer()]
+          if (!showMediumSizeLayout && !showLargeSizeLayout) ...[const Footer()]
         ]),
       ],
     );
@@ -27,10 +27,10 @@ class LayoutManager {
       bool showMediumSizeLayout,
       bool showLargeSizeLayout,
       CurvedAnimation railAnimation) {
-    var colDivider = SizedBox(height: 10);
+    var colDivider = const SizedBox(height: 10);
     childWidgetsRightPage += [
       colDivider,
-      if (!showMediumSizeLayout && !showLargeSizeLayout) ...[Footer()]
+      if (!showMediumSizeLayout && !showLargeSizeLayout) ...[const Footer()]
     ];
     return Row(
       children: [

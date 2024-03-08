@@ -3,7 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:jotrockenmitlockenrepo/constants.dart';
 
 class ColorSeedButton extends StatelessWidget {
-  const ColorSeedButton({
+  const ColorSeedButton({super.key, 
     required this.handleColorSelect,
     required this.colorSelected,
   });

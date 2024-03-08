@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:jotrockenmitlockenrepo/Decoration/decoration_helper.dart';
 import 'package:jotrockenmitlockenrepo/Helper/browser_helper.dart';
-import 'package:jotrockenmitlockenrepo/constants.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'dart:async';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Donation extends StatefulWidget {

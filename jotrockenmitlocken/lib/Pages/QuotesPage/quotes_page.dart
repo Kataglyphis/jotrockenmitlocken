@@ -9,7 +9,7 @@ class QuotesPage extends NavBarPagesFactory {
   @override
   Widget createPage(AppFrameAttributes appFrameAttributes) {
     return LayoutManager.createSinglePage([
-      QuotesList(),
+      const QuotesList(),
     ], appFrameAttributes.showMediumSizeLayout,
         appFrameAttributes.showLargeSizeLayout);
   }

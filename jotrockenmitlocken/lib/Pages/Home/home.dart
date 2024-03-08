@@ -14,7 +14,7 @@ import 'package:jotrockenmitlocken/constants.dart';
 import 'package:jotrockenmitlocken/Pages/screen_configurations.dart';
 
 class Home extends StatefulWidget {
-  Home(
+  const Home(
       {super.key,
       required this.useLightMode,
       required this.useOtherLanguageMode,
@@ -37,11 +37,11 @@ class Home extends StatefulWidget {
 
   final ColorSeed colorSelected;
 
-  late final AnimationController controller;
-  late final CurvedAnimation railAnimation;
+  final AnimationController controller;
+  final CurvedAnimation railAnimation;
 
-  late final GlobalKey<ScaffoldState> scaffoldKey;
-  late final StatefulNavigationShell navigationShell;
+  final GlobalKey<ScaffoldState> scaffoldKey;
+  final StatefulNavigationShell navigationShell;
 
   final void Function() handleLanguageChange;
   final void Function(bool useLightMode) handleBrightnessChange;

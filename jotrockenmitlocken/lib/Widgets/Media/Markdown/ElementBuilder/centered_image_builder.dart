@@ -29,7 +29,7 @@ class CenteredImageBuilder extends MarkdownElementBuilder {
     String displayedImage = "assets/images/Summy&Thundy.png";
     String imageCaption = "placeholder";
     if (img.attributes['src'] != null) {
-      displayedImage = imageDir + "/" + img.attributes['src']!;
+      displayedImage = "$imageDir/${img.attributes['src']!}";
     }
     if (img.attributes['alt'] != null) {
       imageCaption = img.attributes['alt']!;
@@ -48,7 +48,7 @@ class CenteredImageBuilder extends MarkdownElementBuilder {
                       borderRadius: BorderRadius.circular(0),
                       child: FadeInImage(
                         filterQuality: FilterQuality.high,
-                        placeholder: AssetImage(
+                        placeholder: const AssetImage(
                             "assets/images/Summy&Thundy_compressed.png"),
                         image: AssetImage(displayedImage),
                       ),

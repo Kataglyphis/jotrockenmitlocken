@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class BrightnessButton extends StatelessWidget {
-  const BrightnessButton({
+  const BrightnessButton({super.key, 
     required this.handleBrightnessChange,
     this.showTooltipBelow = true,
   });

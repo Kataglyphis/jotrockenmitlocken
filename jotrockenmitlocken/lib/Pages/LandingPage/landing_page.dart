@@ -11,7 +11,7 @@ class LandingPage extends NavBarPagesFactory {
     const colDivider = SizedBox(height: 10);
     List<Widget> childWidgetsLeftPage = [
       colDivider,
-      AIPlayground(),
+      const AIPlayground(),
       colDivider,
     ];
     List<Widget> childWidgetsRightPage = [

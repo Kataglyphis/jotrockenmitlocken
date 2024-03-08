@@ -100,14 +100,14 @@ class _MarkdownFilePage extends State<MarkdownFilePage> {
               data: _markupContent,
               styleSheet: MarkdownStyleSheet(
                   blockquoteAlign: WrapAlignment.start,
-                  blockquotePadding: EdgeInsets.fromLTRB(20, 2, 2, 2),
+                  blockquotePadding: const EdgeInsets.fromLTRB(20, 2, 2, 2),
                   blockquoteDecoration: BoxDecoration(
                       border: BorderDirectional(
                         start: BorderSide(
                             width: 12, color: Colors.blueAccent.shade100),
                       ),
                       color: Colors.blueAccent,
-                      borderRadius: BorderRadius.all(Radius.circular(8))),
+                      borderRadius: const BorderRadius.all(Radius.circular(8))),
                   h1: Theme.of(context).textTheme.headlineLarge,
                   h2: Theme.of(context).textTheme.headlineMedium,
                   code: Theme.of(context).textTheme.bodyMedium,

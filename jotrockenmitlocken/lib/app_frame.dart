@@ -121,7 +121,7 @@ class _AppFrameState extends State<AppFrame>
         useOtherLanguageMode: widget.useOtherLanguageMode,
         useLightMode: widget.useLightMode,
         colorSelected: widget.colorSelected);
-    final GoRouter _routerConfig = GoRouter(
+    final GoRouter routerConfig = GoRouter(
       navigatorKey: _rootNavigatorKey,
       initialLocation: _getInitialLocation(),
       routes: <RouteBase>[
@@ -196,7 +196,7 @@ class _AppFrameState extends State<AppFrame>
         useMaterial3: true,
         brightness: Brightness.dark,
       ),
-      routerConfig: _routerConfig,
+      routerConfig: routerConfig,
     );
   }
 }
