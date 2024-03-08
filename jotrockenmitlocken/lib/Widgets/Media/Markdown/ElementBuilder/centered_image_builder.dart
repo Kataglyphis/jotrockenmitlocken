@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:jotrockenmitlockenrepo/Decoration/decoration_helper.dart';
 import 'package:jotrockenmitlockenrepo/Media/Download/open_button.dart';
@@ -26,10 +27,19 @@ class CenteredImageBuilder extends MarkdownElementBuilder {
 
   @override
   Widget visitElementAfter(md.Element img, TextStyle? preferredStyle) {
-    String displayedImage = "assets/images/Summy&Thundy.png";
+    String placeholderImage = "assets/images/Summy&Thundy.png";
+    String displayedImage = placeholderImage;
+
+    if (kReleaseMode) {
+      placeholderImage = "assets/$placeholderImage";
+    }
+
     String imageCaption = "placeholder";
     if (img.attributes['src'] != null) {
       displayedImage = "$imageDir/${img.attributes['src']!}";
+    }
+    if (kReleaseMode) {
+      displayedImage = "assets/$displayedImage";
     }
     if (img.attributes['alt'] != null) {
       imageCaption = img.attributes['alt']!;
@@ -48,8 +58,7 @@ class CenteredImageBuilder extends MarkdownElementBuilder {
                       borderRadius: BorderRadius.circular(0),
                       child: FadeInImage(
                         filterQuality: FilterQuality.high,
-                        placeholder: const AssetImage(
-                            "assets/images/Summy&Thundy_compressed.png"),
+                        placeholder: AssetImage(placeholderImage),
                         image: AssetImage(displayedImage),
                       ),
                     ),
