@@ -33,7 +33,7 @@ class _BooksListState extends State<BooksList> with DataListState<Book> {
   @override
   void onSortData(int columnIndex, bool ascending) {
     setState(() {
-      Sort(columnIndex, ascending);
+      sort(columnIndex, ascending);
     });
   }
 
@@ -45,10 +45,11 @@ class _BooksListState extends State<BooksList> with DataListState<Book> {
   @override
   Future<List<List<dynamic>>> _loadBooksFromCSV() async {
     final rawData = await rootBundle.loadString("assets/data/Buecherliste.csv");
-    List<List<dynamic>> listData = const CsvToListConverter().convert(rawData);
-    dataCategories = List<String>.from(listData.first);
+    List<List<dynamic>> csvListData =
+        const CsvToListConverter().convert(rawData);
+    dataCategories = List<String>.from(csvListData.first);
 
-    Data = listData
+    listData = csvListData
         .getRange(1, listData.length)
         .toList()
         .map((List e) => Book(
@@ -57,7 +58,7 @@ class _BooksListState extends State<BooksList> with DataListState<Book> {
               ISBN: e.elementAt(2),
             ))
         .toList();
-    return listData;
+    return csvListData;
   }
 
   @override

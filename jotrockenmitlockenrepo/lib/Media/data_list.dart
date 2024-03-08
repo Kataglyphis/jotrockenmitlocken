@@ -25,7 +25,7 @@ class MyDataTableSource extends DataTableSource {
 abstract mixin class DataListState<T extends Data> {
   late Future<List<List<dynamic>>> dataFuture;
   List<String> dataCategories = [];
-  late List<T> Data;
+  late List<T> listData;
   int sortColumnIndex = 0;
   bool isAscending = true;
 
@@ -33,8 +33,8 @@ abstract mixin class DataListState<T extends Data> {
     return ascending ? value1.compareTo(value2) : value2.compareTo(value1);
   }
 
-  void Sort(int columnIndex, bool ascending) {
-    Data.sort((data1, data2) => compareString(isAscending,
+  void sort(int columnIndex, bool ascending) {
+    listData.sort((data1, data2) => compareString(isAscending,
         data1.getCells()[columnIndex], data2.getCells()[columnIndex]));
 
     this.sortColumnIndex = columnIndex;
@@ -85,7 +85,7 @@ abstract mixin class DataListState<T extends Data> {
                 ? currentWidth * 0.8
                 : currentWidth * 0.9;
             final DataTableSource data =
-                MyDataTableSource(getDataRows(Data, dataTableWidth));
+                MyDataTableSource(getDataRows(listData, dataTableWidth));
             return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
