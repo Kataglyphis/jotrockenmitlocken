@@ -22,8 +22,8 @@ jobs:
           channel: stable
           version: 3.19.3
       
-      - name: Install sshpass
-        run: sudo apt install sshpass
+      - name: Install wput
+        run: sudo apt install wput
       # Note: This workflow uses the latest stable version of the Dart SDK.
       # You can specify other versions if desired, see documentation here:
       # https://github.com/dart-lang/setup-dart/blob/main/README.md
@@ -65,4 +65,4 @@ jobs:
           cd jotrockenmitlocken
           flutter build web --web-renderer=canvaskit --release
       - name: deploy
-        run: sshpass -p ${{ secrets.PW }} scp -r ${{ secrets.USERNAME }}@${{ secrets.SERVER }}:/jonasheinle.de/ "./jotrockenmitlocken/build/web"
+        run: wput "./jotrockenmitlocken/build/web" ftp://${{ secrets.USERNAME }}:${{ secrets.PW }}@${{ secrets.SERVER }}
