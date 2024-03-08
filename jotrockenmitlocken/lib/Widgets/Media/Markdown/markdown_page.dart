@@ -5,6 +5,7 @@ import 'package:jotrockenmitlocken/Widgets/Media/Markdown/ElementBuilder/centere
 import 'package:jotrockenmitlocken/Widgets/Media/Markdown/ElementBuilder/code_element_builder.dart';
 import 'package:jotrockenmitlocken/Widgets/Media/Markdown/ElementBuilder/latex_element_builder.dart';
 import 'package:jotrockenmitlocken/Widgets/Media/Markdown/ElementBuilder/latex_inline_syntax.dart';
+import 'package:jotrockenmitlocken/Widgets/Media/Markdown/ElementBuilder/table_element_builder.dart';
 import 'package:markdown/markdown.dart' as md;
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:jotrockenmitlockenrepo/constants.dart';
@@ -129,6 +130,7 @@ class _MarkdownFilePage extends State<MarkdownFilePage> {
                 'h1': CenteredHeaderBuilder(),
                 'blockquote': CenteredBlockQuoteBuilder(
                     useLightMode: widget.useLightMode),
+                'table': TableElementBuilder(),
                 'code': CodeElementBuilder(
                     colorSelected: Theme.of(context)
                         .colorScheme

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:jotrockenmitlockenrepo/Decoration/decoration_helper.dart';
+import 'package:jotrockenmitlockenrepo/Media/Download/open_button.dart';
 import 'package:jotrockenmitlockenrepo/constants.dart';
 import 'package:markdown/markdown.dart' as md;
 
@@ -15,7 +16,7 @@ class CenteredImageBuilder extends MarkdownElementBuilder {
 
   double getImageWidth(double currentWidth) {
     if (currentWidth <= narrowScreenWidthThreshold) {
-      return currentWidth * 0.9;
+      return currentWidth;
     } else if (currentWidth <= mediumWidthBreakpoint) {
       return currentWidth * 0.7;
     } else {
@@ -36,28 +37,40 @@ class CenteredImageBuilder extends MarkdownElementBuilder {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        Column(
-          children: [
-            SizedBox(
-              width: getImageWidth(currentPageWidth),
-              child: applyBoxDecoration(
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(0),
-                  child: FadeInImage(
-                    filterQuality: FilterQuality.medium,
-                    placeholder:
-                        AssetImage("assets/images/Summy&Thundy_compressed.png"),
-                    image: AssetImage(displayedImage),
-                  ),
+        SelectionArea(
+          child: Column(
+            children: [
+              SizedBox(
+                width: getImageWidth(currentPageWidth),
+                child: applyBoxDecoration(
+                  child: Stack(children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(0),
+                      child: FadeInImage(
+                        filterQuality: FilterQuality.high,
+                        placeholder: AssetImage(
+                            "assets/images/Summy&Thundy_compressed.png"),
+                        image: AssetImage(displayedImage),
+                      ),
+                    ),
+                    Align(
+                        alignment: Alignment.topRight,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: OpenButton(
+                            assetFullPath: displayedImage,
+                          ),
+                        )),
+                  ]),
+                  color: colorSelected,
                 ),
-                color: colorSelected,
               ),
-            ),
-            Text(
-              imageCaption,
-              style: preferredStyle,
-            ),
-          ],
+              Text(
+                imageCaption,
+                style: preferredStyle,
+              ),
+            ],
+          ),
         ),
       ],
     );

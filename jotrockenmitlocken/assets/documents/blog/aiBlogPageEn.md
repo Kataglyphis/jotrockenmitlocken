@@ -3,8 +3,7 @@
 > 
 
 # AI Blog
-
-![Clouds](ScreenshotWorleyNoise.png)dsvsdgvsgv
+![Clouds](ScreenshotModernOpenGL.png)
 *image_caption*d
 
 
@@ -244,10 +243,10 @@ static inline void get_css_set(struct css_set *cset)
 #endif /* __CGROUP_INTERNAL_H */
 ```
 
-| Command      | Description                                   |
-|--------      | ---------------------------------             |
-| `git status` | List all new or modified files                |
-| `git-diff`   | Show file differences that haven't been staged|
+|        | Command      | Description                                   |
+| -----  | --------     | ---------------------------------             |
+|        | `git status` | List all new or modified files                |
+|        | `git-diff`   | Show file differences that haven't been staged|
 
 > **_NOTE:_** Das Impressum befindet sich in einer experimentellen Phase und 
 beinhaltet derzeit unvollständige/dummy Daten.

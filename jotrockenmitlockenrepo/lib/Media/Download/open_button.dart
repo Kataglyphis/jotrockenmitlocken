@@ -1,20 +1,18 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:jotrockenmitlocken/Pages/DocumentsPage/Widgets/document.dart';
-import 'package:jotrockenmitlocken/constants.dart';
 
 import 'download_stub.dart' if (dart.library.html) 'download_web.dart';
 
 @immutable
-class DownloadButton extends StatelessWidget {
-  Document document;
-  DownloadButton({
+class OpenButton extends StatelessWidget {
+  String assetFullPath;
+  OpenButton({
     super.key,
-    required this.document,
+    required this.assetFullPath,
   });
 
   void _onPressed() async {
-    myPluginDownload(baseDocumentDir + document.title);
+    myPluginDownload(assetFullPath);
     if (kIsWeb) {
       //String url = baseDocumentDir + document.title;
       //html.window.open(url, "_blank");
@@ -23,7 +21,6 @@ class DownloadButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color selectedColor = Theme.of(context).primaryColor;
     return ElevatedButton(
       onPressed: _onPressed,
       style: ElevatedButton.styleFrom(

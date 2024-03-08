@@ -2,31 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:jotrockenmitlockenrepo/Decoration/decoration_helper.dart';
 import 'package:jotrockenmitlocken/Pages/DocumentsPage/Widgets/doc_icon.dart';
 import 'package:jotrockenmitlocken/Pages/DocumentsPage/Widgets/document.dart';
-import 'package:jotrockenmitlocken/Pages/DocumentsPage/Widgets/open_button.dart';
+import 'package:jotrockenmitlockenrepo/Media/Download/open_button.dart';
 import 'package:jotrockenmitlockenrepo/constants.dart';
+import 'package:jotrockenmitlocken/constants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DocumentTable extends StatefulWidget {
-  const DocumentTable({
+  late List<Document> docs;
+  DocumentTable({
     super.key,
+    required this.docs,
   });
   @override
   AboutMeTableState createState() => AboutMeTableState();
 }
 
 class AboutMeTableState extends State<DocumentTable> {
-  List<Document> docs = [
-    Document(
-      'CV_Jonas_Heinle_english.pdf',
-      '~3.7MB English',
-    ),
-    Document(
-      'CV_Jonas_Heinle_german.pdf',
-      '~3.7MB German',
-    ),
-    Document('Bachelor_Thesis.pdf', '~33MB German')
-  ];
-
   @override
   void initState() {
     super.initState();
@@ -73,7 +64,7 @@ class AboutMeTableState extends State<DocumentTable> {
                 child: ListView.separated(
                   shrinkWrap: true,
                   scrollDirection: Axis.vertical,
-                  itemCount: docs.length,
+                  itemCount: widget.docs.length,
                   separatorBuilder: (_, __) => const Divider(),
                   itemBuilder: _buildListItem,
                 ),
@@ -86,7 +77,7 @@ class AboutMeTableState extends State<DocumentTable> {
   }
 
   Widget _buildListItem(BuildContext context, int index) {
-    Document currentDocument = docs.elementAt(index);
+    Document currentDocument = widget.docs.elementAt(index);
     return Container(
         alignment: Alignment.center,
         padding: const EdgeInsets.all(0),
@@ -101,8 +92,8 @@ class AboutMeTableState extends State<DocumentTable> {
             overflow: TextOverflow.ellipsis,
             style: Theme.of(context).textTheme.titleMedium,
           ),
-          trailing: DownloadButton(
-            document: currentDocument,
+          trailing: OpenButton(
+            assetFullPath: baseDocumentDir + currentDocument.title,
           ),
         ));
   }

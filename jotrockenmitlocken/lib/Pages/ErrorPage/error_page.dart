@@ -7,7 +7,6 @@ import 'package:jotrockenmitlocken/Pages/pages_factory.dart';
 class ErrorPage extends PagesFactory {
   @override
   Widget createPage(AppFrameAttributes appFrameAttributes) {
-    const colDivider = SizedBox(height: 10);
     return LayoutManager.createSinglePage([
       ErrorPageWidget(),
     ], appFrameAttributes.showMediumSizeLayout,
