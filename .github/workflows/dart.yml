@@ -38,12 +38,12 @@ jobs:
 
       # Uncomment this step to verify the use of 'dart format' on each commit.
       - name: Verify formatting
-	  	continue-on-error: true
-      	run: dart format --output=none --set-exit-if-changed .
+        continue-on-error: true
+        run: dart format --output=none --set-exit-if-changed .
 
       # Consider passing '--fatal-infos' for slightly stricter analysis.
       - name: Analyze project source
-	  	continue-on-error: true
+        continue-on-error: true
         run: dart analyze
 
       # Your project will need to have tests in test/ and a dependency on
