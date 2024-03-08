@@ -30,16 +30,14 @@ class CenteredImageBuilder extends MarkdownElementBuilder {
     String placeholderImage = "assets/images/Summy&Thundy.png";
     String displayedImage = placeholderImage;
 
-    if (kReleaseMode) {
-      placeholderImage = "assets/$placeholderImage";
-    }
-
     String imageCaption = "placeholder";
     if (img.attributes['src'] != null) {
       displayedImage = "$imageDir/${img.attributes['src']!}";
     }
+
+    String openButtonImage = displayedImage;
     if (kReleaseMode) {
-      displayedImage = "assets/$displayedImage";
+      openButtonImage = "assets/$displayedImage";
     }
     if (img.attributes['alt'] != null) {
       imageCaption = img.attributes['alt']!;
@@ -67,7 +65,7 @@ class CenteredImageBuilder extends MarkdownElementBuilder {
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: OpenButton(
-                            assetFullPath: displayedImage,
+                            assetFullPath: openButtonImage,
                           ),
                         )),
                   ]),
