@@ -15,6 +15,6 @@ class CenteredBlockQuoteBuilder extends MarkdownElementBuilder {
       language = lg.substring(9);
     }
 
-    return Center(child: Text(""));
+    return const Center(child: Text(""));
   }
 }

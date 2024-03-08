@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LanguageButton extends StatelessWidget {
-  const LanguageButton({
+  const LanguageButton({super.key, 
     required this.handleLanguageChange,
     this.showTooltipBelow = true,
   });

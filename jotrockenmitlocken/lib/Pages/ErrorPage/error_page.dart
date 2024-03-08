@@ -8,7 +8,7 @@ class ErrorPage extends PagesFactory {
   @override
   Widget createPage(AppFrameAttributes appFrameAttributes) {
     return LayoutManager.createSinglePage([
-      ErrorPageWidget(),
+      const ErrorPageWidget(),
     ], appFrameAttributes.showMediumSizeLayout,
         appFrameAttributes.showLargeSizeLayout);
   }

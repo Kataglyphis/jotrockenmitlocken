@@ -46,7 +46,7 @@ class AboutMeTableState extends State<DocumentTable> {
     } else {
       tablePadding = 8;
     }
-    var colDivider = SizedBox(height: 10);
+    var colDivider = const SizedBox(height: 10);
     return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,

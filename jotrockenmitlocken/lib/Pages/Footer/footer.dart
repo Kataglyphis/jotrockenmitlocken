@@ -112,7 +112,7 @@ class _Footer extends State<Footer> {
         mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Row(
@@ -137,9 +137,9 @@ class _Footer extends State<Footer> {
                   BrowserHelper.launchInBrowser(toLaunch);
                 },
                 style: Theme.of(context).textButtonTheme.style,
-                child: Text(
+                child: const Text(
                   'johannes-heinle.de',
-                  style: const TextStyle(
+                  style: TextStyle(
                       fontWeight: FontWeight.bold, fontSize: 11),
                 ),
               ),
@@ -155,9 +155,9 @@ class _Footer extends State<Footer> {
                       Uri(scheme: 'https', host: 'dom-wuest.de', path: '');
                   BrowserHelper.launchInBrowser(toLaunch);
                 },
-                child: Text(
+                child: const Text(
                   'dom-wuest.de',
-                  style: const TextStyle(
+                  style: TextStyle(
                       fontWeight: FontWeight.bold, fontSize: 11),
                 ),
               ),

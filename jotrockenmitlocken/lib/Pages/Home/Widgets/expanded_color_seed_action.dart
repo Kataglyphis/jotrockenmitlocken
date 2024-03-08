@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:jotrockenmitlockenrepo/constants.dart';
 
 class ExpandedColorSeedAction extends StatelessWidget {
-  const ExpandedColorSeedAction({
+  const ExpandedColorSeedAction({super.key, 
     required this.handleColorSelect,
     required this.colorSelected,
   });

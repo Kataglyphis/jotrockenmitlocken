@@ -59,7 +59,7 @@ class CodeElementBuilder extends MarkdownElementBuilder {
                     textScaleFactor: 1.6,
                   ),
                 ),
-                insets: EdgeInsets.all(2),
+                insets: const EdgeInsets.all(2),
                 borderWidth: 1),
           ],
         ),

@@ -7,7 +7,7 @@ import 'package:jotrockenmitlocken/Pages/Home/Widgets/expanded_color_seed_action
 import 'package:jotrockenmitlockenrepo/constants.dart';
 
 class ExpandedTrailingActions extends StatelessWidget {
-  const ExpandedTrailingActions({
+  const ExpandedTrailingActions({super.key, 
     required this.useLightMode,
     required this.useOtherLanguageMode,
     required this.handleBrightnessChange,
