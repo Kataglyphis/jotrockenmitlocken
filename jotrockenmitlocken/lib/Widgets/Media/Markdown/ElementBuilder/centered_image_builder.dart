@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:jotrockenmitlockenrepo/Decoration/decoration_helper.dart';
 import 'package:jotrockenmitlockenrepo/Media/Download/open_button.dart';
@@ -15,18 +16,24 @@ class CenteredImageBuilder extends MarkdownElementBuilder {
   String imageDir;
   double currentPageWidth;
 
-  double getImageWidth(double currentWidth) {
+  double getImageWidth(double currentWidth, double imageWidth) {
+    if (imageWidth < currentWidth) {
+      return imageWidth;
+    }
+
     if (currentWidth <= narrowScreenWidthThreshold) {
-      return currentWidth;
+      return currentWidth * 0.95;
     } else if (currentWidth <= mediumWidthBreakpoint) {
-      return currentWidth * 0.7;
+      return currentWidth * 0.95;
     } else {
-      return currentWidth * 0.7;
+      return currentWidth * 0.95;
     }
   }
 
   @override
   Widget visitElementAfter(md.Element img, TextStyle? preferredStyle) {
+    final _key = GlobalKey();
+
     String placeholderImage = "assets/images/Summy&Thundy.png";
     String displayedImage = placeholderImage;
 
@@ -42,6 +49,25 @@ class CenteredImageBuilder extends MarkdownElementBuilder {
     if (img.attributes['alt'] != null) {
       imageCaption = img.attributes['alt']!;
     }
+
+    FadeInImage ourMainImage = FadeInImage(
+      key: _key,
+      filterQuality: FilterQuality.high,
+      placeholder: AssetImage(displayedImage),
+      image: AssetImage(displayedImage),
+    );
+
+    double imageWidth = 0; //getImageWidth(currentPageWidth);
+    var imageHeight = 0;
+
+    ourMainImage.image
+        .resolve(ImageConfiguration())
+        .addListener(ImageStreamListener((ImageInfo info, bool _) {
+      imageHeight = info.image.height;
+      imageWidth = info.image.width.toDouble();
+      imageWidth = getImageWidth(currentPageWidth, imageWidth).toDouble();
+    }));
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
@@ -50,18 +76,17 @@ class CenteredImageBuilder extends MarkdownElementBuilder {
             children: [
               Container(
                 constraints: BoxConstraints(
-                  maxWidth: getImageWidth(currentPageWidth),
+                  maxWidth: imageWidth,
+                  //getImageWidth(currentPageWidth, imageWidth.toDouble()),
                 ),
-                //width:
-                child: applyBoxDecoration(
-                  child: Stack(children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(0),
-                      child: FadeInImage(
-                        filterQuality: FilterQuality.high,
-                        placeholder: AssetImage(placeholderImage),
-                        image: AssetImage(displayedImage),
+                child: Stack(
+                  children: [
+                    applyBoxDecoration(
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(0),
+                        child: ourMainImage,
                       ),
+                      color: colorSelected,
                     ),
                     Align(
                         alignment: Alignment.topRight,
@@ -71,8 +96,7 @@ class CenteredImageBuilder extends MarkdownElementBuilder {
                             assetFullPath: openButtonImage,
                           ),
                         )),
-                  ]),
-                  color: colorSelected,
+                  ],
                 ),
               ),
               Text(
