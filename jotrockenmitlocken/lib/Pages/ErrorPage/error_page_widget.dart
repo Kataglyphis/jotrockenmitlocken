@@ -17,10 +17,10 @@ class _ErrorPageWidget extends State<ErrorPageWidget> {
   Widget build(BuildContext context) {
     const colDivider = SizedBox(height: 10);
     return ComponentGroupDecoration(label: 'Error 404', children: <Widget>[
-      Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [Text(AppLocalizations.of(context)!.aiPlaygroundDescription)],
-      ),
+      // Row(
+      //   mainAxisAlignment: MainAxisAlignment.center,
+      //   children: [Text(AppLocalizations.of(context)!.aiPlaygroundDescription)],
+      // ),
       colDivider,
       applyBoxDecoration(
           child: ClipRRect(

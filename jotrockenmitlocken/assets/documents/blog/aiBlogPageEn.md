@@ -3,7 +3,7 @@
 > 
 
 # AI Blog
-![Clouds](ScreenshotModernOpenGL.png)
+![Clouds](ScreenshotWorleyNoise.png)
 *image_caption*d
 
 
