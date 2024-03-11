@@ -7,6 +7,7 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_math_fork/flutter_math.dart';
 import 'package:jotrockenmitlockenrepo/Decoration/decoration_helper.dart';
 import 'package:markdown/markdown.dart' as md;
+import 'package:jotrockenmitlockenrepo/Media/copy_button.dart';
 
 class CodeElementBuilder extends MarkdownElementBuilder {
   CodeElementBuilder({required this.colorSelected, required this.useLightMode});
@@ -65,22 +66,47 @@ class CodeElementBuilder extends MarkdownElementBuilder {
         ),
       ));
     }
-    return SelectionArea(
-      child: Center(
-        child: applyBoxDecoration(
-          child: HighlightView(
-            tabSize: 4,
-            // The original code to be highlighted
-            element.textContent,
-            // Specify language
-            // It is recommended to give it a value for performance
-            language: language,
-            theme: getCodeTheme(),
-            textStyle: preferredStyle,
-            // Specify padding
-            padding: const EdgeInsets.all(8),
-          ),
-        ),
+    return Center(
+      child: Column(
+        children: [
+          Container(
+              constraints: BoxConstraints(
+                maxWidth: 1000,
+              ),
+              child: Card(
+                  margin: EdgeInsets.zero,
+                  elevation: 0,
+                  color: Theme.of(context)
+                      .colorScheme
+                      .surfaceVariant
+                      .withOpacity(0.3),
+                  child: applyBoxDecoration(
+                    child: Stack(children: [
+                      Center(
+                        child: HighlightView(
+                          tabSize: 4,
+                          // The original code to be highlighted
+                          element.textContent,
+                          // Specify language
+                          // It is recommended to give it a value for performance
+                          language: language,
+                          theme: getCodeTheme(),
+                          textStyle: preferredStyle,
+                          // Specify padding
+                          padding: const EdgeInsets.all(8),
+                        ),
+                      ),
+                      Align(
+                          alignment: Alignment.topRight,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: CopyButton(
+                              text: element.textContent,
+                            ),
+                          ))
+                    ]),
+                  )))
+        ],
       ),
     );
   }

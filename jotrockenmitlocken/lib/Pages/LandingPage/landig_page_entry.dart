@@ -49,6 +49,7 @@ class _LandingPageEntryState extends State<LandingPageEntry> {
           ),
           Text(
             AppLocalizations.of(context)!.playgroundDescription +
+                "\n" +
                 widget.githubRepo,
             style: Theme.of(context).textTheme.titleSmall,
           )

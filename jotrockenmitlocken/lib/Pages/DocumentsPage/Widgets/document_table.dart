@@ -61,13 +61,10 @@ class AboutMeTableState extends State<DocumentTable> {
           SizedBox(
             width: getDocumentTableWidth(),
             child: applyBoxDecoration(
-                child: ListView.separated(
-                  shrinkWrap: true,
-                  scrollDirection: Axis.vertical,
-                  itemCount: widget.docs.length,
-                  separatorBuilder: (_, __) => const Divider(),
-                  itemBuilder: _buildListItem,
-                ),
+                child: Column(
+                    children: List.generate(widget.docs.length,
+                        (index) => _buildListItem(context, index),
+                        growable: true)),
                 insets: EdgeInsets.all(tablePadding),
                 borderRadius: 8,
                 borderWidth: 4,
