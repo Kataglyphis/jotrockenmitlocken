@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jotrockenmitlockenrepo/Layout/ResponsiveDesign/layout_manager.dart';
-import 'package:jotrockenmitlocken/Pages/app_frame_attributes.dart';
+import 'package:jotrockenmitlockenrepo/Pages/app_frame_attributes.dart';
 import 'package:jotrockenmitlocken/Pages/blog_pages_config.dart';
 import 'package:jotrockenmitlocken/Pages/nav_bar_pages_factory.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -41,6 +41,7 @@ class LandingPage extends NavBarPagesFactory {
     return LayoutManager.createOneTwoTransisionWidget(
         homePagesLeftRight[0],
         homePagesLeftRight[1],
+        ScreenConfigurations.getFooterPagesConfig(),
         appFrameAttributes.showMediumSizeLayout,
         appFrameAttributes.showLargeSizeLayout,
         appFrameAttributes.railAnimation);

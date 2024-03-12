@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:jotrockenmitlocken/Pages/screen_configurations.dart';
 import 'package:jotrockenmitlocken/Widgets/Media/Markdown/markdown_page.dart';
 import 'package:jotrockenmitlockenrepo/Layout/ResponsiveDesign/layout_manager.dart';
-import 'package:jotrockenmitlocken/Pages/app_frame_attributes.dart';
-import 'package:jotrockenmitlocken/Pages/pages_factory.dart';
+import 'package:jotrockenmitlockenrepo/Pages/app_frame_attributes.dart';
+import 'package:jotrockenmitlockenrepo/Pages/pages_factory.dart';
 
 class RenderingBlogPage extends PagesFactory {
   @override
@@ -14,7 +15,9 @@ class RenderingBlogPage extends PagesFactory {
         imageDirectory: 'assets/images/aiBlog',
         useLightMode: appFrameAttributes.useLightMode,
       )
-    ], appFrameAttributes.showMediumSizeLayout,
+    ],
+        ScreenConfigurations.getFooterPagesConfig(),
+        appFrameAttributes.showMediumSizeLayout,
         appFrameAttributes.showLargeSizeLayout);
   }
 }

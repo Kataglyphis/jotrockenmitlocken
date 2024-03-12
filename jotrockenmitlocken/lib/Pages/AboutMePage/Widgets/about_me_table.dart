@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jotrockenmitlocken/Pages/AboutMePage/Widgets/donation.dart';
-import 'package:jotrockenmitlocken/Pages/AboutMePage/Widgets/socialMedia/social_media_widgets.dart';
+import 'package:jotrockenmitlockenrepo/socialMedia/social_media_widgets.dart';
 import 'package:jotrockenmitlockenrepo/Decoration/decoration_helper.dart';
 import 'package:jotrockenmitlockenrepo/constants.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';

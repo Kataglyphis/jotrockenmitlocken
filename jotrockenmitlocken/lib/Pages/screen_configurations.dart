@@ -4,18 +4,24 @@ import 'package:jotrockenmitlocken/Pages/Blog/ai_blog_page.dart';
 import 'package:jotrockenmitlocken/Pages/Blog/rendering_blog_page.dart';
 import 'package:jotrockenmitlocken/Pages/DocumentsPage/documents_page.dart';
 import 'package:jotrockenmitlocken/Pages/ErrorPage/error_page.dart';
-import 'package:jotrockenmitlockenrepo/Footer/contact.dart';
-import 'package:jotrockenmitlockenrepo/Footer/cookie_declaration.dart';
-import 'package:jotrockenmitlockenrepo/Footer/declaration_on_accessibility.dart';
-import 'package:jotrockenmitlockenrepo/Footer/imprint.dart';
-import 'package:jotrockenmitlockenrepo/Footer/privacy_policy.dart';
+import 'package:jotrockenmitlocken/Pages/Footer/configs/contact_config.dart';
+import 'package:jotrockenmitlocken/Pages/Footer/configs/cookie_declaration_config.dart';
+import 'package:jotrockenmitlocken/Pages/Footer/configs/declaration_on_accessibility_config.dart';
+import 'package:jotrockenmitlocken/Pages/Footer/configs/imprint_config.dart';
+import 'package:jotrockenmitlocken/Pages/Footer/configs/privacy_policy_config.dart';
+import 'package:jotrockenmitlocken/Pages/Footer/contact.dart';
+import 'package:jotrockenmitlocken/Pages/Footer/cookie_declaration.dart';
+import 'package:jotrockenmitlocken/Pages/Footer/declaration_on_accessibility.dart';
+import 'package:jotrockenmitlocken/Pages/Footer/imprint.dart';
+import 'package:jotrockenmitlocken/Pages/Footer/privacy_policy.dart';
 import 'package:jotrockenmitlocken/Pages/LandingPage/ai_playground.dart';
 import 'package:jotrockenmitlocken/Pages/LandingPage/landing_page.dart';
 import 'package:jotrockenmitlocken/Pages/LandingPage/rendering_playground.dart';
 import 'package:jotrockenmitlocken/Pages/QuotesPage/quotes_page.dart';
 import 'package:jotrockenmitlocken/Pages/blog_pages_config.dart';
 import 'package:jotrockenmitlocken/Pages/navbar_pages_config.dart';
-import 'package:jotrockenmitlocken/Pages/pages_config.dart';
+import 'package:jotrockenmitlockenrepo/Footer/footer_pages_creator.dart';
+import 'package:jotrockenmitlockenrepo/Pages/pages_config.dart';
 
 class ScreenConfigurations {
   static List<String> getAllValidRoutes() {
@@ -75,25 +81,25 @@ class ScreenConfigurations {
     ];
   }
 
-  static List<PagesConfig> getFooterPagesConfig() {
+  static List<FooterPagesConfig> getFooterPagesConfig() {
     return [
-      PagesConfig(
+      ImprintPagesConfig(
         routingName: "/imprint",
         pagesCreator: ImprintPage(),
       ),
-      PagesConfig(
+      ContactPagesConfig(
         routingName: "/contact",
         pagesCreator: ContactPage(),
       ),
-      PagesConfig(
+      PrivacyPolicyPagesConfig(
         routingName: "/privacyPolicy",
         pagesCreator: PrivacyPolicyPage(),
       ),
-      PagesConfig(
+      CookieDeclarationPagesConfig(
         routingName: "/cookieStatement",
         pagesCreator: CookieDeclarationPage(),
       ),
-      PagesConfig(
+      DeclarationOnAccessibilityPagesConfig(
         routingName: "/declarationOnAccessibility",
         pagesCreator: DeclarationOnAccessibilityPage(),
       ),
