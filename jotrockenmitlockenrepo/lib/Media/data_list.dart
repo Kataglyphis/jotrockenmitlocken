@@ -43,7 +43,7 @@ abstract mixin class DataListState<T extends Data> {
 
   // other classes will have to override these two methods
   void onSortData(int columnIndex, bool ascending);
-  Future<List<List<dynamic>>> _loadDataFromCSV();
+  Future<List<List<dynamic>>> loadDataFromCSV();
   String getTitle();
   String getDescription();
   // every data list gets an individual spacing

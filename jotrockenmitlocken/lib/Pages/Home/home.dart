@@ -72,7 +72,8 @@ class _HomeState extends State<Home> {
   }
 
   @override
-  void didUpdateWidget(Widget oldWidget) {
+  void didUpdateWidget(Home oldWidget) {
+    super.didUpdateWidget(oldWidget);
     widget.handleChangedPageIndex(widget.navigationShell.currentIndex);
   }
 

@@ -1,11 +1,9 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-@immutable
 class CopyButton extends StatelessWidget {
-  String text;
-  CopyButton({
+  final String text;
+  const CopyButton({
     super.key,
     required this.text,
   });

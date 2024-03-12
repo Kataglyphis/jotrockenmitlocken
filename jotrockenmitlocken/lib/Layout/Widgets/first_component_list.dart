@@ -3,7 +3,7 @@ import 'package:jotrockenmitlocken/Layout/Widgets/build_silvers.dart';
 import 'package:jotrockenmitlocken/Layout/Widgets/cache_height.dart';
 
 class FirstComponentList extends StatefulWidget {
-  FirstComponentList({
+  const FirstComponentList({
     super.key,
     required this.showSecondList,
     required this.childWidgetsLeftPage,
@@ -11,8 +11,8 @@ class FirstComponentList extends StatefulWidget {
   });
 
   final bool showSecondList;
-  List<Widget> childWidgetsLeftPage;
-  List<Widget> childWidgetsRightPage;
+  final List<Widget> childWidgetsLeftPage;
+  final List<Widget> childWidgetsRightPage;
 
   @override
   State<FirstComponentList> createState() => _FirstComponentListState();
@@ -21,13 +21,14 @@ class FirstComponentList extends StatefulWidget {
 class _FirstComponentListState extends State<FirstComponentList> {
   @override
   Widget build(BuildContext context) {
+    List<Widget> resultingChildWidgetsLeftPage = widget.childWidgetsLeftPage;
     if (!widget.showSecondList) {
-      widget.childWidgetsLeftPage =
+      resultingChildWidgetsLeftPage =
           widget.childWidgetsLeftPage + widget.childWidgetsRightPage;
     }
 
     List<double?> heights =
-        List.filled(widget.childWidgetsLeftPage.length, null);
+        List.filled(resultingChildWidgetsLeftPage.length, null);
 
     const smallSpacing = 10.0;
 
@@ -48,7 +49,7 @@ class _FirstComponentListState extends State<FirstComponentList> {
                   return CacheHeight(
                     heights: heights,
                     index: index,
-                    child: widget.childWidgetsLeftPage[index],
+                    child: resultingChildWidgetsLeftPage[index],
                   );
                 },
               ),

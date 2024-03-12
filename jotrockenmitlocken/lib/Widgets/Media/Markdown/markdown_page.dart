@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:jotrockenmitlocken/Widgets/Media/Markdown/ElementBuilder/centered_blockquoute_builder.dart';
 import 'package:jotrockenmitlocken/Widgets/Media/Markdown/ElementBuilder/centered_image_builder.dart';
 import 'package:jotrockenmitlocken/Widgets/Media/Markdown/ElementBuilder/code_element_builder.dart';
 import 'package:jotrockenmitlocken/Widgets/Media/Markdown/ElementBuilder/latex_element_builder.dart';
@@ -9,27 +8,28 @@ import 'package:jotrockenmitlocken/Widgets/Media/Markdown/ElementBuilder/table_e
 import 'package:markdown/markdown.dart' as md;
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:jotrockenmitlockenrepo/constants.dart';
+import 'dart:developer' as developer;
 
 import 'ElementBuilder/centered_head_builder.dart';
 
 class MarkdownFilePage extends StatefulWidget {
-  MarkdownFilePage(
+  const MarkdownFilePage(
       {super.key,
       required this.filePathDe,
       required this.filePathEn,
       this.imageDirectory = 'assets/images/',
       required this.useLightMode});
 
-  String filePathDe;
-  String filePathEn;
-  String imageDirectory;
-  bool useLightMode;
+  final String filePathDe;
+  final String filePathEn;
+  final String imageDirectory;
+  final bool useLightMode;
 
   @override
-  _MarkdownFilePage createState() => _MarkdownFilePage();
+  MarkdownFilePageState createState() => MarkdownFilePageState();
 }
 
-class _MarkdownFilePage extends State<MarkdownFilePage> {
+class MarkdownFilePageState extends State<MarkdownFilePage> {
   String _markupContent = '''''';
   @override
   void initState() {
@@ -68,7 +68,7 @@ class _MarkdownFilePage extends State<MarkdownFilePage> {
         return await rootBundle.loadString(widget.filePathEn);
       }
     } catch (e) {
-      print("Error reading file: $e");
+      developer.log("Error reading file: $e");
       return '';
     }
   }
@@ -121,21 +121,17 @@ class _MarkdownFilePage extends State<MarkdownFilePage> {
                   textScaleFactor: 1.4,
                 ),
                 'img': CenteredImageBuilder(
-                    colorSelected: Theme.of(context)
-                        .colorScheme
-                        .surfaceVariant
-                        .withOpacity(0.3),
+                    colorSelected: Theme.of(context).colorScheme.primary,
                     imageDir: widget.imageDirectory,
                     currentPageWidth: getMarkdownPageWidth()),
                 'h1': CenteredHeaderBuilder(),
-                'blockquote': CenteredBlockQuoteBuilder(
-                    useLightMode: widget.useLightMode),
                 'table': TableElementBuilder(),
                 'code': CodeElementBuilder(
-                    colorSelected: Theme.of(context)
+                    colorSelectedBg: Theme.of(context)
                         .colorScheme
                         .surfaceVariant
                         .withOpacity(0.3),
+                    colorSelectedPrimary: Theme.of(context).colorScheme.primary,
                     useLightMode: widget.useLightMode),
               },
               extensionSet: md.ExtensionSet(

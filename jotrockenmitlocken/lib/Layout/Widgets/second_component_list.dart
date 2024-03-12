@@ -3,12 +3,12 @@ import 'package:jotrockenmitlocken/Layout/Widgets/build_silvers.dart';
 import 'package:jotrockenmitlocken/Layout/Widgets/cache_height.dart';
 
 class SecondComponentList extends StatefulWidget {
-  SecondComponentList({
+  const SecondComponentList({
     super.key,
     required this.childWidgets,
   });
 
-  List<Widget> childWidgets;
+  final List<Widget> childWidgets;
 
   @override
   State<SecondComponentList> createState() => _SecondComponentListState();

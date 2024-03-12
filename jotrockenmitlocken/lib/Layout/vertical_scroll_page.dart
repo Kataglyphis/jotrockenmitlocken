@@ -3,8 +3,8 @@ import 'package:jotrockenmitlocken/Layout/Widgets/first_component_list.dart';
 import 'package:jotrockenmitlockenrepo/constants.dart';
 
 class VerticalScrollPage extends StatefulWidget {
-  VerticalScrollPage({super.key, required this.childWidgets});
-  List<Widget> childWidgets;
+  const VerticalScrollPage({super.key, required this.childWidgets});
+  final List<Widget> childWidgets;
   @override
   State<VerticalScrollPage> createState() => _VerticalScrollPage();
 }

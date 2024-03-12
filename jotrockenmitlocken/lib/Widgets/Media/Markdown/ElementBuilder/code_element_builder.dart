@@ -10,26 +10,30 @@ import 'package:markdown/markdown.dart' as md;
 import 'package:jotrockenmitlockenrepo/Media/copy_button.dart';
 
 class CodeElementBuilder extends MarkdownElementBuilder {
-  CodeElementBuilder({required this.colorSelected, required this.useLightMode});
+  CodeElementBuilder(
+      {required this.colorSelectedBg,
+      required this.useLightMode,
+      required this.colorSelectedPrimary});
 
   Map<String, TextStyle> getCodeTheme() {
     if (useLightMode) {
       lightThemeCodeStyle['root'] = TextStyle(
         //fontWeight: FontWeight.w100,
-        backgroundColor: colorSelected,
+        backgroundColor: colorSelectedBg,
       );
       return lightThemeCodeStyle;
     } else {
       darkThemeCodeStyle['root'] = TextStyle(
         //fontWeight: FontWeight.w100,
-        backgroundColor: colorSelected,
+        backgroundColor: colorSelectedBg,
       );
       return darkThemeCodeStyle;
     }
   }
 
   bool useLightMode;
-  Color colorSelected;
+  Color colorSelectedBg;
+  Color colorSelectedPrimary;
   Map<String, TextStyle> lightThemeCodeStyle = {...githubTheme};
   Map<String, TextStyle> darkThemeCodeStyle = {...draculaTheme};
 
@@ -51,7 +55,7 @@ class CodeElementBuilder extends MarkdownElementBuilder {
           children: [
             applyBoxDecoration(
                 child: Container(
-                  color: colorSelected,
+                  color: colorSelectedBg,
                   child: Math.tex(
                     element.textContent,
                     textStyle: preferredStyle,
@@ -61,7 +65,8 @@ class CodeElementBuilder extends MarkdownElementBuilder {
                   ),
                 ),
                 insets: const EdgeInsets.all(2),
-                borderWidth: 1),
+                borderWidth: 1,
+                color: colorSelectedPrimary),
           ],
         ),
       ));
@@ -70,8 +75,8 @@ class CodeElementBuilder extends MarkdownElementBuilder {
       child: Column(
         children: [
           Container(
-              constraints: BoxConstraints(
-                maxWidth: 1000,
+              constraints: const BoxConstraints(
+                maxWidth: 700,
               ),
               child: Card(
                   margin: EdgeInsets.zero,
@@ -81,31 +86,31 @@ class CodeElementBuilder extends MarkdownElementBuilder {
                       .surfaceVariant
                       .withOpacity(0.3),
                   child: applyBoxDecoration(
-                    child: Stack(children: [
-                      Center(
-                        child: HighlightView(
-                          tabSize: 4,
-                          // The original code to be highlighted
-                          element.textContent,
-                          // Specify language
-                          // It is recommended to give it a value for performance
-                          language: language,
-                          theme: getCodeTheme(),
-                          textStyle: preferredStyle,
-                          // Specify padding
-                          padding: const EdgeInsets.all(8),
+                      child: Stack(children: [
+                        Center(
+                          child: HighlightView(
+                            tabSize: 4,
+                            // The original code to be highlighted
+                            element.textContent,
+                            // Specify language
+                            // It is recommended to give it a value for performance
+                            language: language,
+                            theme: getCodeTheme(),
+                            textStyle: preferredStyle,
+                            // Specify padding
+                            padding: const EdgeInsets.all(8),
+                          ),
                         ),
-                      ),
-                      Align(
-                          alignment: Alignment.topRight,
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: CopyButton(
-                              text: element.textContent,
-                            ),
-                          ))
-                    ]),
-                  )))
+                        Align(
+                            alignment: Alignment.topRight,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: CopyButton(
+                                text: element.textContent,
+                              ),
+                            ))
+                      ]),
+                      color: colorSelectedPrimary)))
         ],
       ),
     );
