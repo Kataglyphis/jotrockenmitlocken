@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
-class CopyButton extends StatelessWidget {
-  final String text;
-  const CopyButton({
+import 'open_stub.dart' if (dart.library.html) 'open_web.dart';
+
+class OpenButton extends StatelessWidget {
+  final String assetFullPath;
+  const OpenButton({
     super.key,
-    required this.text,
+    required this.assetFullPath,
   });
 
   void _onPressed() async {
-    await Clipboard.setData(ClipboardData(text: text));
+    myPluginOpen(assetFullPath);
   }
 
   @override
@@ -20,7 +21,7 @@ class CopyButton extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
       ),
       child: Text(
-        "Copy",
+        "Open",
         style: Theme.of(context).textTheme.titleMedium,
       ),
     );

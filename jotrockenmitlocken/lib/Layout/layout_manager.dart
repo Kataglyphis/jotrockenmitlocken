@@ -10,6 +10,7 @@ class LayoutManager {
       bool showMediumSizeLayout, bool showLargeSizeLayout) {
     const colDivider = SizedBox(height: 10);
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         VerticalScrollPage(childWidgets: [
           colDivider,

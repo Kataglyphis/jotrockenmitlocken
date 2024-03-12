@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:jotrockenmitlockenrepo/Decoration/decoration_helper.dart';
-import 'package:jotrockenmitlockenrepo/Media/Download/open_button.dart';
+import 'package:jotrockenmitlockenrepo/Media/Open/open_button.dart';
 
 class OpenableImage extends StatefulWidget {
-  OpenableImage(
-      {required this.placeholderImage,
+  const OpenableImage(
+      {super.key,
+      required this.placeholderImage,
       required this.displayedImage,
       required this.currentPageWidth,
       required this.colorSelected,
       required this.imageCaptioning,
       required this.captioningStyle});
 
-  String placeholderImage;
-  String displayedImage;
-  double currentPageWidth;
-  Color colorSelected;
-  String imageCaptioning;
-  TextStyle captioningStyle;
+  final String placeholderImage;
+  final String displayedImage;
+  final double currentPageWidth;
+  final Color colorSelected;
+  final String imageCaptioning;
+  final TextStyle captioningStyle;
 
   @override
   State<StatefulWidget> createState() => _OpenableImageState();
@@ -46,7 +46,7 @@ class _OpenableImageState extends State<OpenableImage> {
     );
 
     ourMainImage.image
-        .resolve(ImageConfiguration())
+        .resolve(const ImageConfiguration())
         .addListener(ImageStreamListener((ImageInfo info, bool _) {
       setState(() {
         imageHeight = info.image.height;

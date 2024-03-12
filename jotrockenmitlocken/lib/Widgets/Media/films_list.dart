@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:jotrockenmitlockenrepo/Media/data_list.dart';
 import 'package:jotrockenmitlocken/Widgets/Media/film.dart';
-import 'package:jotrockenmitlockenrepo/constants.dart';
 
 class FilmsList extends StatefulWidget {
   const FilmsList({super.key});
@@ -13,12 +12,6 @@ class FilmsList extends StatefulWidget {
 }
 
 class _FilmsListState extends State<FilmsList> with DataListState<Film> {
-  @override
-  ColorSeed getColorSeed() {
-    // TODO: implement getColorSeed
-    throw UnimplementedError();
-  }
-
   @override
   String getTitle() {
     return "Films/Series worth watching";
@@ -41,7 +34,8 @@ class _FilmsListState extends State<FilmsList> with DataListState<Film> {
     });
   }
 
-  Future<List<List<dynamic>>> _loadFilmsFromCSV() async {
+  @override
+  Future<List<List<dynamic>>> loadDataFromCSV() async {
     final rawData = await rootBundle.loadString("assets/data/Filmliste.csv");
     List<List<dynamic>> csvListData =
         const CsvToListConverter().convert(rawData);
@@ -52,7 +46,7 @@ class _FilmsListState extends State<FilmsList> with DataListState<Film> {
         .toList()
         .map((List e) => Film(
               title: e.elementAt(0),
-              ISAN: e.elementAt(1),
+              isan: e.elementAt(1),
             ))
         .toList();
     return csvListData;
@@ -61,6 +55,6 @@ class _FilmsListState extends State<FilmsList> with DataListState<Film> {
   @override
   initState() {
     super.initState();
-    dataFuture = _loadFilmsFromCSV();
+    dataFuture = loadDataFromCSV();
   }
 }

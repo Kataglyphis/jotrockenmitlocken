@@ -41,7 +41,7 @@ class _QuotesListState extends State<QuotesList> with DataListState<Quote> {
   }
 
   @override
-  Future<List<List<dynamic>>> _loadFilmsFromCSV() async {
+  Future<List<List<dynamic>>> loadDataFromCSV() async {
     final rawData = await rootBundle.loadString("assets/data/Zitate.csv");
     List<List<dynamic>> csvListData =
         const CsvToListConverter().convert(rawData);
@@ -61,6 +61,6 @@ class _QuotesListState extends State<QuotesList> with DataListState<Quote> {
   @override
   initState() {
     super.initState();
-    dataFuture = _loadFilmsFromCSV();
+    dataFuture = loadDataFromCSV();
   }
 }

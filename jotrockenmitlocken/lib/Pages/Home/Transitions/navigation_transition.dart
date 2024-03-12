@@ -59,21 +59,17 @@ class _NavigationTransitionState extends State<NavigationTransition> {
   @override
   Widget build(BuildContext context) {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
-    var currentWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      //key: widget.scaffoldKey,
       appBar: widget.appBar,
-      body: Container(
-        child: Row(
-          children: <Widget>[
-            RailTransition(
-              animation: railAnimation,
-              backgroundColor: colorScheme.surface,
-              child: widget.navigationRail,
-            ),
-            widget.body,
-          ],
-        ),
+      body: Row(
+        children: <Widget>[
+          RailTransition(
+            animation: railAnimation,
+            backgroundColor: colorScheme.surface,
+            child: widget.navigationRail,
+          ),
+          widget.body,
+        ],
       ),
       bottomNavigationBar: widget.showFooter
           ? const Footer()

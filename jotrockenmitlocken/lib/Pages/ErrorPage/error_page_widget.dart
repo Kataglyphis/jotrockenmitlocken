@@ -1,7 +1,6 @@
 import 'package:jotrockenmitlockenrepo/Decoration/decoration_helper.dart';
 import 'package:jotrockenmitlocken/Widgets/component_group_decoration.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ErrorPageWidget extends StatefulWidget {
   const ErrorPageWidget({

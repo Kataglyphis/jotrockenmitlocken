@@ -97,7 +97,7 @@ class _SkillTableState extends State<SkillTable> {
                   String entryVal = "";
                   var entryList = values[i];
                   for (int j = 0; j < entryList.length; j++) {
-                    entryVal += "${"• " + entryList[j]}\n";
+                    entryVal += "• ${entryList[j]}${"\n"}";
                   }
                   skills.add(TableRow(children: [
                     TableCell(

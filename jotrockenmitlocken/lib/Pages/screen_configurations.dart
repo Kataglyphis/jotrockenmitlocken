@@ -9,8 +9,11 @@ import 'package:jotrockenmitlocken/Pages/Footer/cookie_declaration.dart';
 import 'package:jotrockenmitlocken/Pages/Footer/declaration_on_accessibility.dart';
 import 'package:jotrockenmitlocken/Pages/Footer/imprint.dart';
 import 'package:jotrockenmitlocken/Pages/Footer/privacy_policy.dart';
+import 'package:jotrockenmitlocken/Pages/LandingPage/ai_playground.dart';
 import 'package:jotrockenmitlocken/Pages/LandingPage/landing_page.dart';
+import 'package:jotrockenmitlocken/Pages/LandingPage/rendering_playground.dart';
 import 'package:jotrockenmitlocken/Pages/QuotesPage/quotes_page.dart';
+import 'package:jotrockenmitlocken/Pages/blog_pages_config.dart';
 import 'package:jotrockenmitlocken/Pages/navbar_pages_config.dart';
 import 'package:jotrockenmitlocken/Pages/pages_config.dart';
 
@@ -57,16 +60,18 @@ class ScreenConfigurations {
     ];
   }
 
-  static List<PagesConfig> getBlogPagesConfig() {
+  static List<BlogPagesConfig> getBlogPagesConfig() {
     return [
-      PagesConfig(
-        routingName: "/aiBlog",
-        pagesCreator: AiBlogPage(),
-      ),
-      PagesConfig(
-        routingName: "/renderingBlog",
-        pagesCreator: RenderingBlogPage(),
-      ),
+      BlogPagesConfig(
+          routingName: "/aiBlog",
+          pagesCreator: AiBlogPage(),
+          landingPageEntry: const AIPlayground(),
+          landingPageAlignment: LandingPageAlignment.left),
+      BlogPagesConfig(
+          routingName: "/renderingBlog",
+          pagesCreator: RenderingBlogPage(),
+          landingPageEntry: const RenderingPlayground(),
+          landingPageAlignment: LandingPageAlignment.right),
     ];
   }
 

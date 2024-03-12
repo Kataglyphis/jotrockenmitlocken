@@ -6,32 +6,28 @@ import 'package:jotrockenmitlockenrepo/Helper/browser_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class LandingPageEntry extends StatefulWidget {
-  LandingPageEntry({
+abstract class LandingPageEntry extends StatefulWidget {
+  const LandingPageEntry({
     super.key,
-    required this.label,
-    required this.routerPath,
-    required this.headline,
-    required this.imagePath,
-    required this.githubRepo,
   });
 
-  String label;
-  String routerPath;
-  String headline;
-  String imagePath;
-  String githubRepo;
-
   @override
-  State<LandingPageEntry> createState() => _LandingPageEntryState();
+  State<LandingPageEntry> createState();
 }
 
-class _LandingPageEntryState extends State<LandingPageEntry> {
+abstract class LandingPageEntryState extends State<LandingPageEntry> {
   bool isDisabled = false;
+
+  String getLabel();
+  String getRouterPath();
+  String getHeadline();
+  String getImagePath();
+  String getGithubRepo();
+
   @override
   Widget build(BuildContext context) {
     const colDivider = SizedBox(height: 10);
-    return ComponentGroupDecoration(label: widget.label, children: <Widget>[
+    return ComponentGroupDecoration(label: getLabel(), children: <Widget>[
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -43,14 +39,12 @@ class _LandingPageEntryState extends State<LandingPageEntry> {
               final Uri toLaunch = Uri(
                   scheme: 'https',
                   host: 'github.com',
-                  path: 'Kataglyphis/${widget.githubRepo}');
+                  path: 'Kataglyphis/${getGithubRepo()}');
               BrowserHelper.launchInBrowser(toLaunch);
             },
           ),
           Text(
-            AppLocalizations.of(context)!.playgroundDescription +
-                "\n" +
-                widget.githubRepo,
+            "${AppLocalizations.of(context)!.playgroundDescription}\n${getGithubRepo()}",
             style: Theme.of(context).textTheme.titleSmall,
           )
         ],
@@ -62,10 +56,10 @@ class _LandingPageEntryState extends State<LandingPageEntry> {
             onPressed: isDisabled
                 ? null
                 : () {
-                    context.go(widget.routerPath);
+                    context.go(getRouterPath());
                   },
             child: Text(
-              widget.headline,
+              getHeadline(),
               style: Theme.of(context).textTheme.titleSmall,
             ),
           ),
@@ -75,7 +69,7 @@ class _LandingPageEntryState extends State<LandingPageEntry> {
       applyBoxDecoration(
           child: ClipRRect(
             borderRadius: BorderRadius.circular(0),
-            child: Image.asset(widget.imagePath),
+            child: Image.asset(getImagePath()),
           ),
           borderRadius: 0,
           borderWidth: 5,
