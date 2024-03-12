@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:jotrockenmitlocken/Layout/Widgets/Transitions/one_two_transition.dart';
-import 'package:jotrockenmitlocken/Layout/Widgets/first_component_list.dart';
-import 'package:jotrockenmitlocken/Layout/Widgets/second_component_list.dart';
-import 'package:jotrockenmitlocken/Layout/vertical_scroll_page.dart';
+import 'package:jotrockenmitlockenrepo/Layout/Widgets/Transitions/one_two_transition.dart';
+import 'package:jotrockenmitlockenrepo/Layout/Widgets/first_component_list.dart';
+import 'package:jotrockenmitlockenrepo/Layout/Widgets/second_component_list.dart';
+import 'package:jotrockenmitlockenrepo/Layout/ResponsiveDesign/vertical_scroll_page.dart';
 import 'package:jotrockenmitlocken/Pages/Footer/footer.dart';
 
 class LayoutManager {

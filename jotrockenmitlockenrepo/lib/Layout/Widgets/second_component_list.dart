@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:jotrockenmitlocken/Layout/Widgets/build_silvers.dart';
-import 'package:jotrockenmitlocken/Layout/Widgets/cache_height.dart';
+import 'package:jotrockenmitlockenrepo/Layout/Widgets/build_silvers.dart';
+import 'package:jotrockenmitlockenrepo/Layout/Widgets/cache_height.dart';
 
 class SecondComponentList extends StatefulWidget {
   const SecondComponentList({

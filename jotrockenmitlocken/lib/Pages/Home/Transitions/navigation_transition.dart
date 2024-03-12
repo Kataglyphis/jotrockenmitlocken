@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:jotrockenmitlocken/Pages/Home/Transitions/bar_transition.dart';
 import 'package:jotrockenmitlocken/Pages/Home/Transitions/rail_transition.dart';
-import 'package:jotrockenmitlocken/Pages/Footer/footer.dart';
+import 'package:jotrockenmitlockenrepo/Footer/footer.dart';
 
 import 'package:go_router/go_router.dart';
 
