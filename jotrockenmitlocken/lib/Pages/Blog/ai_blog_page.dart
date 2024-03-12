@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:jotrockenmitlocken/Pages/screen_configurations.dart';
 import 'package:jotrockenmitlocken/Widgets/appendix_table.dart';
 import 'package:jotrockenmitlockenrepo/Media/Files/file.dart';
 import 'package:jotrockenmitlocken/Widgets/Media/Markdown/markdown_page.dart';
 import 'package:jotrockenmitlockenrepo/Layout/ResponsiveDesign/layout_manager.dart';
-import 'package:jotrockenmitlocken/Pages/app_frame_attributes.dart';
-import 'package:jotrockenmitlocken/Pages/pages_factory.dart';
+import 'package:jotrockenmitlockenrepo/Pages/app_frame_attributes.dart';
+import 'package:jotrockenmitlockenrepo/Pages/pages_factory.dart';
 
 class AiBlogPage extends PagesFactory {
   @override
@@ -35,7 +36,9 @@ class AiBlogPage extends PagesFactory {
       AppendixTable(
         docs: docs,
       )
-    ], appFrameAttributes.showMediumSizeLayout,
+    ],
+        ScreenConfigurations.getFooterPagesConfig(),
+        appFrameAttributes.showMediumSizeLayout,
         appFrameAttributes.showLargeSizeLayout);
   }
 }

@@ -1,25 +1,37 @@
+import 'dart:js_util';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:jotrockenmitlocken/Pages/AboutMePage/Widgets/socialMedia/social_media_widgets.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:jotrockenmitlockenrepo/Footer/footer_pages_creator.dart';
+import 'package:jotrockenmitlockenrepo/SocialMedia/social_media_widgets.dart';
+//import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:jotrockenmitlockenrepo/Helper/browser_helper.dart';
 import 'package:jotrockenmitlockenrepo/constants.dart';
 
 class Footer extends StatefulWidget {
   const Footer({
     super.key,
+    required this.footerPagesConfig,
   });
+
+  final List<FooterPagesConfig> footerPagesConfig;
+
   @override
   State<Footer> createState() => _Footer();
 }
 
 class _Footer extends State<Footer> {
+  final int maxNumFooterPageTextButtonsPerRow = 3;
+
   @override
   void initState() {
     super.initState();
   }
 
   Widget createTextButtons() {
+    final int numRows =
+        (widget.footerPagesConfig.length / maxNumFooterPageTextButtonsPerRow)
+            .floor();
     var currentWidth = MediaQuery.of(context).size.width;
     var align = MainAxisAlignment.start;
     if (currentWidth < mediumWidthBreakpoint) {
@@ -29,76 +41,95 @@ class _Footer extends State<Footer> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            mainAxisAlignment: align,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              TextButton(
-                style: TextButton.styleFrom(
-                    textStyle: Theme.of(context).textTheme.bodyMedium),
-                onPressed: () {
-                  context.go('/imprint');
-                },
-                child: Text(
-                  textAlign: TextAlign.center,
-                  AppLocalizations.of(context)!.imprint,
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 11),
-                ),
-              ),
-              TextButton(
-                onPressed: () {
-                  context.go('/contact');
-                },
-                child: Text(
-                  AppLocalizations.of(context)!.contact,
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 11),
-                ),
-              ),
-              TextButton(
-                onPressed: () {
-                  context.go('/privacyPolicy');
-                },
-                child: Text(
-                  AppLocalizations.of(context)!.privacyPolicy,
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 11),
-                ),
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: align,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              TextButton(
-                onPressed: () {
-                  context.go('/cookieStatement');
-                },
-                child: Text(
-                  AppLocalizations.of(context)!.cookieStatement,
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 11),
-                ),
-              ),
-            ],
-          ),
-          Row(
-              mainAxisAlignment: align,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                TextButton(
-                  onPressed: () {
-                    context.go('/declarationOnAccessibility');
-                  },
-                  child: Text(
-                    AppLocalizations.of(context)!.declarationOnAccessibility,
-                    style: const TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 11),
+          for (int i = 0; i < numRows; i++)
+            Row(
+                mainAxisAlignment: align,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  TextButton(
+                    style: TextButton.styleFrom(
+                        textStyle: Theme.of(context).textTheme.bodyMedium),
+                    onPressed: () {
+                      context.go('/imprint');
+                    },
+                    child: Text(
+                      textAlign: TextAlign.center,
+                      AppLocalizations.of(context)!.imprint,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 11),
+                    ),
                   ),
-                ),
-              ])
+                ]),
+          // Row(
+          //   mainAxisAlignment: align,
+          //   crossAxisAlignment: CrossAxisAlignment.center,
+          //   children: [
+          //     TextButton(
+          //       style: TextButton.styleFrom(
+          //           textStyle: Theme.of(context).textTheme.bodyMedium),
+          //       onPressed: () {
+          //         context.go('/imprint');
+          //       },
+          //       child: Text(
+          //         textAlign: TextAlign.center,
+          //         AppLocalizations.of(context)!.imprint,
+          //         style: const TextStyle(
+          //             fontWeight: FontWeight.bold, fontSize: 11),
+          //       ),
+          //     ),
+          //     TextButton(
+          //       onPressed: () {
+          //         context.go('/contact');
+          //       },
+          //       child: Text(
+          //         AppLocalizations.of(context)!.contact,
+          //         style: const TextStyle(
+          //             fontWeight: FontWeight.bold, fontSize: 11),
+          //       ),
+          //     ),
+          //     TextButton(
+          //       onPressed: () {
+          //         context.go('/privacyPolicy');
+          //       },
+          //       child: Text(
+          //         AppLocalizations.of(context)!.privacyPolicy,
+          //         style: const TextStyle(
+          //             fontWeight: FontWeight.bold, fontSize: 11),
+          //       ),
+          //     ),
+          //   ],
+          // ),
+          // Row(
+          //   mainAxisAlignment: align,
+          //   crossAxisAlignment: CrossAxisAlignment.center,
+          //   children: [
+          //     TextButton(
+          //       onPressed: () {
+          //         context.go('/cookieStatement');
+          //       },
+          //       child: Text(
+          //         AppLocalizations.of(context)!.cookieStatement,
+          //         style: const TextStyle(
+          //             fontWeight: FontWeight.bold, fontSize: 11),
+          //       ),
+          //     ),
+          //   ],
+          // ),
+          // Row(
+          //     mainAxisAlignment: align,
+          //     crossAxisAlignment: CrossAxisAlignment.center,
+          //     children: [
+          //       TextButton(
+          //         onPressed: () {
+          //           context.go('/declarationOnAccessibility');
+          //         },
+          //         child: Text(
+          //           AppLocalizations.of(context)!.declarationOnAccessibility,
+          //           style: const TextStyle(
+          //               fontWeight: FontWeight.bold, fontSize: 11),
+          //         ),
+          //       ),
+          //     ])
         ]);
   }
 
@@ -139,8 +170,7 @@ class _Footer extends State<Footer> {
                 style: Theme.of(context).textButtonTheme.style,
                 child: const Text(
                   'johannes-heinle.de',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 11),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11),
                 ),
               ),
             ],
@@ -157,8 +187,7 @@ class _Footer extends State<Footer> {
                 },
                 child: const Text(
                   'dom-wuest.de',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 11),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11),
                 ),
               ),
             ],

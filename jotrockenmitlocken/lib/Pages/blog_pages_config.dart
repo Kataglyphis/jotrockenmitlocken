@@ -1,5 +1,5 @@
 import 'package:jotrockenmitlocken/Pages/LandingPage/landig_page_entry.dart';
-import 'package:jotrockenmitlocken/Pages/pages_config.dart';
+import 'package:jotrockenmitlockenrepo/Pages/pages_config.dart';
 
 class BlogPagesConfig extends PagesConfig {
   LandingPageEntry landingPageEntry;
