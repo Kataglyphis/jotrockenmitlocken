@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:jotrockenmitlocken/Pages/Footer/jotrockenmitlocken_footer.dart';
 
 import 'package:jotrockenmitlocken/Pages/Home/Transitions/bar_transition.dart';
 import 'package:jotrockenmitlocken/Pages/Home/Transitions/rail_transition.dart';
 import 'package:jotrockenmitlocken/Pages/screen_configurations.dart';
-import 'package:jotrockenmitlockenrepo/Footer/footer.dart';
 
 import 'package:go_router/go_router.dart';
 
@@ -73,9 +73,8 @@ class _NavigationTransitionState extends State<NavigationTransition> {
         ],
       ),
       bottomNavigationBar: widget.showFooter
-          ? Footer(
-              footerPagesConfig: ScreenConfigurations.getFooterPagesConfig(),
-            )
+          ? JotrockenmitlockenFooter(
+              footerPagesConfig: ScreenConfigurations.getFooterPagesConfig())
           : BarTransition(
               animation: barAnimation,
               railAnimation: railAnimation,

@@ -1,5 +1,5 @@
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:jotrockenmitlockenrepo/Footer/footer_pages_creator.dart';
+import 'package:jotrockenmitlockenrepo/Pages/Footer/footer_pages_creator.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DeclarationOnAccessibilityPagesConfig extends FooterPagesConfig {

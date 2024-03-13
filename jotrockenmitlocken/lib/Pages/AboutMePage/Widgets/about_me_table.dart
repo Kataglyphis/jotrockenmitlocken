@@ -93,7 +93,7 @@ class AboutMeTableState extends State<AboutMeTable> {
           const SizedBox(
             height: 10,
           ),
-          const SocialMediaWidgets(
+          SocialMediaWidgets(
             iconSize: 28,
           ),
           const SizedBox(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jotrockenmitlocken/Pages/Footer/jotrockenmitlocken_footer.dart';
 import 'package:jotrockenmitlocken/Pages/screen_configurations.dart';
 import 'package:jotrockenmitlocken/Widgets/appendix_table.dart';
 import 'package:jotrockenmitlockenrepo/Media/Files/file.dart';
@@ -22,22 +23,24 @@ class AiBlogPage extends PagesFactory {
         additionalInfo: '~3.7MB German',
       ),
       File(
-          baseDir: 'assets/documents/',
-          title: 'Bachelor_Thesis.pdf',
-          additionalInfo: '~33MB German')
+          baseDir: 'assets/images/',
+          title: 'WorleyNoiseTextures.zip',
+          additionalInfo: 'Use it for you own projects.')
     ];
-    return LayoutManager.createSinglePage([
-      MarkdownFilePage(
-        filePathDe: '',
-        filePathEn: 'assets/documents/blog/aiBlogPageEn.md',
-        imageDirectory: 'assets/images/aiBlog',
-        useLightMode: appFrameAttributes.useLightMode,
-      ),
-      AppendixTable(
-        docs: docs,
-      )
-    ],
-        ScreenConfigurations.getFooterPagesConfig(),
+    return LayoutManager.createSinglePage(
+        [
+          MarkdownFilePage(
+            filePathDe: '',
+            filePathEn: 'assets/documents/blog/aiBlogPageEn.md',
+            imageDirectory: 'assets/images/aiBlog',
+            useLightMode: appFrameAttributes.useLightMode,
+          ),
+          AppendixTable(
+            docs: docs,
+          )
+        ],
+        JotrockenmitlockenFooter(
+            footerPagesConfig: ScreenConfigurations.getFooterPagesConfig()),
         appFrameAttributes.showMediumSizeLayout,
         appFrameAttributes.showLargeSizeLayout);
   }
