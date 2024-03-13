@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jotrockenmitlocken/Pages/AboutMePage/Widgets/donation.dart';
+import 'package:jotrockenmitlocken/user_settings.dart';
 import 'package:jotrockenmitlockenrepo/socialMedia/social_media_widgets.dart';
 import 'package:jotrockenmitlockenrepo/Decoration/decoration_helper.dart';
 import 'package:jotrockenmitlockenrepo/constants.dart';
@@ -78,7 +79,7 @@ class AboutMeTableState extends State<AboutMeTable> {
           ),
           const SizedBox(height: 10),
           Text(
-            "Jonas Heinle",
+            UserSettings.myName,
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.headlineLarge,
           ),
@@ -95,6 +96,7 @@ class AboutMeTableState extends State<AboutMeTable> {
           ),
           SocialMediaWidgets(
             iconSize: 28,
+            socialMediaLinksConfig: UserSettings.socialMediaLinksConfig,
           ),
           const SizedBox(
             height: 10,
@@ -106,10 +108,10 @@ class AboutMeTableState extends State<AboutMeTable> {
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
               ),
               onPressed: () async {
-                String email =
-                    Uri.encodeComponent("cataglyphis@jotrockenmitlocken.de");
+                String email = Uri.encodeComponent(UserSettings.businessEmail);
                 String subject = Uri.encodeComponent("Awesome job offer");
-                String body = Uri.encodeComponent("Hi Jonas");
+                String body =
+                    Uri.encodeComponent("Hi ${UserSettings.firstName}");
                 //print(subject); //output: Hello%20Flutter
                 Uri mail =
                     Uri.parse("mailto:$email?subject=$subject&body=$body");
@@ -124,13 +126,13 @@ class AboutMeTableState extends State<AboutMeTable> {
               )),
           const SizedBox(height: 10),
           Text(
-            "cataglyphis@jotrockenmitlocken.de",
+            UserSettings.businessEmail,
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.titleMedium,
           ),
           const SizedBox(height: 10),
           Text(
-            "»As soon as it works, no-one calls it AI anymore.« (John McCarthy)",
+            UserSettings.myQuotation,
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.bodyMedium,
           ),

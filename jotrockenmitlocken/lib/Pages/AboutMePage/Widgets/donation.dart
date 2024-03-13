@@ -16,15 +16,6 @@ class Donation extends StatefulWidget {
 }
 
 class _DonationState extends State<Donation> {
-  // Future<void> _launchInBrowser(Uri url) async {
-  //   if (!await launchUrl(
-  //     url,
-  //     mode: LaunchMode.externalApplication,
-  //   )) {
-  //     throw 'Could not launch $url';
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
     double marginPic = 0;

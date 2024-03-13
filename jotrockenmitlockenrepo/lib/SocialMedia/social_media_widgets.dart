@@ -5,20 +5,13 @@ import 'package:jotrockenmitlockenrepo/constants.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class SocialMediaWidgets extends StatelessWidget {
-  SocialMediaWidgets({super.key, required this.iconSize});
+  SocialMediaWidgets({
+    super.key,
+    required this.iconSize,
+    required this.socialMediaLinksConfig,
+  });
 
-  final Map<String, ExternalLinkConfig> socialMediaLinksConfig = {
-    'Facebook':
-        ExternalLinkConfig(host: 'www.facebook.com', path: 'jonas.heinle/'),
-    'GitHub': ExternalLinkConfig(host: 'www.github.com', path: 'Kataglyphis'),
-    'YouTube': ExternalLinkConfig(
-        host: 'www.youtube.com', path: 'channel/UC3LZiH4sZzzaVBCUV8knYeg'),
-    'X': ExternalLinkConfig(host: 'www.twitter.com', path: 'Cataglyphis_'),
-    'LinkedIn': ExternalLinkConfig(
-        host: 'www.linkedin.com', path: 'in/jonas-heinle-0b2a301a0/'),
-    'Instagram': ExternalLinkConfig(
-        host: 'www.instagram.com', path: 'jotrockenmitlocken'),
-  };
+  final Map<String, ExternalLinkConfig> socialMediaLinksConfig;
 
   final Map<String, IconData> socialMediaIcons = {
     'Facebook': FontAwesomeIcons.facebook,

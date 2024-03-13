@@ -105,6 +105,8 @@ abstract class FooterState extends State<Footer> {
 
   String getLiabilityText();
 
+  Map<String, ExternalLinkConfig> getUserLevelSocialMediaLinksConfig();
+
   Widget createSocialIconsAndLiabilityWidgets() {
     var currentWidth = MediaQuery.of(context).size.width;
     var align = MainAxisAlignment.start;
@@ -115,7 +117,10 @@ abstract class FooterState extends State<Footer> {
       mainAxisAlignment: align,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        SocialMediaWidgets(iconSize: 14),
+        SocialMediaWidgets(
+          iconSize: 14,
+          socialMediaLinksConfig: getUserLevelSocialMediaLinksConfig(),
+        ),
         Row(
             mainAxisAlignment: align,
             crossAxisAlignment: CrossAxisAlignment.center,
