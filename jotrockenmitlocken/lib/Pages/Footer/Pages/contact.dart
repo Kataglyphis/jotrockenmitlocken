@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jotrockenmitlocken/Pages/Footer/jotrockenmitlocken_footer.dart';
 import 'package:jotrockenmitlocken/Pages/screen_configurations.dart';
 import 'package:jotrockenmitlocken/Widgets/Media/Markdown/markdown_page.dart';
 import 'package:jotrockenmitlockenrepo/Layout/ResponsiveDesign/layout_manager.dart';
@@ -16,7 +17,8 @@ class ContactPage extends PagesFactory {
           useLightMode: appFrameAttributes.useLightMode,
         )
       ],
-      ScreenConfigurations.getFooterPagesConfig(),
+      JotrockenmitlockenFooter(
+          footerPagesConfig: ScreenConfigurations.getFooterPagesConfig()),
       appFrameAttributes.showMediumSizeLayout,
       appFrameAttributes.showLargeSizeLayout,
     );

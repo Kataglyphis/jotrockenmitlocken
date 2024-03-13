@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:jotrockenmitlocken/Pages/Footer/jotrockenmitlocken_footer.dart';
 import 'package:jotrockenmitlocken/Pages/screen_configurations.dart';
 import 'package:jotrockenmitlockenrepo/Media/Files/file.dart';
 import 'package:jotrockenmitlocken/Pages/DocumentsPage/Widgets/document_table.dart';
@@ -26,12 +27,14 @@ class DocumentPage extends NavBarPagesFactory {
           title: 'Bachelor_Thesis.pdf',
           additionalInfo: '~33MB German')
     ];
-    return LayoutManager.createSinglePage([
-      DocumentTable(
-        docs: docs,
-      )
-    ],
-        ScreenConfigurations.getFooterPagesConfig(),
+    return LayoutManager.createSinglePage(
+        [
+          DocumentTable(
+            docs: docs,
+          )
+        ],
+        JotrockenmitlockenFooter(
+            footerPagesConfig: ScreenConfigurations.getFooterPagesConfig()),
         appFrameAttributes.showMediumSizeLayout,
         appFrameAttributes.showLargeSizeLayout);
   }

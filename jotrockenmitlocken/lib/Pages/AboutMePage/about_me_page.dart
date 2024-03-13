@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:jotrockenmitlocken/Pages/AboutMePage/Widgets/about_me_table.dart';
 import 'package:jotrockenmitlocken/Pages/AboutMePage/Widgets/perfect_day_chart.dart';
 import 'package:jotrockenmitlocken/Pages/AboutMePage/Widgets/skill_table.dart';
+import 'package:jotrockenmitlocken/Pages/Footer/jotrockenmitlocken_footer.dart';
 import 'package:jotrockenmitlocken/Pages/screen_configurations.dart';
 import 'package:jotrockenmitlockenrepo/Layout/ResponsiveDesign/layout_manager.dart';
 import 'package:jotrockenmitlockenrepo/Pages/app_frame_attributes.dart';
@@ -36,7 +37,8 @@ class AboutMePage extends NavBarPagesFactory {
     return LayoutManager.createOneTwoTransisionWidget(
         aboutMePagesLeftRight[0],
         aboutMePagesLeftRight[1],
-        ScreenConfigurations.getFooterPagesConfig(),
+        JotrockenmitlockenFooter(
+            footerPagesConfig: ScreenConfigurations.getFooterPagesConfig()),
         appFrameAttributes.showMediumSizeLayout,
         appFrameAttributes.showLargeSizeLayout,
         appFrameAttributes.railAnimation);

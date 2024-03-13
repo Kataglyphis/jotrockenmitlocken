@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jotrockenmitlocken/Pages/Footer/jotrockenmitlocken_footer.dart';
 import 'package:jotrockenmitlockenrepo/Layout/ResponsiveDesign/layout_manager.dart';
 import 'package:jotrockenmitlockenrepo/Pages/app_frame_attributes.dart';
 import 'package:jotrockenmitlocken/Pages/blog_pages_config.dart';
@@ -41,7 +42,8 @@ class LandingPage extends NavBarPagesFactory {
     return LayoutManager.createOneTwoTransisionWidget(
         homePagesLeftRight[0],
         homePagesLeftRight[1],
-        ScreenConfigurations.getFooterPagesConfig(),
+        JotrockenmitlockenFooter(
+            footerPagesConfig: ScreenConfigurations.getFooterPagesConfig()),
         appFrameAttributes.showMediumSizeLayout,
         appFrameAttributes.showLargeSizeLayout,
         appFrameAttributes.railAnimation);

@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:jotrockenmitlockenrepo/Footer/footer_pages_creator.dart';
 import 'package:jotrockenmitlockenrepo/Layout/Widgets/Transitions/one_two_transition.dart';
 import 'package:jotrockenmitlockenrepo/Layout/Widgets/first_component_list.dart';
 import 'package:jotrockenmitlockenrepo/Layout/Widgets/second_component_list.dart';
 import 'package:jotrockenmitlockenrepo/Layout/ResponsiveDesign/vertical_scroll_page.dart';
-import 'package:jotrockenmitlockenrepo/Footer/footer.dart';
+import 'package:jotrockenmitlockenrepo/Pages/Footer/footer.dart';
 
 class LayoutManager {
   static Widget createSinglePage(
     List<Widget> children,
-    List<FooterPagesConfig> footerPagesConfig,
+    Footer footer,
     bool showMediumSizeLayout,
     bool showLargeSizeLayout,
   ) {
@@ -21,11 +20,7 @@ class LayoutManager {
           colDivider,
           ...children,
           colDivider,
-          if (!showMediumSizeLayout && !showLargeSizeLayout) ...[
-            Footer(
-              footerPagesConfig: footerPagesConfig,
-            )
-          ]
+          if (!showMediumSizeLayout && !showLargeSizeLayout) ...[footer]
         ]),
       ],
     );
@@ -34,18 +29,14 @@ class LayoutManager {
   static Widget createOneTwoTransisionWidget(
       List<Widget> childWidgetsLeftPage,
       List<Widget> childWidgetsRightPage,
-      List<FooterPagesConfig> footerPagesConfig,
+      Footer footer,
       bool showMediumSizeLayout,
       bool showLargeSizeLayout,
       CurvedAnimation railAnimation) {
     var colDivider = const SizedBox(height: 10);
     childWidgetsRightPage += [
       colDivider,
-      if (!showMediumSizeLayout && !showLargeSizeLayout) ...[
-        Footer(
-          footerPagesConfig: footerPagesConfig,
-        )
-      ]
+      if (!showMediumSizeLayout && !showLargeSizeLayout) ...[footer]
     ];
     return Row(
       children: [
