@@ -1,3 +1,4 @@
+import 'package:jotrockenmitlocken/user_settings.dart';
 import 'package:jotrockenmitlockenrepo/Url/external_link_config.dart';
 import 'package:jotrockenmitlockenrepo/Pages/Footer/footer.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -27,5 +28,10 @@ class JotrockenmitlockenFooterState extends FooterState {
   @override
   String getLiabilityText() {
     return "${AppLocalizations.of(context)!.disclaimer}\n${AppLocalizations.of(context)!.copyright}";
+  }
+
+  @override
+  Map<String, ExternalLinkConfig> getUserLevelSocialMediaLinksConfig() {
+    return UserSettings.socialMediaLinksConfig;
   }
 }
