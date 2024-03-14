@@ -14,7 +14,7 @@ class AboutMePage extends NavBarPagesFactory {
   List<List<Widget>> _createAboutMeChildPages(
       bool useOtherLanguageMode, ColorSeed colorSelected) {
     List<Widget> childWidgetsLeftPage = [
-      AboutMeTable(useOtherLanguageMode: useOtherLanguageMode),
+      const AboutMeTable(),
     ];
     List<Widget> childWidgetsRightPage = [
       const PerfectDay(),
