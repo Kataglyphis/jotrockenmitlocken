@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jotrockenmitlockenrepo/SocialMedia/Settings/social_media_settings.dart';
 import 'package:jotrockenmitlockenrepo/Url/browser_helper.dart';
 import 'package:jotrockenmitlockenrepo/Url/external_link_config.dart';
 import 'package:jotrockenmitlockenrepo/constants.dart';
@@ -12,15 +13,6 @@ class SocialMediaWidgets extends StatelessWidget {
   });
 
   final Map<String, ExternalLinkConfig> socialMediaLinksConfig;
-
-  final Map<String, IconData> socialMediaIcons = {
-    'Facebook': FontAwesomeIcons.facebook,
-    'GitHub': FontAwesomeIcons.github,
-    'YouTube': FontAwesomeIcons.youtube,
-    'X': FontAwesomeIcons.xTwitter,
-    'LinkedIn': FontAwesomeIcons.linkedin,
-    'Instagram': FontAwesomeIcons.instagram,
-  };
 
   final double iconSize;
   List<Widget> buildSocialMediaChildren(double iconSize) {

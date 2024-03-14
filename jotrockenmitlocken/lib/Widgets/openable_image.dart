@@ -7,19 +7,17 @@ import 'package:jotrockenmitlockenrepo/Media/Open/open_button.dart';
 class OpenableImage extends StatefulWidget {
   const OpenableImage(
       {super.key,
-      required this.placeholderImage,
       required this.displayedImage,
-      required this.currentPageWidth,
-      required this.colorSelected,
-      required this.imageCaptioning,
-      required this.captioningStyle});
+      this.placeholderImage = "assets/images/Summy&Thundy_compressed.png",
+      this.imageCaptioning,
+      this.captioningStyle,
+      this.disableOpen = false});
 
   final String placeholderImage;
   final String displayedImage;
-  final double currentPageWidth;
-  final Color colorSelected;
-  final String imageCaptioning;
-  final TextStyle captioningStyle;
+  final String? imageCaptioning;
+  final TextStyle? captioningStyle;
+  final bool disableOpen;
 
   @override
   State<StatefulWidget> createState() => _OpenableImageState();
@@ -29,11 +27,12 @@ class _OpenableImageState extends State<OpenableImage> {
   double imageWidth = 0;
   var imageHeight = 0;
 
-  double getImageWidth(double currentWidth, double imageWidth) {
-    if (imageWidth < currentWidth) {
+  double getImageWidth(double imageWidth) {
+    var currentPageWidth = MediaQuery.of(context).size.width;
+    if (imageWidth < currentPageWidth) {
       return imageWidth;
     } else {
-      return currentWidth * 0.95;
+      return currentPageWidth * 0.95;
     }
   }
 
@@ -51,8 +50,7 @@ class _OpenableImageState extends State<OpenableImage> {
       setState(() {
         imageHeight = info.image.height;
         imageWidth = info.image.width.toDouble();
-        imageWidth =
-            getImageWidth(widget.currentPageWidth, imageWidth).toDouble();
+        imageWidth = getImageWidth(imageWidth).toDouble();
       });
     }));
 
@@ -73,23 +71,27 @@ class _OpenableImageState extends State<OpenableImage> {
                   borderRadius: BorderRadius.circular(0),
                   child: ourMainImage,
                 ),
-                color: widget.colorSelected,
+                color: Theme.of(context).colorScheme.primary,
               ),
-              Align(
-                  alignment: Alignment.topRight,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: OpenButton(
-                      assetFullPath: openButtonImage,
-                    ),
-                  )),
+              if (!widget.disableOpen)
+                Align(
+                    alignment: Alignment.topRight,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: OpenButton(
+                        assetFullPath: openButtonImage,
+                      ),
+                    )),
             ],
           ),
         ),
-        Text(
-          widget.imageCaptioning,
-          style: widget.captioningStyle,
-        ),
+        if (widget.imageCaptioning != null)
+          Text(
+            widget.imageCaptioning!,
+            style: (widget.captioningStyle != null)
+                ? widget.captioningStyle!
+                : null,
+          ),
       ],
     );
   }
