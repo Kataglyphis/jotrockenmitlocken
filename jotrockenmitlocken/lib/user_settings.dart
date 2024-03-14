@@ -12,6 +12,7 @@ class UserSettings {
         host: 'www.linkedin.com', path: 'in/jonas-heinle-0b2a301a0/'),
     'Instagram': ExternalLinkConfig(
         host: 'www.instagram.com', path: 'jotrockenmitlocken'),
+    'PayPal': ExternalLinkConfig(host: 'www.paypal.me', path: '/JonasHeinle'),
   };
   static const String businessEmail = "cataglyphis@jotrockenmitlocken.de";
   static const String myQuotation =
@@ -19,4 +20,6 @@ class UserSettings {
   static const String firstName = "Jonas";
   static const String lastName = "Heinle";
   static const String myName = "$firstName $lastName";
+  static const String assetPathImgOfMe =
+      "assets/images/Bewerbungsbilder/a95a64ca.jpg";
 }

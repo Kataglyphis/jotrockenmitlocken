@@ -4,13 +4,14 @@ import 'package:jotrockenmitlocken/Widgets/openable_image.dart';
 import 'package:markdown/markdown.dart' as md;
 
 class CenteredImageBuilder extends MarkdownElementBuilder {
-  CenteredImageBuilder(
-      {required this.colorSelected,
-      required this.imageDir,
-      required this.currentPageWidth});
+  CenteredImageBuilder({
+    required this.colorSelected,
+    required this.imageDir,
+    //required this.currentPageWidth
+  });
   Color colorSelected;
   String imageDir;
-  double currentPageWidth;
+  //double currentPageWidth;
 
   @override
   Widget visitElementAfter(md.Element element, TextStyle? preferredStyle) {
@@ -31,12 +32,12 @@ class CenteredImageBuilder extends MarkdownElementBuilder {
       children: <Widget>[
         SelectionArea(
             child: OpenableImage(
-          currentPageWidth: currentPageWidth,
+          //currentPageWidth: currentPageWidth,
           placeholderImage: placeholderImage,
           displayedImage: displayedImage,
           imageCaptioning: imageCaption,
           captioningStyle: preferredStyle!,
-          colorSelected: colorSelected,
+          //colorSelected: colorSelected,
         )),
       ],
     );
