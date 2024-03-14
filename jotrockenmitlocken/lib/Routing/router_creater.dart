@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 import 'package:go_router/go_router.dart';
 
-import 'package:jotrockenmitlocken/Pages/app_frame_attributes.dart';
+import 'package:jotrockenmitlockenrepo/Pages/app_frame_attributes.dart';
 import 'package:jotrockenmitlocken/Pages/navbar_pages_config.dart';
-import 'package:jotrockenmitlocken/Pages/pages_config.dart';
+import 'package:jotrockenmitlockenrepo/Pages/pages_config.dart';
 import 'package:jotrockenmitlocken/Pages/screen_configurations.dart';
-import 'package:jotrockenmitlocken/Routing/stateful_branch_info_provider.dart';
+import 'package:jotrockenmitlockenrepo/Pages/stateful_branch_info_provider.dart';
 
 class RoutesCreator {
   static GoRoute buildGoRouteForSPA(String path, Widget child) {

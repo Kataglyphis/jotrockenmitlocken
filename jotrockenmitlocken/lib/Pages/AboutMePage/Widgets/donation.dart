@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:jotrockenmitlocken/user_settings.dart';
 import 'package:jotrockenmitlockenrepo/Decoration/decoration_helper.dart';
-import 'package:jotrockenmitlockenrepo/Helper/browser_helper.dart';
+import 'package:jotrockenmitlockenrepo/SocialMedia/Settings/social_media_settings.dart';
+import 'package:jotrockenmitlockenrepo/Url/browser_helper.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:jotrockenmitlockenrepo/Url/external_link_config.dart';
 
 class Donation extends StatefulWidget {
   const Donation({
@@ -16,19 +19,13 @@ class Donation extends StatefulWidget {
 }
 
 class _DonationState extends State<Donation> {
-  // Future<void> _launchInBrowser(Uri url) async {
-  //   if (!await launchUrl(
-  //     url,
-  //     mode: LaunchMode.externalApplication,
-  //   )) {
-  //     throw 'Could not launch $url';
-  //   }
-  // }
-
+  String donationKey = 'PayPal';
   @override
   Widget build(BuildContext context) {
     double marginPic = 0;
     double paddingPic = 0;
+    ExternalLinkConfig paypalLinkConfig =
+        UserSettings.socialMediaLinksConfig[donationKey]!;
     return LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
       return applyBoxDecoration(
@@ -40,10 +37,12 @@ class _DonationState extends State<Donation> {
                   style: Theme.of(context).textTheme.bodyMedium),
               IconButton(
                 iconSize: 57,
-                icon: const FaIcon(FontAwesomeIcons.paypal),
+                icon: FaIcon(socialMediaIcons[donationKey]!),
                 onPressed: () {
                   final Uri toLaunch = Uri(
-                      scheme: 'https', host: 'paypal.me', path: '/JonasHeinle');
+                      scheme: 'https',
+                      host: paypalLinkConfig.host,
+                      path: paypalLinkConfig.path);
                   BrowserHelper.launchInBrowser(toLaunch);
                 },
               ),

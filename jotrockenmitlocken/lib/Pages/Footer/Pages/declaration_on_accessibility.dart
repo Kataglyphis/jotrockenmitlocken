@@ -6,15 +6,16 @@ import 'package:jotrockenmitlockenrepo/Layout/ResponsiveDesign/layout_manager.da
 import 'package:jotrockenmitlockenrepo/Pages/app_frame_attributes.dart';
 import 'package:jotrockenmitlockenrepo/Pages/pages_factory.dart';
 
-class RenderingBlogPage extends PagesFactory {
+class DeclarationOnAccessibilityPage extends PagesFactory {
   @override
   Widget createPage(AppFrameAttributes appFrameAttributes) {
     return LayoutManager.createSinglePage(
         [
           MarkdownFilePage(
-            filePathDe: '',
-            filePathEn: 'assets/documents/blog/renderingBlogPageEn.md',
-            imageDirectory: 'assets/images/aiBlog',
+            filePathDe:
+                'assets/documents/footer/declarationOnAccessibilityDe.md',
+            filePathEn:
+                'assets/documents/footer/declarationOnAccessibilityEn.md',
             useLightMode: appFrameAttributes.useLightMode,
           )
         ],

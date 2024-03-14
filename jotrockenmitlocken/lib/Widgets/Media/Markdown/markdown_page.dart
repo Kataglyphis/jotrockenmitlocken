@@ -111,7 +111,6 @@ class MarkdownFilePageState extends State<MarkdownFilePage> {
                   h1: Theme.of(context).textTheme.headlineLarge,
                   h2: Theme.of(context).textTheme.headlineMedium,
                   code: Theme.of(context).textTheme.bodyMedium,
-                  //h1Padding: EdgeInsets.fromViewPadding(padding, devicePixelRatio),
                   h2Align: WrapAlignment.center,
                   img: Theme.of(context).textTheme.labelLarge),
               styleSheetTheme: MarkdownStyleSheetBaseTheme.material,
@@ -121,9 +120,10 @@ class MarkdownFilePageState extends State<MarkdownFilePage> {
                   textScaleFactor: 1.4,
                 ),
                 'img': CenteredImageBuilder(
-                    colorSelected: Theme.of(context).colorScheme.primary,
-                    imageDir: widget.imageDirectory,
-                    currentPageWidth: getMarkdownPageWidth()),
+                  colorSelected: Theme.of(context).colorScheme.primary,
+                  imageDir: widget.imageDirectory,
+                  //currentPageWidth: getMarkdownPageWidth()
+                ),
                 'h1': CenteredHeaderBuilder(),
                 'table': TableElementBuilder(),
                 'code': CodeElementBuilder(

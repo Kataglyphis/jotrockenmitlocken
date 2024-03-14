@@ -2,7 +2,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:jotrockenmitlockenrepo/Decoration/decoration_helper.dart';
 import 'package:jotrockenmitlocken/Widgets/component_group_decoration.dart';
-import 'package:jotrockenmitlockenrepo/Helper/browser_helper.dart';
+import 'package:jotrockenmitlockenrepo/Url/browser_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:jotrockenmitlocken/Pages/AboutMePage/Widgets/donation.dart';
-import 'package:jotrockenmitlocken/Pages/AboutMePage/Widgets/socialMedia/social_media_widgets.dart';
-import 'package:jotrockenmitlockenrepo/Decoration/decoration_helper.dart';
-import 'package:jotrockenmitlockenrepo/constants.dart';
+import 'package:jotrockenmitlocken/Widgets/openable_image.dart';
+import 'package:jotrockenmitlocken/user_settings.dart';
+import 'package:jotrockenmitlockenrepo/socialMedia/social_media_widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
+import 'package:jotrockenmitlockenrepo/Decoration/col_divider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -32,73 +32,34 @@ class AboutMeTableState extends State<AboutMeTable> {
 
   @override
   Widget build(BuildContext context) {
-    final double currentWidth = MediaQuery.of(context).size.width;
-    // init all as it would be rendered on phone
-    double picWidth = currentWidth * 0.9;
-    double marginPic = 0;
-    double paddingPic = 0;
-    const double borderRadiusPic = 10;
-    if (currentWidth >= narrowScreenWidthThreshold &&
-        currentWidth <= largeWidthBreakpoint) {
-      picWidth = currentWidth * 0.6;
-      marginPic = 0;
-      paddingPic = 0;
-    } else if (currentWidth >= largeWidthBreakpoint) {
-      picWidth = currentWidth * 0.4;
-      marginPic = 0;
-      paddingPic = 0;
-    }
-
     return LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          SizedBox(
-            width: picWidth,
-            child: applyBoxDecoration(
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(0),
-                child: const FadeInImage(
-                  filterQuality: FilterQuality.medium,
-                  placeholder: AssetImage(
-                      "assets/images/Bewerbungsbilder/a95a64ca_runterskaliert.jpg"),
-                  image: AssetImage(
-                    "assets/images/Bewerbungsbilder/a95a64ca_runterskaliert.jpg",
-                  ),
-                ),
-              ),
-              insets: EdgeInsets.all(paddingPic),
-              margin: marginPic,
-              borderRadius: borderRadiusPic,
-              borderWidth: 5,
-              color: Theme.of(context).colorScheme.primary,
-            ),
+          const OpenableImage(
+            displayedImage: UserSettings.assetPathImgOfMe,
+            disableOpen: true,
           ),
-          const SizedBox(height: 10),
+          colDivider,
           Text(
-            "Jonas Heinle",
+            UserSettings.myName,
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.headlineLarge,
           ),
-          const SizedBox(
-            height: 10,
-          ),
+          colDivider,
           Text(
             AppLocalizations.of(context)!.shortDescriptionTextMyPersona,
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.titleMedium,
           ),
-          const SizedBox(
-            height: 10,
+          colDivider,
+          SocialMediaWidgets(
+            iconSize: 20,
+            socialMediaLinksConfig: UserSettings.socialMediaLinksConfig,
           ),
-          const SocialMediaWidgets(
-            iconSize: 28,
-          ),
-          const SizedBox(
-            height: 10,
-          ),
+          colDivider,
           ElevatedButton(
               style: ElevatedButton.styleFrom(
                 textStyle:
@@ -106,10 +67,10 @@ class AboutMeTableState extends State<AboutMeTable> {
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
               ),
               onPressed: () async {
-                String email =
-                    Uri.encodeComponent("cataglyphis@jotrockenmitlocken.de");
+                String email = Uri.encodeComponent(UserSettings.businessEmail);
                 String subject = Uri.encodeComponent("Awesome job offer");
-                String body = Uri.encodeComponent("Hi Jonas");
+                String body =
+                    Uri.encodeComponent("Hi ${UserSettings.firstName}");
                 //print(subject); //output: Hello%20Flutter
                 Uri mail =
                     Uri.parse("mailto:$email?subject=$subject&body=$body");
@@ -122,28 +83,21 @@ class AboutMeTableState extends State<AboutMeTable> {
               child: Text(
                 AppLocalizations.of(context)!.mailMe,
               )),
-          const SizedBox(height: 10),
+          colDivider,
           Text(
-            "cataglyphis@jotrockenmitlocken.de",
+            UserSettings.businessEmail,
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.titleMedium,
           ),
-          const SizedBox(height: 10),
+          colDivider,
           Text(
-            "»As soon as it works, no-one calls it AI anymore.« (John McCarthy)",
+            UserSettings.myQuotation,
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.bodyMedium,
           ),
-          const SizedBox(
-            height: 30,
-          ),
-          SizedBox(
-            width: picWidth,
-            child: const Donation(),
-          ),
-          const SizedBox(
-            height: 30,
-          ),
+          colDivider,
+          const Donation(),
+          colDivider,
           Text(
             "I love to cURL",
             textAlign: TextAlign.center,
@@ -155,7 +109,7 @@ class AboutMeTableState extends State<AboutMeTable> {
             // color: Colors.black,
             onPressed: () {},
           ),
-          const SizedBox(height: 20),
+          colDivider,
         ],
       );
     });
