@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/widgets.dart';
 import 'package:jotrockenmitlockenrepo/Decoration/decoration_helper.dart';
 import 'package:jotrockenmitlockenrepo/Media/Open/open_button.dart';
 
@@ -54,10 +52,6 @@ class _OpenableImageState extends State<OpenableImage> {
       });
     }));
 
-    String openButtonImage = widget.displayedImage;
-    if (kReleaseMode) {
-      openButtonImage = "assets/$widget.displayedImage";
-    }
     return Column(
       children: [
         Container(
@@ -79,7 +73,7 @@ class _OpenableImageState extends State<OpenableImage> {
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: OpenButton(
-                        assetFullPath: openButtonImage,
+                        assetPath: widget.displayedImage,
                       ),
                     )),
             ],

@@ -9,43 +9,25 @@ import 'package:jotrockenmitlocken/Pages/Home/Widgets/color_seed_button.dart';
 import 'package:jotrockenmitlocken/Pages/Home/Widgets/language_button.dart';
 
 import 'package:jotrockenmitlocken/Widgets/Navigation/navigation_bars.dart';
-import 'package:jotrockenmitlockenrepo/constants.dart';
-import 'package:jotrockenmitlocken/constants.dart';
+import 'package:jotrockenmitlockenrepo/Pages/app_attributes.dart';
+import 'package:jotrockenmitlocken/constant_app_setting.dart';
 import 'package:jotrockenmitlocken/Pages/screen_configurations.dart';
 
 class Home extends StatefulWidget {
   const Home(
       {super.key,
-      required this.useLightMode,
-      required this.useOtherLanguageMode,
-      required this.colorSelected,
-      required this.handleBrightnessChange,
-      required this.handleLanguageChange,
-      required this.handleColorSelect,
-      required this.showMediumSizeLayout,
-      required this.showLargeSizeLayout,
+      required this.appAttributes,
       required this.controller,
-      required this.railAnimation,
       required this.scaffoldKey,
       required this.navigationShell,
       required this.handleChangedPageIndex});
 
-  final bool useLightMode;
-  final bool useOtherLanguageMode;
-  final bool showMediumSizeLayout;
-  final bool showLargeSizeLayout;
-
-  final ColorSeed colorSelected;
+  final AppAttributes appAttributes;
 
   final AnimationController controller;
-  final CurvedAnimation railAnimation;
 
   final GlobalKey<ScaffoldState> scaffoldKey;
   final StatefulNavigationShell navigationShell;
-
-  final void Function() handleLanguageChange;
-  final void Function(bool useLightMode) handleBrightnessChange;
-  final void Function(int value) handleColorSelect;
 
   final void Function(int value) handleChangedPageIndex;
 
@@ -57,21 +39,6 @@ class _HomeState extends State<Home> {
   int currentNavBarIndex = 0;
 
   @override
-  initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-  }
-
-  @override
   void didUpdateWidget(Home oldWidget) {
     super.didUpdateWidget(oldWidget);
     widget.handleChangedPageIndex(widget.navigationShell.currentIndex);
@@ -80,17 +47,19 @@ class _HomeState extends State<Home> {
   PreferredSizeWidget _createAppBar() {
     return AppBar(
       title: const Text(appName),
-      actions: !widget.showMediumSizeLayout && !widget.showLargeSizeLayout
+      actions: !widget.appAttributes.showMediumSizeLayout &&
+              !widget.appAttributes.showLargeSizeLayout
           ? [
               LanguageButton(
-                handleLanguageChange: widget.handleLanguageChange,
+                handleLanguageChange: widget.appAttributes.handleLanguageChange,
               ),
               BrightnessButton(
-                handleBrightnessChange: widget.handleBrightnessChange,
+                handleBrightnessChange:
+                    widget.appAttributes.handleBrightnessChange,
               ),
               ColorSeedButton(
-                handleColorSelect: widget.handleColorSelect,
-                colorSelected: widget.colorSelected,
+                handleColorSelect: widget.appAttributes.handleColorSelect,
+                colorSelected: widget.appAttributes.colorSelected,
               ),
             ]
           : [Container()],
@@ -102,20 +71,21 @@ class _HomeState extends State<Home> {
         children: [
           Flexible(
             child: LanguageButton(
-              handleLanguageChange: widget.handleLanguageChange,
+              handleLanguageChange: widget.appAttributes.handleLanguageChange,
               showTooltipBelow: false,
             ),
           ),
           Flexible(
             child: BrightnessButton(
-              handleBrightnessChange: widget.handleBrightnessChange,
+              handleBrightnessChange:
+                  widget.appAttributes.handleBrightnessChange,
               showTooltipBelow: false,
             ),
           ),
           Flexible(
             child: ColorSeedButton(
-              handleColorSelect: widget.handleColorSelect,
-              colorSelected: widget.colorSelected,
+              handleColorSelect: widget.appAttributes.handleColorSelect,
+              colorSelected: widget.appAttributes.colorSelected,
             ),
           ),
         ],
@@ -126,13 +96,10 @@ class _HomeState extends State<Home> {
     return Localizations.override(
         context: context,
         locale: ((Localizations.localeOf(context) == const Locale('de') &&
-                    widget.useOtherLanguageMode) ||
+                    widget.appAttributes.useOtherLanguageMode) ||
                 (Localizations.localeOf(context) == const Locale('en')))
             ? const Locale('en')
             : const Locale('de'),
-        // Using a Builder to get the correct BuildContext.
-        // Alternatively, you can create a new widget and Localizations.override
-        // will pass the updated BuildContext to the new widget.
         child: SelectionArea(
           child: Builder(
             builder: (context) {
@@ -141,17 +108,17 @@ class _HomeState extends State<Home> {
                 builder: (context, child) {
                   return NavigationTransition(
                     navigationShell: widget.navigationShell,
-                    showFooter: widget.showLargeSizeLayout ||
-                        widget.showMediumSizeLayout,
+                    showFooter: widget.appAttributes.showLargeSizeLayout ||
+                        widget.appAttributes.showMediumSizeLayout,
                     scaffoldKey: widget.scaffoldKey,
                     animationController: widget.controller,
-                    railAnimation: widget.railAnimation,
+                    railAnimation: widget.appAttributes.railAnimation,
                     appBar: _createAppBar(),
                     body: Flexible(
                       child: widget.navigationShell,
                     ),
                     navigationRail: NavigationRail(
-                      extended: widget.showLargeSizeLayout,
+                      extended: widget.appAttributes.showLargeSizeLayout,
                       destinations:
                           ScreenConfigurations.getNavRailDestinations(context),
                       selectedIndex: (widget.navigationShell.currentIndex <
@@ -167,17 +134,9 @@ class _HomeState extends State<Home> {
                       trailing: Expanded(
                         child: Padding(
                           padding: const EdgeInsets.only(bottom: 20),
-                          child: widget.showLargeSizeLayout
+                          child: widget.appAttributes.showLargeSizeLayout
                               ? ExpandedTrailingActions(
-                                  useLightMode: widget.useLightMode,
-                                  useOtherLanguageMode:
-                                      widget.useOtherLanguageMode,
-                                  handleLanguageChange:
-                                      widget.handleLanguageChange,
-                                  handleBrightnessChange:
-                                      widget.handleBrightnessChange,
-                                  handleColorSelect: widget.handleColorSelect,
-                                  colorSelected: widget.colorSelected,
+                                  appAttributes: widget.appAttributes,
                                 )
                               : _trailingActions(),
                         ),
