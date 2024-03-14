@@ -4,12 +4,20 @@ import 'open_stub.dart' if (dart.library.html) 'open_web.dart';
 
 import 'package:mime/mime.dart';
 
+import 'package:flutter/foundation.dart';
+
 class OpenButton extends StatelessWidget {
-  final String assetFullPath;
-  const OpenButton({
+  late final String assetFullPath;
+  OpenButton({
     super.key,
-    required this.assetFullPath,
-  });
+    required String assetPath,
+  }) {
+    if (kReleaseMode) {
+      assetFullPath = "assets/$assetPath";
+    } else {
+      assetFullPath = assetPath;
+    }
+  }
 
   void _onPressed() async {
     myPluginOpen(assetFullPath);
