@@ -3,13 +3,13 @@ import 'package:jotrockenmitlocken/Pages/Footer/jotrockenmitlocken_footer.dart';
 import 'package:jotrockenmitlocken/Pages/screen_configurations.dart';
 import 'package:jotrockenmitlockenrepo/Layout/ResponsiveDesign/layout_manager.dart';
 import 'package:jotrockenmitlocken/Pages/QuotesPage/quotes_list.dart';
-import 'package:jotrockenmitlockenrepo/Pages/app_frame_attributes.dart';
+import 'package:jotrockenmitlockenrepo/Pages/app_attributes.dart';
 import 'package:jotrockenmitlocken/Pages/nav_bar_pages_factory.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class QuotesPage extends NavBarPagesFactory {
   @override
-  Widget createPage(AppFrameAttributes appFrameAttributes) {
+  Widget createPage(AppAttributes appFrameAttributes) {
     return LayoutManager.createSinglePage(
         [
           const QuotesList(),
