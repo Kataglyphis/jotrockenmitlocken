@@ -11,7 +11,7 @@ import 'package:go_router/go_router.dart';
 import 'package:jotrockenmitlockenrepo/Pages/app_attributes.dart';
 
 import 'package:jotrockenmitlockenrepo/constants.dart';
-import 'package:jotrockenmitlocken/constants.dart';
+import 'package:jotrockenmitlocken/constant_app_setting.dart';
 
 import 'package:jotrockenmitlocken/Routing/router_creater.dart';
 

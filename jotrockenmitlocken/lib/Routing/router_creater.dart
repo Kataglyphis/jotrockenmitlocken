@@ -36,7 +36,7 @@ class RoutesCreator {
             // to be able access the state of the shell and to navigate to other
             // branches in a stateful way.
             return Home(
-              appFrameAttributes: appAttributes,
+              appAttributes: appAttributes,
               controller: controller,
               scaffoldKey: scaffoldKey,
               navigationShell: navigationShell,

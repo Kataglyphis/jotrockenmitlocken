@@ -6,7 +6,7 @@ import 'package:jotrockenmitlocken/Pages/Footer/jotrockenmitlocken_footer.dart';
 import 'package:jotrockenmitlocken/Pages/screen_configurations.dart';
 import 'package:jotrockenmitlockenrepo/Layout/ResponsiveDesign/layout_manager.dart';
 import 'package:jotrockenmitlockenrepo/Pages/app_attributes.dart';
-import 'package:jotrockenmitlocken/Pages/nav_bar_pages_factory.dart';
+import 'package:jotrockenmitlocken/Pages/navbar_pages_factory.dart';
 import 'package:jotrockenmitlockenrepo/constants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
