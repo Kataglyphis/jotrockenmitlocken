@@ -5,12 +5,12 @@ import 'package:jotrockenmitlocken/Pages/screen_configurations.dart';
 import 'package:jotrockenmitlockenrepo/Media/Files/file.dart';
 import 'package:jotrockenmitlocken/Pages/DocumentsPage/Widgets/document_table.dart';
 import 'package:jotrockenmitlockenrepo/Layout/ResponsiveDesign/layout_manager.dart';
-import 'package:jotrockenmitlockenrepo/Pages/app_frame_attributes.dart';
-import 'package:jotrockenmitlocken/Pages/nav_bar_pages_factory.dart';
+import 'package:jotrockenmitlockenrepo/Pages/app_attributes.dart';
+import 'package:jotrockenmitlocken/Pages/navbar_pages_factory.dart';
 
 class DocumentPage extends NavBarPagesFactory {
   @override
-  Widget createPage(AppFrameAttributes appFrameAttributes) {
+  Widget createPage(AppAttributes appFrameAttributes) {
     List<File> docs = [
       File(
         baseDir: 'assets/documents/',

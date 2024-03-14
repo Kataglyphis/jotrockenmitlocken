@@ -4,25 +4,15 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:jotrockenmitlocken/Pages/Home/Widgets/expanded_color_seed_action.dart';
 
-import 'package:jotrockenmitlockenrepo/constants.dart';
+import 'package:jotrockenmitlockenrepo/Pages/app_attributes.dart';
 
 class ExpandedTrailingActions extends StatelessWidget {
-  const ExpandedTrailingActions({super.key, 
-    required this.useLightMode,
-    required this.useOtherLanguageMode,
-    required this.handleBrightnessChange,
-    required this.handleLanguageChange,
-    required this.handleColorSelect,
-    required this.colorSelected,
+  const ExpandedTrailingActions({
+    super.key,
+    required this.appAttributes,
   });
 
-  final void Function(bool) handleBrightnessChange;
-  final void Function() handleLanguageChange;
-  final void Function(int) handleColorSelect;
-
-  final bool useLightMode;
-  final bool useOtherLanguageMode;
-  final ColorSeed colorSelected;
+  final AppAttributes appAttributes;
 
   @override
   Widget build(BuildContext context) {
@@ -39,9 +29,9 @@ class ExpandedTrailingActions extends StatelessWidget {
               Text(AppLocalizations.of(context)!.switchLang),
               Expanded(child: Container()),
               Switch(
-                  value: useOtherLanguageMode,
+                  value: appAttributes.useOtherLanguageMode,
                   onChanged: (value) {
-                    handleLanguageChange();
+                    appAttributes.handleLanguageChange();
                   })
             ],
           ),
@@ -51,16 +41,16 @@ class ExpandedTrailingActions extends StatelessWidget {
               Text(AppLocalizations.of(context)!.brightness),
               Expanded(child: Container()),
               Switch(
-                  value: useLightMode,
+                  value: appAttributes.useLightMode,
                   onChanged: (value) {
-                    handleBrightnessChange(value);
+                    appAttributes.handleBrightnessChange(value);
                   })
             ],
           ),
           const Divider(),
           ExpandedColorSeedAction(
-            handleColorSelect: handleColorSelect,
-            colorSelected: colorSelected,
+            handleColorSelect: appAttributes.handleColorSelect,
+            colorSelected: appAttributes.colorSelected,
           ),
         ],
       ),

@@ -3,10 +3,17 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import 'package:jotrockenmitlocken/app_frame.dart';
+import 'package:go_router/go_router.dart';
+
+import 'package:jotrockenmitlockenrepo/Pages/app_attributes.dart';
 
 import 'package:jotrockenmitlockenrepo/constants.dart';
+import 'package:jotrockenmitlocken/constant_app_setting.dart';
+
+import 'package:jotrockenmitlocken/Routing/router_creater.dart';
 
 void main() {
   runApp(
@@ -21,7 +28,7 @@ class App extends StatefulWidget {
   State<App> createState() => _AppState();
 }
 
-class _AppState extends State<App> {
+class _AppState extends State<App> with SingleTickerProviderStateMixin {
   ThemeMode themeMode = ThemeMode.dark;
   ColorSeed colorSelected = ColorSeed.baseColor;
   bool useOtherLanguageMode = false;
@@ -35,6 +42,64 @@ class _AppState extends State<App> {
         return true;
       case ThemeMode.dark:
         return false;
+    }
+  }
+
+  late final AnimationController controller;
+  late final CurvedAnimation railAnimation;
+  bool controllerInitialized = false;
+  bool showMediumSizeLayout = false;
+  bool showLargeSizeLayout = false;
+
+  @override
+  initState() {
+    super.initState();
+    controller = AnimationController(
+      duration: Duration(milliseconds: transitionLength.toInt() * 2),
+      value: 0,
+      vsync: this,
+    );
+    railAnimation = CurvedAnimation(
+      parent: controller,
+      curve: const Interval(0.5, 1.0),
+    );
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    final double width = MediaQuery.of(context).size.width;
+    final AnimationStatus status = controller.status;
+    if (width > mediumWidthBreakpoint) {
+      if (width > largeWidthBreakpoint) {
+        showMediumSizeLayout = false;
+        showLargeSizeLayout = true;
+      } else {
+        showMediumSizeLayout = true;
+        showLargeSizeLayout = false;
+      }
+      if (status != AnimationStatus.forward &&
+          status != AnimationStatus.completed) {
+        controller.forward();
+      }
+    } else {
+      showMediumSizeLayout = false;
+      showLargeSizeLayout = false;
+      if (status != AnimationStatus.reverse &&
+          status != AnimationStatus.dismissed) {
+        controller.reverse();
+      }
+    }
+    if (!controllerInitialized) {
+      controllerInitialized = true;
+      controller.value = width > mediumWidthBreakpoint ? 1 : 0;
     }
   }
 
@@ -58,13 +123,44 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-    return AppFrame(
-        useLightMode: useLightMode,
-        useOtherLanguageMode: useOtherLanguageMode,
-        handleBrightnessChange: handleBrightnessChange,
-        handleLanguageChange: handleLanguageChange,
-        handleColorSelect: handleColorSelect,
-        colorSelected: colorSelected,
-        themeMode: themeMode);
+    AppAttributes appAttributes = AppAttributes(
+      railAnimation: railAnimation,
+      showMediumSizeLayout: showMediumSizeLayout,
+      showLargeSizeLayout: showLargeSizeLayout,
+      useOtherLanguageMode: useOtherLanguageMode,
+      useLightMode: useLightMode,
+      colorSelected: colorSelected,
+      handleBrightnessChange: handleBrightnessChange,
+      handleLanguageChange: handleLanguageChange,
+      handleColorSelect: handleColorSelect,
+    );
+    final GoRouter routerConfig =
+        RoutesCreator.getRouterConfig(appAttributes, controller);
+
+    return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: supportedLanguages,
+      title: appTitle,
+      themeMode: themeMode,
+      theme: ThemeData(
+        //fontFamily: 'Montserrat',
+        colorSchemeSeed: colorSelected.color,
+        colorScheme: null,
+        useMaterial3: true,
+        brightness: Brightness.light,
+      ),
+      darkTheme: ThemeData(
+        colorSchemeSeed: colorSelected.color,
+        useMaterial3: true,
+        brightness: Brightness.dark,
+      ),
+      routerConfig: routerConfig,
+    );
   }
 }

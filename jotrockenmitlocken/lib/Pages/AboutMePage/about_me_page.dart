@@ -5,8 +5,8 @@ import 'package:jotrockenmitlocken/Pages/AboutMePage/Widgets/skill_table.dart';
 import 'package:jotrockenmitlocken/Pages/Footer/jotrockenmitlocken_footer.dart';
 import 'package:jotrockenmitlocken/Pages/screen_configurations.dart';
 import 'package:jotrockenmitlockenrepo/Layout/ResponsiveDesign/layout_manager.dart';
-import 'package:jotrockenmitlockenrepo/Pages/app_frame_attributes.dart';
-import 'package:jotrockenmitlocken/Pages/nav_bar_pages_factory.dart';
+import 'package:jotrockenmitlockenrepo/Pages/app_attributes.dart';
+import 'package:jotrockenmitlocken/Pages/navbar_pages_factory.dart';
 import 'package:jotrockenmitlockenrepo/constants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -14,7 +14,7 @@ class AboutMePage extends NavBarPagesFactory {
   List<List<Widget>> _createAboutMeChildPages(
       bool useOtherLanguageMode, ColorSeed colorSelected) {
     List<Widget> childWidgetsLeftPage = [
-      AboutMeTable(useOtherLanguageMode: useOtherLanguageMode),
+      const AboutMeTable(),
     ];
     List<Widget> childWidgetsRightPage = [
       const PerfectDay(),
@@ -30,7 +30,7 @@ class AboutMePage extends NavBarPagesFactory {
   }
 
   @override
-  Widget createPage(AppFrameAttributes appFrameAttributes) {
+  Widget createPage(AppAttributes appFrameAttributes) {
     var aboutMePagesLeftRight = _createAboutMeChildPages(
         appFrameAttributes.useOtherLanguageMode,
         appFrameAttributes.colorSelected);

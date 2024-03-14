@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:jotrockenmitlockenrepo/constants.dart';
-import 'package:jotrockenmitlocken/constants.dart';
+import 'package:jotrockenmitlocken/constant_app_setting.dart';
 
 const double buttonPaddingHorizontal = 40;
 const double buttonPaddingVertical = 20;
