@@ -23,8 +23,3 @@ enum ColorSeed {
   final String label;
   final Color color;
 }
-
-const supportedLanguages = [
-  Locale('de'), // Deutsch
-  Locale('en'), // English
-];

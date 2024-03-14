@@ -10,19 +10,19 @@ import 'package:jotrockenmitlocken/Pages/Home/Widgets/language_button.dart';
 
 import 'package:jotrockenmitlocken/Widgets/Navigation/navigation_bars.dart';
 import 'package:jotrockenmitlockenrepo/Pages/app_attributes.dart';
-import 'package:jotrockenmitlocken/constants.dart';
+import 'package:jotrockenmitlocken/constant_app_setting.dart';
 import 'package:jotrockenmitlocken/Pages/screen_configurations.dart';
 
 class Home extends StatefulWidget {
   const Home(
       {super.key,
-      required this.appFrameAttributes,
+      required this.appAttributes,
       required this.controller,
       required this.scaffoldKey,
       required this.navigationShell,
       required this.handleChangedPageIndex});
 
-  final AppAttributes appFrameAttributes;
+  final AppAttributes appAttributes;
 
   final AnimationController controller;
 
@@ -39,21 +39,6 @@ class _HomeState extends State<Home> {
   int currentNavBarIndex = 0;
 
   @override
-  initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-  }
-
-  @override
   void didUpdateWidget(Home oldWidget) {
     super.didUpdateWidget(oldWidget);
     widget.handleChangedPageIndex(widget.navigationShell.currentIndex);
@@ -62,20 +47,19 @@ class _HomeState extends State<Home> {
   PreferredSizeWidget _createAppBar() {
     return AppBar(
       title: const Text(appName),
-      actions: !widget.appFrameAttributes.showMediumSizeLayout &&
-              !widget.appFrameAttributes.showLargeSizeLayout
+      actions: !widget.appAttributes.showMediumSizeLayout &&
+              !widget.appAttributes.showLargeSizeLayout
           ? [
               LanguageButton(
-                handleLanguageChange:
-                    widget.appFrameAttributes.handleLanguageChange,
+                handleLanguageChange: widget.appAttributes.handleLanguageChange,
               ),
               BrightnessButton(
                 handleBrightnessChange:
-                    widget.appFrameAttributes.handleBrightnessChange,
+                    widget.appAttributes.handleBrightnessChange,
               ),
               ColorSeedButton(
-                handleColorSelect: widget.appFrameAttributes.handleColorSelect,
-                colorSelected: widget.appFrameAttributes.colorSelected,
+                handleColorSelect: widget.appAttributes.handleColorSelect,
+                colorSelected: widget.appAttributes.colorSelected,
               ),
             ]
           : [Container()],
@@ -87,22 +71,21 @@ class _HomeState extends State<Home> {
         children: [
           Flexible(
             child: LanguageButton(
-              handleLanguageChange:
-                  widget.appFrameAttributes.handleLanguageChange,
+              handleLanguageChange: widget.appAttributes.handleLanguageChange,
               showTooltipBelow: false,
             ),
           ),
           Flexible(
             child: BrightnessButton(
               handleBrightnessChange:
-                  widget.appFrameAttributes.handleBrightnessChange,
+                  widget.appAttributes.handleBrightnessChange,
               showTooltipBelow: false,
             ),
           ),
           Flexible(
             child: ColorSeedButton(
-              handleColorSelect: widget.appFrameAttributes.handleColorSelect,
-              colorSelected: widget.appFrameAttributes.colorSelected,
+              handleColorSelect: widget.appAttributes.handleColorSelect,
+              colorSelected: widget.appAttributes.colorSelected,
             ),
           ),
         ],
@@ -113,13 +96,10 @@ class _HomeState extends State<Home> {
     return Localizations.override(
         context: context,
         locale: ((Localizations.localeOf(context) == const Locale('de') &&
-                    widget.appFrameAttributes.useOtherLanguageMode) ||
+                    widget.appAttributes.useOtherLanguageMode) ||
                 (Localizations.localeOf(context) == const Locale('en')))
             ? const Locale('en')
             : const Locale('de'),
-        // Using a Builder to get the correct BuildContext.
-        // Alternatively, you can create a new widget and Localizations.override
-        // will pass the updated BuildContext to the new widget.
         child: SelectionArea(
           child: Builder(
             builder: (context) {
@@ -128,17 +108,17 @@ class _HomeState extends State<Home> {
                 builder: (context, child) {
                   return NavigationTransition(
                     navigationShell: widget.navigationShell,
-                    showFooter: widget.appFrameAttributes.showLargeSizeLayout ||
-                        widget.appFrameAttributes.showMediumSizeLayout,
+                    showFooter: widget.appAttributes.showLargeSizeLayout ||
+                        widget.appAttributes.showMediumSizeLayout,
                     scaffoldKey: widget.scaffoldKey,
                     animationController: widget.controller,
-                    railAnimation: widget.appFrameAttributes.railAnimation,
+                    railAnimation: widget.appAttributes.railAnimation,
                     appBar: _createAppBar(),
                     body: Flexible(
                       child: widget.navigationShell,
                     ),
                     navigationRail: NavigationRail(
-                      extended: widget.appFrameAttributes.showLargeSizeLayout,
+                      extended: widget.appAttributes.showLargeSizeLayout,
                       destinations:
                           ScreenConfigurations.getNavRailDestinations(context),
                       selectedIndex: (widget.navigationShell.currentIndex <
@@ -154,21 +134,9 @@ class _HomeState extends State<Home> {
                       trailing: Expanded(
                         child: Padding(
                           padding: const EdgeInsets.only(bottom: 20),
-                          child: widget.appFrameAttributes.showLargeSizeLayout
+                          child: widget.appAttributes.showLargeSizeLayout
                               ? ExpandedTrailingActions(
-                                  useLightMode:
-                                      widget.appFrameAttributes.useLightMode,
-                                  useOtherLanguageMode: widget
-                                      .appFrameAttributes.useOtherLanguageMode,
-                                  handleLanguageChange: widget
-                                      .appFrameAttributes.handleLanguageChange,
-                                  handleBrightnessChange: widget
-                                      .appFrameAttributes
-                                      .handleBrightnessChange,
-                                  handleColorSelect: widget
-                                      .appFrameAttributes.handleColorSelect,
-                                  colorSelected:
-                                      widget.appFrameAttributes.colorSelected,
+                                  appAttributes: widget.appAttributes,
                                 )
                               : _trailingActions(),
                         ),

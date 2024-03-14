@@ -6,7 +6,7 @@ import 'package:jotrockenmitlockenrepo/Media/Files/file.dart';
 import 'package:jotrockenmitlocken/Pages/DocumentsPage/Widgets/document_table.dart';
 import 'package:jotrockenmitlockenrepo/Layout/ResponsiveDesign/layout_manager.dart';
 import 'package:jotrockenmitlockenrepo/Pages/app_attributes.dart';
-import 'package:jotrockenmitlocken/Pages/nav_bar_pages_factory.dart';
+import 'package:jotrockenmitlocken/Pages/navbar_pages_factory.dart';
 
 class DocumentPage extends NavBarPagesFactory {
   @override
