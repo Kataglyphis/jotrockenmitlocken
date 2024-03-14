@@ -6,11 +6,11 @@ Widget applyBoxDecoration(
     double margin = 0,
     double borderRadius = 10,
     double borderWidth = 5,
-    Color color = (Colors.greenAccent)}) {
+    required Color color}) {
   return Align(
     alignment: Alignment.center,
     child: Container(
-      padding: insets, //EdgeInsets.all(padding),
+      padding: insets,
       margin: EdgeInsets.all(margin),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(borderRadius),

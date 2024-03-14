@@ -1,5 +1,5 @@
-import 'package:jotrockenmitlocken/Pages/pages_factory.dart';
-import 'package:jotrockenmitlocken/Routing/stateful_branch_info_provider.dart';
+import 'package:jotrockenmitlockenrepo/Pages/pages_factory.dart';
+import 'package:jotrockenmitlockenrepo/Pages/stateful_branch_info_provider.dart';
 
 class PagesConfig extends StatefulBranchInfoProvider {
   String routingName;

@@ -1,6 +1,6 @@
 import 'package:jotrockenmitlocken/Pages/nav_bar_pages_factory.dart';
-import 'package:jotrockenmitlocken/Pages/pages_factory.dart';
-import 'package:jotrockenmitlocken/Routing/stateful_branch_info_provider.dart';
+import 'package:jotrockenmitlockenrepo/Pages/pages_factory.dart';
+import 'package:jotrockenmitlockenrepo/Pages/stateful_branch_info_provider.dart';
 
 class NavBarPagesConfig extends StatefulBranchInfoProvider {
   String routingName;
