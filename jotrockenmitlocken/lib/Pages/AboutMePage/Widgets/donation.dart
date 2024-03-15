@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:jotrockenmitlocken/user_settings.dart';
+import 'package:jotrockenmitlockenrepo/Decoration/col_divider.dart';
 import 'package:jotrockenmitlockenrepo/Decoration/decoration_helper.dart';
+import 'package:jotrockenmitlockenrepo/Media/Image/openable_image.dart';
 import 'package:jotrockenmitlockenrepo/SocialMedia/Settings/social_media_settings.dart';
 import 'package:jotrockenmitlockenrepo/Url/browser_helper.dart';
 
@@ -26,52 +28,77 @@ class _DonationState extends State<Donation> {
     double paddingPic = 0;
     ExternalLinkConfig paypalLinkConfig =
         UserSettings.socialMediaLinksConfig[donationKey]!;
-    return LayoutBuilder(
-        builder: (BuildContext context, BoxConstraints constraints) {
-      return applyBoxDecoration(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(AppLocalizations.of(context)!.spendCoffe,
-                  style: Theme.of(context).textTheme.bodyMedium),
-              IconButton(
-                iconSize: 57,
-                icon: FaIcon(socialMediaIcons[donationKey]!),
-                onPressed: () {
-                  BrowserHelper.launchInBrowser(paypalLinkConfig);
-                },
+    return Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(AppLocalizations.of(context)!.spendCoffe,
+              style: Theme.of(context).textTheme.bodyMedium),
+          IconButton(
+            iconSize: 57,
+            icon: FaIcon(socialMediaIcons[donationKey]!),
+            onPressed: () {
+              BrowserHelper.launchInBrowser(paypalLinkConfig);
+            },
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Flexible(
+                //flex: mediumWidthBreakpoint.toInt(),
+                child: OpenableImage(
+                  displayedImage: "assets/images/paypal.jpg",
+                  disableOpen: true,
+                ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    width: constraints.maxWidth * 0.1,
-                  ),
-                  Image.asset(
-                    "assets/images/paypal.jpg",
-                    width: constraints.maxWidth * 0.3,
-                  ),
-                  SizedBox(
-                    width: constraints.maxWidth * 0.1,
-                  ),
-                  Image.asset(
-                    "assets/images/Coffee-removebg.png",
-                    width: constraints.maxWidth * 0.3,
-                  ),
-                  SizedBox(
-                    width: constraints.maxWidth * 0.1,
-                  ),
-                ],
-              ),
+              Flexible(
+                //flex: widthAnimation.value.toInt(),
+                child: OpenableImage(
+                  displayedImage: "assets/images/paypal.jpg",
+                  disableOpen: true,
+                ),
+              )
             ],
           ),
-          insets: EdgeInsets.all(paddingPic),
-          margin: marginPic,
-          borderRadius: 10,
-          borderWidth: 5,
-          color: Theme.of(context).colorScheme.primary);
-    });
+        ]
+        // children: [
+
+        //     Column(
+        //       children: [
+        // OpenableImage(
+        //   displayedImage: "assets/images/paypal.jpg",
+        //   disableOpen: true,
+        // ),
+        //       ],
+
+        //   ),
+        // Column(
+        //   children: [
+        //     OpenableImage(
+        //       displayedImage: "assets/images/paypal.jpg",
+        //       disableOpen: true,
+        //     ),
+        //   ],
+        // ),
+        //   ],
+        // ),
+
+        // Container(
+        //   width: ,
+        //   child: const Column(
+        //     children: [
+        //       OpenableImage(
+        //         displayedImage: "assets/images/Coffee-removebg.png",
+        //         disableOpen: true,
+        //       ),
+        //     ],
+        //   ),
+        // ),
+        //   colDivider,
+        // ],
+        //),
+        // ],
+        );
   }
 }

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:jotrockenmitlocken/Pages/AboutMePage/Widgets/donation.dart';
 import 'package:jotrockenmitlockenrepo/Media/Image/openable_image.dart';
 import 'package:jotrockenmitlocken/user_settings.dart';
+import 'package:jotrockenmitlockenrepo/Media/email_button.dart';
 import 'package:jotrockenmitlockenrepo/socialMedia/social_media_widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:jotrockenmitlockenrepo/Decoration/col_divider.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AboutMeTable extends StatefulWidget {
@@ -49,26 +49,11 @@ class AboutMeTableState extends State<AboutMeTable> {
           socialMediaLinksConfig: UserSettings.socialMediaLinksConfig,
         ),
         colDivider,
-        ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              textStyle: Theme.of(context).textTheme.titleLarge,
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-            ),
-            onPressed: () async {
-              String email = Uri.encodeComponent(UserSettings.businessEmail);
-              String subject = Uri.encodeComponent("Awesome job offer");
-              String body = Uri.encodeComponent("Hi ${UserSettings.firstName}");
-              //print(subject); //output: Hello%20Flutter
-              Uri mail = Uri.parse("mailto:$email?subject=$subject&body=$body");
-              if (await launchUrl(mail)) {
-                //email app opened
-              } else {
-                //email app is not opened
-              }
-            },
-            child: Text(
-              AppLocalizations.of(context)!.mailMe,
-            )),
+        EMailButton(
+          title: AppLocalizations.of(context)!.mailMe,
+          eMail: UserSettings.businessEmail,
+          firstName: UserSettings.firstName,
+        ),
         colDivider,
         Text(
           UserSettings.businessEmail,
