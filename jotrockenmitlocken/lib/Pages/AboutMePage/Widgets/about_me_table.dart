@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jotrockenmitlocken/Pages/AboutMePage/Widgets/donation.dart';
-import 'package:jotrockenmitlocken/Widgets/openable_image.dart';
+import 'package:jotrockenmitlockenrepo/Media/Image/openable_image.dart';
 import 'package:jotrockenmitlocken/user_settings.dart';
 import 'package:jotrockenmitlockenrepo/socialMedia/social_media_widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -21,11 +21,6 @@ class AboutMeTableState extends State<AboutMeTable> {
   AboutMeTableState({
     Key? key,
   });
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,14 +46,12 @@ class AboutMeTableState extends State<AboutMeTable> {
         ),
         colDivider,
         SocialMediaWidgets(
-          iconSize: 20,
           socialMediaLinksConfig: UserSettings.socialMediaLinksConfig,
         ),
         colDivider,
         ElevatedButton(
             style: ElevatedButton.styleFrom(
-              textStyle:
-                  const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+              textStyle: Theme.of(context).textTheme.titleLarge,
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
             ),
             onPressed: () async {

@@ -23,7 +23,7 @@ class OpenableImage extends StatefulWidget {
 
 class _OpenableImageState extends State<OpenableImage> {
   double imageWidth = 0;
-  var imageHeight = 0;
+  double imageHeight = 0;
 
   double getImageWidth(double imageWidth) {
     var currentPageWidth = MediaQuery.of(context).size.width;
@@ -46,7 +46,7 @@ class _OpenableImageState extends State<OpenableImage> {
         .resolve(const ImageConfiguration())
         .addListener(ImageStreamListener((ImageInfo info, bool _) {
       setState(() {
-        imageHeight = info.image.height;
+        imageHeight = info.image.height.toDouble();
         imageWidth = info.image.width.toDouble();
         imageWidth = getImageWidth(imageWidth).toDouble();
       });

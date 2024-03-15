@@ -39,11 +39,7 @@ class _DonationState extends State<Donation> {
                 iconSize: 57,
                 icon: FaIcon(socialMediaIcons[donationKey]!),
                 onPressed: () {
-                  final Uri toLaunch = Uri(
-                      scheme: 'https',
-                      host: paypalLinkConfig.host,
-                      path: paypalLinkConfig.path);
-                  BrowserHelper.launchInBrowser(toLaunch);
+                  BrowserHelper.launchInBrowser(paypalLinkConfig);
                 },
               ),
               Row(
