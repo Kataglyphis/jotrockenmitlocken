@@ -1,3 +1,3 @@
 import 'package:flutter/material.dart';
 
-var colDivider = const SizedBox(height: 10);
+var colDivider = const SizedBox(width: 10);

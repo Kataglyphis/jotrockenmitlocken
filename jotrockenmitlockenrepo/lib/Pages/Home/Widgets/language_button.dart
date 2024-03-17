@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LanguageButton extends StatelessWidget {
-  const LanguageButton({super.key, 
+  const LanguageButton({
+    super.key,
     required this.handleLanguageChange,
     this.showTooltipBelow = true,
+    required this.title,
   });
 
   final Function handleLanguageChange;
   final bool showTooltipBelow;
+  final String title;
 
   @override
   Widget build(BuildContext context) {
     return Tooltip(
       preferBelow: showTooltipBelow,
-      message: AppLocalizations.of(context)!.toogleLanguage,
+      message: title,
       child: IconButton(
         icon: const Icon(Icons.translate),
         onPressed: () => handleLanguageChange(),

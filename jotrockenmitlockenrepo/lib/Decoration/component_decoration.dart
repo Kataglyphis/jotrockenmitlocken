@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jotrockenmitlockenrepo/constants.dart';
 
 class ComponentDecoration extends StatefulWidget {
   const ComponentDecoration({
@@ -22,7 +23,6 @@ class _ComponentDecorationState extends State<ComponentDecoration> {
   @override
   Widget build(BuildContext context) {
     const smallSpacing = 10.0;
-    const double widthConstraint = 450;
     return RepaintBoundary(
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: smallSpacing),
@@ -42,8 +42,8 @@ class _ComponentDecorationState extends State<ComponentDecoration> {
               ],
             ),
             ConstrainedBox(
-              constraints:
-                  const BoxConstraints.tightFor(width: widthConstraint),
+              constraints: const BoxConstraints.tightFor(
+                  width: narrowScreenWidthThreshold),
               // Tapping within the a component card should request focus
               // for that component's children.
               child: Focus(

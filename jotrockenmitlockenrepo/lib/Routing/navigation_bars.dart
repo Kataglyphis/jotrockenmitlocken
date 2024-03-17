@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jotrockenmitlocken/Pages/screen_configurations.dart';
+import 'package:jotrockenmitlockenrepo/Routing/screen_configurations.dart';
 import 'package:go_router/go_router.dart';
 
 class NavigationBars extends StatefulWidget {
@@ -8,11 +8,13 @@ class NavigationBars extends StatefulWidget {
     required this.navigationShell,
     required this.currentNavBarIndex,
     required this.handleChangedNavBarIndex,
+    required this.screenConfigurations,
   });
 
   final int currentNavBarIndex;
   final StatefulNavigationShell navigationShell;
   final void Function(int value) handleChangedNavBarIndex;
+  final ScreenConfigurations screenConfigurations;
 
   @override
   State<NavigationBars> createState() => _NavigationBarsState();
@@ -40,7 +42,8 @@ class _NavigationBarsState extends State<NavigationBars> {
             widget.handleChangedNavBarIndex(index);
             widget.navigationShell.goBranch(index);
           },
-          destinations: ScreenConfigurations.getAppBarDestinations(context),
+          destinations:
+              widget.screenConfigurations.getAppBarDestinations(context),
         ));
 
     return navigationBar;

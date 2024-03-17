@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jotrockenmitlockenrepo/Decoration/decoration_helper.dart';
+import 'package:jotrockenmitlockenrepo/Decoration/row_divider.dart';
 import 'package:jotrockenmitlockenrepo/Media/Open/open_button.dart';
 
 class OpenableImage extends StatefulWidget {
@@ -23,7 +24,7 @@ class OpenableImage extends StatefulWidget {
 
 class _OpenableImageState extends State<OpenableImage> {
   double imageWidth = 0;
-  var imageHeight = 0;
+  double imageHeight = 0;
 
   double getImageWidth(double imageWidth) {
     var currentPageWidth = MediaQuery.of(context).size.width;
@@ -45,11 +46,13 @@ class _OpenableImageState extends State<OpenableImage> {
     ourMainImage.image
         .resolve(const ImageConfiguration())
         .addListener(ImageStreamListener((ImageInfo info, bool _) {
-      setState(() {
-        imageHeight = info.image.height;
-        imageWidth = info.image.width.toDouble();
-        imageWidth = getImageWidth(imageWidth).toDouble();
-      });
+      if (mounted) {
+        setState(() {
+          imageHeight = info.image.height.toDouble();
+          imageWidth = info.image.width.toDouble();
+          imageWidth = getImageWidth(imageWidth).toDouble();
+        });
+      }
     }));
 
     return Column(
@@ -79,13 +82,16 @@ class _OpenableImageState extends State<OpenableImage> {
             ],
           ),
         ),
-        if (widget.imageCaptioning != null)
+        if (widget.imageCaptioning != null) ...[
+          rowDivider,
           Text(
             widget.imageCaptioning!,
             style: (widget.captioningStyle != null)
                 ? widget.captioningStyle!
                 : null,
           ),
+          rowDivider,
+        ]
       ],
     );
   }

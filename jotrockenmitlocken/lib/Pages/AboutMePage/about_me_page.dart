@@ -3,16 +3,15 @@ import 'package:jotrockenmitlocken/Pages/AboutMePage/Widgets/about_me_table.dart
 import 'package:jotrockenmitlocken/Pages/AboutMePage/Widgets/perfect_day_chart.dart';
 import 'package:jotrockenmitlocken/Pages/AboutMePage/Widgets/skill_table.dart';
 import 'package:jotrockenmitlocken/Pages/Footer/jotrockenmitlocken_footer.dart';
-import 'package:jotrockenmitlocken/Pages/screen_configurations.dart';
+import 'package:jotrockenmitlocken/Pages/jotrockenmitlocken_screen_configurations.dart';
 import 'package:jotrockenmitlockenrepo/Layout/ResponsiveDesign/layout_manager.dart';
-import 'package:jotrockenmitlockenrepo/Pages/app_attributes.dart';
-import 'package:jotrockenmitlocken/Pages/navbar_pages_factory.dart';
+import 'package:jotrockenmitlockenrepo/app_attributes.dart';
+import 'package:jotrockenmitlockenrepo/Pages/navbar_pages_factory.dart';
 import 'package:jotrockenmitlockenrepo/constants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AboutMePage extends NavBarPagesFactory {
-  List<List<Widget>> _createAboutMeChildPages(
-      bool useOtherLanguageMode, ColorSeed colorSelected) {
+  List<List<Widget>> _createAboutMeChildPages(ColorSeed colorSelected) {
     List<Widget> childWidgetsLeftPage = [
       const AboutMeTable(),
     ];
@@ -21,9 +20,7 @@ class AboutMePage extends NavBarPagesFactory {
       const SizedBox(
         height: 40,
       ),
-      SkillTable(
-        useOtherLanguageMode: useOtherLanguageMode,
-      ),
+      const SkillTable(),
     ];
 
     return [childWidgetsLeftPage, childWidgetsRightPage];
@@ -31,14 +28,14 @@ class AboutMePage extends NavBarPagesFactory {
 
   @override
   Widget createPage(AppAttributes appFrameAttributes) {
-    var aboutMePagesLeftRight = _createAboutMeChildPages(
-        appFrameAttributes.useOtherLanguageMode,
-        appFrameAttributes.colorSelected);
+    var aboutMePagesLeftRight =
+        _createAboutMeChildPages(appFrameAttributes.colorSelected);
     return LayoutManager.createOneTwoTransisionWidget(
         aboutMePagesLeftRight[0],
         aboutMePagesLeftRight[1],
         JotrockenmitlockenFooter(
-            footerPagesConfig: ScreenConfigurations.getFooterPagesConfig()),
+            footerPagesConfig:
+                JotrockenmitLockenScreenConfigurations.getFooterPagesConfig()),
         appFrameAttributes.showMediumSizeLayout,
         appFrameAttributes.showLargeSizeLayout,
         appFrameAttributes.railAnimation);

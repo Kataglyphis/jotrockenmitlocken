@@ -2,37 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:jotrockenmitlockenrepo/SocialMedia/Settings/social_media_settings.dart';
 import 'package:jotrockenmitlockenrepo/Url/browser_helper.dart';
 import 'package:jotrockenmitlockenrepo/Url/external_link_config.dart';
-import 'package:jotrockenmitlockenrepo/constants.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class SocialMediaWidgets extends StatelessWidget {
-  SocialMediaWidgets({
+  const SocialMediaWidgets({
     super.key,
-    required this.iconSize,
     required this.socialMediaLinksConfig,
   });
 
   final Map<String, ExternalLinkConfig> socialMediaLinksConfig;
 
-  final double iconSize;
-  List<Widget> buildSocialMediaChildren(double iconSize) {
+  List<Widget> buildSocialMediaChildren() {
     List<Widget> socialMediaIconsWithSpacing = [];
     socialMediaLinksConfig.forEach(
         (key, socialMediaLinkConfig) => (socialMediaIconsWithSpacing.addAll([
-              IconButton(
-                iconSize: iconSize,
-                icon: FaIcon(socialMediaIcons[key]),
-                // color: Colors.black,
-                onPressed: () {
-                  final Uri toLaunch = Uri(
-                      scheme: 'https',
-                      host: socialMediaLinkConfig.host,
-                      path: socialMediaLinkConfig.path);
-                  BrowserHelper.launchInBrowser(toLaunch);
-                },
-              ),
-              SizedBox(
-                width: iconSize / 2,
+              Padding(
+                padding: const EdgeInsets.all(2.5),
+                child: IconButton(
+                  icon: FaIcon(socialMediaIcons[key]),
+                  onPressed: () {
+                    BrowserHelper.launchInBrowser(socialMediaLinkConfig);
+                  },
+                ),
               ),
             ])));
     return socialMediaIconsWithSpacing;
@@ -40,16 +31,8 @@ class SocialMediaWidgets extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (context, constraints) {
-      if (constraints.maxWidth > largeWidthBreakpoint) {
-        return Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: buildSocialMediaChildren(iconSize));
-      } else {
-        return Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: buildSocialMediaChildren(iconSize));
-      }
-    });
+    return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: buildSocialMediaChildren());
   }
 }
