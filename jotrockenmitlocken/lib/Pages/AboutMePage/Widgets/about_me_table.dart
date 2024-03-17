@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jotrockenmitlocken/Pages/AboutMePage/Widgets/donation.dart';
+import 'package:jotrockenmitlockenrepo/Decoration/row_divider.dart';
 import 'package:jotrockenmitlockenrepo/Media/Image/openable_image.dart';
 import 'package:jotrockenmitlocken/user_settings.dart';
 import 'package:jotrockenmitlockenrepo/Media/email_button.dart';
@@ -28,47 +29,45 @@ class AboutMeTableState extends State<AboutMeTable> {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        const OpenableImage(
+        OpenableImage(
           displayedImage: UserSettings.assetPathImgOfMe,
+          imageCaptioning: UserSettings.myName,
+          captioningStyle: Theme.of(context).textTheme.headlineLarge,
           disableOpen: true,
         ),
-        colDivider,
-        Text(
-          UserSettings.myName,
-          textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.headlineLarge,
-        ),
-        colDivider,
         Text(
           AppLocalizations.of(context)!.shortDescriptionTextMyPersona,
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.titleMedium,
         ),
-        colDivider,
+        rowDivider,
         SocialMediaWidgets(
           socialMediaLinksConfig: UserSettings.socialMediaLinksConfig,
         ),
-        colDivider,
+        rowDivider,
         EMailButton(
           title: AppLocalizations.of(context)!.mailMe,
           eMail: UserSettings.businessEmail,
           firstName: UserSettings.firstName,
         ),
-        colDivider,
+        rowDivider,
         Text(
           UserSettings.businessEmail,
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.titleMedium,
         ),
-        colDivider,
-        Text(
-          UserSettings.myQuotation,
-          textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.bodyMedium,
+        rowDivider,
+        SizedBox(
+          width: MediaQuery.of(context).size.width * 0.95,
+          child: Text(
+            UserSettings.myQuotation,
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
         ),
-        colDivider,
+        rowDivider,
         const Donation(),
-        colDivider,
+        rowDivider,
         Text(
           "I love to cURL",
           textAlign: TextAlign.center,
@@ -77,7 +76,6 @@ class AboutMeTableState extends State<AboutMeTable> {
         IconButton(
           iconSize: 40,
           icon: const FaIcon(FontAwesomeIcons.dumbbell),
-          // color: Colors.black,
           onPressed: () {},
         ),
         colDivider,

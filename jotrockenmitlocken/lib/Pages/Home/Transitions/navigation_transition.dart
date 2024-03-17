@@ -74,7 +74,8 @@ class _NavigationTransitionState extends State<NavigationTransition> {
       ),
       bottomNavigationBar: widget.showFooter
           ? JotrockenmitlockenFooter(
-              footerPagesConfig: ScreenConfigurations.getFooterPagesConfig())
+              footerPagesConfig:
+                  JotrockenmitLockenScreenConfigurations.getFooterPagesConfig())
           : BarTransition(
               animation: barAnimation,
               railAnimation: railAnimation,

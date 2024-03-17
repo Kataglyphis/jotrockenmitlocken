@@ -13,7 +13,7 @@ class LandingPage extends NavBarPagesFactory {
     List<Widget> childWidgetsLeftPage = [];
     List<Widget> childWidgetsRightPage = [];
     List<BlogPagesConfig> blogPagesConfig =
-        ScreenConfigurations.getBlogPagesConfig();
+        JotrockenmitLockenScreenConfigurations.getBlogPagesConfig();
 
     for (int i = 0; i < blogPagesConfig.length; i++) {
       if (blogPagesConfig[i].landingPageAlignment ==
@@ -43,7 +43,8 @@ class LandingPage extends NavBarPagesFactory {
         homePagesLeftRight[0],
         homePagesLeftRight[1],
         JotrockenmitlockenFooter(
-            footerPagesConfig: ScreenConfigurations.getFooterPagesConfig()),
+            footerPagesConfig:
+                JotrockenmitLockenScreenConfigurations.getFooterPagesConfig()),
         appFrameAttributes.showMediumSizeLayout,
         appFrameAttributes.showLargeSizeLayout,
         appFrameAttributes.railAnimation);

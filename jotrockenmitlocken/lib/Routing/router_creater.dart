@@ -11,7 +11,8 @@ import 'package:jotrockenmitlockenrepo/Pages/stateful_branch_info_provider.dart'
 
 class RoutesCreator {
   static int currentPageIndex = 0;
-  static List<String> allValidRoutes = ScreenConfigurations.getAllValidRoutes();
+  static List<String> allValidRoutes =
+      JotrockenmitLockenScreenConfigurations.getAllValidRoutes();
   static final _rootNavigatorKey =
       GlobalKey<NavigatorState>(debugLabel: "_rootNavigatorKey");
 
@@ -61,7 +62,9 @@ class RoutesCreator {
       ],
       redirect: (BuildContext context, GoRouterState state) {
         if (!allValidRoutes.contains(state.fullPath)) {
-          return ScreenConfigurations.getErrorPagesConfig().first.routingName;
+          return JotrockenmitLockenScreenConfigurations.getErrorPagesConfig()
+              .first
+              .routingName;
         }
         // no need to redirect at all
         return null;
@@ -104,14 +107,14 @@ class RoutesCreator {
     AppAttributes appFrameAttributes,
   ) {
     List<PagesConfig> errorPageConfig =
-        ScreenConfigurations.getErrorPagesConfig();
+        JotrockenmitLockenScreenConfigurations.getErrorPagesConfig();
     return createStatefulShellBranches(appFrameAttributes, errorPageConfig);
   }
 
   static List<StatefulShellBranch> createFooterBranches(
       AppAttributes appFrameAttributes) {
     List<PagesConfig> footerPagesConfigs =
-        ScreenConfigurations.getFooterPagesConfig();
+        JotrockenmitLockenScreenConfigurations.getFooterPagesConfig();
     return createStatefulShellBranches(appFrameAttributes, footerPagesConfigs);
   }
 
@@ -119,7 +122,7 @@ class RoutesCreator {
     AppAttributes appFrameAttributes,
   ) {
     List<NavBarPagesConfig> navRailPagesConfigs =
-        ScreenConfigurations.getNavRailPagesConfig();
+        JotrockenmitLockenScreenConfigurations.getNavRailPagesConfig();
     return createStatefulShellBranches(appFrameAttributes, navRailPagesConfigs);
   }
 
@@ -127,7 +130,7 @@ class RoutesCreator {
     AppAttributes appFrameAttributes,
   ) {
     List<PagesConfig> blogPagesConfigs =
-        ScreenConfigurations.getBlogPagesConfig();
+        JotrockenmitLockenScreenConfigurations.getBlogPagesConfig();
     return createStatefulShellBranches(appFrameAttributes, blogPagesConfigs);
   }
 }
