@@ -1,12 +1,15 @@
+import 'package:jotrockenmitlockenrepo/Url/external_link_config.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'dart:developer' as developer;
 
 class BrowserHelper {
-  static Future<void> launchInBrowser(Uri url) async {
+  static Future<void> launchInBrowser(ExternalLinkConfig link) async {
+    final Uri url = Uri(scheme: 'https', host: link.host, path: link.path);
     if (!await launchUrl(
       url,
       mode: LaunchMode.externalApplication,
     )) {
-      throw 'Could not launch $url';
+      developer.log('Could not launch $url');
     }
   }
 }

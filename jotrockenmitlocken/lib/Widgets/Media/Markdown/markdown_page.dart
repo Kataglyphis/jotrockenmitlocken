@@ -5,6 +5,7 @@ import 'package:jotrockenmitlocken/Widgets/Media/Markdown/ElementBuilder/code_el
 import 'package:jotrockenmitlocken/Widgets/Media/Markdown/ElementBuilder/latex_element_builder.dart';
 import 'package:jotrockenmitlocken/Widgets/Media/Markdown/ElementBuilder/latex_inline_syntax.dart';
 import 'package:jotrockenmitlocken/Widgets/Media/Markdown/ElementBuilder/table_element_builder.dart';
+import 'package:jotrockenmitlockenrepo/Decoration/row_divider.dart';
 import 'package:markdown/markdown.dart' as md;
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:jotrockenmitlockenrepo/constants.dart';
@@ -91,7 +92,7 @@ class MarkdownFilePageState extends State<MarkdownFilePage> {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        const SizedBox(height: 10),
+        rowDivider,
         SizedBox(
             width: getMarkdownPageWidth(),
             child: Center(
@@ -112,7 +113,7 @@ class MarkdownFilePageState extends State<MarkdownFilePage> {
                   h2: Theme.of(context).textTheme.headlineMedium,
                   code: Theme.of(context).textTheme.bodyMedium,
                   h2Align: WrapAlignment.center,
-                  img: Theme.of(context).textTheme.labelLarge),
+                  img: Theme.of(context).textTheme.headlineLarge),
               styleSheetTheme: MarkdownStyleSheetBaseTheme.material,
               imageDirectory: widget.imageDirectory,
               builders: <String, MarkdownElementBuilder>{
@@ -122,7 +123,6 @@ class MarkdownFilePageState extends State<MarkdownFilePage> {
                 'img': CenteredImageBuilder(
                   colorSelected: Theme.of(context).colorScheme.primary,
                   imageDir: widget.imageDirectory,
-                  //currentPageWidth: getMarkdownPageWidth()
                 ),
                 'h1': CenteredHeaderBuilder(),
                 'table': TableElementBuilder(),

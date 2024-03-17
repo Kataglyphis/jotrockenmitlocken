@@ -7,13 +7,16 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:go_router/go_router.dart';
+import 'package:jotrockenmitlocken/Pages/Footer/jotrockenmitlocken_footer.dart';
+import 'package:jotrockenmitlocken/Pages/jotrockenmitlocken_screen_configurations.dart';
+import 'package:jotrockenmitlocken/Routing/router_creator.dart';
 
-import 'package:jotrockenmitlockenrepo/Pages/app_attributes.dart';
+import 'package:jotrockenmitlockenrepo/app_attributes.dart';
+import 'package:jotrockenmitlockenrepo/Routing/screen_configurations.dart';
 
 import 'package:jotrockenmitlockenrepo/constants.dart';
-import 'package:jotrockenmitlocken/constant_app_setting.dart';
 
-import 'package:jotrockenmitlocken/Routing/router_creater.dart';
+import 'package:jotrockenmitlockenrepo/Routing/router_creater.dart';
 
 void main() {
   runApp(
@@ -123,7 +126,16 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    ScreenConfigurations screenConfigurations =
+        JotrockenmitLockenScreenConfigurations();
     AppAttributes appAttributes = AppAttributes(
+      appTitle: 'Artificial neurons are almost magic',
+      appName: "Jotrockenmitlocken",
+      supportedLanguages: [
+        const Locale('de'), // Deutsch
+        const Locale('en'), // English
+      ],
+      screenConfigurations: screenConfigurations,
       railAnimation: railAnimation,
       showMediumSizeLayout: showMediumSizeLayout,
       showLargeSizeLayout: showLargeSizeLayout,
@@ -134,8 +146,15 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
       handleLanguageChange: handleLanguageChange,
       handleColorSelect: handleColorSelect,
     );
-    final GoRouter routerConfig =
-        RoutesCreator.getRouterConfig(appAttributes, controller);
+
+    RoutesCreator routesCreator = JoTrockenMitLockenRoutesCreator();
+
+    final GoRouter routerConfig = routesCreator.getRouterConfig(
+        appAttributes,
+        controller,
+        JotrockenmitlockenFooter(
+            footerPagesConfig:
+                JotrockenmitLockenScreenConfigurations.getFooterPagesConfig()));
 
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
@@ -145,8 +164,8 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: supportedLanguages,
-      title: appTitle,
+      supportedLocales: appAttributes.supportedLanguages,
+      title: appAttributes.appTitle,
       themeMode: themeMode,
       theme: ThemeData(
         //fontFamily: 'Montserrat',

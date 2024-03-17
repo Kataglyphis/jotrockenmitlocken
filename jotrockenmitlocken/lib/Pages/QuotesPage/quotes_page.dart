@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:jotrockenmitlocken/Pages/Footer/jotrockenmitlocken_footer.dart';
-import 'package:jotrockenmitlocken/Pages/screen_configurations.dart';
+import 'package:jotrockenmitlocken/Pages/jotrockenmitlocken_screen_configurations.dart';
 import 'package:jotrockenmitlockenrepo/Layout/ResponsiveDesign/layout_manager.dart';
 import 'package:jotrockenmitlocken/Pages/QuotesPage/quotes_list.dart';
-import 'package:jotrockenmitlockenrepo/Pages/app_attributes.dart';
-import 'package:jotrockenmitlocken/Pages/navbar_pages_factory.dart';
+import 'package:jotrockenmitlockenrepo/app_attributes.dart';
+import 'package:jotrockenmitlockenrepo/Pages/navbar_pages_factory.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class QuotesPage extends NavBarPagesFactory {
@@ -15,7 +15,8 @@ class QuotesPage extends NavBarPagesFactory {
           const QuotesList(),
         ],
         JotrockenmitlockenFooter(
-            footerPagesConfig: ScreenConfigurations.getFooterPagesConfig()),
+            footerPagesConfig:
+                JotrockenmitLockenScreenConfigurations.getFooterPagesConfig()),
         appFrameAttributes.showMediumSizeLayout,
         appFrameAttributes.showLargeSizeLayout);
   }

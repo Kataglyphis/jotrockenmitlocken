@@ -9,7 +9,6 @@ class GridCreator {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           for (int i = 0; i < maxNumRows; i++)
-            //(i*maxNumRows >= widget.footerPagesConfig.length) ?
             Row(
                 mainAxisAlignment: rowAlignment,
                 crossAxisAlignment: CrossAxisAlignment.center,

@@ -4,7 +4,7 @@ class UserSettings {
   static final Map<String, ExternalLinkConfig> socialMediaLinksConfig = {
     'Facebook':
         ExternalLinkConfig(host: 'www.facebook.com', path: 'jonas.heinle/'),
-    'GitHub': ExternalLinkConfig(host: 'www.github.com', path: 'Kataglyphis'),
+    'GitHub': ExternalLinkConfig(host: 'www.github.com', path: 'Kataglyphis/'),
     'YouTube': ExternalLinkConfig(
         host: 'www.youtube.com', path: 'channel/UC3LZiH4sZzzaVBCUV8knYeg'),
     'X': ExternalLinkConfig(host: 'www.twitter.com', path: 'Cataglyphis_'),
@@ -22,4 +22,9 @@ class UserSettings {
   static const String myName = "$firstName $lastName";
   static const String assetPathImgOfMe =
       "assets/images/Bewerbungsbilder/a95a64ca.jpg";
+  static appendRepoToGitHubUserLink(String repo) {
+    ExternalLinkConfig github = socialMediaLinksConfig["GitHub"]!;
+    github.path += repo;
+    return github;
+  }
 }

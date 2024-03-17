@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:jotrockenmitlockenrepo/Decoration/col_divider.dart';
+import 'package:jotrockenmitlockenrepo/Decoration/row_divider.dart';
 import 'package:jotrockenmitlockenrepo/Url/external_link_config.dart';
 import 'package:jotrockenmitlockenrepo/Pages/Footer/footer_pages_creator.dart';
 import 'package:jotrockenmitlockenrepo/Layout/grid_creator.dart';
@@ -19,11 +21,12 @@ abstract class Footer extends StatefulWidget {
 abstract class FooterState extends State<Footer> {
   final int maxNumFooterPageTextButtonsPerRow = 3;
   final int maxExternalLinksTextButtonsPerRow = 1;
+  final double footerHeight = 150.0;
 
-  @override
-  void initState() {
-    super.initState();
-  }
+  String getLiabilityText();
+  String getExternalLinksTitle();
+  Map<String, ExternalLinkConfig> getUserLevelSocialMediaLinksConfig();
+  List<ExternalLinkConfig> getExternalLinks();
 
   Widget createTextButtons() {
     var currentWidth = MediaQuery.of(context).size.width;
@@ -42,8 +45,6 @@ abstract class FooterState extends State<Footer> {
               child: Text(
                 textAlign: TextAlign.center,
                 footerPageConfig.getHeading(context),
-                style:
-                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 11),
               ),
             )))
         .toList();
@@ -51,9 +52,6 @@ abstract class FooterState extends State<Footer> {
     return GridCreator.createAdaptiveGridOfWidgets(
         align, maxNumFooterPageTextButtonsPerRow, footerPagesButtons);
   }
-
-  String getExternalLinksTitle();
-  List<ExternalLinkConfig> getExternalLinks();
 
   Widget createTextButtonsForExternalLinks() {
     var currentWidth = MediaQuery.of(context).size.width;
@@ -66,16 +64,11 @@ abstract class FooterState extends State<Footer> {
     List<TextButton> footerExternalLinksButtons = externalLinksConfig
         .map((externalLinkConfig) => (TextButton(
               onPressed: () {
-                final Uri toLaunch = Uri(
-                    scheme: 'https',
-                    host: externalLinkConfig.host,
-                    path: externalLinkConfig.path);
-                BrowserHelper.launchInBrowser(toLaunch);
+                BrowserHelper.launchInBrowser(externalLinkConfig);
               },
               style: Theme.of(context).textButtonTheme.style,
               child: Text(
                 externalLinkConfig.host,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11),
               ),
             )))
         .toList();
@@ -103,10 +96,6 @@ abstract class FooterState extends State<Footer> {
         ]);
   }
 
-  String getLiabilityText();
-
-  Map<String, ExternalLinkConfig> getUserLevelSocialMediaLinksConfig();
-
   Widget createSocialIconsAndLiabilityWidgets() {
     var currentWidth = MediaQuery.of(context).size.width;
     var align = MainAxisAlignment.start;
@@ -118,18 +107,20 @@ abstract class FooterState extends State<Footer> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         SocialMediaWidgets(
-          iconSize: 14,
           socialMediaLinksConfig: getUserLevelSocialMediaLinksConfig(),
         ),
-        Row(
-            mainAxisAlignment: align,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                getLiabilityText(),
-                style: Theme.of(context).textTheme.labelSmall,
-              ),
-            ])
+        Padding(
+          padding: const EdgeInsets.all(1),
+          child: Row(
+              mainAxisAlignment: align,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  getLiabilityText(),
+                  style: Theme.of(context).textTheme.labelSmall,
+                ),
+              ]),
+        )
       ],
     );
   }
@@ -140,72 +131,33 @@ abstract class FooterState extends State<Footer> {
     if (currentWidth < mediumWidthBreakpoint) {
       return Column(
         children: [
-          const SizedBox(
-            height: 30,
-          ),
+          rowDivider,
           createTextButtons(),
-          const SizedBox(
-            height: 30,
-          ),
+          rowDivider,
           createSocialIconsAndLiabilityWidgets(),
-          const SizedBox(
-            height: 30,
-          ),
+          rowDivider,
           createTextButtonsForExternalLinks(),
-          const SizedBox(
-            height: 30,
-          ),
+          rowDivider,
         ],
       );
     } else {
       return SizedBox(
-        height: 150.0,
+        height: footerHeight,
         child: Column(
           children: [
-            const SizedBox(
-              height: 30,
-            ),
-
-            // const Expanded(
-            //     child: Column(
-            //   mainAxisAlignment: MainAxisAlignment.end,
-            //   crossAxisAlignment: CrossAxisAlignment.end,
-            //   children: [],
-            // )),
-            // const Expanded(
-            //     child: Column(
-            //   mainAxisAlignment: MainAxisAlignment.end,
-            //   crossAxisAlignment: CrossAxisAlignment.end,
-            //   children: [],
-            // )),
-
+            rowDivider,
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(
-                  width: 30,
-                ),
+                colDivider,
                 createTextButtons(),
-                const SizedBox(
-                  width: 30,
-                ),
+                colDivider,
                 createSocialIconsAndLiabilityWidgets(),
-                const SizedBox(
-                  width: 30,
-                ),
+                colDivider,
                 createTextButtonsForExternalLinks(),
               ],
             ),
-            // const Expanded(
-            //     child: Column(
-            //   children: [],
-            // )),
-
-            // const Expanded(
-            //     child: Column(
-            //   children: [],
-            // )),
           ],
         ),
       );

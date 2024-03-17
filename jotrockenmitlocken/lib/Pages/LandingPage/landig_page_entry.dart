@@ -1,8 +1,11 @@
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
-import 'package:jotrockenmitlockenrepo/Decoration/decoration_helper.dart';
-import 'package:jotrockenmitlocken/Widgets/component_group_decoration.dart';
+import 'package:jotrockenmitlockenrepo/Decoration/col_divider.dart';
+import 'package:jotrockenmitlockenrepo/Decoration/row_divider.dart';
+import 'package:jotrockenmitlockenrepo/Decoration/component_group_decoration.dart';
+import 'package:jotrockenmitlockenrepo/Media/Image/openable_image.dart';
 import 'package:jotrockenmitlockenrepo/Url/browser_helper.dart';
+import 'package:jotrockenmitlocken/user_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -26,29 +29,25 @@ abstract class LandingPageEntryState extends State<LandingPageEntry> {
 
   @override
   Widget build(BuildContext context) {
-    const colDivider = SizedBox(height: 10);
     return ComponentGroupDecoration(label: getLabel(), children: <Widget>[
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           IconButton(
-            iconSize: 50,
             icon: const FaIcon(FontAwesomeIcons.github),
-            // color: Colors.black,
             onPressed: () {
-              final Uri toLaunch = Uri(
-                  scheme: 'https',
-                  host: 'github.com',
-                  path: 'Kataglyphis/${getGithubRepo()}');
-              BrowserHelper.launchInBrowser(toLaunch);
+              BrowserHelper.launchInBrowser(
+                  UserSettings.appendRepoToGitHubUserLink(getGithubRepo()));
             },
           ),
+          colDivider,
           Text(
             "${AppLocalizations.of(context)!.playgroundDescription}\n${getGithubRepo()}",
             style: Theme.of(context).textTheme.titleSmall,
           )
         ],
       ),
+      rowDivider,
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -65,16 +64,12 @@ abstract class LandingPageEntryState extends State<LandingPageEntry> {
           ),
         ],
       ),
-      colDivider,
-      applyBoxDecoration(
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(0),
-            child: Image.asset(getImagePath()),
-          ),
-          borderRadius: 0,
-          borderWidth: 5,
-          color: Theme.of(context).colorScheme.primary),
-      colDivider
+      rowDivider,
+      OpenableImage(
+        displayedImage: getImagePath(),
+        disableOpen: true,
+      ),
+      rowDivider
     ]);
   }
 }

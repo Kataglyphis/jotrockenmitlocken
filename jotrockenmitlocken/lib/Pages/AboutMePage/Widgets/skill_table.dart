@@ -6,8 +6,8 @@ import 'package:jotrockenmitlockenrepo/Decoration/decoration_helper.dart';
 import 'package:jotrockenmitlockenrepo/constants.dart';
 
 class SkillTable extends StatefulWidget {
-  const SkillTable({super.key, required this.useOtherLanguageMode});
-  final bool useOtherLanguageMode;
+  const SkillTable({super.key});
+
   @override
   State<SkillTable> createState() => _SkillTableState();
 }

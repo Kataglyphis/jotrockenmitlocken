@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:jotrockenmitlocken/Pages/Footer/jotrockenmitlocken_footer.dart';
+import 'package:jotrockenmitlockenrepo/Pages/Footer/footer.dart';
 
-import 'package:jotrockenmitlocken/Pages/Home/Transitions/bar_transition.dart';
-import 'package:jotrockenmitlocken/Pages/Home/Transitions/rail_transition.dart';
-import 'package:jotrockenmitlocken/Pages/screen_configurations.dart';
+import 'package:jotrockenmitlockenrepo/Pages/Home/Transitions/bar_transition.dart';
+import 'package:jotrockenmitlockenrepo/Pages/Home/Transitions/rail_transition.dart';
 
 import 'package:go_router/go_router.dart';
 
 class NavigationTransition extends StatefulWidget {
   const NavigationTransition(
       {super.key,
+      required this.footer,
       required this.scaffoldKey,
       required this.animationController,
       required this.railAnimation,
@@ -20,6 +20,7 @@ class NavigationTransition extends StatefulWidget {
       required this.showFooter,
       required this.navigationShell});
 
+  final Footer footer;
   final GlobalKey<ScaffoldState> scaffoldKey;
   final AnimationController animationController;
   final CurvedAnimation railAnimation;
@@ -73,8 +74,7 @@ class _NavigationTransitionState extends State<NavigationTransition> {
         ],
       ),
       bottomNavigationBar: widget.showFooter
-          ? JotrockenmitlockenFooter(
-              footerPagesConfig: ScreenConfigurations.getFooterPagesConfig())
+          ? widget.footer
           : BarTransition(
               animation: barAnimation,
               railAnimation: railAnimation,
