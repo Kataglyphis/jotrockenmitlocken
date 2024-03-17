@@ -46,11 +46,13 @@ class _OpenableImageState extends State<OpenableImage> {
     ourMainImage.image
         .resolve(const ImageConfiguration())
         .addListener(ImageStreamListener((ImageInfo info, bool _) {
-      setState(() {
-        imageHeight = info.image.height.toDouble();
-        imageWidth = info.image.width.toDouble();
-        imageWidth = getImageWidth(imageWidth).toDouble();
-      });
+      if (mounted) {
+        setState(() {
+          imageHeight = info.image.height.toDouble();
+          imageWidth = info.image.width.toDouble();
+          imageWidth = getImageWidth(imageWidth).toDouble();
+        });
+      }
     }));
 
     return Column(

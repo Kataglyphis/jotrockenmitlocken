@@ -25,29 +25,33 @@ class ExpandedTrailingActions extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          if (buttonNames.language != null)
-            Row(
-              children: [
-                Text(buttonNames.language!),
-                Expanded(child: Container()),
-                Switch(
-                    value: appAttributes.useOtherLanguageMode,
-                    onChanged: (value) {
-                      appAttributes.handleLanguageChange();
-                    })
-              ],
-            ),
+          if (buttonNames.language != null &&
+              appAttributes.handleLanguageChange != null)
+            if (appAttributes.useOtherLanguageMode != null)
+              Row(
+                children: [
+                  Text(buttonNames.language!),
+                  Expanded(child: Container()),
+                  Switch(
+                      value: appAttributes.useOtherLanguageMode!,
+                      onChanged: (value) {
+                        appAttributes.handleLanguageChange!();
+                      })
+                ],
+              ),
           const Divider(),
           if (buttonNames.brightness != null)
             Row(
               children: [
                 Text(buttonNames.brightness!),
                 Expanded(child: Container()),
-                Switch(
-                    value: appAttributes.useLightMode,
-                    onChanged: (value) {
-                      appAttributes.handleBrightnessChange(value);
-                    })
+                if (appAttributes.useLightMode != null &&
+                    appAttributes.handleBrightnessChange != null)
+                  Switch(
+                      value: appAttributes.useLightMode!,
+                      onChanged: (value) {
+                        appAttributes.handleBrightnessChange!(value);
+                      })
               ],
             ),
           const Divider(),

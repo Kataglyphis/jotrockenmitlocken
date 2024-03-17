@@ -11,8 +11,7 @@ import 'package:jotrockenmitlockenrepo/constants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AboutMePage extends NavBarPagesFactory {
-  List<List<Widget>> _createAboutMeChildPages(
-      bool useOtherLanguageMode, ColorSeed colorSelected) {
+  List<List<Widget>> _createAboutMeChildPages(ColorSeed colorSelected) {
     List<Widget> childWidgetsLeftPage = [
       const AboutMeTable(),
     ];
@@ -21,9 +20,7 @@ class AboutMePage extends NavBarPagesFactory {
       const SizedBox(
         height: 40,
       ),
-      SkillTable(
-        useOtherLanguageMode: useOtherLanguageMode,
-      ),
+      const SkillTable(),
     ];
 
     return [childWidgetsLeftPage, childWidgetsRightPage];
@@ -31,9 +28,8 @@ class AboutMePage extends NavBarPagesFactory {
 
   @override
   Widget createPage(AppAttributes appFrameAttributes) {
-    var aboutMePagesLeftRight = _createAboutMeChildPages(
-        appFrameAttributes.useOtherLanguageMode,
-        appFrameAttributes.colorSelected);
+    var aboutMePagesLeftRight =
+        _createAboutMeChildPages(appFrameAttributes.colorSelected);
     return LayoutManager.createOneTwoTransisionWidget(
         aboutMePagesLeftRight[0],
         aboutMePagesLeftRight[1],
