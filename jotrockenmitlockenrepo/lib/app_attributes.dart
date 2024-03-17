@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:jotrockenmitlockenrepo/Routing/screen_configurations.dart';
 import 'package:jotrockenmitlockenrepo/constants.dart';
 
 class AppAttributes {
+  String appTitle;
+  String appName;
+
+  List<Locale> supportedLanguages;
+  ScreenConfigurations screenConfigurations;
+
   CurvedAnimation railAnimation;
   bool showMediumSizeLayout;
   bool showLargeSizeLayout;
@@ -16,7 +23,11 @@ class AppAttributes {
   final void Function(int value) handleColorSelect;
 
   AppAttributes(
-      {required this.railAnimation,
+      {required this.appTitle,
+      required this.appName,
+      required this.supportedLanguages,
+      required this.screenConfigurations,
+      required this.railAnimation,
       required this.showMediumSizeLayout,
       required this.showLargeSizeLayout,
       required this.useOtherLanguageMode,

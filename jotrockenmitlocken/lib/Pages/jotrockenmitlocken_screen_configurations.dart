@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:jotrockenmitlocken/Pages/AboutMePage/about_me_page.dart';
 import 'package:jotrockenmitlocken/Pages/Blog/ai_blog_page.dart';
 import 'package:jotrockenmitlocken/Pages/Blog/rendering_blog_page.dart';
@@ -19,34 +18,43 @@ import 'package:jotrockenmitlocken/Pages/LandingPage/landing_page.dart';
 import 'package:jotrockenmitlocken/Pages/LandingPage/rendering_playground.dart';
 import 'package:jotrockenmitlocken/Pages/QuotesPage/quotes_page.dart';
 import 'package:jotrockenmitlocken/Pages/blog_pages_config.dart';
-import 'package:jotrockenmitlocken/Pages/navbar_pages_config.dart';
+import 'package:jotrockenmitlockenrepo/Pages/navbar_pages_config.dart';
 import 'package:jotrockenmitlockenrepo/Pages/Footer/footer_pages_creator.dart';
 import 'package:jotrockenmitlockenrepo/Pages/pages_config.dart';
+import 'package:jotrockenmitlockenrepo/Pages/stateful_branch_info_provider.dart';
 import 'package:jotrockenmitlockenrepo/Routing/screen_configurations.dart';
 
 class JotrockenmitLockenScreenConfigurations extends ScreenConfigurations {
-  static List<String> getAllValidRoutes() {
-    List<String> allValidRoutes = [];
-    for (NavBarPagesConfig navRailPageConfig in getNavRailPagesConfig()) {
-      allValidRoutes.add(navRailPageConfig.routingName);
-    }
-    for (PagesConfig navRailPageConfig in getFooterPagesConfig()) {
-      allValidRoutes.add(navRailPageConfig.routingName);
-    }
-    for (PagesConfig blogPageConfig in getBlogPagesConfig()) {
-      allValidRoutes.add(blogPageConfig.routingName);
-    }
-    for (PagesConfig navRailPageConfig in getErrorPagesConfig()) {
-      allValidRoutes.add(navRailPageConfig.routingName);
-    }
-    return allValidRoutes;
+  @override
+  bool disableFooter() {
+    return false;
   }
 
-  static List<PagesConfig> getErrorPagesConfig() {
+  @override
+  List<StatefulBranchInfoProvider> getAllPagesConfigs() {
+    List<StatefulBranchInfoProvider> pagesConfigs = [];
+    for (NavBarPagesConfig navRailPageConfig in getNavRailPagesConfig()) {
+      pagesConfigs.add(navRailPageConfig);
+    }
+    for (PagesConfig navRailPageConfig in getFooterPagesConfig()) {
+      pagesConfigs.add(navRailPageConfig);
+    }
+    for (PagesConfig blogPageConfig in getBlogPagesConfig()) {
+      pagesConfigs.add(blogPageConfig);
+    }
+    for (PagesConfig navRailPageConfig in getErrorPagesConfig()) {
+      pagesConfigs.add(navRailPageConfig);
+    }
+    return pagesConfigs;
+  }
+
+  @override
+  List<PagesConfig> getErrorPagesConfig() {
     return [PagesConfig(routingName: '/error', pagesCreator: ErrorPage())];
   }
 
-  static List<NavBarPagesConfig> getNavRailPagesConfig() {
+  @override
+  List<NavBarPagesConfig> getNavRailPagesConfig() {
     return [
       NavBarPagesConfig(
         routingName: "/home",
@@ -105,13 +113,5 @@ class JotrockenmitLockenScreenConfigurations extends ScreenConfigurations {
         pagesCreator: DeclarationOnAccessibilityPage(),
       ),
     ];
-  }
-
-  @override
-  List<NavigationDestination> getAppBarDestinations(BuildContext context) {
-    var result = getNavRailPagesConfig()
-        .map((config) => config.pagesCreator.getNavigationDestination(context))
-        .toList();
-    return result;
   }
 }

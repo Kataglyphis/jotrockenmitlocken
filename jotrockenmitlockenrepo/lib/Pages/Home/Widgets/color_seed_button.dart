@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:jotrockenmitlockenrepo/constants.dart';
 
 class ColorSeedButton extends StatelessWidget {
-  const ColorSeedButton({super.key, 
+  const ColorSeedButton({
+    super.key,
     required this.handleColorSelect,
     required this.colorSelected,
+    required this.title,
   });
 
   final void Function(int) handleColorSelect;
   final ColorSeed colorSelected;
+  final String title;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +20,7 @@ class ColorSeedButton extends StatelessWidget {
         Icons.palette_outlined,
         color: Theme.of(context).colorScheme.onSurfaceVariant,
       ),
-      tooltip: AppLocalizations.of(context)!.selectSeedColor,
+      tooltip: title,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       itemBuilder: (context) {
         return List.generate(ColorSeed.values.length, (index) {
