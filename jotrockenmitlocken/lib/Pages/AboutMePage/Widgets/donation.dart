@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:jotrockenmitlocken/user_settings.dart';
 import 'package:jotrockenmitlockenrepo/Decoration/col_divider.dart';
 import 'package:jotrockenmitlockenrepo/Decoration/decoration_helper.dart';
+import 'package:jotrockenmitlockenrepo/Decoration/row_divider.dart';
 import 'package:jotrockenmitlockenrepo/Media/Image/openable_image.dart';
 import 'package:jotrockenmitlockenrepo/SocialMedia/Settings/social_media_settings.dart';
 import 'package:jotrockenmitlockenrepo/Url/browser_helper.dart';
@@ -21,84 +22,38 @@ class Donation extends StatefulWidget {
 }
 
 class _DonationState extends State<Donation> {
-  String donationKey = 'PayPal';
   @override
   Widget build(BuildContext context) {
-    double marginPic = 0;
-    double paddingPic = 0;
-    ExternalLinkConfig paypalLinkConfig =
-        UserSettings.socialMediaLinksConfig[donationKey]!;
     return Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(AppLocalizations.of(context)!.spendCoffe,
-              style: Theme.of(context).textTheme.bodyMedium),
-          IconButton(
-            iconSize: 57,
-            icon: FaIcon(socialMediaIcons[donationKey]!),
-            onPressed: () {
-              BrowserHelper.launchInBrowser(paypalLinkConfig);
-            },
-          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Flexible(
-                //flex: mediumWidthBreakpoint.toInt(),
+              colDivider,
+              const Flexible(
                 child: OpenableImage(
                   displayedImage: "assets/images/paypal.jpg",
                   disableOpen: true,
                 ),
               ),
-              Flexible(
-                //flex: widthAnimation.value.toInt(),
+              colDivider,
+              const Flexible(
                 child: OpenableImage(
-                  displayedImage: "assets/images/paypal.jpg",
-                  disableOpen: true,
+                  displayedImage: "assets/images/Coffee-removebg.png",
+                  disableOpen: false,
                 ),
-              )
+              ),
+              colDivider,
             ],
           ),
-        ]
-        // children: [
-
-        //     Column(
-        //       children: [
-        // OpenableImage(
-        //   displayedImage: "assets/images/paypal.jpg",
-        //   disableOpen: true,
-        // ),
-        //       ],
-
-        //   ),
-        // Column(
-        //   children: [
-        //     OpenableImage(
-        //       displayedImage: "assets/images/paypal.jpg",
-        //       disableOpen: true,
-        //     ),
-        //   ],
-        // ),
-        //   ],
-        // ),
-
-        // Container(
-        //   width: ,
-        //   child: const Column(
-        //     children: [
-        //       OpenableImage(
-        //         displayedImage: "assets/images/Coffee-removebg.png",
-        //         disableOpen: true,
-        //       ),
-        //     ],
-        //   ),
-        // ),
-        //   colDivider,
-        // ],
-        //),
-        // ],
-        );
+          rowDivider,
+          Text(
+            AppLocalizations.of(context)!.spendCoffe + "\u2615",
+            style: Theme.of(context).textTheme.titleLarge,
+          )
+        ]);
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jotrockenmitlockenrepo/Decoration/decoration_helper.dart';
+import 'package:jotrockenmitlockenrepo/Decoration/row_divider.dart';
 import 'package:jotrockenmitlockenrepo/Media/Open/open_button.dart';
 
 class OpenableImage extends StatefulWidget {
@@ -79,13 +80,16 @@ class _OpenableImageState extends State<OpenableImage> {
             ],
           ),
         ),
-        if (widget.imageCaptioning != null)
+        if (widget.imageCaptioning != null) ...[
+          rowDivider,
           Text(
             widget.imageCaptioning!,
             style: (widget.captioningStyle != null)
                 ? widget.captioningStyle!
                 : null,
           ),
+          rowDivider,
+        ]
       ],
     );
   }

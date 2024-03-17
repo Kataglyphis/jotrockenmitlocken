@@ -8,10 +8,11 @@ import 'package:jotrockenmitlocken/Pages/Home/Widgets/brightness_button.dart';
 import 'package:jotrockenmitlocken/Pages/Home/Widgets/color_seed_button.dart';
 import 'package:jotrockenmitlocken/Pages/Home/Widgets/language_button.dart';
 
-import 'package:jotrockenmitlocken/Widgets/Navigation/navigation_bars.dart';
+import 'package:jotrockenmitlockenrepo/Routing/navigation_bars.dart';
 import 'package:jotrockenmitlockenrepo/Pages/app_attributes.dart';
 import 'package:jotrockenmitlocken/constant_app_setting.dart';
 import 'package:jotrockenmitlocken/Pages/screen_configurations.dart';
+import 'package:jotrockenmitlockenrepo/Routing/screen_configurations.dart';
 
 class Home extends StatefulWidget {
   const Home(
@@ -37,6 +38,8 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int currentNavBarIndex = 0;
+  ScreenConfigurations screenConfigurations =
+      JotrockenmitLockenScreenConfigurations();
 
   @override
   void didUpdateWidget(Home oldWidget) {
@@ -120,10 +123,10 @@ class _HomeState extends State<Home> {
                     navigationRail: NavigationRail(
                       extended: widget.appAttributes.showLargeSizeLayout,
                       destinations:
-                          ScreenConfigurations.getNavRailDestinations(context),
+                          screenConfigurations.getNavRailDestinations(context),
                       selectedIndex: (widget.navigationShell.currentIndex <
-                              ScreenConfigurations.getAppBarDestinations(
-                                      context)
+                              screenConfigurations
+                                  .getAppBarDestinations(context)
                                   .length)
                           ? widget.navigationShell.currentIndex
                           : currentNavBarIndex,
@@ -143,9 +146,10 @@ class _HomeState extends State<Home> {
                       ),
                     ),
                     navigationBar: NavigationBars(
+                      screenConfigurations: screenConfigurations,
                       currentNavBarIndex: (widget.navigationShell.currentIndex <
-                              ScreenConfigurations.getAppBarDestinations(
-                                      context)
+                              screenConfigurations
+                                  .getAppBarDestinations(context)
                                   .length)
                           ? widget.navigationShell.currentIndex
                           : currentNavBarIndex,

@@ -38,7 +38,8 @@ class AboutMePage extends NavBarPagesFactory {
         aboutMePagesLeftRight[0],
         aboutMePagesLeftRight[1],
         JotrockenmitlockenFooter(
-            footerPagesConfig: ScreenConfigurations.getFooterPagesConfig()),
+            footerPagesConfig:
+                JotrockenmitLockenScreenConfigurations.getFooterPagesConfig()),
         appFrameAttributes.showMediumSizeLayout,
         appFrameAttributes.showLargeSizeLayout,
         appFrameAttributes.railAnimation);

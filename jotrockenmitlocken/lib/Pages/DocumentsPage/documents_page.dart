@@ -34,7 +34,8 @@ class DocumentPage extends NavBarPagesFactory {
           )
         ],
         JotrockenmitlockenFooter(
-            footerPagesConfig: ScreenConfigurations.getFooterPagesConfig()),
+            footerPagesConfig:
+                JotrockenmitLockenScreenConfigurations.getFooterPagesConfig()),
         appFrameAttributes.showMediumSizeLayout,
         appFrameAttributes.showLargeSizeLayout);
   }

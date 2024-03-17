@@ -20,7 +20,8 @@ class DeclarationOnAccessibilityPage extends PagesFactory {
           )
         ],
         JotrockenmitlockenFooter(
-            footerPagesConfig: ScreenConfigurations.getFooterPagesConfig()),
+            footerPagesConfig:
+                JotrockenmitLockenScreenConfigurations.getFooterPagesConfig()),
         appFrameAttributes.showMediumSizeLayout,
         appFrameAttributes.showLargeSizeLayout);
   }

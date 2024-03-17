@@ -1,8 +1,8 @@
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:jotrockenmitlockenrepo/Decoration/col_divider.dart';
-import 'package:jotrockenmitlockenrepo/Decoration/decoration_helper.dart';
-import 'package:jotrockenmitlocken/Widgets/component_group_decoration.dart';
+import 'package:jotrockenmitlockenrepo/Decoration/row_divider.dart';
+import 'package:jotrockenmitlockenrepo/Decoration/component_group_decoration.dart';
 import 'package:jotrockenmitlockenrepo/Media/Image/openable_image.dart';
 import 'package:jotrockenmitlockenrepo/Url/browser_helper.dart';
 import 'package:jotrockenmitlocken/user_settings.dart';
@@ -47,6 +47,7 @@ abstract class LandingPageEntryState extends State<LandingPageEntry> {
           )
         ],
       ),
+      rowDivider,
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -63,12 +64,12 @@ abstract class LandingPageEntryState extends State<LandingPageEntry> {
           ),
         ],
       ),
-      colDivider,
+      rowDivider,
       OpenableImage(
         displayedImage: getImagePath(),
         disableOpen: true,
       ),
-      colDivider
+      rowDivider
     ]);
   }
 }

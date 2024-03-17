@@ -22,8 +22,9 @@ import 'package:jotrockenmitlocken/Pages/blog_pages_config.dart';
 import 'package:jotrockenmitlocken/Pages/navbar_pages_config.dart';
 import 'package:jotrockenmitlockenrepo/Pages/Footer/footer_pages_creator.dart';
 import 'package:jotrockenmitlockenrepo/Pages/pages_config.dart';
+import 'package:jotrockenmitlockenrepo/Routing/screen_configurations.dart';
 
-class ScreenConfigurations {
+class JotrockenmitLockenScreenConfigurations extends ScreenConfigurations {
   static List<String> getAllValidRoutes() {
     List<String> allValidRoutes = [];
     for (NavBarPagesConfig navRailPageConfig in getNavRailPagesConfig()) {
@@ -106,30 +107,10 @@ class ScreenConfigurations {
     ];
   }
 
-  static List<NavigationDestination> getAppBarDestinations(
-      BuildContext context) {
+  @override
+  List<NavigationDestination> getAppBarDestinations(BuildContext context) {
     var result = getNavRailPagesConfig()
         .map((config) => config.pagesCreator.getNavigationDestination(context))
-        .toList();
-    return result;
-  }
-
-  static List<NavigationRailDestination> getNavRailDestinations(
-      BuildContext context) {
-    var result = getAppBarDestinations(context)
-        .map(
-          (destination) => NavigationRailDestination(
-            icon: Tooltip(
-              message: destination.label,
-              child: destination.icon,
-            ),
-            selectedIcon: Tooltip(
-              message: destination.label,
-              child: destination.selectedIcon,
-            ),
-            label: Text(destination.label),
-          ),
-        )
         .toList();
     return result;
   }

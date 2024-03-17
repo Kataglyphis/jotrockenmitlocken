@@ -131,13 +131,13 @@ abstract class FooterState extends State<Footer> {
     if (currentWidth < mediumWidthBreakpoint) {
       return Column(
         children: [
-          colDivider,
+          rowDivider,
           createTextButtons(),
-          colDivider,
+          rowDivider,
           createSocialIconsAndLiabilityWidgets(),
-          colDivider,
+          rowDivider,
           createTextButtonsForExternalLinks(),
-          colDivider,
+          rowDivider,
         ],
       );
     } else {
@@ -145,16 +145,16 @@ abstract class FooterState extends State<Footer> {
         height: footerHeight,
         child: Column(
           children: [
-            colDivider,
+            rowDivider,
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                rowDivider,
+                colDivider,
                 createTextButtons(),
-                rowDivider,
+                colDivider,
                 createSocialIconsAndLiabilityWidgets(),
-                rowDivider,
+                colDivider,
                 createTextButtonsForExternalLinks(),
               ],
             ),
