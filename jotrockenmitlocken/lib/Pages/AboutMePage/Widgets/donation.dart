@@ -1,16 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:jotrockenmitlocken/user_settings.dart';
 import 'package:jotrockenmitlockenrepo/Decoration/col_divider.dart';
-import 'package:jotrockenmitlockenrepo/Decoration/decoration_helper.dart';
 import 'package:jotrockenmitlockenrepo/Decoration/row_divider.dart';
 import 'package:jotrockenmitlockenrepo/Media/Image/openable_image.dart';
-import 'package:jotrockenmitlockenrepo/SocialMedia/Settings/social_media_settings.dart';
-import 'package:jotrockenmitlockenrepo/Url/browser_helper.dart';
 
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:jotrockenmitlockenrepo/Url/external_link_config.dart';
 
 class Donation extends StatefulWidget {
   const Donation({
@@ -51,7 +45,7 @@ class _DonationState extends State<Donation> {
           ),
           rowDivider,
           Text(
-            AppLocalizations.of(context)!.spendCoffe + "\u2615",
+            "${AppLocalizations.of(context)!.spendCoffe}\u2615",
             style: Theme.of(context).textTheme.titleLarge,
           )
         ]);

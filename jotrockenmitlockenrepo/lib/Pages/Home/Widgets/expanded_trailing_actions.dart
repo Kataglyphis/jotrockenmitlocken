@@ -45,10 +45,9 @@ class ExpandedTrailingActions extends StatelessWidget {
               children: [
                 Text(buttonNames.brightness!),
                 Expanded(child: Container()),
-                if (appAttributes.useLightMode != null &&
-                    appAttributes.handleBrightnessChange != null)
+                if (appAttributes.handleBrightnessChange != null)
                   Switch(
-                      value: appAttributes.useLightMode!,
+                      value: appAttributes.useLightMode,
                       onChanged: (value) {
                         appAttributes.handleBrightnessChange!(value);
                       })

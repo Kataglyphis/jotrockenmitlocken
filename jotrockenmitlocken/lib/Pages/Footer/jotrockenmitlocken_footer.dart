@@ -4,7 +4,7 @@ import 'package:jotrockenmitlockenrepo/Pages/Footer/footer.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class JotrockenmitlockenFooter extends Footer {
-  JotrockenmitlockenFooter({required super.footerPagesConfig});
+  const JotrockenmitlockenFooter({super.key, required super.footerPagesConfig});
 
   @override
   JotrockenmitlockenFooterState createState() =>
