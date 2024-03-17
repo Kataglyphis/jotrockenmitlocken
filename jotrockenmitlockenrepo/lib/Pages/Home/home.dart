@@ -51,21 +51,24 @@ abstract class HomeState extends State<Home> {
       actions: !widget.appAttributes.showMediumSizeLayout &&
               !widget.appAttributes.showLargeSizeLayout
           ? [
-              if (buttonNames.language != null)
+              if (buttonNames.language != null &&
+                  widget.appAttributes.handleLanguageChange != null)
                 LanguageButton(
                   handleLanguageChange:
-                      widget.appAttributes.handleLanguageChange,
+                      widget.appAttributes.handleLanguageChange!,
                   title: buttonNames.language!,
                 ),
-              if (buttonNames.brightness != null)
+              if (buttonNames.brightness != null &&
+                  widget.appAttributes.handleBrightnessChange != null)
                 BrightnessButton(
                   handleBrightnessChange:
-                      widget.appAttributes.handleBrightnessChange,
+                      widget.appAttributes.handleBrightnessChange!,
                   message: buttonNames.brightness!,
                 ),
-              if (buttonNames.color != null)
+              if (buttonNames.color != null &&
+                  widget.appAttributes.handleColorSelect != null)
                 ColorSeedButton(
-                  handleColorSelect: widget.appAttributes.handleColorSelect,
+                  handleColorSelect: widget.appAttributes.handleColorSelect!,
                   colorSelected: widget.appAttributes.colorSelected,
                   title: buttonNames.color!,
                 ),
@@ -79,27 +82,30 @@ abstract class HomeState extends State<Home> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        if (buttonNames.language != null)
+        if (buttonNames.language != null &&
+            widget.appAttributes.handleLanguageChange != null)
           Flexible(
             child: LanguageButton(
-              handleLanguageChange: widget.appAttributes.handleLanguageChange,
+              handleLanguageChange: widget.appAttributes.handleLanguageChange!,
               showTooltipBelow: false,
               title: buttonNames.language!,
             ),
           ),
-        if (buttonNames.brightness != null)
+        if (buttonNames.brightness != null &&
+            widget.appAttributes.handleBrightnessChange != null)
           Flexible(
             child: BrightnessButton(
               handleBrightnessChange:
-                  widget.appAttributes.handleBrightnessChange,
+                  widget.appAttributes.handleBrightnessChange!,
               showTooltipBelow: false,
               message: buttonNames.brightness!,
             ),
           ),
-        if (buttonNames.color != null)
+        if (buttonNames.color != null &&
+            widget.appAttributes.handleColorSelect != null)
           Flexible(
             child: ColorSeedButton(
-              handleColorSelect: widget.appAttributes.handleColorSelect,
+              handleColorSelect: widget.appAttributes.handleColorSelect!,
               colorSelected: widget.appAttributes.colorSelected,
               title: buttonNames.color!,
             ),
@@ -114,11 +120,13 @@ abstract class HomeState extends State<Home> {
     assert(supportedLang.length <= 2 && supportedLang.isNotEmpty,
         "For now only max. 2 different lang are supported. And you need at least 1 :)");
     Locale currentLocale = supportedLang[0];
-    if (supportedLang.length == 2 &&
-            (Localizations.localeOf(context) == supportedLang[0] &&
-                widget.appAttributes.useOtherLanguageMode) ||
-        (Localizations.localeOf(context) == supportedLang[1])) {
-      currentLocale = supportedLang[1];
+    if (widget.appAttributes.useOtherLanguageMode != null) {
+      if (supportedLang.length == 2 &&
+              (Localizations.localeOf(context) == supportedLang[0] &&
+                  widget.appAttributes.useOtherLanguageMode!) ||
+          (Localizations.localeOf(context) == supportedLang[1])) {
+        currentLocale = supportedLang[1];
+      }
     }
     return Localizations.override(
         context: context,
