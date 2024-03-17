@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:jotrockenmitlockenrepo/constants.dart';
-import 'package:jotrockenmitlocken/constant_app_setting.dart';
 
 const double buttonPaddingHorizontal = 40;
 const double buttonPaddingVertical = 20;
@@ -81,11 +80,11 @@ class DesktopNavbar extends StatelessWidget {
 
   List<Widget> createLogoAndName() {
     return [
-      const Text(
-        appName,
-        style: TextStyle(
-            fontWeight: FontWeight.bold, color: Colors.black, fontSize: 60),
-      ),
+      // const Text(
+      //   //appName,
+      //   style: TextStyle(
+      //       fontWeight: FontWeight.bold, color: Colors.black, fontSize: 60),
+      // ),
       const SizedBox(width: 16),
       Image.asset("assets/images/barbell.png", width: 64),
     ];
