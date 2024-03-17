@@ -4,7 +4,7 @@ import 'package:jotrockenmitlockenrepo/Decoration/row_divider.dart';
 import 'package:jotrockenmitlockenrepo/Media/Image/openable_image.dart';
 import 'package:jotrockenmitlocken/user_settings.dart';
 import 'package:jotrockenmitlockenrepo/Media/email_button.dart';
-import 'package:jotrockenmitlockenrepo/socialMedia/social_media_widgets.dart';
+import 'package:jotrockenmitlockenrepo/SocialMedia/social_media_widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:jotrockenmitlockenrepo/Decoration/col_divider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
