@@ -12,6 +12,11 @@ For help getting started with Flutter development, view the
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
+## Run Web Server locally for Debugging
+```bash
+flutter run -d web-server --web-renderer canvaskit --profile --web-port 8080 --web-hostname 0.0.0.0
+```
+
 ## Assets
 
 The `assets` directory houses images, fonts, and any other files you want to

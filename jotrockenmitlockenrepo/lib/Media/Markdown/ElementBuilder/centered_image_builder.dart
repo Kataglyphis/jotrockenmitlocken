@@ -27,6 +27,7 @@ class CenteredImageBuilder extends MarkdownElementBuilder {
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         SelectionArea(
             child: OpenableImage(
