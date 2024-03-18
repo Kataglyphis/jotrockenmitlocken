@@ -31,7 +31,7 @@ class _OpenableImageState extends State<OpenableImage> {
     if (imageWidth < currentPageWidth) {
       return imageWidth;
     } else {
-      return currentPageWidth * 0.95;
+      return currentPageWidth * 0.9;
     }
   }
 

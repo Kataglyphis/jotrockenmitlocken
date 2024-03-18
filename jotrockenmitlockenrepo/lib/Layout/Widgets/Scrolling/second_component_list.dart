@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:jotrockenmitlockenrepo/Layout/Widgets/build_silvers.dart';
-import 'package:jotrockenmitlockenrepo/Layout/Widgets/cache_height.dart';
+import 'package:jotrockenmitlockenrepo/Layout/Widgets/Scrolling/build_silvers.dart';
+import 'package:jotrockenmitlockenrepo/Layout/Widgets/Scrolling/cache_height.dart';
 
 class SecondComponentList extends StatefulWidget {
   const SecondComponentList({
@@ -21,10 +21,13 @@ class _SecondComponentListState extends State<SecondComponentList> {
     List<double?> heights = List.filled(widget.childWidgets.length, null);
 
     // Fully traverse this list before moving on.
+    // return SingleChildScrollView(
+    //     child: Column(
+    //   children: widget.childWidgets,
+    // ));
     return FocusTraversalGroup(
       child: CustomScrollView(
         scrollDirection: Axis.vertical,
-        shrinkWrap: true,
         slivers: [
           SliverPadding(
             padding: const EdgeInsetsDirectional.only(end: smallSpacing),
