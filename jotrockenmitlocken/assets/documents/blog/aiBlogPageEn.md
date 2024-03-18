@@ -8,10 +8,9 @@
 
 
 This is inline latex: $f(x) = \sum_{i=0}^{n} \frac{a_i}{1+x}$
-latex: $c = \pm\sqrt{a^2 + b^2}$
 This is block level latex:
 
-This is inline latex with displayMode: $$f(x) = \sum_{i=0}^{n} \frac{a_i}{1+x}$$ This is inline latex with displayMode: $$f(x) = \sum_{i=0}^{n} \frac{a_i}{1+x}$$ This is inline latex with displayMode: $$f(x) = \sum_{i=0}^{n} \frac{a_i}{1+x}$$
+This is inline latex with displayMode: $$f(x) = \sum_{i=0}^{n} \frac{a_i}{1+x}$$ 
 
 **The Cauchy-Schwarz Inequality**
 
@@ -27,15 +26,9 @@ This is inline latex with displayMode: $$f(x) = \sum_{i=0}^{n} \frac{a_i}{1+x}$$
 
 #include <linux/cgroup.h>
 #include <linux/kernfs.h>
-#include <linux/workqueue.h>
-#include <linux/list.h>
-#include <linux/refcount.h>
-#include <linux/fs_parser.h>
 
 #define TRACE_CGROUP_PATH_LEN 1024
-extern spinlock_t trace_cgroup_path_lock;
-extern char trace_cgroup_path[TRACE_CGROUP_PATH_LEN];
-extern void __init enable_debug_cgroup(void);
+
 
 /*
  * cgroup_path() takes a spin lock. It is good practice not to take
@@ -79,7 +72,7 @@ struct cgroup_fs_context {
 	char		*name;			/* Hierarchy name */
 	char		*release_agent;		/* Path for release notifications */
 };
-
+```
 static inline struct cgroup_fs_context *cgroup_fc2context(struct fs_context *fc)
 {
 	struct kernfs_fs_context *kfc = fc->fs_private;
@@ -241,8 +234,6 @@ static inline void get_css_set(struct css_set *cset)
 	refcount_inc(&cset->refcount);
 }
 #endif /* __CGROUP_INTERNAL_H */
-```
-
 |        | Command      | Description                                   |
 | -----  | --------     | ---------------------------------             |
 |        | `git status` | List all new or modified files                |

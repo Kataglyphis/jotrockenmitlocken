@@ -89,7 +89,7 @@ abstract class FileTableState extends State<FileTable> {
             style: Theme.of(context).textTheme.titleMedium,
           ),
           trailing: OpenButton(
-            assetPath: currentDocument.baseDir + currentDocument.title,
+            assetFullPath: currentDocument.baseDir + currentDocument.title,
           ),
         ));
   }

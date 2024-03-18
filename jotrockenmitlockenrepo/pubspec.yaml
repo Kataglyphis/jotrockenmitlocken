@@ -10,8 +10,13 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  web_smooth_scroll: ^1.1.0
   url_launcher: ^6.1.8
   go_router: ^13.2.0
+  markdown: ^7.2.1
+  flutter_markdown: ^0.6.21
+  flutter_math_fork: ^0.7.2
+  flutter_highlighter: ^0.1.1
   font_awesome_flutter: ^10.7.0
   syncfusion_flutter_charts: ^25.1.35
   mime: ^1.0.5

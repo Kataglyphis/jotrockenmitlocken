@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:jotrockenmitlockenrepo/Decoration/col_divider.dart';
 import 'package:jotrockenmitlockenrepo/Layout/Widgets/Transitions/one_two_transition.dart';
-import 'package:jotrockenmitlockenrepo/Layout/Widgets/first_component_list.dart';
-import 'package:jotrockenmitlockenrepo/Layout/Widgets/second_component_list.dart';
-import 'package:jotrockenmitlockenrepo/Layout/ResponsiveDesign/vertical_scroll_page.dart';
+import 'package:jotrockenmitlockenrepo/Layout/Widgets/Scrolling/first_component_list.dart';
+import 'package:jotrockenmitlockenrepo/Layout/Widgets/Scrolling/second_component_list.dart';
 import 'package:jotrockenmitlockenrepo/Pages/Footer/footer.dart';
 
 class LayoutManager {
@@ -12,16 +12,20 @@ class LayoutManager {
     bool showMediumSizeLayout,
     bool showLargeSizeLayout,
   ) {
-    const colDivider = SizedBox(height: 10);
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        VerticalScrollPage(childWidgets: [
-          colDivider,
-          ...children,
-          colDivider,
-          if (!showMediumSizeLayout && !showLargeSizeLayout) ...[footer]
-        ]),
+        Expanded(
+          child: FirstComponentList(
+            showSecondList: false,
+            childWidgetsLeftPage: [...children] +
+                [
+                  colDivider,
+                  if (!showMediumSizeLayout && !showLargeSizeLayout) ...[footer]
+                ],
+            childWidgetsRightPage: const [],
+          ),
+        ),
       ],
     );
   }
@@ -33,7 +37,6 @@ class LayoutManager {
       bool showMediumSizeLayout,
       bool showLargeSizeLayout,
       CurvedAnimation railAnimation) {
-    var colDivider = const SizedBox(height: 10);
     childWidgetsRightPage += [
       colDivider,
       if (!showMediumSizeLayout && !showLargeSizeLayout) ...[footer]
