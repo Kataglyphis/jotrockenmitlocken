@@ -76,7 +76,7 @@ class _OpenableImageState extends State<OpenableImage> {
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: OpenButton(
-                        assetPath: widget.displayedImage,
+                        assetFullPath: widget.displayedImage,
                       ),
                     )),
             ],
