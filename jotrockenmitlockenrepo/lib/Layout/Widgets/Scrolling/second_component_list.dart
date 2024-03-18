@@ -21,10 +21,10 @@ class _SecondComponentListState extends State<SecondComponentList> {
     List<double?> heights = List.filled(widget.childWidgets.length, null);
 
     // Fully traverse this list before moving on.
-    // return SingleChildScrollView(
-    //     child: Column(
+    // return ListView(
     //   children: widget.childWidgets,
-    // ));
+    //   physics: BouncingScrollPhysics(),
+    // );
     return FocusTraversalGroup(
       child: CustomScrollView(
         scrollDirection: Axis.vertical,

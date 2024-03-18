@@ -33,13 +33,12 @@ class _FirstComponentListState extends State<FirstComponentList> {
     const smallSpacing = 10.0;
 
     // Fully traverse this list before moving on.
-    // return SingleChildScrollView(
-    //     child: Column(
+    // return ListView(
     //   children: resultingChildWidgetsLeftPage,
-    // ));
+    //   physics: BouncingScrollPhysics(),
+    // );
     return FocusTraversalGroup(
       child: CustomScrollView(
-        //primary: false,
         scrollDirection: Axis.vertical,
         slivers: [
           SliverPadding(
