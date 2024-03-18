@@ -31,7 +31,7 @@ class _OpenableImageState extends State<OpenableImage> {
     if (imageWidth < currentPageWidth) {
       return imageWidth;
     } else {
-      return currentPageWidth * 0.95;
+      return currentPageWidth * 0.9;
     }
   }
 
@@ -76,7 +76,7 @@ class _OpenableImageState extends State<OpenableImage> {
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: OpenButton(
-                        assetPath: widget.displayedImage,
+                        assetFullPath: widget.displayedImage,
                       ),
                     )),
             ],
