@@ -8,8 +8,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:go_router/go_router.dart';
 import 'package:jotrockenmitlocken/Pages/Footer/jotrockenmitlocken_footer.dart';
+import 'package:jotrockenmitlocken/Pages/Home/home_config.dart';
 import 'package:jotrockenmitlocken/Pages/jotrockenmitlocken_screen_configurations.dart';
-import 'package:jotrockenmitlocken/Routing/router_creator.dart';
 
 import 'package:jotrockenmitlockenrepo/app_attributes.dart';
 import 'package:jotrockenmitlockenrepo/Routing/screen_configurations.dart';
@@ -17,6 +17,9 @@ import 'package:jotrockenmitlockenrepo/Routing/screen_configurations.dart';
 import 'package:jotrockenmitlockenrepo/constants.dart';
 
 import 'package:jotrockenmitlockenrepo/Routing/router_creater.dart';
+
+import 'package:jotrockenmitlockenrepo/Url/external_link_config.dart';
+import 'package:jotrockenmitlockenrepo/user_settings.dart';
 
 void main() {
   runApp(
@@ -124,6 +127,29 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
     });
   }
 
+  UserSettings JonasHeinle = UserSettings(
+    socialMediaLinksConfig: {
+      'Facebook':
+          ExternalLinkConfig(host: 'www.facebook.com', path: 'jonas.heinle/'),
+      'GitHub':
+          ExternalLinkConfig(host: 'www.github.com', path: 'Kataglyphis/'),
+      'YouTube': ExternalLinkConfig(
+          host: 'www.youtube.com', path: 'channel/UC3LZiH4sZzzaVBCUV8knYeg'),
+      'X': ExternalLinkConfig(host: 'www.twitter.com', path: 'Cataglyphis_'),
+      'LinkedIn': ExternalLinkConfig(
+          host: 'www.linkedin.com', path: 'in/jonas-heinle-0b2a301a0/'),
+      'Instagram': ExternalLinkConfig(
+          host: 'www.instagram.com', path: 'jotrockenmitlocken'),
+      'PayPal': ExternalLinkConfig(host: 'www.paypal.me', path: '/JonasHeinle'),
+    },
+    businessEmail: "cataglyphis@jotrockenmitlocken.de",
+    myQuotation:
+        "»As soon as it works, no-one calls it AI anymore.« (John McCarthy)",
+    firstName: "Jonas",
+    lastName: "Heinle",
+    assetPathImgOfMe: "assets/images/Bewerbungsbilder/a95a64ca.jpg",
+  );
+
   @override
   Widget build(BuildContext context) {
     ScreenConfigurations screenConfigurations =
@@ -135,6 +161,8 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
         const Locale('de'), // Deutsch
         const Locale('en'), // English
       ],
+      homeConfig: JotrockenMitLockenHomeConfig(),
+      userSettings: JonasHeinle,
       screenConfigurations: screenConfigurations,
       railAnimation: railAnimation,
       showMediumSizeLayout: showMediumSizeLayout,
@@ -147,14 +175,16 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
       handleColorSelect: handleColorSelect,
     );
 
-    RoutesCreator routesCreator = JoTrockenMitLockenRoutesCreator();
+    RoutesCreator routesCreator = RoutesCreator();
 
     final GoRouter routerConfig = routesCreator.getRouterConfig(
         appAttributes,
         controller,
         JotrockenmitlockenFooter(
-            footerPagesConfig:
-                JotrockenmitLockenScreenConfigurations.getFooterPagesConfig()));
+          footerPagesConfig:
+              JotrockenmitLockenScreenConfigurations.getFooterPagesConfig(),
+          userSettings: JonasHeinle,
+        ));
 
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,

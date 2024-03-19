@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:jotrockenmitlockenrepo/Pages/Home/home_config.dart';
 import 'package:jotrockenmitlockenrepo/Routing/screen_configurations.dart';
 import 'package:jotrockenmitlockenrepo/constants.dart';
+import 'package:jotrockenmitlockenrepo/user_settings.dart';
 
 class AppAttributes {
   String appTitle;
   String appName;
+
+  UserSettings userSettings;
+
+  HomeConfig homeConfig;
 
   List<Locale> supportedLanguages;
   ScreenConfigurations screenConfigurations;
@@ -23,8 +29,10 @@ class AppAttributes {
   final void Function(int value)? handleColorSelect;
 
   AppAttributes(
-      {required this.appTitle,
+      {required this.homeConfig,
+      required this.appTitle,
       required this.appName,
+      required this.userSettings,
       required this.supportedLanguages,
       required this.screenConfigurations,
       required this.railAnimation,

@@ -8,7 +8,7 @@ import 'package:jotrockenmitlockenrepo/Pages/pages_factory.dart';
 
 class DeclarationOnAccessibilityPage extends PagesFactory {
   @override
-  Widget createPage(AppAttributes appFrameAttributes) {
+  Widget createPage(AppAttributes appAttributes, BuildContext context) {
     return LayoutManager.createSinglePage(
         [
           MarkdownFilePage(
@@ -16,13 +16,15 @@ class DeclarationOnAccessibilityPage extends PagesFactory {
                 'assets/documents/footer/declarationOnAccessibilityDe.md',
             filePathEn:
                 'assets/documents/footer/declarationOnAccessibilityEn.md',
-            useLightMode: appFrameAttributes.useLightMode,
+            useLightMode: appAttributes.useLightMode,
           )
         ],
         JotrockenmitlockenFooter(
-            footerPagesConfig:
-                JotrockenmitLockenScreenConfigurations.getFooterPagesConfig()),
-        appFrameAttributes.showMediumSizeLayout,
-        appFrameAttributes.showLargeSizeLayout);
+          footerPagesConfig:
+              JotrockenmitLockenScreenConfigurations.getFooterPagesConfig(),
+          userSettings: appAttributes.userSettings,
+        ),
+        appAttributes.showMediumSizeLayout,
+        appAttributes.showLargeSizeLayout);
   }
 }

@@ -9,16 +9,22 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class QuotesPage extends NavBarPagesFactory {
   @override
-  Widget createPage(AppAttributes appFrameAttributes) {
+  Widget createPage(AppAttributes appAttributes, BuildContext context) {
     return LayoutManager.createSinglePage(
         [
-          const QuotesList(),
+          QuotesList(
+              title: AppLocalizations.of(context)!.quotations,
+              description:
+                  "${AppLocalizations.of(context)!.quotationsDescription}\u{1F63A}",
+              dataFilePath: "assets/data/Zitate.csv"),
         ],
         JotrockenmitlockenFooter(
-            footerPagesConfig:
-                JotrockenmitLockenScreenConfigurations.getFooterPagesConfig()),
-        appFrameAttributes.showMediumSizeLayout,
-        appFrameAttributes.showLargeSizeLayout);
+          footerPagesConfig:
+              JotrockenmitLockenScreenConfigurations.getFooterPagesConfig(),
+          userSettings: appAttributes.userSettings,
+        ),
+        appAttributes.showMediumSizeLayout,
+        appAttributes.showLargeSizeLayout);
   }
 
   @override

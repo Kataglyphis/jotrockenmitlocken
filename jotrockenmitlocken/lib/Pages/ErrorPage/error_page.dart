@@ -8,15 +8,17 @@ import 'package:jotrockenmitlockenrepo/Pages/pages_factory.dart';
 
 class ErrorPage extends PagesFactory {
   @override
-  Widget createPage(AppAttributes appFrameAttributes) {
+  Widget createPage(AppAttributes appAttributes, BuildContext context) {
     return LayoutManager.createSinglePage(
         [
           const ErrorPageWidget(),
         ],
         JotrockenmitlockenFooter(
-            footerPagesConfig:
-                JotrockenmitLockenScreenConfigurations.getFooterPagesConfig()),
-        appFrameAttributes.showMediumSizeLayout,
-        appFrameAttributes.showLargeSizeLayout);
+          footerPagesConfig:
+              JotrockenmitLockenScreenConfigurations.getFooterPagesConfig(),
+          userSettings: appAttributes.userSettings,
+        ),
+        appAttributes.showMediumSizeLayout,
+        appAttributes.showLargeSizeLayout);
   }
 }

@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:jotrockenmitlockenrepo/Pages/Footer/footer.dart';
 
 import 'package:jotrockenmitlockenrepo/Pages/Home/Transitions/navigation_transition.dart';
-import 'package:jotrockenmitlockenrepo/Pages/Home/Widgets/button_names.dart';
 import 'package:jotrockenmitlockenrepo/Pages/Home/Widgets/expanded_trailing_actions.dart';
 import 'package:jotrockenmitlockenrepo/Pages/Home/Widgets/brightness_button.dart';
 import 'package:jotrockenmitlockenrepo/Pages/Home/Widgets/color_seed_button.dart';
@@ -13,7 +12,7 @@ import 'package:jotrockenmitlockenrepo/Pages/Home/Widgets/language_button.dart';
 import 'package:jotrockenmitlockenrepo/Routing/navigation_bars.dart';
 import 'package:jotrockenmitlockenrepo/app_attributes.dart';
 
-abstract class Home extends StatefulWidget {
+class Home extends StatefulWidget {
   const Home(
       {super.key,
       required this.footer,
@@ -31,11 +30,12 @@ abstract class Home extends StatefulWidget {
   final StatefulNavigationShell navigationShell;
 
   final void Function(int value) handleChangedPageIndex;
+
+  @override
+  State<Home> createState() => HomeState();
 }
 
-abstract class HomeState extends State<Home> {
-  ButtonNames getButtonNames();
-
+class HomeState extends State<Home> {
   int currentNavBarIndex = 0;
 
   @override
@@ -45,7 +45,7 @@ abstract class HomeState extends State<Home> {
   }
 
   PreferredSizeWidget _createAppBar() {
-    var buttonNames = getButtonNames();
+    var buttonNames = widget.appAttributes.homeConfig.getButtonNames(context);
     return AppBar(
       title: Text(widget.appAttributes.appName),
       actions: !widget.appAttributes.showMediumSizeLayout &&
@@ -78,7 +78,7 @@ abstract class HomeState extends State<Home> {
   }
 
   Widget _trailingActions() {
-    var buttonNames = getButtonNames();
+    var buttonNames = widget.appAttributes.homeConfig.getButtonNames(context);
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
@@ -170,7 +170,8 @@ abstract class HomeState extends State<Home> {
                           padding: const EdgeInsets.only(bottom: 20),
                           child: widget.appAttributes.showLargeSizeLayout
                               ? ExpandedTrailingActions(
-                                  buttonNames: getButtonNames(),
+                                  buttonNames: widget.appAttributes.homeConfig
+                                      .getButtonNames(context),
                                   appAttributes: widget.appAttributes,
                                 )
                               : _trailingActions(),

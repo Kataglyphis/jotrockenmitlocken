@@ -13,9 +13,9 @@ import 'package:jotrockenmitlocken/Pages/Footer/Pages/cookie_declaration.dart';
 import 'package:jotrockenmitlocken/Pages/Footer/Pages/declaration_on_accessibility.dart';
 import 'package:jotrockenmitlocken/Pages/Footer/Pages/imprint.dart';
 import 'package:jotrockenmitlocken/Pages/Footer/Pages/privacy_policy.dart';
-import 'package:jotrockenmitlocken/Pages/LandingPage/ai_playground.dart';
+import 'package:jotrockenmitlocken/Pages/LandingPage/Entries/ai_playground.dart';
 import 'package:jotrockenmitlocken/Pages/LandingPage/landing_page.dart';
-import 'package:jotrockenmitlocken/Pages/LandingPage/rendering_playground.dart';
+import 'package:jotrockenmitlocken/Pages/LandingPage/Entries/rendering_playground.dart';
 import 'package:jotrockenmitlocken/Pages/QuotesPage/quotes_page.dart';
 import 'package:jotrockenmitlocken/Pages/blog_pages_config.dart';
 import 'package:jotrockenmitlockenrepo/Pages/navbar_pages_config.dart';
@@ -80,12 +80,13 @@ class JotrockenmitLockenScreenConfigurations extends ScreenConfigurations {
       BlogPagesConfig(
           routingName: "/aiBlog",
           pagesCreator: AiBlogPage(),
-          landingPageEntry: const AIPlayground(),
+          landingPageEntryFactory: AIPlayground(routerPath: '/aiBlog'),
           landingPageAlignment: LandingPageAlignment.left),
       BlogPagesConfig(
           routingName: "/renderingBlog",
           pagesCreator: RenderingBlogPage(),
-          landingPageEntry: const RenderingPlayground(),
+          landingPageEntryFactory:
+              RenderingPlayground(routerPath: "/renderingBlog"),
           landingPageAlignment: LandingPageAlignment.right),
     ];
   }
