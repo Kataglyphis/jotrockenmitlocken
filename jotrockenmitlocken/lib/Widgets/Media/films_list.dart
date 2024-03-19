@@ -3,28 +3,18 @@ import 'package:jotrockenmitlockenrepo/Media/DataTable/data_list.dart';
 import 'package:jotrockenmitlocken/Widgets/Media/film.dart';
 
 class FilmsList extends DataList {
-  const FilmsList({super.key, required super.dataFilePath});
+  const FilmsList(
+      {super.key,
+      required super.dataFilePath,
+      required super.title,
+      required super.description});
   // "assets/data/Filmliste.csv"
+  // "Films/Series worth watching"
   @override
   State<FilmsList> createState() => _FilmsListState();
 }
 
 class _FilmsListState extends DataListState<Film, FilmsList> {
-  @override
-  String getTitle() {
-    return "Films/Series worth watching";
-  }
-
-  @override
-  String getDescription() {
-    return "TODO: Implement";
-  }
-
-  @override
-  List<double> getSpacing() {
-    return [0.33, 0.33, 0.33];
-  }
-
   @override
   Future<List<List<dynamic>>> convertRawCSVDataToFinalLayout(
       List<List<dynamic>> csvListData) async {

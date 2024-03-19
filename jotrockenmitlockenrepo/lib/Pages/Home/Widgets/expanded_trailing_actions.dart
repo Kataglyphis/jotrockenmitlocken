@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jotrockenmitlockenrepo/Pages/Home/Widgets/button_names.dart';
+import 'package:jotrockenmitlockenrepo/Pages/Home/button_names.dart';
 
 import 'package:jotrockenmitlockenrepo/Pages/Home/Widgets/expanded_color_seed_action.dart';
 

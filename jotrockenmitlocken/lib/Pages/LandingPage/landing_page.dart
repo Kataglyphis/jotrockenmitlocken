@@ -8,7 +8,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:jotrockenmitlocken/Pages/jotrockenmitlocken_screen_configurations.dart';
 
 class LandingPage extends NavBarPagesFactory {
-  List<List<Widget>> _createLandingPageChildWidgets() {
+  List<List<Widget>> _createLandingPageChildWidgets(
+      AppAttributes appAttributes, BuildContext context) {
     const colDivider = SizedBox(height: 10);
     List<Widget> childWidgetsLeftPage = [];
     List<Widget> childWidgetsRightPage = [];
@@ -20,13 +21,17 @@ class LandingPage extends NavBarPagesFactory {
           LandingPageAlignment.left) {
         childWidgetsLeftPage += [
           colDivider,
-          blogPagesConfig[i].landingPageEntry,
+          blogPagesConfig[i]
+              .landingPageEntryFactory
+              .createLandingPageEntry(appAttributes, context),
           colDivider,
         ];
       } else {
         childWidgetsRightPage += [
           colDivider,
-          blogPagesConfig[i].landingPageEntry,
+          blogPagesConfig[i]
+              .landingPageEntryFactory
+              .createLandingPageEntry(appAttributes, context),
           colDivider,
         ];
       }
@@ -35,17 +40,20 @@ class LandingPage extends NavBarPagesFactory {
   }
 
   @override
-  Widget createPage(AppAttributes appFrameAttributes, BuildContext context) {
-    var homePagesLeftRight = _createLandingPageChildWidgets();
+  Widget createPage(AppAttributes appAttributes, BuildContext context) {
+    var homePagesLeftRight =
+        _createLandingPageChildWidgets(appAttributes, context);
     return LayoutManager.createOneTwoTransisionWidget(
         homePagesLeftRight[0],
         homePagesLeftRight[1],
         JotrockenmitlockenFooter(
-            footerPagesConfig:
-                JotrockenmitLockenScreenConfigurations.getFooterPagesConfig()),
-        appFrameAttributes.showMediumSizeLayout,
-        appFrameAttributes.showLargeSizeLayout,
-        appFrameAttributes.railAnimation);
+          footerPagesConfig:
+              JotrockenmitLockenScreenConfigurations.getFooterPagesConfig(),
+          userSettings: appAttributes.userSettings,
+        ),
+        appAttributes.showMediumSizeLayout,
+        appAttributes.showLargeSizeLayout,
+        appAttributes.railAnimation);
   }
 
   @override

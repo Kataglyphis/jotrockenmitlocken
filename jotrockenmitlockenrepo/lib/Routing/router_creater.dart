@@ -7,7 +7,7 @@ import 'package:jotrockenmitlockenrepo/Pages/Home/home.dart';
 import 'package:jotrockenmitlockenrepo/app_attributes.dart';
 import 'package:jotrockenmitlockenrepo/Pages/stateful_branch_info_provider.dart';
 
-abstract class RoutesCreator {
+class RoutesCreator {
   int currentPageIndex = 0;
 
   final _rootNavigatorKey =
@@ -20,13 +20,6 @@ abstract class RoutesCreator {
     return appAttributes.screenConfigurations
         .getAllValidRoutes()[currentPageIndex];
   }
-
-  Home getHome(
-    Footer footer,
-    AppAttributes appAttributes,
-    AnimationController controller,
-    StatefulNavigationShell navigationShell,
-  );
 
   GoRouter getRouterConfig(AppAttributes appAttributes,
       AnimationController controller, Footer footer) {
@@ -41,7 +34,15 @@ abstract class RoutesCreator {
             // using a BottomNavigationBar). The StatefulNavigationShell is passed
             // to be able access the state of the shell and to navigate to other
             // branches in a stateful way.
-            return getHome(footer, appAttributes, controller, navigationShell);
+            return Home(
+                handleChangedPageIndex: (index) {
+                  currentPageIndex = index;
+                },
+                scaffoldKey: scaffoldKey,
+                footer: footer,
+                appAttributes: appAttributes,
+                controller: controller,
+                navigationShell: navigationShell);
           },
           branches: RoutesCreator.createBranches(appAttributes),
         )

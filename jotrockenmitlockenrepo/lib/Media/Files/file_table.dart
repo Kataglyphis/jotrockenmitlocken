@@ -5,23 +5,20 @@ import 'package:jotrockenmitlockenrepo/Media/Files/file.dart';
 import 'package:jotrockenmitlockenrepo/Media/Open/open_button.dart';
 import 'package:jotrockenmitlockenrepo/constants.dart';
 
-abstract class FileTable extends StatefulWidget {
+class FileTable extends StatefulWidget {
   final List<File> docs;
-
+  final String title;
   const FileTable({
     super.key,
     required this.docs,
+    required this.title,
   });
+
+  @override
+  State<StatefulWidget> createState() => FileTableState();
 }
 
-abstract class FileTableState extends State<FileTable> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  String getTitle();
-
+class FileTableState extends State<FileTable> {
   double getDocumentTableWidth() {
     var currentWidth = MediaQuery.of(context).size.width;
     if (currentWidth <= narrowScreenWidthThreshold) {
@@ -52,7 +49,7 @@ abstract class FileTableState extends State<FileTable> {
         children: [
           colDivider,
           Text(
-            getTitle(),
+            widget.title,
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.headlineLarge,
           ),
