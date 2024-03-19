@@ -25,7 +25,6 @@ class OpenableImage extends StatefulWidget {
 class _OpenableImageState extends State<OpenableImage> {
   double imageWidth = 0;
   double imageHeight = 0;
-  bool imageInfoLoaded = false;
 
   double getImageWidth(double imageWidth) {
     var currentPageWidth = MediaQuery.of(context).size.width;
@@ -52,7 +51,6 @@ class _OpenableImageState extends State<OpenableImage> {
           imageHeight = info.image.height.toDouble();
           double retrievedImageWidth = info.image.width.toDouble();
           imageWidth = getImageWidth(retrievedImageWidth).toDouble();
-          imageInfoLoaded = true;
         });
       }
     }));
@@ -61,9 +59,7 @@ class _OpenableImageState extends State<OpenableImage> {
       children: [
         Container(
           constraints: BoxConstraints(
-            maxWidth: (imageInfoLoaded)
-                ? imageWidth
-                : MediaQuery.of(context).size.width * 0.85,
+            maxWidth: imageWidth,
           ),
           child: Stack(
             children: [

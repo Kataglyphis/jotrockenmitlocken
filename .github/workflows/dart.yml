@@ -71,4 +71,3 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PW }}
           local-dir: "./jotrockenmitlocken/build/web/"
-          dangerous-clean-slate: true
