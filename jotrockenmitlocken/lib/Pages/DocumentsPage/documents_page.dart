@@ -3,14 +3,14 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:jotrockenmitlocken/Pages/Footer/jotrockenmitlocken_footer.dart';
 import 'package:jotrockenmitlocken/Pages/jotrockenmitlocken_screen_configurations.dart';
 import 'package:jotrockenmitlockenrepo/Media/Files/file.dart';
-import 'package:jotrockenmitlocken/Pages/DocumentsPage/Widgets/document_table.dart';
 import 'package:jotrockenmitlockenrepo/Layout/ResponsiveDesign/layout_manager.dart';
+import 'package:jotrockenmitlockenrepo/Media/Files/file_table.dart';
 import 'package:jotrockenmitlockenrepo/app_attributes.dart';
 import 'package:jotrockenmitlockenrepo/Pages/navbar_pages_factory.dart';
 
 class DocumentPage extends NavBarPagesFactory {
   @override
-  Widget createPage(AppAttributes appFrameAttributes, BuildContext context) {
+  Widget createPage(AppAttributes appAttributes, BuildContext context) {
     List<File> docs = [
       File(
         baseDir: 'assets/documents/',
@@ -29,15 +29,18 @@ class DocumentPage extends NavBarPagesFactory {
     ];
     return LayoutManager.createSinglePage(
         [
-          DocumentTable(
+          FileTable(
             docs: docs,
+            title: AppLocalizations.of(context)!.documents,
           )
         ],
         JotrockenmitlockenFooter(
-            footerPagesConfig:
-                JotrockenmitLockenScreenConfigurations.getFooterPagesConfig()),
-        appFrameAttributes.showMediumSizeLayout,
-        appFrameAttributes.showLargeSizeLayout);
+          footerPagesConfig:
+              JotrockenmitLockenScreenConfigurations.getFooterPagesConfig(),
+          userSettings: appAttributes.userSettings,
+        ),
+        appAttributes.showMediumSizeLayout,
+        appAttributes.showLargeSizeLayout);
   }
 
   @override

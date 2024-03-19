@@ -1,6 +1,6 @@
-import 'package:jotrockenmitlockenrepo/Media/DataTable/data.dart';
+import 'package:jotrockenmitlockenrepo/Media/DataTable/table_data.dart';
 
-class Book extends Data {
+class Book extends TableData {
   String title = "placeholder";
   String author = "placeholder";
   String isbn = "placeholder";
@@ -9,5 +9,10 @@ class Book extends Data {
   @override
   List<String> getCells() {
     return [title, author, isbn];
+  }
+
+  @override
+  List<double> getSpacing() {
+    return [0.25, 0.25, 0.25, 0.25];
   }
 }

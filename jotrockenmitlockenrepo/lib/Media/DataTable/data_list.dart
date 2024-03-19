@@ -2,9 +2,10 @@ import 'package:csv/csv.dart';
 import 'package:flutter/material.dart';
 import 'package:jotrockenmitlockenrepo/Decoration/decoration_helper.dart';
 import 'package:jotrockenmitlockenrepo/Decoration/row_divider.dart';
-import 'package:jotrockenmitlockenrepo/Media/DataTable/data.dart';
+import 'package:jotrockenmitlockenrepo/Media/DataTable/table_data.dart';
 import 'package:jotrockenmitlockenrepo/constants.dart';
 import 'package:flutter/services.dart';
+import 'dart:developer';
 
 class _MyDataTableSource extends DataTableSource {
   List<DataRow> dataRows;
@@ -26,21 +27,22 @@ class _MyDataTableSource extends DataTableSource {
 }
 
 abstract class DataList extends StatefulWidget {
-  const DataList({super.key, required this.dataFilePath});
+  const DataList(
+      {super.key,
+      required this.dataFilePath,
+      required this.title,
+      required this.description});
+  final String title;
   final String dataFilePath;
+  final String description;
 }
 
-abstract class DataListState<T extends Data, U extends DataList>
+abstract class DataListState<T extends TableData, U extends DataList>
     extends State<U> {
   List<String> dataCategories = [];
   late List<T> listData;
   int sortColumnIndex = 0;
   bool isAscending = true;
-
-  String getTitle();
-  String getDescription();
-  // every data list gets an individual spacing
-  List<double> getSpacing();
 
   Future<List<List<dynamic>>> _loadDataFromCSV() async {
     final rawData = await rootBundle.loadString(widget.dataFilePath);
@@ -67,7 +69,7 @@ abstract class DataListState<T extends Data, U extends DataList>
   }
 
   // other classes will have to override these two methods
-  void onSortData(int columnIndex, bool ascending) {
+  void _onSortData(int columnIndex, bool ascending) {
     setState(() {
       _sort(columnIndex, ascending);
     });
@@ -75,8 +77,10 @@ abstract class DataListState<T extends Data, U extends DataList>
 
   List<DataRow> getDataRows(List<T> rowData, double maxWidth) =>
       rowData.map((T data) {
-        List<double> spacings = getSpacing();
+        List<double> spacings = data.getSpacing();
         final cells = data.getCells();
+        assert(cells.length == spacings.length,
+            "The spacing values are percentages of row space per header entry!");
         return DataRow(
             cells: cells
                 .map((entry) => DataCell(SizedBox(
@@ -94,7 +98,7 @@ abstract class DataListState<T extends Data, U extends DataList>
     return columnsString
         .map((String column) => DataColumn(
               label: Text(column),
-              onSort: onSortData,
+              onSort: _onSortData,
             ))
         .toList();
   }
@@ -116,13 +120,13 @@ abstract class DataListState<T extends Data, U extends DataList>
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    getTitle(),
+                    widget.title,
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.headlineLarge,
                   ),
                   rowDivider,
                   Text(
-                    "${getDescription()} \u{1F63A}",
+                    widget.description,
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.titleLarge,
                   ),

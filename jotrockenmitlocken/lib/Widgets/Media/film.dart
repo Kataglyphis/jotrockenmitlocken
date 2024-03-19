@@ -1,6 +1,6 @@
-import 'package:jotrockenmitlockenrepo/Media/DataTable/data.dart';
+import 'package:jotrockenmitlockenrepo/Media/DataTable/table_data.dart';
 
-class Film extends Data {
+class Film extends TableData {
   String title = "placeholder";
   String isan = "placeholder";
   Film({required this.title, required this.isan});
@@ -8,5 +8,10 @@ class Film extends Data {
   @override
   List<String> getCells() {
     return [title, isan];
+  }
+
+  @override
+  List<double> getSpacing() {
+    return [0.33, 0.33, 0.33];
   }
 }
