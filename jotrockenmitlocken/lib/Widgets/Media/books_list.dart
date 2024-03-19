@@ -1,17 +1,15 @@
-import 'package:csv/csv.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:jotrockenmitlocken/Widgets/Media/book.dart';
-import 'package:jotrockenmitlockenrepo/Media/data_list.dart';
+import 'package:jotrockenmitlockenrepo/Media/DataTable/data_list.dart';
 
-class BooksList extends StatefulWidget {
-  const BooksList({super.key});
-
+class BooksList extends DataList {
+  const BooksList({super.key, required super.dataFilePath});
+  // "assets/data/Buecherliste.csv"
   @override
   State<BooksList> createState() => _BooksListState();
 }
 
-class _BooksListState extends State<BooksList> with DataListState<Book> {
+class _BooksListState extends DataListState<Book, BooksList> {
   @override
   String getTitle() {
     return "Books worth reading";
@@ -23,24 +21,14 @@ class _BooksListState extends State<BooksList> with DataListState<Book> {
   }
 
   @override
-  void onSortData(int columnIndex, bool ascending) {
-    setState(() {
-      sort(columnIndex, ascending);
-    });
-  }
-
-  @override
   List<double> getSpacing() {
     return [0.25, 0.25, 0.25, 0.25];
   }
 
   @override
-  Future<List<List<dynamic>>> loadDataFromCSV() async {
-    final rawData = await rootBundle.loadString("assets/data/Buecherliste.csv");
-    List<List<dynamic>> csvListData =
-        const CsvToListConverter().convert(rawData);
+  Future<List<List<dynamic>>> convertRawCSVDataToFinalLayout(
+      List<List<dynamic>> csvListData) async {
     dataCategories = List<String>.from(csvListData.first);
-
     listData = csvListData
         .getRange(1, listData.length)
         .toList()
@@ -51,11 +39,5 @@ class _BooksListState extends State<BooksList> with DataListState<Book> {
             ))
         .toList();
     return csvListData;
-  }
-
-  @override
-  initState() {
-    super.initState();
-    dataFuture = loadDataFromCSV();
   }
 }

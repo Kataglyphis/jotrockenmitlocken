@@ -27,7 +27,7 @@ class AboutMePage extends NavBarPagesFactory {
   }
 
   @override
-  Widget createPage(AppAttributes appFrameAttributes) {
+  Widget createPage(AppAttributes appFrameAttributes, BuildContext context) {
     var aboutMePagesLeftRight =
         _createAboutMeChildPages(appFrameAttributes.colorSelected);
     return LayoutManager.createOneTwoTransisionWidget(

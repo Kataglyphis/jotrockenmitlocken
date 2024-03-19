@@ -8,7 +8,7 @@ import 'package:jotrockenmitlockenrepo/Pages/pages_factory.dart';
 
 class RenderingBlogPage extends PagesFactory {
   @override
-  Widget createPage(AppAttributes appFrameAttributes) {
+  Widget createPage(AppAttributes appFrameAttributes, BuildContext context) {
     return LayoutManager.createSinglePage(
         [
           MarkdownFilePage(
