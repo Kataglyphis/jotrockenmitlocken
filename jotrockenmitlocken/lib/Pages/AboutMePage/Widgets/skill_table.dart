@@ -15,28 +15,17 @@ class SkillTable extends StatefulWidget {
 class _SkillTableState extends State<SkillTable> {
   _SkillTableState();
 
-  late Future<Map<String, dynamic>> _readJson;
   List keys = [];
   List<List<dynamic>> values = [];
   String aboutMeFileDe = 'assets/data/aboutme_de.json';
   String aboutMeFileEn = 'assets/data/aboutme_en.json';
 
-  void initCsvFuture(BuildContext context) {
-    if (Localizations.localeOf(context) == const Locale('de')) {
-      _readJson = readJson(aboutMeFileDe);
-    } else {
-      _readJson = readJson(aboutMeFileEn);
-    }
-  }
-
-  @override
-  initState() {
-    super.initState();
-    //initCsvFuture(context);
-  }
-
   // Fetch content from the json file
-  Future<Map<String, dynamic>> readJson(String aboutMeFile) async {
+  Future<Map<String, dynamic>> _readJson() async {
+    String aboutMeFile = aboutMeFileEn;
+    if (Localizations.localeOf(context) == const Locale('de')) {
+      aboutMeFile = aboutMeFileDe;
+    }
     final jsonData = await rootBundle.loadString(aboutMeFile);
     final Map<String, dynamic> list = json.decode(jsonData);
     var items = list;
@@ -85,11 +74,9 @@ class _SkillTableState extends State<SkillTable> {
     double betweenColumnPadding =
         (currentWith <= narrowScreenWidthThreshold) ? 40.0 : 80.0;
 
-    initCsvFuture(context);
-
     return applyBoxDecoration(
         child: FutureBuilder(
-            future: _readJson,
+            future: _readJson(),
             builder: (context, data) {
               if (data.hasData) {
                 List<TableRow> skills = [];
