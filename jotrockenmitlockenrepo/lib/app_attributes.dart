@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jotrockenmitlockenrepo/Pages/Footer/footer_config.dart';
 import 'package:jotrockenmitlockenrepo/Pages/Home/home_config.dart';
 import 'package:jotrockenmitlockenrepo/Routing/screen_configurations.dart';
 import 'package:jotrockenmitlockenrepo/constants.dart';
@@ -9,7 +10,7 @@ class AppAttributes {
   String appName;
 
   UserSettings userSettings;
-
+  FooterConfig footerConfig;
   HomeConfig homeConfig;
 
   List<Locale> supportedLanguages;
@@ -29,7 +30,8 @@ class AppAttributes {
   final void Function(int value)? handleColorSelect;
 
   AppAttributes(
-      {required this.homeConfig,
+      {required this.footerConfig,
+      required this.homeConfig,
       required this.appTitle,
       required this.appName,
       required this.userSettings,
