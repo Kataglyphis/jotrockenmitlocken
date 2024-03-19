@@ -7,8 +7,6 @@ import 'package:jotrockenmitlockenrepo/Media/Image/openable_image.dart';
 import 'package:jotrockenmitlockenrepo/Url/browser_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:jotrockenmitlockenrepo/Url/external_link_config.dart';
-//import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-// import 'package:jotrockenmitlocken/user_settings.dart';
 
 class LandingPageEntry extends StatefulWidget {
   const LandingPageEntry(
