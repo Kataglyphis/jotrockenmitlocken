@@ -105,33 +105,33 @@ abstract class DataListState<T extends TableData, U extends DataList>
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: _loadDataFromCSV(),
-        builder: (context, data) {
-          if (data.hasData) {
-            double currentWidth = MediaQuery.of(context).size.width;
-            double dataTableWidth = (currentWidth >= largeWidthBreakpoint)
-                ? currentWidth * 0.8
-                : currentWidth * 0.9;
-            final DataTableSource data =
-                _MyDataTableSource(getDataRows(listData, dataTableWidth));
-            return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    widget.title,
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.headlineLarge,
-                  ),
-                  rowDivider,
-                  Text(
-                    widget.description,
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                  rowDivider,
-                  SizedBox(
+    return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            widget.title,
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.headlineLarge,
+          ),
+          rowDivider,
+          Text(
+            widget.description,
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.titleLarge,
+          ),
+          rowDivider,
+          FutureBuilder(
+              future: _loadDataFromCSV(),
+              builder: (context, data) {
+                if (data.hasData) {
+                  double currentWidth = MediaQuery.of(context).size.width;
+                  double dataTableWidth = (currentWidth >= largeWidthBreakpoint)
+                      ? currentWidth * 0.8
+                      : currentWidth * 0.9;
+                  final DataTableSource data =
+                      _MyDataTableSource(getDataRows(listData, dataTableWidth));
+                  return SizedBox(
                     width: dataTableWidth,
                     child: applyBoxDecoration(
                         child: PaginatedDataTable(
@@ -144,15 +144,15 @@ abstract class DataListState<T extends TableData, U extends DataList>
                         borderRadius: 8,
                         borderWidth: 6,
                         color: Theme.of(context).colorScheme.primary),
-                  ),
-                ]);
-          } else if (data.hasError) {
-            return Center(child: Text("${data.error}"));
-          } else {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-        });
+                  );
+                } else if (data.hasError) {
+                  return Center(child: Text("${data.error}"));
+                } else {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+              })
+        ]);
   }
 }
