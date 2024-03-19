@@ -148,7 +148,8 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
         "»As soon as it works, no-one calls it AI anymore.« (John McCarthy)",
     firstName: "Jonas",
     lastName: "Heinle",
-    assetPathImgOfMe: "assets/images/Bewerbungsbilder/a95a64ca.jpg",
+    assetPathImgOfMe:
+        "assets/images/Bewerbungsbilder/a95a64ca_runterskaliert.jpg",
   );
 
   @override
