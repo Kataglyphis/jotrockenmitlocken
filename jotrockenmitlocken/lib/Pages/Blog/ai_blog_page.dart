@@ -10,7 +10,7 @@ import 'package:jotrockenmitlockenrepo/Pages/pages_factory.dart';
 
 class AiBlogPage extends PagesFactory {
   @override
-  Widget createPage(AppAttributes appFrameAttributes) {
+  Widget createPage(AppAttributes appFrameAttributes, BuildContext context) {
     List<File> docs = [
       File(
         baseDir: 'assets/documents/',

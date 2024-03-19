@@ -2,35 +2,31 @@ import 'package:flutter/material.dart';
 import 'package:jotrockenmitlockenrepo/Layout/Widgets/Scrolling/build_silvers.dart';
 import 'package:jotrockenmitlockenrepo/Layout/Widgets/Scrolling/cache_height.dart';
 
-class SecondComponentList extends StatefulWidget {
-  const SecondComponentList({
+class ScrollableList extends StatefulWidget {
+  const ScrollableList({
     super.key,
     required this.childWidgets,
+    this.padding = EdgeInsets.zero,
   });
 
   final List<Widget> childWidgets;
+  final EdgeInsetsGeometry padding;
 
   @override
-  State<SecondComponentList> createState() => _SecondComponentListState();
+  State<ScrollableList> createState() => _ScrollableListState();
 }
 
-class _SecondComponentListState extends State<SecondComponentList> {
+class _ScrollableListState extends State<ScrollableList> {
   @override
   Widget build(BuildContext context) {
-    const smallSpacing = 10.0;
     List<double?> heights = List.filled(widget.childWidgets.length, null);
 
-    // Fully traverse this list before moving on.
-    // return ListView(
-    //   children: widget.childWidgets,
-    //   physics: BouncingScrollPhysics(),
-    // );
     return FocusTraversalGroup(
       child: CustomScrollView(
         scrollDirection: Axis.vertical,
         slivers: [
           SliverPadding(
-            padding: const EdgeInsetsDirectional.only(end: smallSpacing),
+            padding: widget.padding,
             sliver: SliverList(
               delegate: BuildSlivers(
                 heights: heights,

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:jotrockenmitlockenrepo/Decoration/col_divider.dart';
+import 'package:jotrockenmitlockenrepo/Layout/Widgets/Scrolling/scrollable_list.dart';
 import 'package:jotrockenmitlockenrepo/Layout/Widgets/Transitions/one_two_transition.dart';
 import 'package:jotrockenmitlockenrepo/Layout/Widgets/Scrolling/first_component_list.dart';
-import 'package:jotrockenmitlockenrepo/Layout/Widgets/Scrolling/second_component_list.dart';
 import 'package:jotrockenmitlockenrepo/Pages/Footer/footer.dart';
 
 class LayoutManager {
@@ -51,8 +51,9 @@ class LayoutManager {
               childWidgetsLeftPage: childWidgetsLeftPage,
               childWidgetsRightPage: childWidgetsRightPage,
             ),
-            two: SecondComponentList(
+            two: ScrollableList(
               childWidgets: childWidgetsRightPage,
+              padding: const EdgeInsetsDirectional.only(end: 10.0),
             ),
           ),
         ),

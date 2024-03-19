@@ -139,6 +139,8 @@ class MarkdownFilePageState extends State<MarkdownFilePage> {
                       ],
                     ),
                   )));
+            } else if (data.hasError) {
+              return Center(child: Text("${data.error}"));
             } else {
               return const CircularProgressIndicator();
             }

@@ -35,7 +35,7 @@ class LandingPage extends NavBarPagesFactory {
   }
 
   @override
-  Widget createPage(AppAttributes appFrameAttributes) {
+  Widget createPage(AppAttributes appFrameAttributes, BuildContext context) {
     var homePagesLeftRight = _createLandingPageChildWidgets();
     return LayoutManager.createOneTwoTransisionWidget(
         homePagesLeftRight[0],

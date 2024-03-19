@@ -1,11 +1,14 @@
+import 'package:csv/csv.dart';
 import 'package:flutter/material.dart';
 import 'package:jotrockenmitlockenrepo/Decoration/decoration_helper.dart';
-import 'package:jotrockenmitlockenrepo/Media/data.dart';
+import 'package:jotrockenmitlockenrepo/Decoration/row_divider.dart';
+import 'package:jotrockenmitlockenrepo/Media/DataTable/data.dart';
 import 'package:jotrockenmitlockenrepo/constants.dart';
+import 'package:flutter/services.dart';
 
-class MyDataTableSource extends DataTableSource {
+class _MyDataTableSource extends DataTableSource {
   List<DataRow> dataRows;
-  MyDataTableSource(this.dataRows);
+  _MyDataTableSource(this.dataRows);
 
   @override
   DataRow? getRow(int index) {
@@ -22,19 +25,41 @@ class MyDataTableSource extends DataTableSource {
   int get selectedRowCount => 0;
 }
 
-abstract mixin class DataListState<T extends Data> {
-  late Future<List<List<dynamic>>> dataFuture;
+abstract class DataList extends StatefulWidget {
+  const DataList({super.key, required this.dataFilePath});
+  final String dataFilePath;
+}
+
+abstract class DataListState<T extends Data, U extends DataList>
+    extends State<U> {
   List<String> dataCategories = [];
   late List<T> listData;
   int sortColumnIndex = 0;
   bool isAscending = true;
 
-  int compareString(bool ascending, String value1, String value2) {
+  String getTitle();
+  String getDescription();
+  // every data list gets an individual spacing
+  List<double> getSpacing();
+
+  Future<List<List<dynamic>>> _loadDataFromCSV() async {
+    final rawData = await rootBundle.loadString(widget.dataFilePath);
+    List<List<dynamic>> csvListData =
+        const CsvToListConverter().convert(rawData);
+    List<List<dynamic>> finalData =
+        await convertRawCSVDataToFinalLayout(csvListData);
+    return finalData;
+  }
+
+  Future<List<List<dynamic>>> convertRawCSVDataToFinalLayout(
+      List<List<dynamic>> csvListData);
+
+  int _compareString(bool ascending, String value1, String value2) {
     return ascending ? value1.compareTo(value2) : value2.compareTo(value1);
   }
 
-  void sort(int columnIndex, bool ascending) {
-    listData.sort((data1, data2) => compareString(isAscending,
+  void _sort(int columnIndex, bool ascending) {
+    listData.sort((data1, data2) => _compareString(isAscending,
         data1.getCells()[columnIndex], data2.getCells()[columnIndex]));
 
     this.sortColumnIndex = columnIndex;
@@ -42,12 +67,11 @@ abstract mixin class DataListState<T extends Data> {
   }
 
   // other classes will have to override these two methods
-  void onSortData(int columnIndex, bool ascending);
-  Future<List<List<dynamic>>> loadDataFromCSV();
-  String getTitle();
-  String getDescription();
-  // every data list gets an individual spacing
-  List<double> getSpacing();
+  void onSortData(int columnIndex, bool ascending) {
+    setState(() {
+      _sort(columnIndex, ascending);
+    });
+  }
 
   List<DataRow> getDataRows(List<T> rowData, double maxWidth) =>
       rowData.map((T data) {
@@ -75,9 +99,10 @@ abstract mixin class DataListState<T extends Data> {
         .toList();
   }
 
-  Widget buildDataTable() {
+  @override
+  Widget build(BuildContext context) {
     return FutureBuilder(
-        future: dataFuture,
+        future: _loadDataFromCSV(),
         builder: (context, data) {
           if (data.hasData) {
             double currentWidth = MediaQuery.of(context).size.width;
@@ -85,7 +110,7 @@ abstract mixin class DataListState<T extends Data> {
                 ? currentWidth * 0.8
                 : currentWidth * 0.9;
             final DataTableSource data =
-                MyDataTableSource(getDataRows(listData, dataTableWidth));
+                _MyDataTableSource(getDataRows(listData, dataTableWidth));
             return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -95,17 +120,13 @@ abstract mixin class DataListState<T extends Data> {
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.headlineLarge,
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
+                  rowDivider,
                   Text(
                     "${getDescription()} \u{1F63A}",
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
+                  rowDivider,
                   SizedBox(
                     width: dataTableWidth,
                     child: applyBoxDecoration(
@@ -129,9 +150,5 @@ abstract mixin class DataListState<T extends Data> {
             );
           }
         });
-  }
-
-  Widget build(BuildContext context) {
-    return buildDataTable();
   }
 }

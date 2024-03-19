@@ -61,29 +61,32 @@ abstract class RoutesCreator {
     );
   }
 
-  static GoRoute buildGoRouteForSPA(String path, Widget child) {
+  static GoRoute buildGoRouteForSPA(
+      StatefulBranchInfoProvider pageConfig, AppAttributes appAttributes) {
     return GoRoute(
-        path: path,
+        path: pageConfig.getRoutingName(),
         pageBuilder: (context, state) {
           return NoTransitionPage(
-            child: child,
+            child:
+                pageConfig.getPagesFactory().createPage(appAttributes, context),
           );
         });
   }
 
   static List<StatefulShellBranch> createStatefulShellBranches(
-    AppAttributes appFrameAttributes,
+    AppAttributes appAttributes,
     List<StatefulBranchInfoProvider> configs,
   ) {
     List<StatefulShellBranch> branches = [];
     for (int i = 0; i < configs.length; i++) {
       final pageConfig = configs[i];
+
       branches.add(
         StatefulShellBranch(
           routes: <RouteBase>[
             buildGoRouteForSPA(
-              pageConfig.getRoutingName(),
-              pageConfig.getPagesFactory().createPage(appFrameAttributes),
+              pageConfig,
+              appAttributes,
             )
           ],
         ),

@@ -9,10 +9,10 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class QuotesPage extends NavBarPagesFactory {
   @override
-  Widget createPage(AppAttributes appFrameAttributes) {
+  Widget createPage(AppAttributes appFrameAttributes, BuildContext context) {
     return LayoutManager.createSinglePage(
         [
-          const QuotesList(),
+          QuotesList(dataFilePath: "assets/data/Zitate.csv"),
         ],
         JotrockenmitlockenFooter(
             footerPagesConfig:

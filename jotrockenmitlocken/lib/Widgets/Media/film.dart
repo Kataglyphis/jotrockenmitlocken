@@ -1,4 +1,4 @@
-import 'package:jotrockenmitlockenrepo/Media/data.dart';
+import 'package:jotrockenmitlockenrepo/Media/DataTable/data.dart';
 
 class Film extends Data {
   String title = "placeholder";
