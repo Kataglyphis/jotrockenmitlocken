@@ -2,18 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:jotrockenmitlocken/Pages/AboutMePage/Widgets/donation.dart';
 import 'package:jotrockenmitlockenrepo/Decoration/row_divider.dart';
 import 'package:jotrockenmitlockenrepo/Media/Image/openable_image.dart';
-import 'package:jotrockenmitlocken/user_settings.dart';
 import 'package:jotrockenmitlockenrepo/Media/email_button.dart';
 import 'package:jotrockenmitlockenrepo/SocialMedia/social_media_widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:jotrockenmitlockenrepo/Decoration/col_divider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:jotrockenmitlockenrepo/user_settings.dart';
 
 class AboutMeTable extends StatefulWidget {
   const AboutMeTable({
     super.key,
+    required this.userSettings,
   });
 
+  final UserSettings userSettings;
   @override
   AboutMeTableState createState() => AboutMeTableState();
 }
@@ -30,8 +32,8 @@ class AboutMeTableState extends State<AboutMeTable> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         OpenableImage(
-          displayedImage: UserSettings.assetPathImgOfMe,
-          imageCaptioning: UserSettings.myName,
+          displayedImage: widget.userSettings.assetPathImgOfMe!,
+          imageCaptioning: widget.userSettings.myName,
           captioningStyle: Theme.of(context).textTheme.headlineLarge,
           disableOpen: true,
         ),
@@ -42,17 +44,17 @@ class AboutMeTableState extends State<AboutMeTable> {
         ),
         rowDivider,
         SocialMediaWidgets(
-          socialMediaLinksConfig: UserSettings.socialMediaLinksConfig,
+          socialMediaLinksConfig: widget.userSettings.socialMediaLinksConfig!,
         ),
         rowDivider,
         EMailButton(
           title: AppLocalizations.of(context)!.mailMe,
-          eMail: UserSettings.businessEmail,
-          firstName: UserSettings.firstName,
+          eMail: widget.userSettings.businessEmail!,
+          firstName: widget.userSettings.firstName!,
         ),
         rowDivider,
         Text(
-          UserSettings.businessEmail,
+          widget.userSettings.businessEmail!,
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.titleMedium,
         ),
@@ -60,7 +62,7 @@ class AboutMeTableState extends State<AboutMeTable> {
         SizedBox(
           width: MediaQuery.of(context).size.width * 0.95,
           child: Text(
-            UserSettings.myQuotation,
+            widget.userSettings.myQuotation!,
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.titleMedium,
           ),

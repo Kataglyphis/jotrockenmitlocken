@@ -8,14 +8,17 @@ import 'package:jotrockenmitlockenrepo/Layout/grid_creator.dart';
 import 'package:jotrockenmitlockenrepo/SocialMedia/social_media_widgets.dart';
 import 'package:jotrockenmitlockenrepo/Url/browser_helper.dart';
 import 'package:jotrockenmitlockenrepo/constants.dart';
+import 'package:jotrockenmitlockenrepo/user_settings.dart';
 
 abstract class Footer extends StatefulWidget {
   const Footer({
     super.key,
     required this.footerPagesConfig,
+    required this.userSettings,
   });
 
   final List<FooterPagesConfig> footerPagesConfig;
+  final UserSettings userSettings;
 }
 
 abstract class FooterState extends State<Footer> {

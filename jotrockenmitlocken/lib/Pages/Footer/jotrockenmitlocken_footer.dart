@@ -1,10 +1,13 @@
-import 'package:jotrockenmitlocken/user_settings.dart';
 import 'package:jotrockenmitlockenrepo/Url/external_link_config.dart';
 import 'package:jotrockenmitlockenrepo/Pages/Footer/footer.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:jotrockenmitlockenrepo/user_settings.dart';
 
 class JotrockenmitlockenFooter extends Footer {
-  const JotrockenmitlockenFooter({super.key, required super.footerPagesConfig});
+  const JotrockenmitlockenFooter(
+      {super.key,
+      required super.footerPagesConfig,
+      required super.userSettings});
 
   @override
   JotrockenmitlockenFooterState createState() =>
@@ -32,6 +35,6 @@ class JotrockenmitlockenFooterState extends FooterState {
 
   @override
   Map<String, ExternalLinkConfig> getUserLevelSocialMediaLinksConfig() {
-    return UserSettings.socialMediaLinksConfig;
+    return widget.userSettings.socialMediaLinksConfig!;
   }
 }

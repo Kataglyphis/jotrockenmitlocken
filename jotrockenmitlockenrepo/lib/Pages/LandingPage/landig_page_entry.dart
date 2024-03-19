@@ -5,44 +5,52 @@ import 'package:jotrockenmitlockenrepo/Decoration/row_divider.dart';
 import 'package:jotrockenmitlockenrepo/Decoration/component_group_decoration.dart';
 import 'package:jotrockenmitlockenrepo/Media/Image/openable_image.dart';
 import 'package:jotrockenmitlockenrepo/Url/browser_helper.dart';
-import 'package:jotrockenmitlocken/user_settings.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:jotrockenmitlockenrepo/Url/external_link_config.dart';
+//import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+// import 'package:jotrockenmitlocken/user_settings.dart';
 
-abstract class LandingPageEntry extends StatefulWidget {
-  const LandingPageEntry({
-    super.key,
-  });
+class LandingPageEntry extends StatefulWidget {
+  const LandingPageEntry(
+      {super.key,
+      required this.label,
+      required this.routerPath,
+      required this.headline,
+      required this.imagePath,
+      required this.githubRepoName,
+      required this.githubRepo,
+      required this.description,
+      re});
+  final String label;
+  final String routerPath;
+  final String headline;
+  final String imagePath;
+  final String githubRepoName;
+  final String description;
+  final ExternalLinkConfig githubRepo;
 
   @override
-  State<LandingPageEntry> createState();
+  State<LandingPageEntry> createState() => LandingPageEntryState();
 }
 
-abstract class LandingPageEntryState extends State<LandingPageEntry> {
+class LandingPageEntryState extends State<LandingPageEntry> {
   bool isDisabled = false;
-
-  String getLabel();
-  String getRouterPath();
-  String getHeadline();
-  String getImagePath();
-  String getGithubRepo();
 
   @override
   Widget build(BuildContext context) {
-    return ComponentGroupDecoration(label: getLabel(), children: <Widget>[
+    return ComponentGroupDecoration(label: widget.label, children: <Widget>[
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           IconButton(
             icon: const FaIcon(FontAwesomeIcons.github),
             onPressed: () {
-              BrowserHelper.launchInBrowser(
-                  UserSettings.appendRepoToGitHubUserLink(getGithubRepo()));
+              BrowserHelper.launchInBrowser(widget.githubRepo);
             },
           ),
           colDivider,
           Text(
-            "${AppLocalizations.of(context)!.playgroundDescription}\n${getGithubRepo()}",
+            "${widget.description}\n${widget.githubRepoName}",
             style: Theme.of(context).textTheme.titleSmall,
           )
         ],
@@ -55,10 +63,10 @@ abstract class LandingPageEntryState extends State<LandingPageEntry> {
             onPressed: isDisabled
                 ? null
                 : () {
-                    context.go(getRouterPath());
+                    context.go(widget.routerPath);
                   },
             child: Text(
-              getHeadline(),
+              widget.headline,
               style: Theme.of(context).textTheme.titleSmall,
             ),
           ),
@@ -66,7 +74,7 @@ abstract class LandingPageEntryState extends State<LandingPageEntry> {
       ),
       rowDivider,
       OpenableImage(
-        displayedImage: getImagePath(),
+        displayedImage: widget.imagePath,
         disableOpen: true,
       ),
       rowDivider

@@ -9,11 +9,13 @@ import 'package:jotrockenmitlockenrepo/app_attributes.dart';
 import 'package:jotrockenmitlockenrepo/Pages/navbar_pages_factory.dart';
 import 'package:jotrockenmitlockenrepo/constants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:jotrockenmitlockenrepo/user_settings.dart';
 
 class AboutMePage extends NavBarPagesFactory {
-  List<List<Widget>> _createAboutMeChildPages(ColorSeed colorSelected) {
+  List<List<Widget>> _createAboutMeChildPages(
+      UserSettings userSettings, ColorSeed colorSelected) {
     List<Widget> childWidgetsLeftPage = [
-      const AboutMeTable(),
+      AboutMeTable(userSettings: userSettings),
     ];
     List<Widget> childWidgetsRightPage = [
       const PerfectDay(),
@@ -27,18 +29,20 @@ class AboutMePage extends NavBarPagesFactory {
   }
 
   @override
-  Widget createPage(AppAttributes appFrameAttributes) {
-    var aboutMePagesLeftRight =
-        _createAboutMeChildPages(appFrameAttributes.colorSelected);
+  Widget createPage(AppAttributes appAttributes, BuildContext context) {
+    var aboutMePagesLeftRight = _createAboutMeChildPages(
+        appAttributes.userSettings, appAttributes.colorSelected);
     return LayoutManager.createOneTwoTransisionWidget(
         aboutMePagesLeftRight[0],
         aboutMePagesLeftRight[1],
         JotrockenmitlockenFooter(
-            footerPagesConfig:
-                JotrockenmitLockenScreenConfigurations.getFooterPagesConfig()),
-        appFrameAttributes.showMediumSizeLayout,
-        appFrameAttributes.showLargeSizeLayout,
-        appFrameAttributes.railAnimation);
+          footerPagesConfig:
+              JotrockenmitLockenScreenConfigurations.getFooterPagesConfig(),
+          userSettings: appAttributes.userSettings,
+        ),
+        appAttributes.showMediumSizeLayout,
+        appAttributes.showLargeSizeLayout,
+        appAttributes.railAnimation);
   }
 
   @override

@@ -8,20 +8,22 @@ import 'package:jotrockenmitlockenrepo/Pages/pages_factory.dart';
 
 class ContactPage extends PagesFactory {
   @override
-  Widget createPage(AppAttributes appFrameAttributes) {
+  Widget createPage(AppAttributes appAttributes, BuildContext context) {
     return LayoutManager.createSinglePage(
       [
         MarkdownFilePage(
           filePathDe: 'assets/documents/footer/contactDe.md',
           filePathEn: 'assets/documents/footer/contactEn.md',
-          useLightMode: appFrameAttributes.useLightMode,
+          useLightMode: appAttributes.useLightMode,
         )
       ],
       JotrockenmitlockenFooter(
-          footerPagesConfig:
-              JotrockenmitLockenScreenConfigurations.getFooterPagesConfig()),
-      appFrameAttributes.showMediumSizeLayout,
-      appFrameAttributes.showLargeSizeLayout,
+        footerPagesConfig:
+            JotrockenmitLockenScreenConfigurations.getFooterPagesConfig(),
+        userSettings: appAttributes.userSettings,
+      ),
+      appAttributes.showMediumSizeLayout,
+      appAttributes.showLargeSizeLayout,
     );
   }
 }
