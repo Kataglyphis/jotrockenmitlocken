@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:jotrockenmitlockenrepo/Decoration/col_divider.dart';
 import 'package:jotrockenmitlockenrepo/Decoration/row_divider.dart';
+import 'package:jotrockenmitlockenrepo/Pages/Footer/footer_config.dart';
 import 'package:jotrockenmitlockenrepo/Url/external_link_config.dart';
 import 'package:jotrockenmitlockenrepo/Pages/Footer/footer_pages_creator.dart';
 import 'package:jotrockenmitlockenrepo/Layout/grid_creator.dart';
@@ -10,26 +11,26 @@ import 'package:jotrockenmitlockenrepo/Url/browser_helper.dart';
 import 'package:jotrockenmitlockenrepo/constants.dart';
 import 'package:jotrockenmitlockenrepo/user_settings.dart';
 
-abstract class Footer extends StatefulWidget {
+class Footer extends StatefulWidget {
   const Footer({
     super.key,
     required this.footerPagesConfig,
     required this.userSettings,
+    required this.footerConfig,
   });
 
   final List<FooterPagesConfig> footerPagesConfig;
+  final FooterConfig footerConfig;
   final UserSettings userSettings;
+
+  @override
+  State<StatefulWidget> createState() => FooterState();
 }
 
-abstract class FooterState extends State<Footer> {
+class FooterState extends State<Footer> {
   final int maxNumFooterPageTextButtonsPerRow = 3;
   final int maxExternalLinksTextButtonsPerRow = 1;
   final double footerHeight = 150.0;
-
-  String getLiabilityText();
-  String getExternalLinksTitle();
-  Map<String, ExternalLinkConfig> getUserLevelSocialMediaLinksConfig();
-  List<ExternalLinkConfig> getExternalLinks();
 
   Widget createTextButtons() {
     var currentWidth = MediaQuery.of(context).size.width;
@@ -63,7 +64,8 @@ abstract class FooterState extends State<Footer> {
       align = MainAxisAlignment.center;
     }
 
-    List<ExternalLinkConfig> externalLinksConfig = getExternalLinks();
+    List<ExternalLinkConfig> externalLinksConfig =
+        widget.footerConfig.getExternalLinks(context);
     List<TextButton> footerExternalLinksButtons = externalLinksConfig
         .map((externalLinkConfig) => (TextButton(
               onPressed: () {
@@ -89,7 +91,7 @@ abstract class FooterState extends State<Footer> {
             children: [
               Text(
                 textAlign: TextAlign.center,
-                getExternalLinksTitle(),
+                widget.footerConfig.getExternalLinksTitle(context),
                 style: Theme.of(context).textTheme.titleMedium,
               ),
             ],
@@ -110,7 +112,7 @@ abstract class FooterState extends State<Footer> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         SocialMediaWidgets(
-          socialMediaLinksConfig: getUserLevelSocialMediaLinksConfig(),
+          socialMediaLinksConfig: widget.userSettings.socialMediaLinksConfig!,
         ),
         Padding(
           padding: const EdgeInsets.all(1),
@@ -119,7 +121,7 @@ abstract class FooterState extends State<Footer> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  getLiabilityText(),
+                  widget.footerConfig.getLiabilityText(context),
                   style: Theme.of(context).textTheme.labelSmall,
                 ),
               ]),

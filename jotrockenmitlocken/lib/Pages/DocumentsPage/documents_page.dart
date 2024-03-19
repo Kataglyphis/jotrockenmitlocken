@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:jotrockenmitlocken/Pages/Footer/jotrockenmitlocken_footer.dart';
+import 'package:jotrockenmitlockenrepo/Pages/Footer/footer.dart';
 import 'package:jotrockenmitlocken/Pages/jotrockenmitlocken_screen_configurations.dart';
 import 'package:jotrockenmitlockenrepo/Media/Files/file.dart';
 import 'package:jotrockenmitlockenrepo/Layout/ResponsiveDesign/layout_manager.dart';
@@ -34,10 +34,11 @@ class DocumentPage extends NavBarPagesFactory {
             title: AppLocalizations.of(context)!.documents,
           )
         ],
-        JotrockenmitlockenFooter(
+        Footer(
           footerPagesConfig:
               JotrockenmitLockenScreenConfigurations.getFooterPagesConfig(),
           userSettings: appAttributes.userSettings,
+          footerConfig: appAttributes.footerConfig,
         ),
         appAttributes.showMediumSizeLayout,
         appAttributes.showLargeSizeLayout);

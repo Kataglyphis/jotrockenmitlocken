@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jotrockenmitlocken/Pages/Footer/jotrockenmitlocken_footer.dart';
+import 'package:jotrockenmitlockenrepo/Pages/Footer/footer.dart';
 import 'package:jotrockenmitlockenrepo/Pages/LandingPage/landig_page_entry.dart';
 import 'package:jotrockenmitlocken/Pages/jotrockenmitlocken_screen_configurations.dart';
 import 'package:jotrockenmitlockenrepo/Media/Files/file.dart';
@@ -41,10 +41,11 @@ class AiBlogPage extends PagesFactory {
             docs: docs,
           )
         ],
-        JotrockenmitlockenFooter(
+        Footer(
           footerPagesConfig:
               JotrockenmitLockenScreenConfigurations.getFooterPagesConfig(),
           userSettings: appAttributes.userSettings,
+          footerConfig: appAttributes.footerConfig,
         ),
         appAttributes.showMediumSizeLayout,
         appAttributes.showLargeSizeLayout);

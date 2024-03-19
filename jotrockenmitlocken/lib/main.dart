@@ -8,6 +8,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:go_router/go_router.dart';
 import 'package:jotrockenmitlocken/Pages/Footer/jotrockenmitlocken_footer.dart';
+import 'package:jotrockenmitlockenrepo/Pages/Footer/footer.dart';
 import 'package:jotrockenmitlocken/Pages/Home/home_config.dart';
 import 'package:jotrockenmitlocken/Pages/jotrockenmitlocken_screen_configurations.dart';
 
@@ -161,6 +162,7 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
         const Locale('de'), // Deutsch
         const Locale('en'), // English
       ],
+      footerConfig: JoTrockenMitLockenFooterConfig(),
       homeConfig: JotrockenMitLockenHomeConfig(),
       userSettings: JonasHeinle,
       screenConfigurations: screenConfigurations,
@@ -180,10 +182,11 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
     final GoRouter routerConfig = routesCreator.getRouterConfig(
         appAttributes,
         controller,
-        JotrockenmitlockenFooter(
+        Footer(
           footerPagesConfig:
               JotrockenmitLockenScreenConfigurations.getFooterPagesConfig(),
           userSettings: JonasHeinle,
+          footerConfig: JoTrockenMitLockenFooterConfig(),
         ));
 
     return MaterialApp.router(
