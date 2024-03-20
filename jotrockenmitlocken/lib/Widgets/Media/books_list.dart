@@ -16,11 +16,11 @@ class BooksList extends DataList {
 
 class _BooksListState extends DataListState<Book, BooksList> {
   @override
-  Future<List<List<dynamic>>> convertRawCSVDataToFinalLayout(
+  Future<(List<Book>, List<String>)> convertRawCSVDataToFinalLayout(
       List<List<dynamic>> csvListData) async {
-    dataCategories = List<String>.from(csvListData.first);
-    listData = csvListData
-        .getRange(1, listData.length)
+    List<String> dataCategories = List<String>.from(csvListData.first);
+    List<Book> convertedCsvListData = csvListData
+        .getRange(1, csvListData.length)
         .toList()
         .map((List e) => Book(
               title: e.elementAt(0),
@@ -28,6 +28,11 @@ class _BooksListState extends DataListState<Book, BooksList> {
               isbn: e.elementAt(2),
             ))
         .toList();
-    return csvListData;
+    return (convertedCsvListData, dataCategories);
+  }
+
+  @override
+  List<double> getSpacing() {
+    return [0.25, 0.25, 0.25, 0.25];
   }
 }

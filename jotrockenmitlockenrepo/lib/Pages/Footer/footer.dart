@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:jotrockenmitlockenrepo/Decoration/col_divider.dart';
 import 'package:jotrockenmitlockenrepo/Decoration/row_divider.dart';
 import 'package:jotrockenmitlockenrepo/Pages/Footer/footer_config.dart';
-import 'package:jotrockenmitlockenrepo/Url/external_link_config.dart';
-import 'package:jotrockenmitlockenrepo/Pages/Footer/footer_pages_creator.dart';
-import 'package:jotrockenmitlockenrepo/Layout/grid_creator.dart';
-import 'package:jotrockenmitlockenrepo/SocialMedia/social_media_widgets.dart';
-import 'package:jotrockenmitlockenrepo/Url/browser_helper.dart';
+import 'package:jotrockenmitlockenrepo/Pages/Footer/Sections/footer_external_links.dart';
+import 'package:jotrockenmitlockenrepo/Pages/Footer/Sections/footer_pages_text_buttons.dart';
+import 'package:jotrockenmitlockenrepo/Pages/Footer/Sections/footer_social_icons_and_liability.dart';
+import 'package:jotrockenmitlockenrepo/Pages/Footer/footer_pages_config.dart';
 import 'package:jotrockenmitlockenrepo/constants.dart';
 import 'package:jotrockenmitlockenrepo/user_settings.dart';
 
@@ -28,106 +26,11 @@ class Footer extends StatefulWidget {
 }
 
 class FooterState extends State<Footer> {
-  final int maxNumFooterPageTextButtonsPerRow = 3;
-  final int maxExternalLinksTextButtonsPerRow = 1;
   final double footerHeight = 150.0;
 
-  Widget createTextButtons() {
-    var currentWidth = MediaQuery.of(context).size.width;
-    var align = MainAxisAlignment.start;
-    if (currentWidth < mediumWidthBreakpoint) {
-      align = MainAxisAlignment.center;
-    }
-
-    List<TextButton> footerPagesButtons = widget.footerPagesConfig
-        .map((footerPageConfig) => (TextButton(
-              style: TextButton.styleFrom(
-                  textStyle: Theme.of(context).textTheme.bodyMedium),
-              onPressed: () {
-                context.go(footerPageConfig.routingName);
-              },
-              child: Text(
-                textAlign: TextAlign.center,
-                footerPageConfig.getHeading(context),
-              ),
-            )))
-        .toList();
-
-    return GridCreator.createAdaptiveGridOfWidgets(
-        align, maxNumFooterPageTextButtonsPerRow, footerPagesButtons);
-  }
-
-  Widget createTextButtonsForExternalLinks() {
-    var currentWidth = MediaQuery.of(context).size.width;
-    var align = MainAxisAlignment.center;
-    if (currentWidth < mediumWidthBreakpoint) {
-      align = MainAxisAlignment.center;
-    }
-
-    List<ExternalLinkConfig> externalLinksConfig =
-        widget.footerConfig.getExternalLinks(context);
-    List<TextButton> footerExternalLinksButtons = externalLinksConfig
-        .map((externalLinkConfig) => (TextButton(
-              onPressed: () {
-                BrowserHelper.launchInBrowser(externalLinkConfig);
-              },
-              style: Theme.of(context).textButtonTheme.style,
-              child: Text(
-                externalLinkConfig.host,
-              ),
-            )))
-        .toList();
-
-    return Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SizedBox(
-            height: 10,
-          ),
-          Row(
-            mainAxisAlignment: align,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Text(
-                textAlign: TextAlign.center,
-                widget.footerConfig.getExternalLinksTitle(context),
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
-            ],
-          ),
-          GridCreator.createAdaptiveGridOfWidgets(align,
-              maxExternalLinksTextButtonsPerRow, footerExternalLinksButtons),
-        ]);
-  }
-
-  Widget createSocialIconsAndLiabilityWidgets() {
-    var currentWidth = MediaQuery.of(context).size.width;
-    var align = MainAxisAlignment.start;
-    if (currentWidth < mediumWidthBreakpoint) {
-      align = MainAxisAlignment.center;
-    }
-    return Column(
-      mainAxisAlignment: align,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        SocialMediaWidgets(
-          socialMediaLinksConfig: widget.userSettings.socialMediaLinksConfig!,
-        ),
-        Padding(
-          padding: const EdgeInsets.all(1),
-          child: Row(
-              mainAxisAlignment: align,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  widget.footerConfig.getLiabilityText(context),
-                  style: Theme.of(context).textTheme.labelSmall,
-                ),
-              ]),
-        )
-      ],
-    );
+  @override
+  void initState() {
+    super.initState();
   }
 
   @override
@@ -137,11 +40,19 @@ class FooterState extends State<Footer> {
       return Column(
         children: [
           rowDivider,
-          createTextButtons(),
+          FooterPagesTextButtons(
+            footerPagesConfig: widget.footerPagesConfig,
+          ),
           rowDivider,
-          createSocialIconsAndLiabilityWidgets(),
+          FooterSocialIconsAndLiability(
+            footerConfig: widget.footerConfig,
+            userSettings: widget.userSettings,
+          ),
           rowDivider,
-          createTextButtonsForExternalLinks(),
+          FooterExternalLinks(
+            footerConfig: widget.footerConfig,
+            userSettings: widget.userSettings,
+          ),
           rowDivider,
         ],
       );
@@ -156,11 +67,18 @@ class FooterState extends State<Footer> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 colDivider,
-                createTextButtons(),
+                FooterPagesTextButtons(
+                    footerPagesConfig: widget.footerPagesConfig),
                 colDivider,
-                createSocialIconsAndLiabilityWidgets(),
+                FooterSocialIconsAndLiability(
+                  footerConfig: widget.footerConfig,
+                  userSettings: widget.userSettings,
+                ),
                 colDivider,
-                createTextButtonsForExternalLinks(),
+                FooterExternalLinks(
+                  footerConfig: widget.footerConfig,
+                  userSettings: widget.userSettings,
+                ),
               ],
             ),
           ],

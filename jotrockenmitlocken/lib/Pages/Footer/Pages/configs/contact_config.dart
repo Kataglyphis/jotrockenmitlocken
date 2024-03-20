@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jotrockenmitlockenrepo/Pages/Footer/footer_pages_creator.dart';
+import 'package:jotrockenmitlockenrepo/Pages/Footer/footer_pages_config.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ContactPagesConfig extends FooterPagesConfig {

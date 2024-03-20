@@ -30,6 +30,13 @@ class MarkdownFilePage extends StatefulWidget {
 }
 
 class MarkdownFilePageState extends State<MarkdownFilePage> {
+  late Future<String> _markupFileContent;
+  @override
+  void initState() {
+    super.initState();
+    _markupFileContent = _readMarkupFile();
+  }
+
   Future<String> _readMarkupFile() async {
     // Path to the markup file
     assert(widget.filePathDe != '' || widget.filePathEn != '',
@@ -78,7 +85,7 @@ class MarkdownFilePageState extends State<MarkdownFilePage> {
       children: <Widget>[
         rowDivider,
         FutureBuilder(
-          future: _readMarkupFile(),
+          future: _markupFileContent,
           builder: (context, data) {
             if (data.hasData) {
               return SizedBox(

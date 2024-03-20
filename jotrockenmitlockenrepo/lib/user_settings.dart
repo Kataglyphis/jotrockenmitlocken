@@ -7,6 +7,8 @@ class UserSettings {
       required this.myQuotation,
       required this.firstName,
       required this.lastName,
+      required this.aboutMeFileDe,
+      required this.aboutMeFileEn,
       required this.assetPathImgOfMe}) {
     myName = "$firstName $lastName";
   }
@@ -17,6 +19,8 @@ class UserSettings {
   String? lastName;
   String? myName;
   String? assetPathImgOfMe;
+  String? aboutMeFileDe;
+  String? aboutMeFileEn;
 
   ExternalLinkConfig getFullPathToGithubRepo(String repo) {
     ExternalLinkConfig github = socialMediaLinksConfig!["GitHub"]!;
