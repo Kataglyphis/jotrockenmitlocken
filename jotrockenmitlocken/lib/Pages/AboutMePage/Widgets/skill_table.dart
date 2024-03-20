@@ -4,34 +4,37 @@ import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:jotrockenmitlockenrepo/Decoration/decoration_helper.dart';
 import 'package:jotrockenmitlockenrepo/constants.dart';
+import 'package:jotrockenmitlockenrepo/user_settings.dart';
 
 class SkillTable extends StatefulWidget {
-  const SkillTable({super.key});
+  const SkillTable({super.key, required this.userSettings});
 
+  final UserSettings userSettings;
   @override
   State<SkillTable> createState() => _SkillTableState();
 }
 
 class _SkillTableState extends State<SkillTable> {
-  _SkillTableState();
+  late Future<(List<String>, List<List<dynamic>>)> _skillTableJson;
 
-  List keys = [];
-  List<List<dynamic>> values = [];
-  String aboutMeFileDe = 'assets/data/aboutme_de.json';
-  String aboutMeFileEn = 'assets/data/aboutme_en.json';
+  @override
+  void initState() {
+    super.initState();
+    _skillTableJson = _readJson();
+  }
 
   // Fetch content from the json file
-  Future<Map<String, dynamic>> _readJson() async {
-    String aboutMeFile = aboutMeFileEn;
+  Future<(List<String>, List<List<dynamic>>)> _readJson() async {
+    String aboutMeFile = widget.userSettings.aboutMeFileEn!;
     if (Localizations.localeOf(context) == const Locale('de')) {
-      aboutMeFile = aboutMeFileDe;
+      aboutMeFile = widget.userSettings.aboutMeFileDe!;
     }
     final jsonData = await rootBundle.loadString(aboutMeFile);
     final Map<String, dynamic> list = json.decode(jsonData);
-    var items = list;
-    keys = items.keys.toList();
+    List<List<dynamic>> values = [];
+    List<String> keys = list.keys.toList();
     for (int i = 0; i < keys.length; i++) {
-      var val = items[keys[i]];
+      var val = list[keys[i]];
       // no support right now for nested object notations
       if (val is List) {
         values.add(val);
@@ -42,7 +45,7 @@ class _SkillTableState extends State<SkillTable> {
       }
     }
 
-    return list;
+    return (keys, values);
   }
 
   List<Widget> getSkillTableKeys(dynamic key) {
@@ -74,66 +77,67 @@ class _SkillTableState extends State<SkillTable> {
     double betweenColumnPadding =
         (currentWith <= narrowScreenWidthThreshold) ? 40.0 : 80.0;
 
-    return applyBoxDecoration(
-        child: FutureBuilder(
-            future: _readJson(),
-            builder: (context, data) {
-              if (data.hasData) {
-                List<TableRow> skills = [];
-                for (int i = 0; i < keys.length; i++) {
-                  String entryVal = "";
-                  var entryList = values[i];
-                  for (int j = 0; j < entryList.length; j++) {
-                    entryVal += "• ${entryList[j]}${"\n"}";
-                  }
-                  skills.add(TableRow(children: [
-                    TableCell(
-                        child: Padding(
-                      padding: const EdgeInsets.fromLTRB(8, 8, 0, 0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: getSkillTableKeys(keys[i]),
-                      ),
-                    )),
-                    TableCell(
-                        child: Padding(
-                      padding:
-                          EdgeInsets.fromLTRB(betweenColumnPadding, 8, 0, 0),
-                      child: Text(entryVal,
-                          style: Theme.of(context).textTheme.titleMedium),
-                    ))
-                  ]));
-                  skills.add(const TableRow(children: [
-                    SizedBox(
-                      height: 16,
-                    ),
-                    SizedBox(
-                      height: 16,
-                    ),
-                  ]));
-                }
-                final double currentWidth = MediaQuery.of(context).size.width;
-                double skillTableWidth = currentWidth;
-                if (currentWidth >= mediumWidthBreakpoint) {
-                  skillTableWidth = skillTableWidth * 0.4;
-                } else {
-                  skillTableWidth = skillTableWidth * 0.9;
-                }
-                return SizedBox(
+    return FutureBuilder(
+        future: _skillTableJson,
+        builder: (context, data) {
+          if (data.hasData) {
+            List<String> keys = data.requireData.$1;
+            List<List<dynamic>> values = data.requireData.$2;
+            List<TableRow> skills = [];
+            for (int i = 0; i < keys.length; i++) {
+              String entryVal = "";
+              var entryList = values[i];
+              for (int j = 0; j < entryList.length; j++) {
+                entryVal += "• ${entryList[j]}${"\n"}";
+              }
+              skills.add(TableRow(children: [
+                TableCell(
+                    child: Padding(
+                  padding: const EdgeInsets.fromLTRB(8, 8, 0, 0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: getSkillTableKeys(keys[i]),
+                  ),
+                )),
+                TableCell(
+                    child: Padding(
+                  padding: EdgeInsets.fromLTRB(betweenColumnPadding, 8, 0, 0),
+                  child: Text(entryVal,
+                      style: Theme.of(context).textTheme.titleMedium),
+                ))
+              ]));
+              skills.add(const TableRow(children: [
+                SizedBox(
+                  height: 16,
+                ),
+                SizedBox(
+                  height: 16,
+                ),
+              ]));
+            }
+            final double currentWidth = MediaQuery.of(context).size.width;
+            double skillTableWidth = currentWidth;
+            if (currentWidth >= mediumWidthBreakpoint) {
+              skillTableWidth = skillTableWidth * 0.4;
+            } else {
+              skillTableWidth = skillTableWidth * 0.9;
+            }
+            return applyBoxDecoration(
+                child: SizedBox(
                   width: skillTableWidth,
                   child: Table(
                       defaultVerticalAlignment: TableCellVerticalAlignment.top,
                       children: skills),
-                );
-              } else if (data.hasError) {
-                return Center(child: Text("${data.error}"));
-              } else {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-            }),
-        color: Theme.of(context).colorScheme.primary);
+                ),
+                color: Theme.of(context).colorScheme.primary);
+          } else if (data.hasError) {
+            return Center(child: Text("${data.error}"));
+          } else {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        });
   }
 }

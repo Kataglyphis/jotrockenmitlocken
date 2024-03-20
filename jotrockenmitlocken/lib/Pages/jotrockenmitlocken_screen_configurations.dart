@@ -19,7 +19,7 @@ import 'package:jotrockenmitlocken/Pages/LandingPage/Entries/rendering_playgroun
 import 'package:jotrockenmitlocken/Pages/QuotesPage/quotes_page.dart';
 import 'package:jotrockenmitlocken/Pages/blog_pages_config.dart';
 import 'package:jotrockenmitlockenrepo/Pages/navbar_pages_config.dart';
-import 'package:jotrockenmitlockenrepo/Pages/Footer/footer_pages_creator.dart';
+import 'package:jotrockenmitlockenrepo/Pages/Footer/footer_pages_config.dart';
 import 'package:jotrockenmitlockenrepo/Pages/pages_config.dart';
 import 'package:jotrockenmitlockenrepo/Pages/stateful_branch_info_provider.dart';
 import 'package:jotrockenmitlockenrepo/Routing/screen_configurations.dart';

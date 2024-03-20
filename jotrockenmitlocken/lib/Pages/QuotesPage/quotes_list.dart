@@ -20,10 +20,10 @@ class _QuotesListState extends DataListState<Quote, QuotesList> {
   }
 
   @override
-  Future<List<List<dynamic>>> convertRawCSVDataToFinalLayout(
+  Future<(List<Quote>, List<String>)> convertRawCSVDataToFinalLayout(
       List<List<dynamic>> csvListData) async {
-    dataCategories = List<String>.from(csvListData.first);
-    listData = csvListData
+    List<String> dataCategories = List<String>.from(csvListData.first);
+    List<Quote> convertedCsvListData = csvListData
         .getRange(1, csvListData.length)
         .toList()
         .map((List e) => Quote(
@@ -31,6 +31,11 @@ class _QuotesListState extends DataListState<Quote, QuotesList> {
               content: _formatQuote(e.elementAt(1).toString()),
             ))
         .toList();
-    return csvListData;
+    return (convertedCsvListData, dataCategories);
+  }
+
+  @override
+  List<double> getSpacing() {
+    return [0.2, 0.65];
   }
 }
