@@ -39,72 +39,58 @@ abstract class DataList extends StatefulWidget {
 
 abstract class DataListState<T extends TableData, U extends DataList>
     extends State<U> {
-  List<String> dataCategories = [];
-  late List<T> listData;
   int sortColumnIndex = 0;
   bool isAscending = true;
 
-  Future<List<List<dynamic>>> _loadDataFromCSV() async {
+  late Future<(List<T>, List<String>)> _rawCsvData;
+
+  List<double> getSpacing();
+  Future<(List<T>, List<String>)> convertRawCSVDataToFinalLayout(
+      List<List<dynamic>> csvListData);
+
+  @override
+  void initState() {
+    super.initState();
+    _rawCsvData = _loadDataFromCSV();
+  }
+
+  Future<(List<T>, List<String>)> _loadDataFromCSV() async {
     final rawData = await rootBundle.loadString(widget.dataFilePath);
     List<List<dynamic>> csvListData =
         const CsvToListConverter().convert(rawData);
-    List<List<dynamic>> finalData =
-        await convertRawCSVDataToFinalLayout(csvListData);
+    Future<(List<T>, List<String>)> finalData =
+        convertRawCSVDataToFinalLayout(csvListData);
     return finalData;
   }
-
-  Future<List<List<dynamic>>> convertRawCSVDataToFinalLayout(
-      List<List<dynamic>> csvListData);
 
   int _compareString(bool ascending, String value1, String value2) {
     return ascending ? value1.compareTo(value2) : value2.compareTo(value1);
   }
 
-  void _sort(int columnIndex, bool ascending) {
-    listData.sort((data1, data2) => _compareString(isAscending,
-        data1.getCells()[columnIndex], data2.getCells()[columnIndex]));
-
-    this.sortColumnIndex = columnIndex;
-    this.isAscending = ascending;
-  }
-
-  // other classes will have to override these two methods
-  void _onSortData(int columnIndex, bool ascending) {
-    setState(() {
-      _sort(columnIndex, ascending);
-    });
-  }
-
-  List<DataRow> getDataRows(List<T> rowData, double maxWidth) =>
-      rowData.map((T data) {
-        List<double> spacings = data.getSpacing();
-        final cells = data.getCells();
-        assert(cells.length == spacings.length,
-            "The spacing values are percentages of row space per header entry!");
-        return DataRow(
-            cells: cells
-                .map((entry) => DataCell(SizedBox(
-                      width: (maxWidth) * spacings[cells.indexOf(entry)],
-                      child: Text(
-                        entry,
-                        overflow: TextOverflow.visible,
-                        softWrap: true,
-                      ),
-                    )))
-                .toList());
-      }).toList();
-
-  List<DataColumn> getDataColumns(List<String> columnsString) {
-    return columnsString
-        .map((String column) => DataColumn(
-              label: Text(column),
-              onSort: _onSortData,
-            ))
-        .toList();
+  List<DataRow> getDataRows(List<T> csvData, double maxWidth) {
+    return csvData.map((T data) {
+      return DataRow(
+          cells: data
+              .getCells()
+              .map((entry) => DataCell(SizedBox(
+                    width: (maxWidth) *
+                        getSpacing()[data.getCells().indexOf(entry)],
+                    child: Text(
+                      entry,
+                      overflow: TextOverflow.visible,
+                      softWrap: true,
+                    ),
+                  )))
+              .toList());
+    }).toList();
   }
 
   @override
   Widget build(BuildContext context) {
+    double currentWidth = MediaQuery.of(context).size.width;
+    double dataTableWidth = (currentWidth >= largeWidthBreakpoint)
+        ? currentWidth * 0.8
+        : currentWidth * 0.9;
     return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -122,15 +108,14 @@ abstract class DataListState<T extends TableData, U extends DataList>
           ),
           rowDivider,
           FutureBuilder(
-              future: _loadDataFromCSV(),
+              future: _rawCsvData,
               builder: (context, data) {
                 if (data.hasData) {
-                  double currentWidth = MediaQuery.of(context).size.width;
-                  double dataTableWidth = (currentWidth >= largeWidthBreakpoint)
-                      ? currentWidth * 0.8
-                      : currentWidth * 0.9;
-                  final DataTableSource data =
-                      _MyDataTableSource(getDataRows(listData, dataTableWidth));
+                  List<T> csvData = data.requireData.$1;
+                  List<String> dataCategories = data.requireData.$2;
+
+                  final DataTableSource dataTableSource =
+                      _MyDataTableSource(getDataRows(csvData, dataTableWidth));
                   return SizedBox(
                     width: dataTableWidth,
                     child: applyBoxDecoration(
@@ -138,8 +123,24 @@ abstract class DataListState<T extends TableData, U extends DataList>
                           dataRowMaxHeight: double.infinity,
                           sortColumnIndex: sortColumnIndex,
                           sortAscending: isAscending,
-                          columns: getDataColumns(dataCategories),
-                          source: data,
+                          columns: dataCategories
+                              .map((String column) => DataColumn(
+                                    label: Text(column),
+                                    onSort: (int columnIndex, bool ascending) {
+                                      setState(() {
+                                        csvData.sort((data1, data2) =>
+                                            _compareString(
+                                                isAscending,
+                                                data1.getCells()[columnIndex],
+                                                data2.getCells()[columnIndex]));
+
+                                        this.sortColumnIndex = columnIndex;
+                                        this.isAscending = ascending;
+                                      });
+                                    },
+                                  ))
+                              .toList(),
+                          source: dataTableSource,
                         ),
                         borderRadius: 8,
                         borderWidth: 6,

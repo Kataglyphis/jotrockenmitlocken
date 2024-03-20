@@ -9,9 +9,4 @@ class Quote extends TableData {
   List<String> getCells() {
     return [author, content];
   }
-
-  @override
-  List<double> getSpacing() {
-    return [0.2, 0.65];
-  }
 }

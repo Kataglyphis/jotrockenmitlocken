@@ -22,7 +22,9 @@ class AboutMePage extends NavBarPagesFactory {
       const SizedBox(
         height: 40,
       ),
-      const SkillTable(),
+      SkillTable(
+        userSettings: userSettings,
+      ),
     ];
 
     return [childWidgetsLeftPage, childWidgetsRightPage];

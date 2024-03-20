@@ -150,6 +150,8 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
     lastName: "Heinle",
     assetPathImgOfMe:
         "assets/images/Bewerbungsbilder/a95a64ca_runterskaliert.jpg",
+    aboutMeFileDe: 'assets/data/aboutme_de.json',
+    aboutMeFileEn: 'assets/data/aboutme_en.json',
   );
 
   @override

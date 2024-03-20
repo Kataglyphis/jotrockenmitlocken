@@ -10,9 +10,4 @@ class Book extends TableData {
   List<String> getCells() {
     return [title, author, isbn];
   }
-
-  @override
-  List<double> getSpacing() {
-    return [0.25, 0.25, 0.25, 0.25];
-  }
 }

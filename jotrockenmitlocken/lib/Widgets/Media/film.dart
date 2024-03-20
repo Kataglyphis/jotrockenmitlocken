@@ -9,9 +9,4 @@ class Film extends TableData {
   List<String> getCells() {
     return [title, isan];
   }
-
-  @override
-  List<double> getSpacing() {
-    return [0.33, 0.33, 0.33];
-  }
 }
