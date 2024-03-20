@@ -16,17 +16,22 @@ class FilmsList extends DataList {
 
 class _FilmsListState extends DataListState<Film, FilmsList> {
   @override
-  Future<List<List<dynamic>>> convertRawCSVDataToFinalLayout(
+  Future<(List<Film>, List<String>)> convertRawCSVDataToFinalLayout(
       List<List<dynamic>> csvListData) async {
-    dataCategories = List<String>.from(csvListData.first);
-    listData = csvListData
-        .getRange(1, listData.length)
+    List<String> dataCategories = List<String>.from(csvListData.first);
+    List<Film> convertedCsvListData = csvListData
+        .getRange(1, csvListData.length)
         .toList()
         .map((List e) => Film(
               title: e.elementAt(0),
               isan: e.elementAt(1),
             ))
         .toList();
-    return csvListData;
+    return (convertedCsvListData, dataCategories);
+  }
+
+  @override
+  List<double> getSpacing() {
+    return [0.33, 0.33, 0.33];
   }
 }
