@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jotrockenmitlockenrepo/Pages/Footer/footer.dart';
-import 'package:jotrockenmitlockenrepo/Layout/ResponsiveDesign/layout_manager.dart';
+import 'package:jotrockenmitlockenrepo/Layout/ResponsiveDesign/one_two_transition_widget.dart';
 import 'package:jotrockenmitlockenrepo/app_attributes.dart';
 import 'package:jotrockenmitlocken/Pages/blog_pages_config.dart';
 import 'package:jotrockenmitlockenrepo/Pages/navbar_pages_factory.dart';
@@ -43,18 +43,18 @@ class LandingPage extends NavBarPagesFactory {
   Widget createPage(AppAttributes appAttributes, BuildContext context) {
     var homePagesLeftRight =
         _createLandingPageChildWidgets(appAttributes, context);
-    return LayoutManager.createOneTwoTransisionWidget(
-        homePagesLeftRight[0],
-        homePagesLeftRight[1],
-        Footer(
+    return OneTwoTransitionPage(
+        childWidgetsLeftPage: homePagesLeftRight[0],
+        childWidgetsRightPage: homePagesLeftRight[1],
+        footer: Footer(
           footerPagesConfig:
               JotrockenmitLockenScreenConfigurations.getFooterPagesConfig(),
           userSettings: appAttributes.userSettings,
           footerConfig: appAttributes.footerConfig,
         ),
-        appAttributes.showMediumSizeLayout,
-        appAttributes.showLargeSizeLayout,
-        appAttributes.railAnimation);
+        showMediumSizeLayout: appAttributes.showMediumSizeLayout,
+        showLargeSizeLayout: appAttributes.showLargeSizeLayout,
+        railAnimation: appAttributes.railAnimation);
   }
 
   @override

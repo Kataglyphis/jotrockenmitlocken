@@ -3,7 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:jotrockenmitlockenrepo/Pages/Footer/footer.dart';
 import 'package:jotrockenmitlocken/Pages/jotrockenmitlocken_screen_configurations.dart';
 import 'package:jotrockenmitlockenrepo/Media/Files/file.dart';
-import 'package:jotrockenmitlockenrepo/Layout/ResponsiveDesign/layout_manager.dart';
+import 'package:jotrockenmitlockenrepo/Layout/ResponsiveDesign/single_page.dart';
 import 'package:jotrockenmitlockenrepo/Media/Files/file_table.dart';
 import 'package:jotrockenmitlockenrepo/app_attributes.dart';
 import 'package:jotrockenmitlockenrepo/Pages/navbar_pages_factory.dart';
@@ -27,21 +27,21 @@ class DocumentPage extends NavBarPagesFactory {
           title: 'Bachelor_Thesis.pdf',
           additionalInfo: '~33MB German')
     ];
-    return LayoutManager.createSinglePage(
-        [
+    return SinglePage(
+        children: [
           FileTable(
             docs: docs,
             title: AppLocalizations.of(context)!.documents,
           )
         ],
-        Footer(
+        footer: Footer(
           footerPagesConfig:
               JotrockenmitLockenScreenConfigurations.getFooterPagesConfig(),
           userSettings: appAttributes.userSettings,
           footerConfig: appAttributes.footerConfig,
         ),
-        appAttributes.showMediumSizeLayout,
-        appAttributes.showLargeSizeLayout);
+        showMediumSizeLayout: appAttributes.showMediumSizeLayout,
+        showLargeSizeLayout: appAttributes.showLargeSizeLayout);
   }
 
   @override
