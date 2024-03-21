@@ -36,7 +36,10 @@ class OneTwoTransitionPageState extends State<OneTwoTransitionPage> {
               showSecondList:
                   widget.showMediumSizeLayout || widget.showLargeSizeLayout,
               childWidgetsLeftPage: widget.childWidgetsLeftPage,
-              childWidgetsRightPage: widget.childWidgetsRightPage,
+              childWidgetsRightPage:
+                  (widget.showMediumSizeLayout || widget.showLargeSizeLayout)
+                      ? widget.childWidgetsRightPage
+                      : widget.childWidgetsRightPage + [widget.footer],
             ),
             two: ScrollableList(
               childWidgets: widget.childWidgetsRightPage,
