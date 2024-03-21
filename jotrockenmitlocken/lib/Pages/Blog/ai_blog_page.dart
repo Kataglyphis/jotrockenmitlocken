@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:jotrockenmitlockenrepo/Pages/Footer/footer.dart';
 import 'package:jotrockenmitlocken/Pages/jotrockenmitlocken_screen_configurations.dart';
+import 'package:jotrockenmitlockenrepo/Layout/ResponsiveDesign/single_page.dart';
 import 'package:jotrockenmitlockenrepo/Media/Files/file.dart';
 import 'package:jotrockenmitlockenrepo/Media/Files/file_table.dart';
 import 'package:jotrockenmitlockenrepo/Media/Markdown/markdown_page.dart';
-import 'package:jotrockenmitlockenrepo/Layout/ResponsiveDesign/layout_manager.dart';
 import 'package:jotrockenmitlockenrepo/app_attributes.dart';
 import 'package:jotrockenmitlockenrepo/Pages/pages_factory.dart';
 
@@ -27,8 +27,8 @@ class AiBlogPage extends PagesFactory {
           title: 'WorleyNoiseTextures.zip',
           additionalInfo: 'Use it for you own projects.')
     ];
-    return LayoutManager.createSinglePage(
-        [
+    return SinglePage(
+        children: [
           MarkdownFilePage(
             filePathDe: '',
             filePathEn: 'assets/documents/blog/aiBlogPageEn.md',
@@ -40,13 +40,13 @@ class AiBlogPage extends PagesFactory {
             docs: docs,
           )
         ],
-        Footer(
+        footer: Footer(
           footerPagesConfig:
               JotrockenmitLockenScreenConfigurations.getFooterPagesConfig(),
           userSettings: appAttributes.userSettings,
           footerConfig: appAttributes.footerConfig,
         ),
-        appAttributes.showMediumSizeLayout,
-        appAttributes.showLargeSizeLayout);
+        showMediumSizeLayout: appAttributes.showMediumSizeLayout,
+        showLargeSizeLayout: appAttributes.showLargeSizeLayout);
   }
 }
