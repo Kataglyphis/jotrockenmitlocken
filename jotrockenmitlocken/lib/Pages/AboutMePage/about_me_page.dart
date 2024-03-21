@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:jotrockenmitlocken/Pages/AboutMePage/Widgets/about_me_table.dart';
 import 'package:jotrockenmitlocken/Pages/AboutMePage/Widgets/perfect_day_chart.dart';
 import 'package:jotrockenmitlocken/Pages/AboutMePage/Widgets/skill_table.dart';
+import 'package:jotrockenmitlockenrepo/Layout/ResponsiveDesign/one_two_transition_widget.dart';
 import 'package:jotrockenmitlockenrepo/Pages/Footer/footer.dart';
 import 'package:jotrockenmitlocken/Pages/jotrockenmitlocken_screen_configurations.dart';
-import 'package:jotrockenmitlockenrepo/Layout/ResponsiveDesign/layout_manager.dart';
 import 'package:jotrockenmitlockenrepo/app_attributes.dart';
 import 'package:jotrockenmitlockenrepo/Pages/navbar_pages_factory.dart';
 import 'package:jotrockenmitlockenrepo/constants.dart';
@@ -12,8 +12,12 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:jotrockenmitlockenrepo/user_settings.dart';
 
 class AboutMePage extends NavBarPagesFactory {
-  List<List<Widget>> _createAboutMeChildPages(
-      UserSettings userSettings, ColorSeed colorSelected) {
+  List<List<Widget>> _createAboutMeChildPages(UserSettings userSettings,
+      ColorSeed colorSelected, BuildContext context) {
+    String aboutMeFile = userSettings.aboutMeFileEn!;
+    if (Localizations.localeOf(context) == const Locale('de')) {
+      aboutMeFile = userSettings.aboutMeFileDe!;
+    }
     List<Widget> childWidgetsLeftPage = [
       AboutMeTable(userSettings: userSettings),
     ];
@@ -23,6 +27,7 @@ class AboutMePage extends NavBarPagesFactory {
         height: 40,
       ),
       SkillTable(
+        aboutMeFile: aboutMeFile,
         userSettings: userSettings,
       ),
     ];
@@ -33,19 +38,19 @@ class AboutMePage extends NavBarPagesFactory {
   @override
   Widget createPage(AppAttributes appAttributes, BuildContext context) {
     var aboutMePagesLeftRight = _createAboutMeChildPages(
-        appAttributes.userSettings, appAttributes.colorSelected);
-    return LayoutManager.createOneTwoTransisionWidget(
-        aboutMePagesLeftRight[0],
-        aboutMePagesLeftRight[1],
-        Footer(
+        appAttributes.userSettings, appAttributes.colorSelected, context);
+    return OneTwoTransitionPage(
+        childWidgetsLeftPage: aboutMePagesLeftRight[0],
+        childWidgetsRightPage: aboutMePagesLeftRight[1],
+        footer: Footer(
           footerPagesConfig:
               JotrockenmitLockenScreenConfigurations.getFooterPagesConfig(),
           userSettings: appAttributes.userSettings,
           footerConfig: appAttributes.footerConfig,
         ),
-        appAttributes.showMediumSizeLayout,
-        appAttributes.showLargeSizeLayout,
-        appAttributes.railAnimation);
+        showMediumSizeLayout: appAttributes.showMediumSizeLayout,
+        showLargeSizeLayout: appAttributes.showLargeSizeLayout,
+        railAnimation: appAttributes.railAnimation);
   }
 
   @override
