@@ -5,11 +5,15 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:jotrockenmitlockenrepo/Decoration/decoration_helper.dart';
 import 'package:jotrockenmitlockenrepo/constants.dart';
 import 'package:jotrockenmitlockenrepo/user_settings.dart';
+import 'package:jotrockenmitlockenrepo/Decoration/row_divider.dart';
 
 class SkillTable extends StatefulWidget {
-  const SkillTable({super.key, required this.userSettings});
+  SkillTable(
+      {super.key, required this.userSettings, required this.aboutMeFile});
 
   final UserSettings userSettings;
+  final String aboutMeFile; //= widget.userSettings.aboutMeFileEn!;
+
   @override
   State<SkillTable> createState() => _SkillTableState();
 }
@@ -25,11 +29,7 @@ class _SkillTableState extends State<SkillTable> {
 
   // Fetch content from the json file
   Future<(List<String>, List<List<dynamic>>)> _readJson() async {
-    String aboutMeFile = widget.userSettings.aboutMeFileEn!;
-    if (Localizations.localeOf(context) == const Locale('de')) {
-      aboutMeFile = widget.userSettings.aboutMeFileDe!;
-    }
-    final jsonData = await rootBundle.loadString(aboutMeFile);
+    final jsonData = await rootBundle.loadString(widget.aboutMeFile);
     final Map<String, dynamic> list = json.decode(jsonData);
     List<List<dynamic>> values = [];
     List<String> keys = list.keys.toList();
@@ -107,13 +107,9 @@ class _SkillTableState extends State<SkillTable> {
                       style: Theme.of(context).textTheme.titleMedium),
                 ))
               ]));
-              skills.add(const TableRow(children: [
-                SizedBox(
-                  height: 16,
-                ),
-                SizedBox(
-                  height: 16,
-                ),
+              skills.add(TableRow(children: [
+                rowDivider,
+                rowDivider,
               ]));
             }
             final double currentWidth = MediaQuery.of(context).size.width;
