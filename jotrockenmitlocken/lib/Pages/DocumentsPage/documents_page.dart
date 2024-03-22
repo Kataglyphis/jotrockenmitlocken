@@ -6,11 +6,18 @@ import 'package:jotrockenmitlockenrepo/Media/Files/file.dart';
 import 'package:jotrockenmitlockenrepo/Layout/ResponsiveDesign/single_page.dart';
 import 'package:jotrockenmitlockenrepo/Media/Files/file_table.dart';
 import 'package:jotrockenmitlockenrepo/app_attributes.dart';
-import 'package:jotrockenmitlockenrepo/Pages/navbar_pages_factory.dart';
 
-class DocumentPage extends NavBarPagesFactory {
+class DocumentPage extends StatefulWidget {
+  final AppAttributes appAttributes;
+  DocumentPage({required this.appAttributes});
+
   @override
-  Widget createPage(AppAttributes appAttributes, BuildContext context) {
+  State<StatefulWidget> createState() => DocumentPageState();
+}
+
+class DocumentPageState extends State<DocumentPage> {
+  @override
+  Widget build(BuildContext context) {
     List<File> docs = [
       File(
         baseDir: 'assets/documents/',
@@ -35,22 +42,12 @@ class DocumentPage extends NavBarPagesFactory {
           )
         ],
         footer: Footer(
-          footerPagesConfig:
+          footerPagesConfigs:
               JotrockenmitLockenScreenConfigurations.getFooterPagesConfig(),
-          userSettings: appAttributes.userSettings,
-          footerConfig: appAttributes.footerConfig,
+          userSettings: widget.appAttributes.userSettings,
+          footerConfig: widget.appAttributes.footerConfig,
         ),
-        showMediumSizeLayout: appAttributes.showMediumSizeLayout,
-        showLargeSizeLayout: appAttributes.showLargeSizeLayout);
-  }
-
-  @override
-  NavigationDestination getNavigationDestination(BuildContext context) {
-    return NavigationDestination(
-      tooltip: '',
-      icon: const Icon(Icons.description_outlined),
-      label: AppLocalizations.of(context)!.documents,
-      selectedIcon: const Icon(Icons.description),
-    );
+        showMediumSizeLayout: widget.appAttributes.showMediumSizeLayout,
+        showLargeSizeLayout: widget.appAttributes.showLargeSizeLayout);
   }
 }

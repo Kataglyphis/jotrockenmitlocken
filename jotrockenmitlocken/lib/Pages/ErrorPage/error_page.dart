@@ -4,22 +4,29 @@ import 'package:jotrockenmitlocken/Pages/jotrockenmitlocken_screen_configuration
 import 'package:jotrockenmitlockenrepo/Layout/ResponsiveDesign/single_page.dart';
 import 'package:jotrockenmitlocken/Pages/ErrorPage/error_page_widget.dart';
 import 'package:jotrockenmitlockenrepo/app_attributes.dart';
-import 'package:jotrockenmitlockenrepo/Pages/pages_factory.dart';
 
-class ErrorPage extends PagesFactory {
+class ErrorPage extends StatefulWidget {
+  final AppAttributes appAttributes;
+  ErrorPage({required this.appAttributes});
+
   @override
-  Widget createPage(AppAttributes appAttributes, BuildContext context) {
+  State<StatefulWidget> createState() => ErrorPageState();
+}
+
+class ErrorPageState extends State<ErrorPage> {
+  @override
+  Widget build(BuildContext context) {
     return SinglePage(
         children: [
           const ErrorPageWidget(),
         ],
         footer: Footer(
-          footerPagesConfig:
+          footerPagesConfigs:
               JotrockenmitLockenScreenConfigurations.getFooterPagesConfig(),
-          userSettings: appAttributes.userSettings,
-          footerConfig: appAttributes.footerConfig,
+          userSettings: widget.appAttributes.userSettings,
+          footerConfig: widget.appAttributes.footerConfig,
         ),
-        showMediumSizeLayout: appAttributes.showMediumSizeLayout,
-        showLargeSizeLayout: appAttributes.showLargeSizeLayout);
+        showMediumSizeLayout: widget.appAttributes.showMediumSizeLayout,
+        showLargeSizeLayout: widget.appAttributes.showLargeSizeLayout);
   }
 }

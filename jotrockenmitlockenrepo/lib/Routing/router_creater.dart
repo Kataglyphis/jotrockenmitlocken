@@ -7,7 +7,7 @@ import 'package:jotrockenmitlockenrepo/Pages/Home/home.dart';
 import 'package:jotrockenmitlockenrepo/app_attributes.dart';
 import 'package:jotrockenmitlockenrepo/Pages/stateful_branch_info_provider.dart';
 
-class RoutesCreator {
+abstract class RoutesCreator {
   int currentPageIndex = 0;
 
   final _rootNavigatorKey =
@@ -17,12 +17,17 @@ class RoutesCreator {
       GlobalKey<ScaffoldState>(debugLabel: "scaffoldKey");
 
   String _getInitialLocation(AppAttributes appAttributes) {
-    return appAttributes.screenConfigurations
-        .getAllValidRoutes()[currentPageIndex];
+    List<(Widget, StatefulBranchInfoProvider)> allPages =
+        getAllPagesWithConfigs(appAttributes);
+    return allPages[currentPageIndex].$2.getRoutingName();
   }
 
-  GoRouter getRouterConfig(AppAttributes appAttributes,
-      AnimationController controller, Footer footer) {
+  List<(Widget, StatefulBranchInfoProvider)> getAllPagesWithConfigs(
+      AppAttributes appAttributes);
+  Footer getFooter(AppAttributes appAttributes);
+
+  GoRouter getRouterConfig(
+      AppAttributes appAttributes, AnimationController controller) {
     return GoRouter(
       navigatorKey: _rootNavigatorKey,
       initialLocation: _getInitialLocation(appAttributes),
@@ -39,12 +44,12 @@ class RoutesCreator {
                   currentPageIndex = index;
                 },
                 scaffoldKey: scaffoldKey,
-                footer: footer,
+                footer: getFooter(appAttributes),
                 appAttributes: appAttributes,
                 controller: controller,
                 navigationShell: navigationShell);
           },
-          branches: RoutesCreator.createBranches(appAttributes),
+          branches: createBranches(appAttributes),
         )
       ],
       redirect: (BuildContext context, GoRouterState state) {
@@ -62,31 +67,31 @@ class RoutesCreator {
     );
   }
 
-  static GoRoute buildGoRouteForSPA(
-      StatefulBranchInfoProvider pageConfig, AppAttributes appAttributes) {
+  GoRoute buildGoRouteForSPA(
+      (Widget, StatefulBranchInfoProvider) allPagesWithConfigs,
+      AppAttributes appAttributes) {
     return GoRoute(
-        path: pageConfig.getRoutingName(),
+        path: allPagesWithConfigs.$2.getRoutingName(),
         pageBuilder: (context, state) {
           return NoTransitionPage(
-            child:
-                pageConfig.getPagesFactory().createPage(appAttributes, context),
+            child: allPagesWithConfigs.$1,
           );
         });
   }
 
-  static List<StatefulShellBranch> createStatefulShellBranches(
+  List<StatefulShellBranch> createStatefulShellBranches(
     AppAttributes appAttributes,
-    List<StatefulBranchInfoProvider> configs,
+    List<(Widget, StatefulBranchInfoProvider)> allPagesWithConfigs,
   ) {
     List<StatefulShellBranch> branches = [];
-    for (int i = 0; i < configs.length; i++) {
-      final pageConfig = configs[i];
+    for (int i = 0; i < allPagesWithConfigs.length; i++) {
+      final pageWithConfig = allPagesWithConfigs[i];
 
       branches.add(
         StatefulShellBranch(
           routes: <RouteBase>[
             buildGoRouteForSPA(
-              pageConfig,
+              pageWithConfig,
               appAttributes,
             )
           ],
@@ -96,9 +101,9 @@ class RoutesCreator {
     return branches;
   }
 
-  static createBranches(AppAttributes appAttributes) {
-    List<StatefulBranchInfoProvider> allPagesConfigs =
-        appAttributes.screenConfigurations.getAllPagesConfigs();
-    return createStatefulShellBranches(appAttributes, allPagesConfigs);
+  createBranches(AppAttributes appAttributes) {
+    List<(Widget, StatefulBranchInfoProvider)> allPagesWithConfigs =
+        getAllPagesWithConfigs(appAttributes);
+    return createStatefulShellBranches(appAttributes, allPagesWithConfigs);
   }
 }

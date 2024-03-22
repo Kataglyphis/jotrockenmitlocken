@@ -1,12 +1,10 @@
 import 'package:jotrockenmitlockenrepo/Pages/LandingPage/landing_page_entry_factory.dart';
-import 'package:jotrockenmitlockenrepo/Pages/pages_config.dart';
+import 'package:jotrockenmitlockenrepo/Pages/stateful_branch_info_provider.dart';
 
-class BlogPagesConfig extends PagesConfig {
+abstract class BlogPage extends StatefulBranchInfoProvider {
   LandingPageEntryFactory landingPageEntryFactory;
   LandingPageAlignment landingPageAlignment;
-  BlogPagesConfig({
-    required super.routingName,
-    required super.pagesCreator,
+  BlogPage({
     required this.landingPageEntryFactory,
     required this.landingPageAlignment,
   });
