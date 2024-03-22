@@ -6,12 +6,18 @@ import 'package:jotrockenmitlockenrepo/Layout/ResponsiveDesign/one_two_transitio
 import 'package:jotrockenmitlockenrepo/Pages/Footer/footer.dart';
 import 'package:jotrockenmitlocken/Pages/jotrockenmitlocken_screen_configurations.dart';
 import 'package:jotrockenmitlockenrepo/app_attributes.dart';
-import 'package:jotrockenmitlockenrepo/Pages/navbar_pages_factory.dart';
 import 'package:jotrockenmitlockenrepo/constants.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:jotrockenmitlockenrepo/user_settings.dart';
 
-class AboutMePage extends NavBarPagesFactory {
+class AboutMePage extends StatefulWidget {
+  final AppAttributes appAttributes;
+  AboutMePage({required this.appAttributes});
+
+  @override
+  State<StatefulWidget> createState() => AboutMePageState();
+}
+
+class AboutMePageState extends State<AboutMePage> {
   List<List<Widget>> _createAboutMeChildPages(UserSettings userSettings,
       ColorSeed colorSelected, BuildContext context) {
     String aboutMeFile = userSettings.aboutMeFileEn!;
@@ -36,30 +42,22 @@ class AboutMePage extends NavBarPagesFactory {
   }
 
   @override
-  Widget createPage(AppAttributes appAttributes, BuildContext context) {
+  Widget build(BuildContext context) {
     var aboutMePagesLeftRight = _createAboutMeChildPages(
-        appAttributes.userSettings, appAttributes.colorSelected, context);
+        widget.appAttributes.userSettings,
+        widget.appAttributes.colorSelected,
+        context);
     return OneTwoTransitionPage(
         childWidgetsLeftPage: aboutMePagesLeftRight[0],
         childWidgetsRightPage: aboutMePagesLeftRight[1],
         footer: Footer(
-          footerPagesConfig:
+          footerPagesConfigs:
               JotrockenmitLockenScreenConfigurations.getFooterPagesConfig(),
-          userSettings: appAttributes.userSettings,
-          footerConfig: appAttributes.footerConfig,
+          userSettings: widget.appAttributes.userSettings,
+          footerConfig: widget.appAttributes.footerConfig,
         ),
-        showMediumSizeLayout: appAttributes.showMediumSizeLayout,
-        showLargeSizeLayout: appAttributes.showLargeSizeLayout,
-        railAnimation: appAttributes.railAnimation);
-  }
-
-  @override
-  NavigationDestination getNavigationDestination(BuildContext context) {
-    return NavigationDestination(
-      tooltip: '',
-      icon: const Icon(Icons.person_outlined),
-      label: AppLocalizations.of(context)!.aboutme,
-      selectedIcon: const Icon(Icons.person),
-    );
+        showMediumSizeLayout: widget.appAttributes.showMediumSizeLayout,
+        showLargeSizeLayout: widget.appAttributes.showLargeSizeLayout,
+        railAnimation: widget.appAttributes.railAnimation);
   }
 }

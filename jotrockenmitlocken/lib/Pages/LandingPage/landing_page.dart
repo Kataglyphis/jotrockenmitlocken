@@ -2,18 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:jotrockenmitlockenrepo/Pages/Footer/footer.dart';
 import 'package:jotrockenmitlockenrepo/Layout/ResponsiveDesign/one_two_transition_widget.dart';
 import 'package:jotrockenmitlockenrepo/app_attributes.dart';
-import 'package:jotrockenmitlocken/Pages/blog_pages_config.dart';
-import 'package:jotrockenmitlockenrepo/Pages/navbar_pages_factory.dart';
+import 'package:jotrockenmitlocken/Pages/blog_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:jotrockenmitlocken/Pages/jotrockenmitlocken_screen_configurations.dart';
 
-class LandingPage extends NavBarPagesFactory {
-  List<List<Widget>> _createLandingPageChildWidgets(
-      AppAttributes appAttributes, BuildContext context) {
+class LandingPage extends StatefulWidget {
+  final AppAttributes appAttributes;
+  LandingPage({required this.appAttributes});
+
+  @override
+  State<StatefulWidget> createState() => LandingPageState();
+}
+
+class LandingPageState extends State<LandingPage> {
+  List<List<Widget>> _createLandingPageChildWidgets(BuildContext context) {
     const colDivider = SizedBox(height: 10);
     List<Widget> childWidgetsLeftPage = [];
     List<Widget> childWidgetsRightPage = [];
-    List<BlogPagesConfig> blogPagesConfig =
+    List<BlogPage> blogPagesConfig =
         JotrockenmitLockenScreenConfigurations.getBlogPagesConfig();
 
     for (int i = 0; i < blogPagesConfig.length; i++) {
@@ -23,7 +29,7 @@ class LandingPage extends NavBarPagesFactory {
           colDivider,
           blogPagesConfig[i]
               .landingPageEntryFactory
-              .createLandingPageEntry(appAttributes, context),
+              .createLandingPageEntry(widget.appAttributes, context),
           colDivider,
         ];
       } else {
@@ -31,7 +37,7 @@ class LandingPage extends NavBarPagesFactory {
           colDivider,
           blogPagesConfig[i]
               .landingPageEntryFactory
-              .createLandingPageEntry(appAttributes, context),
+              .createLandingPageEntry(widget.appAttributes, context),
           colDivider,
         ];
       }
@@ -40,30 +46,19 @@ class LandingPage extends NavBarPagesFactory {
   }
 
   @override
-  Widget createPage(AppAttributes appAttributes, BuildContext context) {
-    var homePagesLeftRight =
-        _createLandingPageChildWidgets(appAttributes, context);
+  Widget build(BuildContext context) {
+    var homePagesLeftRight = _createLandingPageChildWidgets(context);
     return OneTwoTransitionPage(
         childWidgetsLeftPage: homePagesLeftRight[0],
         childWidgetsRightPage: homePagesLeftRight[1],
         footer: Footer(
-          footerPagesConfig:
+          footerPagesConfigs:
               JotrockenmitLockenScreenConfigurations.getFooterPagesConfig(),
-          userSettings: appAttributes.userSettings,
-          footerConfig: appAttributes.footerConfig,
+          userSettings: widget.appAttributes.userSettings,
+          footerConfig: widget.appAttributes.footerConfig,
         ),
-        showMediumSizeLayout: appAttributes.showMediumSizeLayout,
-        showLargeSizeLayout: appAttributes.showLargeSizeLayout,
-        railAnimation: appAttributes.railAnimation);
-  }
-
-  @override
-  NavigationDestination getNavigationDestination(BuildContext context) {
-    return NavigationDestination(
-      tooltip: '',
-      icon: const Icon(Icons.house_outlined),
-      label: AppLocalizations.of(context)!.homepage,
-      selectedIcon: const Icon(Icons.house),
-    );
+        showMediumSizeLayout: widget.appAttributes.showMediumSizeLayout,
+        showLargeSizeLayout: widget.appAttributes.showLargeSizeLayout,
+        railAnimation: widget.appAttributes.railAnimation);
   }
 }

@@ -4,26 +4,32 @@ import 'package:jotrockenmitlocken/Pages/jotrockenmitlocken_screen_configuration
 import 'package:jotrockenmitlockenrepo/Media/Markdown/markdown_page.dart';
 import 'package:jotrockenmitlockenrepo/Layout/ResponsiveDesign/single_page.dart';
 import 'package:jotrockenmitlockenrepo/app_attributes.dart';
-import 'package:jotrockenmitlockenrepo/Pages/pages_factory.dart';
 
-class PrivacyPolicyPage extends PagesFactory {
+class PrivacyPolicyPage extends StatefulWidget {
+  final AppAttributes appAttributes;
+  PrivacyPolicyPage({required this.appAttributes});
   @override
-  Widget createPage(AppAttributes appAttributes, BuildContext context) {
+  State<StatefulWidget> createState() => PrivacyPolicyPageState();
+}
+
+class PrivacyPolicyPageState extends State<PrivacyPolicyPage> {
+  @override
+  Widget build(BuildContext context) {
     return SinglePage(
         children: [
           MarkdownFilePage(
             filePathDe: 'assets/documents/footer/privacyPolicyDe.md',
             filePathEn: 'assets/documents/footer/privacyPolicyEn.md',
-            useLightMode: appAttributes.useLightMode,
+            useLightMode: widget.appAttributes.useLightMode,
           )
         ],
         footer: Footer(
-          footerPagesConfig:
+          footerPagesConfigs:
               JotrockenmitLockenScreenConfigurations.getFooterPagesConfig(),
-          userSettings: appAttributes.userSettings,
-          footerConfig: appAttributes.footerConfig,
+          userSettings: widget.appAttributes.userSettings,
+          footerConfig: widget.appAttributes.footerConfig,
         ),
-        showMediumSizeLayout: appAttributes.showMediumSizeLayout,
-        showLargeSizeLayout: appAttributes.showLargeSizeLayout);
+        showMediumSizeLayout: widget.appAttributes.showMediumSizeLayout,
+        showLargeSizeLayout: widget.appAttributes.showLargeSizeLayout);
   }
 }
