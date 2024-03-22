@@ -8,7 +8,8 @@ import 'package:jotrockenmitlocken/Pages/jotrockenmitlocken_screen_configuration
 
 class LandingPage extends StatefulWidget {
   final AppAttributes appAttributes;
-  LandingPage({required this.appAttributes});
+  final Footer footer;
+  LandingPage({required this.appAttributes, required this.footer});
 
   @override
   State<StatefulWidget> createState() => LandingPageState();
@@ -51,12 +52,7 @@ class LandingPageState extends State<LandingPage> {
     return OneTwoTransitionPage(
         childWidgetsLeftPage: homePagesLeftRight[0],
         childWidgetsRightPage: homePagesLeftRight[1],
-        footer: Footer(
-          footerPagesConfigs:
-              JotrockenmitLockenScreenConfigurations.getFooterPagesConfig(),
-          userSettings: widget.appAttributes.userSettings,
-          footerConfig: widget.appAttributes.footerConfig,
-        ),
+        footer: widget.footer,
         showMediumSizeLayout: widget.appAttributes.showMediumSizeLayout,
         showLargeSizeLayout: widget.appAttributes.showLargeSizeLayout,
         railAnimation: widget.appAttributes.railAnimation);

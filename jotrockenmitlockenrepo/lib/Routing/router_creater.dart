@@ -59,7 +59,7 @@ abstract class RoutesCreator {
           return appAttributes.screenConfigurations
               .getErrorPagesConfig()
               .first
-              .routingName;
+              .getRoutingName();
         }
         // no need to redirect at all
         return null;

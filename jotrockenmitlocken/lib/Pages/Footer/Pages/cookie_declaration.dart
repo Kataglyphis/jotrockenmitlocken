@@ -7,7 +7,8 @@ import 'package:jotrockenmitlockenrepo/app_attributes.dart';
 
 class CookieDeclarationPage extends StatefulWidget {
   final AppAttributes appAttributes;
-  CookieDeclarationPage({required this.appAttributes});
+  final Footer footer;
+  CookieDeclarationPage({required this.appAttributes, required this.footer});
   @override
   State<StatefulWidget> createState() => CookieDeclarationPageState();
 }
@@ -23,12 +24,7 @@ class CookieDeclarationPageState extends State<CookieDeclarationPage> {
             useLightMode: widget.appAttributes.useLightMode,
           )
         ],
-        footer: Footer(
-          footerPagesConfigs:
-              JotrockenmitLockenScreenConfigurations.getFooterPagesConfig(),
-          userSettings: widget.appAttributes.userSettings,
-          footerConfig: widget.appAttributes.footerConfig,
-        ),
+        footer: widget.footer,
         showMediumSizeLayout: widget.appAttributes.showMediumSizeLayout,
         showLargeSizeLayout: widget.appAttributes.showLargeSizeLayout);
   }

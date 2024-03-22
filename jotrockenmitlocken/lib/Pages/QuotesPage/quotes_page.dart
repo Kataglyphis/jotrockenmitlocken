@@ -8,7 +8,8 @@ import 'package:jotrockenmitlockenrepo/Layout/ResponsiveDesign/single_page.dart'
 
 class QuotesPage extends StatefulWidget {
   final AppAttributes appAttributes;
-  QuotesPage({required this.appAttributes});
+  final Footer footer;
+  QuotesPage({required this.appAttributes, required this.footer});
 
   @override
   State<StatefulWidget> createState() => QuotesPageState();
@@ -25,12 +26,7 @@ class QuotesPageState extends State<QuotesPage> {
                   "${AppLocalizations.of(context)!.quotationsDescription}\u{1F63A}",
               dataFilePath: "assets/data/Zitate.csv"),
         ],
-        footer: Footer(
-          footerPagesConfigs:
-              JotrockenmitLockenScreenConfigurations.getFooterPagesConfig(),
-          userSettings: widget.appAttributes.userSettings,
-          footerConfig: widget.appAttributes.footerConfig,
-        ),
+        footer: widget.footer,
         showMediumSizeLayout: widget.appAttributes.showMediumSizeLayout,
         showLargeSizeLayout: widget.appAttributes.showLargeSizeLayout);
   }

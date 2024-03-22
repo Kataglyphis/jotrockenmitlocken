@@ -11,7 +11,8 @@ import 'package:jotrockenmitlockenrepo/user_settings.dart';
 
 class AboutMePage extends StatefulWidget {
   final AppAttributes appAttributes;
-  AboutMePage({required this.appAttributes});
+  final Footer footer;
+  AboutMePage({required this.appAttributes, required this.footer});
 
   @override
   State<StatefulWidget> createState() => AboutMePageState();
@@ -50,12 +51,7 @@ class AboutMePageState extends State<AboutMePage> {
     return OneTwoTransitionPage(
         childWidgetsLeftPage: aboutMePagesLeftRight[0],
         childWidgetsRightPage: aboutMePagesLeftRight[1],
-        footer: Footer(
-          footerPagesConfigs:
-              JotrockenmitLockenScreenConfigurations.getFooterPagesConfig(),
-          userSettings: widget.appAttributes.userSettings,
-          footerConfig: widget.appAttributes.footerConfig,
-        ),
+        footer: widget.footer,
         showMediumSizeLayout: widget.appAttributes.showMediumSizeLayout,
         showLargeSizeLayout: widget.appAttributes.showLargeSizeLayout,
         railAnimation: widget.appAttributes.railAnimation);
