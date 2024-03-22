@@ -7,7 +7,9 @@ import 'package:jotrockenmitlockenrepo/app_attributes.dart';
 
 class DeclarationOnAccessibilityPage extends StatefulWidget {
   final AppAttributes appAttributes;
-  DeclarationOnAccessibilityPage({required this.appAttributes});
+  final Footer footer;
+  DeclarationOnAccessibilityPage(
+      {required this.appAttributes, required this.footer});
   @override
   State<StatefulWidget> createState() => DeclarationOnAccessibilityPageState();
 }
@@ -26,12 +28,7 @@ class DeclarationOnAccessibilityPageState
             useLightMode: widget.appAttributes.useLightMode,
           )
         ],
-        footer: Footer(
-          footerPagesConfigs:
-              JotrockenmitLockenScreenConfigurations.getFooterPagesConfig(),
-          userSettings: widget.appAttributes.userSettings,
-          footerConfig: widget.appAttributes.footerConfig,
-        ),
+        footer: widget.footer,
         showMediumSizeLayout: widget.appAttributes.showMediumSizeLayout,
         showLargeSizeLayout: widget.appAttributes.showLargeSizeLayout);
   }
