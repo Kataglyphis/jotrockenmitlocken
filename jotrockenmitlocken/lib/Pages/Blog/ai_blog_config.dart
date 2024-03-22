@@ -1,4 +1,4 @@
-import 'package:jotrockenmitlocken/Pages/blog_page.dart';
+import 'package:jotrockenmitlocken/Pages/blog_page_config.dart';
 import 'package:jotrockenmitlockenrepo/app_attributes.dart';
 
 class AiBlogPageConfig extends BlogPageConfig {

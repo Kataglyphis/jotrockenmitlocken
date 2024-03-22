@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:jotrockenmitlockenrepo/Pages/Footer/footer.dart';
 import 'package:jotrockenmitlockenrepo/Layout/ResponsiveDesign/one_two_transition_widget.dart';
 import 'package:jotrockenmitlockenrepo/app_attributes.dart';
-import 'package:jotrockenmitlocken/Pages/blog_page.dart';
+import 'package:jotrockenmitlocken/Pages/blog_page_config.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:jotrockenmitlocken/Pages/jotrockenmitlocken_screen_configurations.dart';
 
