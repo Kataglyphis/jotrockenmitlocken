@@ -21,6 +21,7 @@ class DeclarationOnAccessibilityPageState
     return SinglePage(
         children: [
           MarkdownFilePage(
+            currentLocale: Localizations.localeOf(context),
             filePathDe:
                 'assets/documents/footer/declarationOnAccessibilityDe.md',
             filePathEn:

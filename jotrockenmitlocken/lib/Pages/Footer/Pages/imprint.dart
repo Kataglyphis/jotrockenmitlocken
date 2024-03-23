@@ -19,6 +19,7 @@ class ImprintPageState extends State<ImprintPage> {
     return SinglePage(
         children: [
           MarkdownFilePage(
+            currentLocale: Localizations.localeOf(context),
             filePathDe: 'assets/documents/footer/imprintDe.md',
             filePathEn: 'assets/documents/footer/imprintEn.md',
             useLightMode: widget.appAttributes.useLightMode,

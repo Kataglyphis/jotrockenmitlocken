@@ -10,7 +10,7 @@ import 'package:jotrockenmitlocken/Pages/Footer/Pages/configs/imprint_footer_con
 import 'package:jotrockenmitlocken/Pages/Footer/Pages/configs/privacy_policy_config.dart';
 import 'package:jotrockenmitlocken/Pages/LandingPage/landing_page_navbar_page_config.dart';
 import 'package:jotrockenmitlocken/Pages/QuotesPage/quotes_pages_navbar_page_config.dart';
-import 'package:jotrockenmitlocken/Pages/blog_page_config.dart';
+import 'package:jotrockenmitlockenrepo/Pages/blog_page_config.dart';
 import 'package:jotrockenmitlockenrepo/Pages/Footer/footer_page_config.dart';
 import 'package:jotrockenmitlockenrepo/Pages/navbar_page_config.dart';
 import 'package:jotrockenmitlockenrepo/Pages/stateful_branch_info_provider.dart';
@@ -36,9 +36,8 @@ class JotrockenmitLockenScreenConfigurations extends ScreenConfigurations {
     for (StatefulBranchInfoProvider blogPageConfig in getBlogPagesConfig()) {
       pagesConfigs.add(blogPageConfig);
     }
-    for (StatefulBranchInfoProvider navRailPageConfig
-        in getErrorPagesConfig()) {
-      pagesConfigs.add(navRailPageConfig);
+    for (StatefulBranchInfoProvider errorPageConfig in getErrorPagesConfig()) {
+      pagesConfigs.add(errorPageConfig);
     }
     return pagesConfigs;
   }
@@ -58,20 +57,11 @@ class JotrockenmitLockenScreenConfigurations extends ScreenConfigurations {
     ];
   }
 
-  static List<BlogPageConfig> getBlogPagesConfig() {
+  @override
+  List<BlogPageConfig> getBlogPagesConfig() {
     return [
       AiBlogPageConfig(),
-      // BlogPagesConfig(
-      //     routingName: "/aiBlog",
-      //     pagesCreator: AiBlogPage(),
-      //     landingPageEntryFactory: AIPlayground(routerPath: '/aiBlog'),
-      //     landingPageAlignment: LandingPageAlignment.left),
       RenderingBlogPageConfig(),
-      // routingName: "/renderingBlog",
-      // pagesCreator: RenderingBlogPage(),
-      // landingPageEntryFactory:
-      //     RenderingPlayground(routerPath: "/renderingBlog"),
-      // landingPageAlignment: LandingPageAlignment.right),
     ];
   }
 

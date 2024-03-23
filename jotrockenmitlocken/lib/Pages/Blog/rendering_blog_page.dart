@@ -18,6 +18,7 @@ class RenderingBlogPageState extends State<RenderingBlogPage> {
     return SinglePage(
         children: [
           MarkdownFilePage(
+            currentLocale: Localizations.localeOf(context),
             filePathDe: '',
             filePathEn: 'assets/documents/blog/renderingBlogPageEn.md',
             imageDirectory: 'assets/images/aiBlog',

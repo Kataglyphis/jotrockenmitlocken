@@ -37,6 +37,7 @@ class AiBlogPageState extends State<AiBlogPage> {
     return SinglePage(
         children: [
           MarkdownFilePage(
+            currentLocale: Localizations.localeOf(context),
             filePathDe: '',
             filePathEn: 'assets/documents/blog/aiBlogPageEn.md',
             imageDirectory: 'assets/images/aiBlog',
