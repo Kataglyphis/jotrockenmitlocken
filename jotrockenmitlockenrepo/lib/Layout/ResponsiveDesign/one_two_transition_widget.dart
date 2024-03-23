@@ -41,9 +41,10 @@ class OneTwoTransitionPageState extends State<OneTwoTransitionPage> {
                       ? widget.childWidgetsRightPage
                       : widget.childWidgetsRightPage + [widget.footer],
             ),
-            two: ScrollableList(
-              childWidgets: widget.childWidgetsRightPage,
+            two: ListView(
+              //ScrollableList(childWidgets:
               padding: const EdgeInsetsDirectional.only(end: 10.0),
+              children: widget.childWidgetsRightPage,
             ),
           ),
         ),

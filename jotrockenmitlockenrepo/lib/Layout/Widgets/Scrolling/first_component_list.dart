@@ -25,6 +25,8 @@ class _FirstComponentListState extends State<FirstComponentList> {
       resultingChildWidgetsLeftPage =
           widget.childWidgetsLeftPage + widget.childWidgetsRightPage;
     }
-    return ScrollableList(childWidgets: resultingChildWidgetsLeftPage);
+    return ListView(
+      children: resultingChildWidgetsLeftPage,
+    ); //ScrollableList(childWidgets: resultingChildWidgetsLeftPage);
   }
 }
