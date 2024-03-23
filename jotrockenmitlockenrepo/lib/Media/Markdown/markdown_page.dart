@@ -15,11 +15,13 @@ import 'dart:developer' as developer;
 class MarkdownFilePage extends StatefulWidget {
   const MarkdownFilePage(
       {super.key,
+      required this.currentLocale,
       required this.filePathDe,
       required this.filePathEn,
       this.imageDirectory = 'assets/images/',
       required this.useLightMode});
 
+  final Locale currentLocale;
   final String filePathDe;
   final String filePathEn;
   final String imageDirectory;
@@ -43,16 +45,16 @@ class MarkdownFilePageState extends State<MarkdownFilePage> {
         'You must provide at least one correct file path!');
     try {
       // Read file content
-      if (Localizations.localeOf(context) == const Locale('de') &&
+      if (widget.currentLocale == const Locale('de') &&
           widget.filePathDe != '') {
         return await rootBundle.loadString(widget.filePathDe);
-      } else if (Localizations.localeOf(context) == const Locale('de') &&
+      } else if (widget.currentLocale == const Locale('de') &&
           widget.filePathEn != '') {
         return await rootBundle.loadString(widget.filePathEn);
-      } else if (Localizations.localeOf(context) == const Locale('en') &&
+      } else if (widget.currentLocale == const Locale('en') &&
           widget.filePathEn != '') {
         return await rootBundle.loadString(widget.filePathEn);
-      } else if (Localizations.localeOf(context) == const Locale('en') &&
+      } else if (widget.currentLocale == const Locale('en') &&
           widget.filePathDe != '') {
         return await rootBundle.loadString(widget.filePathDe);
       } else if (widget.filePathDe != '') {
