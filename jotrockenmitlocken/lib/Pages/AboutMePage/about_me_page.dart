@@ -37,7 +37,7 @@ class AboutMePageState extends State<AboutMePage> {
         aboutMeFile: aboutMeFile,
         userSettings: userSettings,
       ),
-      widget.footer
+      //widget.footer
     ];
 
     return [childWidgetsLeftPage, childWidgetsRightPage];
