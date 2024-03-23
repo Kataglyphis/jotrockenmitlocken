@@ -12,8 +12,8 @@ on:
 jobs:
   build:
     name: 🚀 Deploy website on push
-    # runs-on: windows-latest
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
+    # runs-on: ubuntu-latest
     steps:
       - name: 🚚 Get latest code
         uses: actions/checkout@v4
@@ -22,7 +22,7 @@ jobs:
         uses: flutter-actions/setup-flutter@v2.3  
         with:
           channel: stable
-          version: 3.16.0
+          version: 3.19.4
       
       # Note: This workflow uses the latest stable version of the Dart SDK.
       # You can specify other versions if desired, see documentation here:
