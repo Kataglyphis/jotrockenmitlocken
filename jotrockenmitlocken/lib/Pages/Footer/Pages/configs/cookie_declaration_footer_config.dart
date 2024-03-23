@@ -12,4 +12,14 @@ class CookieDeclarationFooterConfig extends FooterPageConfig {
   String getRoutingName() {
     return "/cookieStatement";
   }
+
+  @override
+  String getFilePathDe() {
+    return 'assets/documents/footer/cookieDeclarationDe.md';
+  }
+
+  @override
+  String getFilePathEn() {
+    return 'assets/documents/footer/cookieDeclarationEn.md';
+  }
 }
