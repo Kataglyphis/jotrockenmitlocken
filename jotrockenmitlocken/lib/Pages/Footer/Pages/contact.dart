@@ -1,30 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:jotrockenmitlockenrepo/Pages/Footer/footer.dart';
-import 'package:jotrockenmitlocken/Pages/jotrockenmitlocken_screen_configurations.dart';
 import 'package:jotrockenmitlockenrepo/Media/Markdown/markdown_page.dart';
 import 'package:jotrockenmitlockenrepo/Layout/ResponsiveDesign/single_page.dart';
 import 'package:jotrockenmitlockenrepo/app_attributes.dart';
-import 'package:jotrockenmitlockenrepo/Pages/pages_factory.dart';
 
-class ContactPage extends PagesFactory {
+class ContactPage extends StatefulWidget {
+  final AppAttributes appAttributes;
+  final Footer footer;
+  ContactPage({required this.appAttributes, required this.footer});
   @override
-  Widget createPage(AppAttributes appAttributes, BuildContext context) {
+  State<StatefulWidget> createState() => ContactPageState();
+}
+
+class ContactPageState extends State<ContactPage> {
+  @override
+  Widget build(BuildContext context) {
     return SinglePage(
       children: [
         MarkdownFilePage(
+          currentLocale: Localizations.localeOf(context),
           filePathDe: 'assets/documents/footer/contactDe.md',
           filePathEn: 'assets/documents/footer/contactEn.md',
-          useLightMode: appAttributes.useLightMode,
+          useLightMode: widget.appAttributes.useLightMode,
         )
       ],
-      footer: Footer(
-        footerPagesConfig:
-            JotrockenmitLockenScreenConfigurations.getFooterPagesConfig(),
-        userSettings: appAttributes.userSettings,
-        footerConfig: appAttributes.footerConfig,
-      ),
-      showMediumSizeLayout: appAttributes.showMediumSizeLayout,
-      showLargeSizeLayout: appAttributes.showLargeSizeLayout,
+      footer: widget.footer,
+      showMediumSizeLayout: widget.appAttributes.showMediumSizeLayout,
+      showLargeSizeLayout: widget.appAttributes.showLargeSizeLayout,
     );
   }
 }

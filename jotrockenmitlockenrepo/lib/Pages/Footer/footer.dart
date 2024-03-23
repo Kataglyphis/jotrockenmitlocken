@@ -5,19 +5,19 @@ import 'package:jotrockenmitlockenrepo/Pages/Footer/footer_config.dart';
 import 'package:jotrockenmitlockenrepo/Pages/Footer/Sections/footer_external_links.dart';
 import 'package:jotrockenmitlockenrepo/Pages/Footer/Sections/footer_pages_text_buttons.dart';
 import 'package:jotrockenmitlockenrepo/Pages/Footer/Sections/footer_social_icons_and_liability.dart';
-import 'package:jotrockenmitlockenrepo/Pages/Footer/footer_pages_config.dart';
+import 'package:jotrockenmitlockenrepo/Pages/Footer/footer_page_config.dart';
 import 'package:jotrockenmitlockenrepo/constants.dart';
 import 'package:jotrockenmitlockenrepo/user_settings.dart';
 
 class Footer extends StatefulWidget {
   const Footer({
     super.key,
-    required this.footerPagesConfig,
+    required this.footerPagesConfigs,
     required this.userSettings,
     required this.footerConfig,
   });
 
-  final List<FooterPagesConfig> footerPagesConfig;
+  final List<FooterPageConfig> footerPagesConfigs;
   final FooterConfig footerConfig;
   final UserSettings userSettings;
 
@@ -41,7 +41,7 @@ class FooterState extends State<Footer> {
         children: [
           rowDivider,
           FooterPagesTextButtons(
-            footerPagesConfig: widget.footerPagesConfig,
+            footerPagesConfig: widget.footerPagesConfigs,
           ),
           rowDivider,
           FooterSocialIconsAndLiability(
@@ -68,7 +68,7 @@ class FooterState extends State<Footer> {
               children: [
                 colDivider,
                 FooterPagesTextButtons(
-                    footerPagesConfig: widget.footerPagesConfig),
+                    footerPagesConfig: widget.footerPagesConfigs),
                 colDivider,
                 FooterSocialIconsAndLiability(
                   footerConfig: widget.footerConfig,
