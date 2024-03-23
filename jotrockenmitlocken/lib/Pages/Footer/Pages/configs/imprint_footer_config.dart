@@ -12,4 +12,14 @@ class ImprintFooterConfig extends FooterPageConfig {
   String getRoutingName() {
     return "/declarationOnAccessibility";
   }
+
+  @override
+  String getFilePathDe() {
+    return 'assets/documents/footer/imprintDe.md';
+  }
+
+  @override
+  String getFilePathEn() {
+    return 'assets/documents/footer/imprintEn.md';
+  }
 }

@@ -9,7 +9,7 @@
 			"request": "launch",
 			"type": "dart",
 			"program": "jotrockenmitlocken/lib/main.dart",
-			"args": ["--web-renderer", "canvaskit","--debug"], // 
+			"args": ["--debug"], // "--web-renderer", "canvaskit"
 		},
 		{
 			"name": "jotrockenmitlocken (profile mode)",
@@ -17,7 +17,7 @@
 			"type": "dart",
 			"flutterMode": "profile",
 			"program": "jotrockenmitlocken/lib/main.dart",
-			"args": ["--web-renderer", "canvaskit", "--profile"] //
+			"args": ["--profile"] //"--web-renderer", "canvaskit"
 		},
 		{
 			"name": "jotrockenmitlocken (release mode)",
@@ -25,7 +25,7 @@
 			"type": "dart",
 			"flutterMode": "release",
 			"program": "jotrockenmitlocken/lib/main.dart",
-			"args": ["--web-renderer","canvaskit", "--release"] //   "html", 
+			"args": ["--release"] //   "html", "--web-renderer","canvaskit"
 		}
 	]
 }

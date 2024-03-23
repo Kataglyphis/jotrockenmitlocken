@@ -12,4 +12,14 @@ class PrivacyPolicyFooterConfig extends FooterPageConfig {
   String getRoutingName() {
     return "/privacyPolicy";
   }
+
+  @override
+  String getFilePathDe() {
+    return 'assets/documents/footer/privacyPolicyDe.md';
+  }
+
+  @override
+  String getFilePathEn() {
+    return 'assets/documents/footer/privacyPolicyEn.md';
+  }
 }

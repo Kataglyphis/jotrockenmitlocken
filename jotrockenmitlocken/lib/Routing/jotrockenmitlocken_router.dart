@@ -13,11 +13,7 @@ import 'package:jotrockenmitlocken/Pages/Footer/Pages/configs/declaration_on_acc
 import 'package:jotrockenmitlocken/Pages/Footer/Pages/configs/imprint_footer_config.dart';
 import 'package:jotrockenmitlocken/Pages/Footer/Pages/configs/privacy_policy_config.dart';
 
-import 'package:jotrockenmitlocken/Pages/Footer/Pages/contact.dart';
-import 'package:jotrockenmitlocken/Pages/Footer/Pages/cookie_declaration.dart';
-import 'package:jotrockenmitlocken/Pages/Footer/Pages/declaration_on_accessibility.dart';
-import 'package:jotrockenmitlocken/Pages/Footer/Pages/imprint.dart';
-import 'package:jotrockenmitlocken/Pages/Footer/Pages/privacy_policy.dart';
+import 'package:jotrockenmitlockenrepo/Pages/Footer/footer_page.dart';
 import 'package:jotrockenmitlocken/Pages/LandingPage/landing_page.dart';
 import 'package:jotrockenmitlocken/Pages/LandingPage/landing_page_navbar_page_config.dart';
 import 'package:jotrockenmitlocken/Pages/QuotesPage/quotes_page.dart';
@@ -84,31 +80,57 @@ class JotrockenMitLockenRoutes extends RoutesCreator {
 
   List<(Widget, StatefulBranchInfoProvider)> _getFooterPagesAndConfigs(
       AppAttributes appAttributes) {
+    var imprintConfig = ImprintFooterConfig();
+    var contactConfig = ContactFooterConfig();
+    var privacyPolicyConfig = PrivacyPolicyFooterConfig();
+    var cookieDeclarationConfig = CookieDeclarationFooterConfig();
+    var declarationOnAccessibilityConfig =
+        DeclarationOnAccessibilityFooterConfig();
     List<(Widget, StatefulBranchInfoProvider)> footerPages = [
       (
-        ImprintPage(
-            footer: getFooter(appAttributes), appAttributes: appAttributes),
-        ImprintFooterConfig()
+        FooterPage(
+          footer: getFooter(appAttributes),
+          appAttributes: appAttributes,
+          filePathDe: imprintConfig.getFilePathDe(),
+          filePathEn: imprintConfig.getFilePathEn(),
+        ),
+        imprintConfig
       ),
       (
-        ContactPage(
-            footer: getFooter(appAttributes), appAttributes: appAttributes),
-        ContactFooterConfig()
+        FooterPage(
+          footer: getFooter(appAttributes),
+          appAttributes: appAttributes,
+          filePathDe: contactConfig.getFilePathDe(),
+          filePathEn: contactConfig.getFilePathEn(),
+        ),
+        contactConfig
       ),
       (
-        PrivacyPolicyPage(
-            footer: getFooter(appAttributes), appAttributes: appAttributes),
-        PrivacyPolicyFooterConfig()
+        FooterPage(
+          footer: getFooter(appAttributes),
+          appAttributes: appAttributes,
+          filePathDe: privacyPolicyConfig.getFilePathDe(),
+          filePathEn: privacyPolicyConfig.getFilePathEn(),
+        ),
+        privacyPolicyConfig
       ),
       (
-        CookieDeclarationPage(
-            footer: getFooter(appAttributes), appAttributes: appAttributes),
-        CookieDeclarationFooterConfig()
+        FooterPage(
+          footer: getFooter(appAttributes),
+          appAttributes: appAttributes,
+          filePathDe: cookieDeclarationConfig.getFilePathDe(),
+          filePathEn: cookieDeclarationConfig.getFilePathEn(),
+        ),
+        cookieDeclarationConfig
       ),
       (
-        DeclarationOnAccessibilityPage(
-            footer: getFooter(appAttributes), appAttributes: appAttributes),
-        DeclarationOnAccessibilityFooterConfig()
+        FooterPage(
+          footer: getFooter(appAttributes),
+          appAttributes: appAttributes,
+          filePathDe: declarationOnAccessibilityConfig.getFilePathDe(),
+          filePathEn: declarationOnAccessibilityConfig.getFilePathEn(),
+        ),
+        declarationOnAccessibilityConfig
       ),
     ];
     return footerPages;
@@ -117,7 +139,6 @@ class JotrockenMitLockenRoutes extends RoutesCreator {
   @override
   Footer getFooter(AppAttributes appAttributes) {
     return Footer(
-      //key: _footerKey,
       footerPagesConfigs:
           appAttributes.screenConfigurations.getFooterPagesConfig(),
       userSettings: appAttributes.userSettings,
