@@ -64,7 +64,7 @@ jobs:
       # canvaskit
         run: | 
           cd jotrockenmitlocken
-          flutter build web --web-renderer html --release
+          flutter build web --release
 
       - name: 📂 Sync files
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
