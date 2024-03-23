@@ -4,7 +4,6 @@ import 'package:jotrockenmitlocken/Pages/AboutMePage/Widgets/perfect_day_chart.d
 import 'package:jotrockenmitlocken/Pages/AboutMePage/Widgets/skill_table.dart';
 import 'package:jotrockenmitlockenrepo/Layout/ResponsiveDesign/one_two_transition_widget.dart';
 import 'package:jotrockenmitlockenrepo/Pages/Footer/footer.dart';
-import 'package:jotrockenmitlocken/Pages/jotrockenmitlocken_screen_configurations.dart';
 import 'package:jotrockenmitlockenrepo/app_attributes.dart';
 import 'package:jotrockenmitlockenrepo/constants.dart';
 import 'package:jotrockenmitlockenrepo/user_settings.dart';
