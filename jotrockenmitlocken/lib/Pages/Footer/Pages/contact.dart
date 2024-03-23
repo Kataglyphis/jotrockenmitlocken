@@ -18,6 +18,7 @@ class ContactPageState extends State<ContactPage> {
     return SinglePage(
       children: [
         MarkdownFilePage(
+          currentLocale: Localizations.localeOf(context),
           filePathDe: 'assets/documents/footer/contactDe.md',
           filePathEn: 'assets/documents/footer/contactEn.md',
           useLightMode: widget.appAttributes.useLightMode,

@@ -18,6 +18,7 @@ class PrivacyPolicyPageState extends State<PrivacyPolicyPage> {
     return SinglePage(
         children: [
           MarkdownFilePage(
+            currentLocale: Localizations.localeOf(context),
             filePathDe: 'assets/documents/footer/privacyPolicyDe.md',
             filePathEn: 'assets/documents/footer/privacyPolicyEn.md',
             useLightMode: widget.appAttributes.useLightMode,

@@ -19,6 +19,7 @@ class CookieDeclarationPageState extends State<CookieDeclarationPage> {
     return SinglePage(
         children: [
           MarkdownFilePage(
+            currentLocale: Localizations.localeOf(context),
             filePathDe: 'assets/documents/footer/cookieDeclarationDe.md',
             filePathEn: 'assets/documents/footer/cookieDeclarationEn.md',
             useLightMode: widget.appAttributes.useLightMode,
