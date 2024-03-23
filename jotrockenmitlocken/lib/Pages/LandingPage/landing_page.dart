@@ -44,7 +44,7 @@ class LandingPageState extends State<LandingPage> {
           colDivider,
           landingPageEntry,
           colDivider,
-          widget.footer
+          //widget.footer
         ];
       }
     }
