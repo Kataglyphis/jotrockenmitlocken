@@ -4,23 +4,29 @@ import 'package:jotrockenmitlockenrepo/Media/Markdown/markdown_page.dart';
 import 'package:jotrockenmitlockenrepo/Layout/ResponsiveDesign/single_page.dart';
 import 'package:jotrockenmitlockenrepo/app_attributes.dart';
 
-class ContactPage extends StatefulWidget {
+class FooterPage extends StatefulWidget {
   final AppAttributes appAttributes;
   final Footer footer;
-  ContactPage({required this.appAttributes, required this.footer});
+  final String filePathDe;
+  final String filePathEn;
+  FooterPage(
+      {required this.appAttributes,
+      required this.footer,
+      required this.filePathDe,
+      required this.filePathEn});
   @override
-  State<StatefulWidget> createState() => ContactPageState();
+  State<StatefulWidget> createState() => FooterPageState();
 }
 
-class ContactPageState extends State<ContactPage> {
+class FooterPageState extends State<FooterPage> {
   @override
   Widget build(BuildContext context) {
     return SinglePage(
       children: [
         MarkdownFilePage(
           currentLocale: Localizations.localeOf(context),
-          filePathDe: 'assets/documents/footer/contactDe.md',
-          filePathEn: 'assets/documents/footer/contactEn.md',
+          filePathDe: widget.filePathDe,
+          filePathEn: widget.filePathEn,
           useLightMode: widget.appAttributes.useLightMode,
         )
       ],

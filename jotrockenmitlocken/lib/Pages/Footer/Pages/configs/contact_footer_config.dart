@@ -12,4 +12,14 @@ class ContactFooterConfig extends FooterPageConfig {
   String getRoutingName() {
     return "/contact";
   }
+
+  @override
+  String getFilePathDe() {
+    return 'assets/documents/footer/contactDe.md';
+  }
+
+  @override
+  String getFilePathEn() {
+    return 'assets/documents/footer/contactEn.md';
+  }
 }
