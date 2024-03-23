@@ -1,6 +1,6 @@
 name: jotrockenmitlockenrepo
 description: "Central modular code for my flutter/dart projects."
-version: 1.0.0
+version: 1.0.2
 homepage: https://jotrockenmitlocken.de
 
 environment:
@@ -22,7 +22,7 @@ dependencies:
   mime: ^1.0.5
 
 dev_dependencies:
-  mockito: ^5.4.4
+  # mockito: ^5.4.4
   flutter_test:
     sdk: flutter
   integration_test:
