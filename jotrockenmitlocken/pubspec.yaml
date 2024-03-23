@@ -22,7 +22,7 @@ dependencies:
   intl: ^0.18.1
 
 dev_dependencies:
-  mockito: ^5.4.4
+  # mockito: ^5.4.4
   flutter_test:
     sdk: flutter
   integration_test:
