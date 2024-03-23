@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:jotrockenmitlockenrepo/Layout/adaptive_grid.dart';
-import 'package:jotrockenmitlockenrepo/Pages/Footer/footer_pages_config.dart';
+import 'package:jotrockenmitlockenrepo/Pages/Footer/footer_page_config.dart';
 import 'package:jotrockenmitlockenrepo/constants.dart';
 import 'package:go_router/go_router.dart';
 
 class FooterPagesTextButtons extends StatefulWidget {
   const FooterPagesTextButtons({super.key, required this.footerPagesConfig});
-  final List<FooterPagesConfig> footerPagesConfig;
+  final List<FooterPageConfig> footerPagesConfig;
   @override
   State<StatefulWidget> createState() => FooterPagesTextButtonsState();
 }
@@ -25,7 +25,7 @@ class FooterPagesTextButtonsState extends State<FooterPagesTextButtons> {
               style: TextButton.styleFrom(
                   textStyle: Theme.of(context).textTheme.bodyMedium),
               onPressed: () {
-                context.go(footerPageConfig.routingName);
+                context.go(footerPageConfig.getRoutingName());
               },
               child: Text(
                 textAlign: TextAlign.center,

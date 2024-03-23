@@ -4,26 +4,29 @@ import 'package:jotrockenmitlocken/Pages/jotrockenmitlocken_screen_configuration
 import 'package:jotrockenmitlockenrepo/Media/Markdown/markdown_page.dart';
 import 'package:jotrockenmitlockenrepo/Layout/ResponsiveDesign/single_page.dart';
 import 'package:jotrockenmitlockenrepo/app_attributes.dart';
-import 'package:jotrockenmitlockenrepo/Pages/pages_factory.dart';
 
-class CookieDeclarationPage extends PagesFactory {
+class CookieDeclarationPage extends StatefulWidget {
+  final AppAttributes appAttributes;
+  final Footer footer;
+  CookieDeclarationPage({required this.appAttributes, required this.footer});
   @override
-  Widget createPage(AppAttributes appAttributes, BuildContext context) {
+  State<StatefulWidget> createState() => CookieDeclarationPageState();
+}
+
+class CookieDeclarationPageState extends State<CookieDeclarationPage> {
+  @override
+  Widget build(BuildContext context) {
     return SinglePage(
         children: [
           MarkdownFilePage(
+            currentLocale: Localizations.localeOf(context),
             filePathDe: 'assets/documents/footer/cookieDeclarationDe.md',
             filePathEn: 'assets/documents/footer/cookieDeclarationEn.md',
-            useLightMode: appAttributes.useLightMode,
+            useLightMode: widget.appAttributes.useLightMode,
           )
         ],
-        footer: Footer(
-          footerPagesConfig:
-              JotrockenmitLockenScreenConfigurations.getFooterPagesConfig(),
-          userSettings: appAttributes.userSettings,
-          footerConfig: appAttributes.footerConfig,
-        ),
-        showMediumSizeLayout: appAttributes.showMediumSizeLayout,
-        showLargeSizeLayout: appAttributes.showLargeSizeLayout);
+        footer: widget.footer,
+        showMediumSizeLayout: widget.appAttributes.showMediumSizeLayout,
+        showLargeSizeLayout: widget.appAttributes.showLargeSizeLayout);
   }
 }
