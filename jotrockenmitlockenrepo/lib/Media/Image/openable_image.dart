@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jotrockenmitlockenrepo/Decoration/decoration_helper.dart';
+import 'package:jotrockenmitlockenrepo/Decoration/centered_box_decoration.dart';
 import 'package:jotrockenmitlockenrepo/Decoration/row_divider.dart';
 import 'package:jotrockenmitlockenrepo/Media/Open/open_button.dart';
 
@@ -63,7 +63,7 @@ class _OpenableImageState extends State<OpenableImage> {
           ),
           child: Stack(
             children: [
-              applyBoxDecoration(
+              CenteredBoxDecoration(
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(0),
                   child: ourMainImage,
