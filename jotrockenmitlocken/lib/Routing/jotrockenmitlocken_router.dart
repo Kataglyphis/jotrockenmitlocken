@@ -1,17 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:jotrockenmitlocken/Pages/AboutMePage/about_me_page.dart';
 import 'package:jotrockenmitlocken/Pages/AboutMePage/about_me_page_navbar_config.dart';
-import 'package:jotrockenmitlocken/Pages/Blog/ai_blog_config.dart';
-import 'package:jotrockenmitlocken/Pages/Blog/ai_blog_page.dart';
-import 'package:jotrockenmitlocken/Pages/Blog/rendering_blog_config.dart';
-import 'package:jotrockenmitlocken/Pages/Blog/rendering_blog_page.dart';
+import 'package:jotrockenmitlocken/Pages/Blog/blog_page.dart';
 import 'package:jotrockenmitlocken/Pages/DocumentsPage/document_page_navbar_config.dart';
 import 'package:jotrockenmitlocken/Pages/DocumentsPage/documents_page.dart';
-import 'package:jotrockenmitlocken/Pages/Footer/Pages/configs/contact_footer_config.dart';
-import 'package:jotrockenmitlocken/Pages/Footer/Pages/configs/cookie_declaration_footer_config.dart';
-import 'package:jotrockenmitlocken/Pages/Footer/Pages/configs/declaration_on_accessibility_footer_config.dart';
-import 'package:jotrockenmitlocken/Pages/Footer/Pages/configs/imprint_footer_config.dart';
-import 'package:jotrockenmitlocken/Pages/Footer/Pages/configs/privacy_policy_config.dart';
 
 import 'package:jotrockenmitlockenrepo/Pages/Footer/footer_page.dart';
 import 'package:jotrockenmitlocken/Pages/LandingPage/landing_page.dart';
@@ -20,6 +12,7 @@ import 'package:jotrockenmitlocken/Pages/QuotesPage/quotes_page.dart';
 import 'package:jotrockenmitlocken/Pages/QuotesPage/quotes_pages_navbar_page_config.dart';
 import 'package:jotrockenmitlockenrepo/Pages/Footer/footer.dart';
 import 'package:jotrockenmitlockenrepo/Pages/Footer/footer_page_config.dart';
+import 'package:jotrockenmitlockenrepo/Pages/blog_page_config.dart';
 import 'package:jotrockenmitlockenrepo/Routing/router_creater.dart';
 
 import 'package:jotrockenmitlockenrepo/app_attributes.dart';
@@ -65,18 +58,22 @@ class JotrockenMitLockenRoutes extends RoutesCreator {
 
   List<(Widget, StatefulBranchInfoProvider)> _getBlogPagesAndConfigs(
       AppAttributes appAttributes) {
-    return [
-      (
-        AiBlogPage(
-            footer: getFooter(appAttributes), appAttributes: appAttributes),
-        AiBlogPageConfig(),
-      ),
-      (
-        RenderingBlogPage(
-            footer: getFooter(appAttributes), appAttributes: appAttributes),
-        RenderingBlogPageConfig(),
-      ),
-    ];
+    List<BlogPageConfig> blogPagesConfigs =
+        appAttributes.screenConfigurations.getBlogPagesConfig();
+    List<(Widget, StatefulBranchInfoProvider)> footerPages = blogPagesConfigs
+        .map(
+          (pageConfig) => (
+            BlogPage(
+              footer: getFooter(appAttributes),
+              appAttributes: appAttributes,
+              blogPageConfig: pageConfig,
+            ),
+            pageConfig
+          ),
+        )
+        .toList();
+
+    return footerPages;
   }
 
   List<(Widget, StatefulBranchInfoProvider)> _getFooterPagesAndConfigs(
