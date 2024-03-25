@@ -65,6 +65,7 @@ class JotrockenmitLockenScreenConfigurations extends ScreenConfigurations {
     ];
   }
 
+  @override
   List<FooterPageConfig> getFooterPagesConfig() {
     return [
       ImprintFooterConfig(),
