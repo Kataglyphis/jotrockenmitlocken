@@ -128,10 +128,14 @@ class MarkdownFilePageState extends State<MarkdownFilePage> {
                       'h1': CenteredHeaderBuilder(),
                       'table': TableElementBuilder(),
                       'code': CodeElementBuilder(
-                          colorSelectedBg: Theme.of(context)
-                              .colorScheme
-                              .surfaceVariant
-                              .withOpacity(0.3),
+                          markdownPageWidth: MediaQuery.of(context).size.width,
+                          colorSelectedBg: (MediaQuery.of(context).size.width >
+                                  narrowScreenWidthThreshold)
+                              ? Theme.of(context)
+                                  .colorScheme
+                                  .surfaceVariant
+                                  .withOpacity(0.3)
+                              : null,
                           colorSelectedPrimary:
                               Theme.of(context).colorScheme.primary,
                           useLightMode: widget.useLightMode),

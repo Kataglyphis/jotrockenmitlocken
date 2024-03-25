@@ -4,43 +4,42 @@ import 'package:jotrockenmitlockenrepo/Layout/ResponsiveDesign/single_page.dart'
 import 'package:jotrockenmitlockenrepo/Media/Files/file.dart';
 import 'package:jotrockenmitlockenrepo/Media/Files/file_table.dart';
 import 'package:jotrockenmitlockenrepo/Media/Markdown/markdown_page.dart';
+import 'package:jotrockenmitlockenrepo/Pages/blog_page_config.dart';
 import 'package:jotrockenmitlockenrepo/app_attributes.dart';
 
-class AiBlogPage extends StatefulWidget {
+class BlogPage extends StatefulWidget {
   final AppAttributes appAttributes;
   final Footer footer;
-  AiBlogPage({required this.appAttributes, required this.footer});
+  final BlogPageConfig blogPageConfig;
+  BlogPage(
+      {required this.appAttributes,
+      required this.footer,
+      required this.blogPageConfig});
 
   @override
-  State<StatefulWidget> createState() => AiBlogPageState();
+  State<StatefulWidget> createState() => BlogPageState();
 }
 
-class AiBlogPageState extends State<AiBlogPage> {
+class BlogPageState extends State<BlogPage> {
   @override
   Widget build(BuildContext context) {
-    List<File> docs = [
-      File(
-        baseDir: 'assets/documents/',
-        title: 'CV_Jonas_Heinle_english.pdf',
-        additionalInfo: '~3.7MB English',
-      ),
-      File(
-        baseDir: 'assets/documents/',
-        title: 'CV_Jonas_Heinle_german.pdf',
-        additionalInfo: '~3.7MB German',
-      ),
-      File(
-          baseDir: 'assets/images/',
-          title: 'WorleyNoiseTextures.zip',
-          additionalInfo: 'Use it for you own projects.')
-    ];
+    List<File> docs = widget.blogPageConfig
+        .getDocsDesc()
+        .map(
+          (fileConfig) => File(
+            baseDir: fileConfig['baseDir']!,
+            title: fileConfig['title']!,
+            additionalInfo: fileConfig['additionalInfo']!,
+          ),
+        )
+        .toList();
     return SinglePage(
         children: [
           MarkdownFilePage(
             currentLocale: Localizations.localeOf(context),
-            filePathDe: '',
-            filePathEn: 'assets/documents/blog/aiBlogPageEn.md',
-            imageDirectory: 'assets/images/aiBlog',
+            filePathDe: widget.blogPageConfig.getFilePathDe(),
+            filePathEn: widget.blogPageConfig.getFilePathEn(),
+            imageDirectory: widget.blogPageConfig.getImageDirectory(),
             useLightMode: widget.appAttributes.useLightMode,
           ),
           FileTable(

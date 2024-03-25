@@ -15,6 +15,6 @@ class LandingPageNavBarConfig extends NavBarPageConfig {
 
   @override
   String getRoutingName() {
-    return "/LandingPage";
+    return "/landingPage";
   }
 }

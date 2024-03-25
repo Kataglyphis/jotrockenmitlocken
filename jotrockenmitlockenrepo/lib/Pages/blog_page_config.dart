@@ -10,4 +10,8 @@ abstract class BlogPageConfig extends StatefulBranchInfoProvider {
   String getImagePath();
   String getGithubRepoName();
   String getDescription(BuildContext context);
+  String getFilePathDe();
+  String getFilePathEn();
+  String getImageDirectory();
+  List<Map<String, String>> getDocsDesc();
 }

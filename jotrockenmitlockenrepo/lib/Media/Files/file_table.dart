@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:jotrockenmitlockenrepo/Decoration/decoration_helper.dart';
+import 'package:jotrockenmitlockenrepo/Decoration/centered_box_decoration.dart';
+
 import 'package:jotrockenmitlockenrepo/Media/Download/download_file_icon.dart';
 import 'package:jotrockenmitlockenrepo/Media/Files/file.dart';
 import 'package:jotrockenmitlockenrepo/Media/Open/open_button.dart';
@@ -56,7 +57,7 @@ class FileTableState extends State<FileTable> {
           colDivider,
           SizedBox(
             width: getDocumentTableWidth(),
-            child: applyBoxDecoration(
+            child: CenteredBoxDecoration(
                 child: Column(
                     children: List.generate(widget.docs.length,
                         (index) => _buildListItem(context, index),
