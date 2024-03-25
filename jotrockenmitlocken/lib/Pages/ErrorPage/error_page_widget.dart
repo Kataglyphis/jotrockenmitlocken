@@ -1,4 +1,4 @@
-import 'package:jotrockenmitlockenrepo/Decoration/decoration_helper.dart';
+import 'package:jotrockenmitlockenrepo/Decoration/centered_box_decoration.dart';
 import 'package:jotrockenmitlockenrepo/Decoration/component_group_decoration.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +17,7 @@ class _ErrorPageWidget extends State<ErrorPageWidget> {
     const colDivider = SizedBox(height: 10);
     return ComponentGroupDecoration(label: 'Error 404', children: <Widget>[
       colDivider,
-      applyBoxDecoration(
+      CenteredBoxDecoration(
           child: ClipRRect(
             borderRadius: BorderRadius.circular(0),
             child: Image.asset("assets/images/error404.gif"),
