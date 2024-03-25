@@ -19,6 +19,7 @@ import 'package:jotrockenmitlocken/Pages/LandingPage/landing_page_navbar_page_co
 import 'package:jotrockenmitlocken/Pages/QuotesPage/quotes_page.dart';
 import 'package:jotrockenmitlocken/Pages/QuotesPage/quotes_pages_navbar_page_config.dart';
 import 'package:jotrockenmitlockenrepo/Pages/Footer/footer.dart';
+import 'package:jotrockenmitlockenrepo/Pages/Footer/footer_page_config.dart';
 import 'package:jotrockenmitlockenrepo/Routing/router_creater.dart';
 
 import 'package:jotrockenmitlockenrepo/app_attributes.dart';
@@ -80,59 +81,22 @@ class JotrockenMitLockenRoutes extends RoutesCreator {
 
   List<(Widget, StatefulBranchInfoProvider)> _getFooterPagesAndConfigs(
       AppAttributes appAttributes) {
-    var imprintConfig = ImprintFooterConfig();
-    var contactConfig = ContactFooterConfig();
-    var privacyPolicyConfig = PrivacyPolicyFooterConfig();
-    var cookieDeclarationConfig = CookieDeclarationFooterConfig();
-    var declarationOnAccessibilityConfig =
-        DeclarationOnAccessibilityFooterConfig();
-    List<(Widget, StatefulBranchInfoProvider)> footerPages = [
-      (
-        FooterPage(
-          footer: getFooter(appAttributes),
-          appAttributes: appAttributes,
-          filePathDe: imprintConfig.getFilePathDe(),
-          filePathEn: imprintConfig.getFilePathEn(),
-        ),
-        imprintConfig
-      ),
-      (
-        FooterPage(
-          footer: getFooter(appAttributes),
-          appAttributes: appAttributes,
-          filePathDe: contactConfig.getFilePathDe(),
-          filePathEn: contactConfig.getFilePathEn(),
-        ),
-        contactConfig
-      ),
-      (
-        FooterPage(
-          footer: getFooter(appAttributes),
-          appAttributes: appAttributes,
-          filePathDe: privacyPolicyConfig.getFilePathDe(),
-          filePathEn: privacyPolicyConfig.getFilePathEn(),
-        ),
-        privacyPolicyConfig
-      ),
-      (
-        FooterPage(
-          footer: getFooter(appAttributes),
-          appAttributes: appAttributes,
-          filePathDe: cookieDeclarationConfig.getFilePathDe(),
-          filePathEn: cookieDeclarationConfig.getFilePathEn(),
-        ),
-        cookieDeclarationConfig
-      ),
-      (
-        FooterPage(
-          footer: getFooter(appAttributes),
-          appAttributes: appAttributes,
-          filePathDe: declarationOnAccessibilityConfig.getFilePathDe(),
-          filePathEn: declarationOnAccessibilityConfig.getFilePathEn(),
-        ),
-        declarationOnAccessibilityConfig
-      ),
-    ];
+    List<FooterPageConfig> footerPagesConfigs =
+        appAttributes.screenConfigurations.getFooterPagesConfig();
+    List<(Widget, StatefulBranchInfoProvider)> footerPages = footerPagesConfigs
+        .map(
+          (pageConfig) => (
+            FooterPage(
+              footer: getFooter(appAttributes),
+              appAttributes: appAttributes,
+              filePathDe: pageConfig.getFilePathDe(),
+              filePathEn: pageConfig.getFilePathEn(),
+            ),
+            pageConfig
+          ),
+        )
+        .toList();
+
     return footerPages;
   }
 
