@@ -63,13 +63,14 @@ class _OpenableImageState extends State<OpenableImage> {
           ),
           child: Stack(
             children: [
-              CenteredBoxDecoration(
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(0),
-                  child: ourMainImage,
-                ),
-                color: Theme.of(context).colorScheme.primary,
+              //CenteredBoxDecoration(
+              //child:
+              ClipRRect(
+                borderRadius: BorderRadius.circular(0),
+                child: ourMainImage,
               ),
+              //color: Theme.of(context).colorScheme.primary,
+              //),
               if (!widget.disableOpen)
                 Align(
                     alignment: Alignment.topRight,
