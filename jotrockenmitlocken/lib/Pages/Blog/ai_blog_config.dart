@@ -30,7 +30,7 @@ class AiBlogPageConfig extends BlogPageConfig {
 
   @override
   String getImagePath() {
-    return "assets/images/funny_programmer.gif";
+    return "assets/images/logo.png"; //funny_programmer.gif
   }
 
   @override

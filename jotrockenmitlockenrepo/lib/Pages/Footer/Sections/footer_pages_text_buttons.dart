@@ -12,13 +12,16 @@ class FooterPagesTextButtons extends StatefulWidget {
 }
 
 class FooterPagesTextButtonsState extends State<FooterPagesTextButtons> {
-  final int maxNumFooterPageTextButtonsPerRow = 3;
   @override
   Widget build(BuildContext context) {
     var currentWidth = MediaQuery.of(context).size.width;
+    int maxNumFooterPageTextButtonsPerRow = 3;
     var align = MainAxisAlignment.start;
     if (currentWidth < mediumWidthBreakpoint) {
       align = MainAxisAlignment.center;
+    }
+    if (currentWidth < narrowScreenWidthThreshold) {
+      maxNumFooterPageTextButtonsPerRow = 2;
     }
     List<TextButton> footerPagesButtons = widget.footerPagesConfig
         .map((footerPageConfig) => (TextButton(
