@@ -23,7 +23,7 @@ class OpenableImage extends StatefulWidget {
 }
 
 class _OpenableImageState extends State<OpenableImage> {
-  double imageWidth = 0;
+  double imageWidth = 200;
   double imageHeight = 0;
 
   double getImageWidth(double imageWidth) {
@@ -47,11 +47,11 @@ class _OpenableImageState extends State<OpenableImage> {
         .resolve(const ImageConfiguration())
         .addListener(ImageStreamListener((ImageInfo info, bool _) {
       if (mounted) {
-        setState(() {
-          imageHeight = info.image.height.toDouble();
-          double retrievedImageWidth = info.image.width.toDouble();
-          imageWidth = getImageWidth(retrievedImageWidth).toDouble();
-        });
+        // setState(() {
+        //   imageHeight = info.image.height.toDouble();
+        //   double retrievedImageWidth = info.image.width.toDouble();
+        //   imageWidth = getImageWidth(retrievedImageWidth).toDouble();
+        // });
       }
     }));
 

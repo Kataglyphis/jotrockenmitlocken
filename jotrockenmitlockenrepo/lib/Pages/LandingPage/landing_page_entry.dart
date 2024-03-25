@@ -55,6 +55,7 @@ class LandingPageEntryState extends State<LandingPageEntry> {
         ],
       ),
       rowDivider,
+
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -71,11 +72,14 @@ class LandingPageEntryState extends State<LandingPageEntry> {
           ),
         ],
       ),
-      rowDivider,
-      OpenableImage(
-        displayedImage: widget.imagePath,
-        disableOpen: true,
+      // rowDivider,
+      SizedBox(
+        height: 400,
       ),
+      // OpenableImage(
+      //   displayedImage: widget.imagePath,
+      //   disableOpen: true,
+      // ),
       rowDivider
     ];
     if (MediaQuery.of(context).size.width > narrowScreenWidthThreshold) {
