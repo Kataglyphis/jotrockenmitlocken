@@ -5,15 +5,17 @@ import 'package:flutter_highlighter/themes/github.dart';
 import 'package:flutter_highlighter/themes/dracula.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_math_fork/flutter_math.dart';
-import 'package:jotrockenmitlockenrepo/Decoration/decoration_helper.dart';
+import 'package:jotrockenmitlockenrepo/Decoration/centered_box_decoration.dart';
 import 'package:markdown/markdown.dart' as md;
 import 'package:jotrockenmitlockenrepo/Media/copy_button.dart';
+import 'package:jotrockenmitlockenrepo/constants.dart';
 
 class CodeElementBuilder extends MarkdownElementBuilder {
   CodeElementBuilder(
       {required this.colorSelectedBg,
       required this.useLightMode,
-      required this.colorSelectedPrimary});
+      required this.colorSelectedPrimary,
+      required this.markdownPageWidth});
 
   Map<String, TextStyle> getCodeTheme() {
     if (useLightMode) {
@@ -21,7 +23,16 @@ class CodeElementBuilder extends MarkdownElementBuilder {
         //fontWeight: FontWeight.w100,
         backgroundColor: colorSelectedBg,
       );
+
       return lightThemeCodeStyle;
+      // } else if (useLightMode && colorSelectedBg == null) {
+      //   return lightThemeCodeStyle;
+      // } else if (!useLightMode && colorSelectedBg != null) {
+      //   darkThemeCodeStyle['root'] = TextStyle(
+      //     //fontWeight: FontWeight.w100,
+      //     backgroundColor: colorSelectedBg,
+      //   );
+      //   return darkThemeCodeStyle;
     } else {
       darkThemeCodeStyle['root'] = TextStyle(
         //fontWeight: FontWeight.w100,
@@ -32,10 +43,11 @@ class CodeElementBuilder extends MarkdownElementBuilder {
   }
 
   bool useLightMode;
-  Color colorSelectedBg;
+  Color? colorSelectedBg;
   Color colorSelectedPrimary;
   Map<String, TextStyle> lightThemeCodeStyle = {...githubTheme};
   Map<String, TextStyle> darkThemeCodeStyle = {...draculaTheme};
+  double markdownPageWidth;
 
   @override
   Widget visitElementAfterWithContext(BuildContext context, md.Element element,
@@ -53,14 +65,12 @@ class CodeElementBuilder extends MarkdownElementBuilder {
         scrollDirection: Axis.horizontal,
         child: Column(
           children: [
-            applyBoxDecoration(
+            CenteredBoxDecoration(
                 child: Container(
                   color: colorSelectedBg,
                   child: Math.tex(
                     element.textContent,
                     textStyle: preferredStyle,
-
-                    // mathStyle: mathStyle,
                     textScaleFactor: 1.6,
                   ),
                 ),
@@ -81,11 +91,13 @@ class CodeElementBuilder extends MarkdownElementBuilder {
               child: Card(
                   margin: EdgeInsets.zero,
                   elevation: 0,
-                  color: Theme.of(context)
-                      .colorScheme
-                      .surfaceVariant
-                      .withOpacity(0.3),
-                  child: applyBoxDecoration(
+                  color: (markdownPageWidth > narrowScreenWidthThreshold)
+                      ? Theme.of(context)
+                          .colorScheme
+                          .surfaceVariant
+                          .withOpacity(0.3)
+                      : null,
+                  child: CenteredBoxDecoration(
                       child: Stack(children: [
                         Center(
                           child: HighlightView(

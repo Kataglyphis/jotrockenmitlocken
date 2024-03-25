@@ -1,6 +1,7 @@
 import 'package:csv/csv.dart';
 import 'package:flutter/material.dart';
-import 'package:jotrockenmitlockenrepo/Decoration/decoration_helper.dart';
+import 'package:jotrockenmitlockenrepo/Decoration/centered_box_decoration.dart';
+
 import 'package:jotrockenmitlockenrepo/Decoration/row_divider.dart';
 import 'package:jotrockenmitlockenrepo/Media/DataTable/table_data.dart';
 import 'package:jotrockenmitlockenrepo/constants.dart';
@@ -118,7 +119,7 @@ abstract class DataListState<T extends TableData, U extends DataList>
                       _MyDataTableSource(getDataRows(csvData, dataTableWidth));
                   return SizedBox(
                     width: dataTableWidth,
-                    child: applyBoxDecoration(
+                    child: CenteredBoxDecoration(
                         child: PaginatedDataTable(
                           dataRowMaxHeight: double.infinity,
                           sortColumnIndex: sortColumnIndex,

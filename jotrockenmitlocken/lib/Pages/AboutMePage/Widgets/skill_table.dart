@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:jotrockenmitlockenrepo/Decoration/decoration_helper.dart';
+import 'package:jotrockenmitlockenrepo/Decoration/centered_box_decoration.dart';
 import 'package:jotrockenmitlockenrepo/constants.dart';
 import 'package:jotrockenmitlockenrepo/user_settings.dart';
 import 'package:jotrockenmitlockenrepo/Decoration/row_divider.dart';
@@ -119,7 +119,7 @@ class _SkillTableState extends State<SkillTable> {
             } else {
               skillTableWidth = skillTableWidth * 0.9;
             }
-            return applyBoxDecoration(
+            return CenteredBoxDecoration(
                 child: SizedBox(
                   width: skillTableWidth,
                   child: Table(
