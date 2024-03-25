@@ -37,4 +37,40 @@ class RenderingBlogPageConfig extends BlogPageConfig {
   String getLabel(BuildContext context) {
     return AppLocalizations.of(context)!.renderingPlayground;
   }
+
+  @override
+  List<Map<String, String>> getDocsDesc() {
+    return [
+      {
+        'baseDir': 'assets/documents/',
+        'title': 'CV_Jonas_Heinle_english.pdf',
+        'additionalInfo': '~3.7MB English',
+      },
+      {
+        'baseDir': 'assets/documents/',
+        'title': 'CV_Jonas_Heinle_german.pdf',
+        'additionalInfo': '~3.7MB German',
+      },
+      {
+        'baseDir': 'assets/images/',
+        'title': 'WorleyNoiseTextures.zip',
+        'additionalInfo': 'Use it for you own projects.',
+      },
+    ];
+  }
+
+  @override
+  String getFilePathDe() {
+    return '';
+  }
+
+  @override
+  String getFilePathEn() {
+    return 'assets/documents/blog/renderingBlogPageEn.md';
+  }
+
+  @override
+  String getImageDirectory() {
+    return 'assets/images/aiBlog';
+  }
 }
