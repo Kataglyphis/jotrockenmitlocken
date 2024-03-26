@@ -44,7 +44,6 @@ class LandingPageState extends State<LandingPage> {
           colDivider,
           landingPageEntry,
           colDivider,
-          //widget.footer
         ];
       }
     }
@@ -54,20 +53,13 @@ class LandingPageState extends State<LandingPage> {
   @override
   Widget build(BuildContext context) {
     var homePagesLeftRight = _createLandingPageChildWidgets(context);
-    return ListView(
-      children: [
-        ...homePagesLeftRight[0],
-        ...homePagesLeftRight[0],
-        ...homePagesLeftRight[1],
-        ...homePagesLeftRight[1],
-      ],
-    );
-    // return OneTwoTransitionPage(
-    //     childWidgetsLeftPage: homePagesLeftRight[0],
-    //     childWidgetsRightPage: homePagesLeftRight[1],
-    //     footer: widget.footer,
-    //     showMediumSizeLayout: widget.appAttributes.showMediumSizeLayout,
-    //     showLargeSizeLayout: widget.appAttributes.showLargeSizeLayout,
-    //     railAnimation: widget.appAttributes.railAnimation);
+
+    return OneTwoTransitionPage(
+        childWidgetsLeftPage: homePagesLeftRight[0],
+        childWidgetsRightPage: homePagesLeftRight[1],
+        footer: widget.footer,
+        showMediumSizeLayout: widget.appAttributes.showMediumSizeLayout,
+        showLargeSizeLayout: widget.appAttributes.showLargeSizeLayout,
+        railAnimation: widget.appAttributes.railAnimation);
   }
 }
