@@ -72,12 +72,9 @@ class LandingPageEntryState extends State<LandingPageEntry> {
         ],
       ),
       rowDivider,
-      // OpenableImage(
-      //   displayedImage: widget.imagePath,
-      //   disableOpen: true,
-      // ),
-      SizedBox(
-        height: 150,
+      OpenableImage(
+        displayedImage: widget.imagePath,
+        disableOpen: true,
       ),
       rowDivider
     ];
