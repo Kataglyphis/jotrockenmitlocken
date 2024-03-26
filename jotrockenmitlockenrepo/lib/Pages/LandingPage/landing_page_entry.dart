@@ -7,7 +7,6 @@ import 'package:jotrockenmitlockenrepo/Media/Image/openable_image.dart';
 import 'package:jotrockenmitlockenrepo/Url/browser_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:jotrockenmitlockenrepo/Url/external_link_config.dart';
-import 'package:jotrockenmitlockenrepo/constants.dart';
 
 class LandingPageEntry extends StatefulWidget {
   const LandingPageEntry(
@@ -78,17 +77,7 @@ class LandingPageEntryState extends State<LandingPageEntry> {
       ),
       rowDivider
     ];
-    if (MediaQuery.of(context).size.width > narrowScreenWidthThreshold) {
-      return ComponentGroupDecoration(
-          label: widget.label, children: <Widget>[...undecoratedChilds]);
-    } else {
-      return Column(
-        children: [
-          Text(widget.label, style: Theme.of(context).textTheme.headlineSmall),
-          colDivider,
-          ...undecoratedChilds
-        ],
-      );
-    }
+    return ComponentGroupDecoration(
+        label: widget.label, children: <Widget>[...undecoratedChilds]);
   }
 }

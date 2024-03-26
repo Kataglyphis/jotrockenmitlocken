@@ -30,7 +30,7 @@ class RenderingBlogPageConfig extends BlogPageConfig {
 
   @override
   String getImagePath() {
-    return "assets/images/Engine_logo.png"; // cat-computer.gif
+    return "assets/images/cat-computer.gif";
   }
 
   @override
