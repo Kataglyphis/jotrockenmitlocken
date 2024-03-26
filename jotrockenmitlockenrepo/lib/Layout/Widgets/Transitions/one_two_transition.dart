@@ -46,15 +46,13 @@ class _OneTwoTransitionState extends State<OneTwoTransition> {
           flex: mediumWidthBreakpoint.toInt(),
           child: widget.one,
         ),
-        if (MediaQuery.of(context).size.width > mediumWidthBreakpoint) ...[
+        if (widthAnimation.value.toInt() > 0) ...[
           Flexible(
-            // widthAnimation.value.toInt() > 0
             flex: widthAnimation.value.toInt(),
-            child: widget.two,
-            // FractionalTranslation(
-            //   translation: offsetAnimation.value,
-            //   child: widget.two,
-            // ),
+            child: FractionalTranslation(
+              translation: offsetAnimation.value,
+              child: widget.two,
+            ),
           )
         ],
       ],
