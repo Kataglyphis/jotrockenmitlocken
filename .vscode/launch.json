@@ -17,7 +17,7 @@
 			"type": "dart",
 			"flutterMode": "profile",
 			"program": "jotrockenmitlocken/lib/main.dart",
-			"args": ["--profile"] //"--web-renderer", "canvaskit"
+			"args": ["--profile", "--web-renderer", "html"] //
 		},
 		{
 			"name": "jotrockenmitlocken (release mode)",

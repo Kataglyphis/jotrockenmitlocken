@@ -3,7 +3,6 @@ import 'package:jotrockenmitlockenrepo/Decoration/col_divider.dart';
 import 'package:jotrockenmitlockenrepo/Decoration/row_divider.dart';
 import 'package:jotrockenmitlockenrepo/Media/Image/openable_image.dart';
 
-
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Donation extends StatefulWidget {
@@ -27,14 +26,14 @@ class _DonationState extends State<Donation> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               colDivider,
-              const Flexible(
+              Flexible(
                 child: OpenableImage(
                   displayedImage: "assets/images/paypal.jpg",
                   disableOpen: true,
                 ),
               ),
               colDivider,
-              const Flexible(
+              Flexible(
                 child: OpenableImage(
                   displayedImage: "assets/images/Coffee-removebg.png",
                   disableOpen: false,

@@ -8,6 +8,7 @@ import 'package:jotrockenmitlockenrepo/Pages/Home/Widgets/expanded_trailing_acti
 import 'package:jotrockenmitlockenrepo/Pages/Home/Widgets/brightness_button.dart';
 import 'package:jotrockenmitlockenrepo/Pages/Home/Widgets/color_seed_button.dart';
 import 'package:jotrockenmitlockenrepo/Pages/Home/Widgets/language_button.dart';
+import 'package:jotrockenmitlockenrepo/Pages/Home/Widgets/trailing_actions.dart';
 
 import 'package:jotrockenmitlockenrepo/Routing/navigation_bars.dart';
 import 'package:jotrockenmitlockenrepo/app_attributes.dart';
@@ -77,43 +78,6 @@ class HomeState extends State<Home> {
     );
   }
 
-  Widget _trailingActions() {
-    var buttonNames = widget.appAttributes.homeConfig.getButtonNames(context);
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        if (buttonNames.language != null &&
-            widget.appAttributes.handleLanguageChange != null)
-          Flexible(
-            child: LanguageButton(
-              handleLanguageChange: widget.appAttributes.handleLanguageChange!,
-              showTooltipBelow: false,
-              title: buttonNames.language!,
-            ),
-          ),
-        if (buttonNames.brightness != null &&
-            widget.appAttributes.handleBrightnessChange != null)
-          Flexible(
-            child: BrightnessButton(
-              handleBrightnessChange:
-                  widget.appAttributes.handleBrightnessChange!,
-              showTooltipBelow: false,
-              message: buttonNames.brightness!,
-            ),
-          ),
-        if (buttonNames.color != null &&
-            widget.appAttributes.handleColorSelect != null)
-          Flexible(
-            child: ColorSeedButton(
-              handleColorSelect: widget.appAttributes.handleColorSelect!,
-              colorSelected: widget.appAttributes.colorSelected,
-              title: buttonNames.color!,
-            ),
-          ),
-      ],
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     List<Locale> supportedLang = widget.appAttributes.supportedLanguages;
@@ -139,7 +103,6 @@ class HomeState extends State<Home> {
                 builder: (context, child) {
                   return NavigationTransition(
                     footer: widget.footer,
-                    navigationShell: widget.navigationShell,
                     showFooter: (widget.appAttributes.showLargeSizeLayout ||
                             widget.appAttributes.showMediumSizeLayout) &&
                         !widget.appAttributes.screenConfigurations
@@ -148,7 +111,7 @@ class HomeState extends State<Home> {
                     animationController: widget.controller,
                     railAnimation: widget.appAttributes.railAnimation,
                     appBar: _createAppBar(),
-                    body: Flexible(
+                    body: Expanded(
                       child: widget.navigationShell,
                     ),
                     navigationRail: NavigationRail(
@@ -174,7 +137,9 @@ class HomeState extends State<Home> {
                                       .getButtonNames(context),
                                   appAttributes: widget.appAttributes,
                                 )
-                              : _trailingActions(),
+                              : TrailingActions(
+                                  appAttributes: widget.appAttributes,
+                                ),
                         ),
                       ),
                     ),

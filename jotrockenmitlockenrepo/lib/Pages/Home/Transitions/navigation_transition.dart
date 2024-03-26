@@ -4,21 +4,19 @@ import 'package:jotrockenmitlockenrepo/Pages/Footer/footer.dart';
 import 'package:jotrockenmitlockenrepo/Pages/Home/Transitions/bar_transition.dart';
 import 'package:jotrockenmitlockenrepo/Pages/Home/Transitions/rail_transition.dart';
 
-import 'package:go_router/go_router.dart';
-
 class NavigationTransition extends StatefulWidget {
-  const NavigationTransition(
-      {super.key,
-      required this.footer,
-      required this.scaffoldKey,
-      required this.animationController,
-      required this.railAnimation,
-      required this.navigationRail,
-      required this.navigationBar,
-      required this.appBar,
-      required this.body,
-      required this.showFooter,
-      required this.navigationShell});
+  const NavigationTransition({
+    super.key,
+    required this.footer,
+    required this.scaffoldKey,
+    required this.animationController,
+    required this.railAnimation,
+    required this.navigationRail,
+    required this.navigationBar,
+    required this.appBar,
+    required this.body,
+    required this.showFooter,
+  });
 
   final Footer footer;
   final GlobalKey<ScaffoldState> scaffoldKey;
@@ -29,7 +27,6 @@ class NavigationTransition extends StatefulWidget {
   final PreferredSizeWidget appBar;
   final Widget body;
   final bool showFooter;
-  final StatefulNavigationShell navigationShell;
 
   @override
   State<NavigationTransition> createState() => _NavigationTransitionState();

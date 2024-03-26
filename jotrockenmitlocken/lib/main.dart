@@ -94,19 +94,19 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
       }
       if (status != AnimationStatus.forward &&
           status != AnimationStatus.completed) {
-        //controller.forward();
+        controller.forward();
       }
     } else {
       showMediumSizeLayout = false;
       showLargeSizeLayout = false;
       if (status != AnimationStatus.reverse &&
           status != AnimationStatus.dismissed) {
-        //controller.reverse();
+        controller.reverse();
       }
     }
     if (!controllerInitialized) {
       controllerInitialized = true;
-      //controller.value = width > mediumWidthBreakpoint ? 1 : 0;
+      controller.value = width > mediumWidthBreakpoint ? 1 : 0;
     }
   }
 

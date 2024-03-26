@@ -27,28 +27,22 @@ class OneTwoTransitionPage extends StatefulWidget {
 class OneTwoTransitionPageState extends State<OneTwoTransitionPage> {
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: OneTwoTransition(
-            animation: widget.railAnimation,
-            one: FirstComponentList(
-              showSecondList:
-                  widget.showMediumSizeLayout || widget.showLargeSizeLayout,
-              childWidgetsLeftPage: widget.childWidgetsLeftPage,
-              childWidgetsRightPage:
-                  (widget.showMediumSizeLayout || widget.showLargeSizeLayout)
-                      ? widget.childWidgetsRightPage
-                      : widget.childWidgetsRightPage + [widget.footer],
-            ),
-            two: ListView(
-              //ScrollableList(childWidgets:
-              padding: const EdgeInsetsDirectional.only(end: 10.0),
-              children: widget.childWidgetsRightPage,
-            ),
-          ),
-        ),
-      ],
+    return OneTwoTransition(
+      animation: widget.railAnimation,
+      one: FirstComponentList(
+        showSecondList:
+            widget.showMediumSizeLayout || widget.showLargeSizeLayout,
+        childWidgetsLeftPage: widget.childWidgetsLeftPage,
+        childWidgetsRightPage:
+            (widget.showMediumSizeLayout || widget.showLargeSizeLayout)
+                ? widget.childWidgetsRightPage
+                : widget.childWidgetsRightPage + [widget.footer],
+      ),
+      two: ListView(
+        //ScrollableList(childWidgets:
+        padding: const EdgeInsetsDirectional.only(end: 10.0),
+        children: widget.childWidgetsRightPage,
+      ),
     );
   }
 }
