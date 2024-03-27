@@ -4,9 +4,14 @@ import 'package:jotrockenmitlockenrepo/constants.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class PieChart extends StatefulWidget {
-  const PieChart({super.key, required this.chartConfig, required this.title});
+  const PieChart(
+      {super.key,
+      required this.chartConfig,
+      required this.title,
+      this.animate = true});
   final Map<String, double> chartConfig;
   final String title;
+  final bool animate;
   @override
   PieChartState createState() => PieChartState();
 }
@@ -40,7 +45,7 @@ class PieChartState extends State<PieChart> {
             yValueMapper: (PieChartDataEntry data, _) => data.y,
             dataLabelMapper: (PieChartDataEntry data, _) => data.x,
             // Explode the segments on tap
-            animationDuration: 1000,
+            animationDuration: (widget.animate) ? 1000 : 0,
             animationDelay: 500,
             explode: true,
             explodeIndex: 5,
