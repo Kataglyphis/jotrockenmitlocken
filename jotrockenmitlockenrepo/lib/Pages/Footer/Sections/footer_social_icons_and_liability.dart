@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jotrockenmitlockenrepo/Layout/adaptive_grid.dart';
 import 'package:jotrockenmitlockenrepo/Pages/Footer/footer_config.dart';
 import 'package:jotrockenmitlockenrepo/SocialMedia/social_media_widgets.dart';
 import 'package:jotrockenmitlockenrepo/constants.dart';

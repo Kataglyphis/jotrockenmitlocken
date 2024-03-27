@@ -23,16 +23,7 @@ class CodeElementBuilder extends MarkdownElementBuilder {
         //fontWeight: FontWeight.w100,
         backgroundColor: colorSelectedBg,
       );
-
       return lightThemeCodeStyle;
-      // } else if (useLightMode && colorSelectedBg == null) {
-      //   return lightThemeCodeStyle;
-      // } else if (!useLightMode && colorSelectedBg != null) {
-      //   darkThemeCodeStyle['root'] = TextStyle(
-      //     //fontWeight: FontWeight.w100,
-      //     backgroundColor: colorSelectedBg,
-      //   );
-      //   return darkThemeCodeStyle;
     } else {
       darkThemeCodeStyle['root'] = TextStyle(
         //fontWeight: FontWeight.w100,
@@ -66,17 +57,18 @@ class CodeElementBuilder extends MarkdownElementBuilder {
         child: Column(
           children: [
             CenteredBoxDecoration(
-                child: Container(
-                  color: colorSelectedBg,
-                  child: Math.tex(
-                    element.textContent,
-                    textStyle: preferredStyle,
-                    textScaleFactor: 1.6,
-                  ),
+              insets: const EdgeInsets.all(2),
+              borderWidth: 1,
+              color: colorSelectedPrimary,
+              child: Container(
+                color: colorSelectedBg,
+                child: Math.tex(
+                  element.textContent,
+                  textStyle: preferredStyle,
+                  textScaleFactor: 1.6,
                 ),
-                insets: const EdgeInsets.all(2),
-                borderWidth: 1,
-                color: colorSelectedPrimary),
+              ),
+            ),
           ],
         ),
       ));
@@ -98,6 +90,7 @@ class CodeElementBuilder extends MarkdownElementBuilder {
                           .withOpacity(0.3)
                       : null,
                   child: CenteredBoxDecoration(
+                      color: colorSelectedPrimary,
                       child: Stack(children: [
                         Center(
                           child: HighlightView(
@@ -121,8 +114,7 @@ class CodeElementBuilder extends MarkdownElementBuilder {
                                 text: element.textContent,
                               ),
                             ))
-                      ]),
-                      color: colorSelectedPrimary)))
+                      ]))))
         ],
       ),
     );
