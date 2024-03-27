@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:jotrockenmitlockenrepo/Decoration/Charts/pie_chart.dart';
 import 'package:jotrockenmitlockenrepo/Decoration/Charts/pie_chart_data_entry.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:jotrockenmitlockenrepo/constants.dart';
 
 class PerfectDay extends StatefulWidget {
   const PerfectDay({super.key});
@@ -31,10 +32,11 @@ class PerfectDayState extends State<PerfectDay> {
     chartConfig.forEach((entryName, valueInPercentage) {
       chartData.add(PieChartDataEntry(entryName, valueInPercentage));
     });
-
+    double currentWidth = MediaQuery.of(context).size.width;
     return PieChart(
       chartConfig: chartConfig,
       title: AppLocalizations.of(context)!.myPerfectDay,
+      animate: currentWidth > narrowScreenWidthThreshold,
     );
   }
 }
