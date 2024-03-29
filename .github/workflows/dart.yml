@@ -22,7 +22,7 @@ jobs:
         uses: flutter-actions/setup-flutter@v2.3  
         with:
           channel: stable
-          version: 3.19.4
+          version: 3.19.5
       
       # Note: This workflow uses the latest stable version of the Dart SDK.
       # You can specify other versions if desired, see documentation here:
