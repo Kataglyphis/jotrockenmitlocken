@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:jotrockenmitlockenrepo/Decoration/col_divider.dart';
 import 'package:jotrockenmitlockenrepo/Decoration/row_divider.dart';
 import 'package:jotrockenmitlockenrepo/Media/Image/openable_image.dart';
 

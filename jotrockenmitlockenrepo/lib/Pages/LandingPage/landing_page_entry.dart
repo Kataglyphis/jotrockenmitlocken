@@ -41,45 +41,42 @@ class LandingPageEntryState extends State<LandingPageEntry> {
   @override
   Widget build(BuildContext context) {
     List<Widget> undecoratedChilds = [
-      Container(
-        padding: const EdgeInsets.symmetric(horizontal: 32.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            IconButton(
-              icon: const FaIcon(FontAwesomeIcons.github),
-              onPressed: () {
-                BrowserHelper.launchInBrowser(widget.githubRepo);
-              },
-            ),
-            colDivider,
-            Text(
-              "${widget.description}",
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          IconButton(
+            icon: const FaIcon(FontAwesomeIcons.github),
+            onPressed: () {
+              BrowserHelper.launchInBrowser(widget.githubRepo);
+            },
+          ),
+          colDivider,
+          Text(
+            "${widget.description}",
+            style: Theme.of(context).textTheme.titleSmall,
+          ),
+        ],
+      ),
+
+      // //rowDivider,
+
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          FilledButton.tonal(
+            onPressed: isDisabled
+                ? null
+                : () {
+                    context.go(widget.routerPath);
+                  },
+            child: Text(
+              widget.headline,
               style: Theme.of(context).textTheme.titleSmall,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
-      // //rowDivider,
-      Container(
-        padding: const EdgeInsets.symmetric(horizontal: 32.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            FilledButton.tonal(
-              onPressed: isDisabled
-                  ? null
-                  : () {
-                      context.go(widget.routerPath);
-                    },
-              child: Text(
-                widget.headline,
-                style: Theme.of(context).textTheme.titleSmall,
-              ),
-            ),
-          ],
-        ),
-      ),
+
       rowDivider,
       OpenableImage(
         displayedImage: widget.imagePath,
