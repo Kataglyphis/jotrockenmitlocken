@@ -7,7 +7,8 @@ import 'package:jotrockenmitlockenrepo/app_attributes.dart';
 class ErrorPage extends StatefulWidget {
   final AppAttributes appAttributes;
   final Footer footer;
-  ErrorPage({required this.appAttributes, required this.footer});
+  const ErrorPage(
+      {super.key, required this.appAttributes, required this.footer});
 
   @override
   State<StatefulWidget> createState() => ErrorPageState();
@@ -17,11 +18,12 @@ class ErrorPageState extends State<ErrorPage> {
   @override
   Widget build(BuildContext context) {
     return SinglePage(
-        children: [
-          const ErrorPageWidget(),
-        ],
-        footer: widget.footer,
-        showMediumSizeLayout: widget.appAttributes.showMediumSizeLayout,
-        showLargeSizeLayout: widget.appAttributes.showLargeSizeLayout);
+      footer: widget.footer,
+      showMediumSizeLayout: widget.appAttributes.showMediumSizeLayout,
+      showLargeSizeLayout: widget.appAttributes.showLargeSizeLayout,
+      children: const [
+        ErrorPageWidget(),
+      ],
+    );
   }
 }

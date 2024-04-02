@@ -15,6 +15,7 @@ import 'package:jotrockenmitlocken/Pages/Footer/jotrockenmitlocken_footer.dart';
 import 'package:jotrockenmitlocken/Routing/jotrockenmitlocken_router.dart';
 import 'package:jotrockenmitlocken/Pages/Home/home_config.dart';
 import 'package:jotrockenmitlocken/Pages/jotrockenmitlocken_screen_configurations.dart';
+import 'package:jotrockenmitlockenrepo/Pages/blog_page_config.dart';
 import 'package:jotrockenmitlockenrepo/app_attributes.dart';
 import 'package:jotrockenmitlockenrepo/Routing/screen_configurations.dart';
 import 'package:jotrockenmitlockenrepo/constants.dart';
@@ -53,9 +54,15 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
 
   late final AnimationController controller;
   late final CurvedAnimation railAnimation;
-  late Future<(UserSettings, String)> _settings;
+  late Future<(UserSettings, List<BlogPageConfig>)> _settings;
   final String userSettingsFilePath = "assets/data/user_settings.json";
   final String blogSettingsFilePath = "assets/data/blog_settings.json";
+  final String appTitle = 'Artificial neurons are almost magic';
+  final String appName = 'Jotrockenmitlocken';
+  final List<Locale> supportedLanguages = [
+    const Locale('de'), // Deutsch
+    const Locale('en'), // English
+  ];
   bool controllerInitialized = false;
   bool showMediumSizeLayout = false;
   bool showLargeSizeLayout = false;
@@ -113,14 +120,22 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
     }
   }
 
-  Future<(UserSettings, String)> _loadAppSettings() async {
+  Future<(UserSettings, List<BlogPageConfig>)> _loadAppSettings() async {
     final userSettingsJsonString =
         await rootBundle.loadString(userSettingsFilePath);
     final Map<String, dynamic> userSettingsJson =
         json.decode(userSettingsJsonString);
-    final blogSettingsJson = await rootBundle.loadString(blogSettingsFilePath);
     UserSettings userSettings = UserSettings.fromJsonFile(userSettingsJson);
-    return (userSettings, blogSettingsJson);
+
+    final blogSettingsJsonString =
+        await rootBundle.loadString(blogSettingsFilePath);
+    final List<dynamic> blogSettingsJson = json.decode(blogSettingsJsonString);
+    List<BlogPageConfig> blogConfigs = [];
+    for (var e in blogSettingsJson) {
+      blogConfigs.add(BlogPageConfig.fromJsonFile(e as Map<String, dynamic>));
+    }
+
+    return (userSettings, blogConfigs);
   }
 
   void handleBrightnessChange(bool useLightMode) {
@@ -141,21 +156,37 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
     });
   }
 
+  final List<LocalizationsDelegate> localizationsDelegate = const [
+    AppLocalizations.delegate,
+    GlobalMaterialLocalizations.delegate,
+    GlobalWidgetsLocalizations.delegate,
+    GlobalCupertinoLocalizations.delegate,
+  ];
   @override
   Widget build(BuildContext context) {
+    ThemeData darkTheme = ThemeData(
+      colorSchemeSeed: colorSelected.color,
+      useMaterial3: true,
+      brightness: Brightness.dark,
+    );
+    ThemeData lightTheme = ThemeData(
+      //fontFamily: 'Montserrat',
+      colorSchemeSeed: colorSelected.color,
+      colorScheme: null,
+      useMaterial3: true,
+      brightness: Brightness.light,
+    );
     return FutureBuilder(
         future: _settings,
         builder: (context, data) {
           if (data.hasData) {
             ScreenConfigurations screenConfigurations =
-                JotrockenmitLockenScreenConfigurations(); //.fromJsonFile(data.requireData.$2);
+                JotrockenmitLockenScreenConfigurations.fromBlogConfigs(
+                    blogPageConfigs: data.requireData.$2);
             AppAttributes appAttributes = AppAttributes(
-              appTitle: 'Artificial neurons are almost magic',
-              appName: "Jotrockenmitlocken",
-              supportedLanguages: [
-                const Locale('de'), // Deutsch
-                const Locale('en'), // English
-              ],
+              appTitle: appTitle,
+              appName: appName,
+              supportedLanguages: supportedLanguages,
               footerConfig: JoTrockenMitLockenFooterConfig(),
               homeConfig: JotrockenMitLockenHomeConfig(),
               userSettings: data.requireData.$1,
@@ -178,37 +209,36 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
               controller,
             );
             return MaterialApp.router(
-              debugShowCheckedModeBanner: false,
-              localizationsDelegates: const [
-                AppLocalizations.delegate,
-                GlobalMaterialLocalizations.delegate,
-                GlobalWidgetsLocalizations.delegate,
-                GlobalCupertinoLocalizations.delegate,
-              ],
-              supportedLocales: appAttributes.supportedLanguages,
-              title: appAttributes.appTitle,
-              themeMode: themeMode,
-              theme: ThemeData(
-                //fontFamily: 'Montserrat',
-                colorSchemeSeed: colorSelected.color,
-                colorScheme: null,
-                useMaterial3: true,
-                brightness: Brightness.light,
-              ),
-              darkTheme: ThemeData(
-                colorSchemeSeed: colorSelected.color,
-                useMaterial3: true,
-                brightness: Brightness.dark,
-              ),
-              routerConfig: routerConfig,
-            );
+                debugShowCheckedModeBanner: false,
+                localizationsDelegates: localizationsDelegate,
+                supportedLocales: supportedLanguages,
+                title: appTitle,
+                themeMode: themeMode,
+                theme: lightTheme,
+                darkTheme: darkTheme,
+                routerConfig: routerConfig);
           } else if (data.hasError) {
-            return MaterialApp(home: Text("${data.error}"));
+            return MaterialApp(
+                debugShowCheckedModeBanner: false,
+                localizationsDelegates: localizationsDelegate,
+                supportedLocales: supportedLanguages,
+                title: appTitle,
+                themeMode: themeMode,
+                theme: lightTheme,
+                darkTheme: darkTheme,
+                home: Text("${data.error}"));
           } else {
             return MaterialApp(
-                home: Center(
-              child: CircularProgressIndicator(),
-            ));
+                debugShowCheckedModeBanner: false,
+                localizationsDelegates: localizationsDelegate,
+                supportedLocales: supportedLanguages,
+                title: appTitle,
+                themeMode: themeMode,
+                theme: lightTheme,
+                darkTheme: darkTheme,
+                home: const Center(
+                  child: CircularProgressIndicator(),
+                ));
           }
         });
   }

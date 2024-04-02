@@ -9,7 +9,8 @@ import 'package:jotrockenmitlockenrepo/app_attributes.dart';
 class DocumentPage extends StatefulWidget {
   final AppAttributes appAttributes;
   final Footer footer;
-  DocumentPage({required this.appAttributes, required this.footer});
+  const DocumentPage(
+      {super.key, required this.appAttributes, required this.footer});
 
   @override
   State<StatefulWidget> createState() => DocumentPageState();
@@ -35,14 +36,15 @@ class DocumentPageState extends State<DocumentPage> {
           additionalInfo: '~33MB German')
     ];
     return SinglePage(
-        children: [
-          FileTable(
-            docs: docs,
-            title: AppLocalizations.of(context)!.documents,
-          )
-        ],
-        footer: widget.footer,
-        showMediumSizeLayout: widget.appAttributes.showMediumSizeLayout,
-        showLargeSizeLayout: widget.appAttributes.showLargeSizeLayout);
+      footer: widget.footer,
+      showMediumSizeLayout: widget.appAttributes.showMediumSizeLayout,
+      showLargeSizeLayout: widget.appAttributes.showLargeSizeLayout,
+      children: [
+        FileTable(
+          docs: docs,
+          title: AppLocalizations.of(context)!.documents,
+        )
+      ],
+    );
   }
 }

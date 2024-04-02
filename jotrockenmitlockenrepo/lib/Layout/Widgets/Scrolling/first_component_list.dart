@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:jotrockenmitlockenrepo/Layout/Widgets/Scrolling/scrollable_list.dart';
 
 class FirstComponentList extends StatefulWidget {
   const FirstComponentList({
