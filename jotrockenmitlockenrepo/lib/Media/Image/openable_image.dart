@@ -12,7 +12,7 @@ class OpenableImage extends StatefulWidget {
     this.captioningStyle,
     this.disableOpen = false,
   }) {
-    this.ourMainImage = FadeInImage(
+    ourMainImage = FadeInImage(
       placeholder: AssetImage(placeholderImage),
       image: AssetImage(displayedImage),
     );
@@ -23,7 +23,7 @@ class OpenableImage extends StatefulWidget {
   final String? imageCaptioning;
   final TextStyle? captioningStyle;
   final bool disableOpen;
-  late FadeInImage ourMainImage;
+  late final FadeInImage ourMainImage;
 
   @override
   State<StatefulWidget> createState() => _OpenableImageState();
@@ -47,19 +47,23 @@ class _OpenableImageState extends State<OpenableImage> {
 
   @override
   Widget build(BuildContext context) {
-    if (mounted && !initializedImage) {
+    if (!initializedImage) {
+      //mounted &&
       initializedImage = true;
       imageListener = ImageStreamListener((ImageInfo info, bool _) {
-        setState(() {
-          imageHeight = info.image.height.toDouble();
-          double retrievedImageWidth = info.image.width.toDouble();
-          imageWidth = getImageWidth(retrievedImageWidth).toDouble();
-        });
+        if (mounted) {
+          setState(() {
+            imageHeight = info.image.height.toDouble();
+            double retrievedImageWidth = info.image.width.toDouble();
+            imageWidth = getImageWidth(retrievedImageWidth).toDouble();
+          });
+        }
       });
       widget.ourMainImage.image
           .resolve(const ImageConfiguration())
           .addListener(imageListener);
-    } else if (initializedImage) {
+    } else {
+      //(mounted && initializedImage)
       widget.ourMainImage.image
           .resolve(const ImageConfiguration())
           .removeListener(imageListener);
@@ -73,18 +77,21 @@ class _OpenableImageState extends State<OpenableImage> {
           ),
           child: Stack(
             children: [
-              CenteredBoxDecoration(
-                color: Theme.of(context).colorScheme.primary,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(0),
-                  child: widget.ourMainImage,
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: CenteredBoxDecoration(
+                  color: Theme.of(context).colorScheme.primary,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(0),
+                    child: widget.ourMainImage,
+                  ),
                 ),
               ),
               if (!widget.disableOpen)
                 Align(
                     alignment: Alignment.topRight,
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(16.0),
                       child: OpenButton(
                         assetFullPath: widget.displayedImage,
                       ),

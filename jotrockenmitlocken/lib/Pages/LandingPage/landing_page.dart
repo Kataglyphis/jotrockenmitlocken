@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 import 'package:jotrockenmitlockenrepo/Pages/Footer/footer.dart';
 import 'package:jotrockenmitlockenrepo/Layout/ResponsiveDesign/one_two_transition_widget.dart';
 import 'package:jotrockenmitlockenrepo/Pages/LandingPage/landing_page_entry.dart';
+import 'package:jotrockenmitlockenrepo/Url/external_link_config.dart';
 import 'package:jotrockenmitlockenrepo/app_attributes.dart';
 import 'package:jotrockenmitlockenrepo/Pages/blog_page_config.dart';
 
 class LandingPage extends StatefulWidget {
   final AppAttributes appAttributes;
   final Footer footer;
-  LandingPage({required this.appAttributes, required this.footer});
+  const LandingPage(
+      {super.key, required this.appAttributes, required this.footer});
 
   @override
   State<StatefulWidget> createState() => LandingPageState();
@@ -22,18 +26,23 @@ class LandingPageState extends State<LandingPage> {
     List<BlogPageConfig> blogPagesConfig =
         widget.appAttributes.screenConfigurations.getBlogPagesConfig();
 
+    ExternalLinkConfig gitHub =
+        widget.appAttributes.userSettings.socialMediaLinksConfig!['GitHub']!;
     for (int i = 0; i < blogPagesConfig.length; i++) {
+      ExternalLinkConfig githubRepo = ExternalLinkConfig(
+          host: gitHub.host, path: gitHub.path + blogPagesConfig[i].githubRepo);
+
       var landingPageEntry = LandingPageEntry(
-        label: blogPagesConfig[i].getLabel(context),
+        currentLocale: Localizations.localeOf(context),
+        labelEN: blogPagesConfig[i].shortDescriptionEN,
+        labelDE: blogPagesConfig[i].shortDescriptionDE,
         routerPath: blogPagesConfig[i].getRoutingName(),
-        headline: blogPagesConfig[i].getHeadline(context),
-        githubRepoName: blogPagesConfig[i].getGithubRepoName(),
-        githubRepo: widget
-            .appAttributes.userSettings.socialMediaLinksConfig!['GitHub']!,
-        description: blogPagesConfig[i].getDescription(context),
-        imagePath: blogPagesConfig[i].getImagePath(),
+        headline: AppLocalizations.of(context)!.visitBlogEntry,
+        githubRepo: githubRepo,
+        description: AppLocalizations.of(context)!.playgroundDescription,
+        imagePath: blogPagesConfig[i].landingPageEntryImagePath,
       );
-      if (blogPagesConfig[i].getAlignment() == LandingPageAlignment.left) {
+      if (blogPagesConfig[i].landingPageAlignment == "left") {
         childWidgetsLeftPage += [
           colDivider,
           landingPageEntry,

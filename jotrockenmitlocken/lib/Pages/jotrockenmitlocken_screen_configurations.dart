@@ -1,6 +1,4 @@
 import 'package:jotrockenmitlocken/Pages/AboutMePage/about_me_page_navbar_config.dart';
-import 'package:jotrockenmitlocken/Pages/Blog/ai_blog_config.dart';
-import 'package:jotrockenmitlocken/Pages/Blog/rendering_blog_config.dart';
 import 'package:jotrockenmitlocken/Pages/DocumentsPage/document_page_navbar_config.dart';
 import 'package:jotrockenmitlocken/Pages/ErrorPage/error_page_stateful_branch_info_provider.dart';
 import 'package:jotrockenmitlocken/Pages/Footer/Pages/configs/contact_footer_config.dart';
@@ -17,6 +15,10 @@ import 'package:jotrockenmitlockenrepo/Pages/stateful_branch_info_provider.dart'
 import 'package:jotrockenmitlockenrepo/Routing/screen_configurations.dart';
 
 class JotrockenmitLockenScreenConfigurations extends ScreenConfigurations {
+  List<BlogPageConfig> blogPageConfigs;
+  JotrockenmitLockenScreenConfigurations.fromBlogConfigs(
+      {required this.blogPageConfigs});
+
   @override
   bool disableFooter() {
     return false;
@@ -59,10 +61,7 @@ class JotrockenmitLockenScreenConfigurations extends ScreenConfigurations {
 
   @override
   List<BlogPageConfig> getBlogPagesConfig() {
-    return [
-      AiBlogPageConfig(),
-      RenderingBlogPageConfig(),
-    ];
+    return blogPageConfigs;
   }
 
   @override

@@ -8,7 +8,7 @@ import 'package:jotrockenmitlockenrepo/user_settings.dart';
 import 'package:jotrockenmitlockenrepo/Decoration/row_divider.dart';
 
 class SkillTable extends StatefulWidget {
-  SkillTable(
+  const SkillTable(
       {super.key, required this.userSettings, required this.aboutMeFile});
 
   final UserSettings userSettings;
@@ -120,13 +120,14 @@ class _SkillTableState extends State<SkillTable> {
               skillTableWidth = skillTableWidth * 0.9;
             }
             return CenteredBoxDecoration(
-                child: SizedBox(
-                  width: skillTableWidth,
-                  child: Table(
-                      defaultVerticalAlignment: TableCellVerticalAlignment.top,
-                      children: skills),
-                ),
-                color: Theme.of(context).colorScheme.primary);
+              color: Theme.of(context).colorScheme.primary,
+              child: SizedBox(
+                width: skillTableWidth,
+                child: Table(
+                    defaultVerticalAlignment: TableCellVerticalAlignment.top,
+                    children: skills),
+              ),
+            );
           } else if (data.hasError) {
             return Center(child: Text("${data.error}"));
           } else {

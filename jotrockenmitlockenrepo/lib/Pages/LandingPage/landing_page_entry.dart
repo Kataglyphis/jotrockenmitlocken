@@ -9,23 +9,25 @@ import 'package:flutter/material.dart';
 import 'package:jotrockenmitlockenrepo/Url/external_link_config.dart';
 
 class LandingPageEntry extends StatefulWidget {
-  const LandingPageEntry(
-      {super.key,
-      required this.label,
-      required this.routerPath,
-      required this.headline,
-      required this.imagePath,
-      required this.githubRepoName,
-      required this.githubRepo,
-      required this.description,
-      re});
-  final String label;
+  const LandingPageEntry({
+    super.key,
+    required this.currentLocale,
+    required this.labelEN,
+    required this.labelDE,
+    required this.routerPath,
+    required this.headline,
+    required this.imagePath,
+    required this.githubRepo,
+    required this.description,
+  });
+  final String labelEN;
+  final String labelDE;
   final String routerPath;
   final String headline;
   final String imagePath;
-  final String githubRepoName;
   final String description;
   final ExternalLinkConfig githubRepo;
+  final Locale currentLocale;
 
   @override
   State<LandingPageEntry> createState() => LandingPageEntryState();
@@ -37,47 +39,65 @@ class LandingPageEntryState extends State<LandingPageEntry> {
   @override
   Widget build(BuildContext context) {
     List<Widget> undecoratedChilds = [
-      Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          IconButton(
-            icon: const FaIcon(FontAwesomeIcons.github),
-            onPressed: () {
-              BrowserHelper.launchInBrowser(widget.githubRepo);
-            },
-          ),
-          colDivider,
-          Text(
-            "${widget.description}\n${widget.githubRepoName}",
-            style: Theme.of(context).textTheme.titleSmall,
-          )
-        ],
-      ),
-      rowDivider,
-      Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          FilledButton.tonal(
-            onPressed: isDisabled
-                ? null
-                : () {
-                    context.go(widget.routerPath);
-                  },
-            child: Text(
-              widget.headline,
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 32.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            IconButton(
+              icon: const FaIcon(FontAwesomeIcons.github),
+              onPressed: () {
+                BrowserHelper.launchInBrowser(widget.githubRepo);
+              },
+            ),
+            colDivider,
+            Text(
+              "${widget.description}",
               style: Theme.of(context).textTheme.titleSmall,
             ),
+          ],
+        ),
+      ),
+      rowDivider,
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 32.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            FilledButton.tonal(
+              onPressed: isDisabled
+                  ? null
+                  : () {
+                      context.go(widget.routerPath);
+                    },
+              child: Text(
+                widget.headline,
+                style: Theme.of(context).textTheme.titleSmall,
+              ),
+            ),
+          ],
+        ),
+      ),
+      rowDivider,
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          OpenableImage(
+            displayedImage: widget.imagePath,
+            disableOpen: true,
           ),
         ],
       ),
-      rowDivider,
-      OpenableImage(
-        displayedImage: widget.imagePath,
-        disableOpen: true,
-      ),
-      rowDivider
     ];
-    return ComponentGroupDecoration(
-        label: widget.label, children: <Widget>[...undecoratedChilds]);
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        ComponentGroupDecoration(
+            label: (widget.currentLocale == const Locale("de"))
+                ? widget.labelDE
+                : widget.labelEN,
+            children: <Widget>[...undecoratedChilds]),
+      ],
+    );
   }
 }
