@@ -12,7 +12,9 @@ class BlogPageConfig extends StatefulBranchInfoProvider {
         githubRepo = jsonFile["githubRepo"] as String,
         landingPageAlignment = jsonFile["landingPageAlignment"] as String,
         landingPageEntryImagePath =
-            jsonFile["landingPageEntryImagePath"] as String {
+            jsonFile["landingPageEntryImagePath"] as String,
+        landingPageEntryImageCaptioning =
+            jsonFile["landingPageEntryImageCaptioning"] as String {
     var docsDescJsonFile = jsonFile["docsDesc"] as List<dynamic>;
     for (var element in docsDescJsonFile) {
       docsDesc.add({
@@ -30,6 +32,7 @@ class BlogPageConfig extends StatefulBranchInfoProvider {
   String githubRepo;
   String landingPageAlignment;
   String landingPageEntryImagePath;
+  String? landingPageEntryImageCaptioning;
   List<Map<String, String>> docsDesc = [];
 
   @override

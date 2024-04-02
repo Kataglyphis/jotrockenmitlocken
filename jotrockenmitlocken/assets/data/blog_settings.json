@@ -8,6 +8,7 @@
 		"githubRepo":"MachineLearningAlgorithms",
 		"landingPageAlignment":"left",
 		"landingPageEntryImagePath": "assets/images/funny_programmer.gif",
+		"landingPageEntryImageCaptioning": "image source: https://learnopengl.com",
 		"docsDesc": [
 			{
 				"baseDir":"assets/documents/",
@@ -35,6 +36,7 @@
 		"githubRepo":"MachineLearningAlgorithms",
 		"landingPageAlignment":"left",
 		"landingPageEntryImagePath": "assets/images/ML_CV.jpeg",
+		"landingPageEntryImageCaptioning": "image source: https://pyimagesearch.com/2023/03/30/machine-learning-computer-vision/",
 		"docsDesc": [
 			{
 				"baseDir":"assets/documents/",
@@ -62,6 +64,7 @@
 		"githubRepo":"GraphicsEngineVulkan",
 		"landingPageAlignment":"right",
 		"landingPageEntryImagePath": "assets/images/cat-computer.gif",
+		"landingPageEntryImageCaptioning": "image source: https://tenor.com/de/view/cat-computer-typing-fast-gif-5368357",
 		"docsDesc": [
 			{
 				"baseDir":"assets/documents/",
