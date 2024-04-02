@@ -1,4 +1,4 @@
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/material.dart';
 import 'package:jotrockenmitlockenrepo/Pages/Footer/footer_page_config.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -10,7 +10,7 @@ class CookieDeclarationFooterConfig extends FooterPageConfig {
 
   @override
   String getRoutingName() {
-    return "/cookieStatement";
+    return "/cookieDeclaration";
   }
 
   @override

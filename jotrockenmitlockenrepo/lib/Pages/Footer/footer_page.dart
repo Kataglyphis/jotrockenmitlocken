@@ -9,8 +9,9 @@ class FooterPage extends StatefulWidget {
   final Footer footer;
   final String filePathDe;
   final String filePathEn;
-  FooterPage(
-      {required this.appAttributes,
+  const FooterPage(
+      {super.key,
+      required this.appAttributes,
       required this.footer,
       required this.filePathDe,
       required this.filePathEn});
@@ -22,6 +23,9 @@ class FooterPageState extends State<FooterPage> {
   @override
   Widget build(BuildContext context) {
     return SinglePage(
+      footer: widget.footer,
+      showMediumSizeLayout: widget.appAttributes.showMediumSizeLayout,
+      showLargeSizeLayout: widget.appAttributes.showLargeSizeLayout,
       children: [
         MarkdownFilePage(
           currentLocale: Localizations.localeOf(context),
@@ -30,9 +34,6 @@ class FooterPageState extends State<FooterPage> {
           useLightMode: widget.appAttributes.useLightMode,
         )
       ],
-      footer: widget.footer,
-      showMediumSizeLayout: widget.appAttributes.showMediumSizeLayout,
-      showLargeSizeLayout: widget.appAttributes.showLargeSizeLayout,
     );
   }
 }

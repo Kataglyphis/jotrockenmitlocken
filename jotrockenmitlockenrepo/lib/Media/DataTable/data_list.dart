@@ -120,32 +120,33 @@ abstract class DataListState<T extends TableData, U extends DataList>
                   return SizedBox(
                     width: dataTableWidth,
                     child: CenteredBoxDecoration(
-                        child: PaginatedDataTable(
-                          dataRowMaxHeight: double.infinity,
-                          sortColumnIndex: sortColumnIndex,
-                          sortAscending: isAscending,
-                          columns: dataCategories
-                              .map((String column) => DataColumn(
-                                    label: Text(column),
-                                    onSort: (int columnIndex, bool ascending) {
-                                      setState(() {
-                                        csvData.sort((data1, data2) =>
-                                            _compareString(
-                                                isAscending,
-                                                data1.getCells()[columnIndex],
-                                                data2.getCells()[columnIndex]));
+                      borderRadius: 8,
+                      borderWidth: 6,
+                      color: Theme.of(context).colorScheme.primary,
+                      child: PaginatedDataTable(
+                        dataRowMaxHeight: double.infinity,
+                        sortColumnIndex: sortColumnIndex,
+                        sortAscending: isAscending,
+                        columns: dataCategories
+                            .map((String column) => DataColumn(
+                                  label: Text(column),
+                                  onSort: (int columnIndex, bool ascending) {
+                                    setState(() {
+                                      csvData.sort((data1, data2) =>
+                                          _compareString(
+                                              isAscending,
+                                              data1.getCells()[columnIndex],
+                                              data2.getCells()[columnIndex]));
 
-                                        this.sortColumnIndex = columnIndex;
-                                        this.isAscending = ascending;
-                                      });
-                                    },
-                                  ))
-                              .toList(),
-                          source: dataTableSource,
-                        ),
-                        borderRadius: 8,
-                        borderWidth: 6,
-                        color: Theme.of(context).colorScheme.primary),
+                                      this.sortColumnIndex = columnIndex;
+                                      this.isAscending = ascending;
+                                    });
+                                  },
+                                ))
+                            .toList(),
+                        source: dataTableSource,
+                      ),
+                    ),
                   );
                 } else if (data.hasError) {
                   return Center(child: Text("${data.error}"));

@@ -11,8 +11,9 @@ class BlogPage extends StatefulWidget {
   final AppAttributes appAttributes;
   final Footer footer;
   final BlogPageConfig blogPageConfig;
-  BlogPage(
-      {required this.appAttributes,
+  const BlogPage(
+      {super.key,
+      required this.appAttributes,
       required this.footer,
       required this.blogPageConfig});
 
@@ -23,8 +24,7 @@ class BlogPage extends StatefulWidget {
 class BlogPageState extends State<BlogPage> {
   @override
   Widget build(BuildContext context) {
-    List<File> docs = widget.blogPageConfig
-        .getDocsDesc()
+    List<File> docs = widget.blogPageConfig.docsDesc
         .map(
           (fileConfig) => File(
             baseDir: fileConfig['baseDir']!,
@@ -41,8 +41,8 @@ class BlogPageState extends State<BlogPage> {
         MarkdownFilePage(
           currentLocale: Localizations.localeOf(context),
           filePathDe: '',
-          filePathEn: widget.blogPageConfig.getFilePath(),
-          imageDirectory: widget.blogPageConfig.getImageDirectory(),
+          filePathEn: widget.blogPageConfig.filePath,
+          imageDirectory: widget.blogPageConfig.imageDir,
           useLightMode: widget.appAttributes.useLightMode,
         ),
         FileTable(
