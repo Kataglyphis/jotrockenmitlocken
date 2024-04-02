@@ -19,6 +19,7 @@ class LandingPageEntry extends StatefulWidget {
     required this.imagePath,
     required this.githubRepo,
     required this.description,
+    this.imageCaptioning,
   });
   final String labelEN;
   final String labelDE;
@@ -28,6 +29,7 @@ class LandingPageEntry extends StatefulWidget {
   final String description;
   final ExternalLinkConfig githubRepo;
   final Locale currentLocale;
+  final String? imageCaptioning;
 
   @override
   State<LandingPageEntry> createState() => LandingPageEntryState();
@@ -39,7 +41,7 @@ class LandingPageEntryState extends State<LandingPageEntry> {
   @override
   Widget build(BuildContext context) {
     List<Widget> undecoratedChilds = [
-      Padding(
+      Container(
         padding: const EdgeInsets.symmetric(horizontal: 32.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -58,8 +60,8 @@ class LandingPageEntryState extends State<LandingPageEntry> {
           ],
         ),
       ),
-      rowDivider,
-      Padding(
+      // //rowDivider,
+      Container(
         padding: const EdgeInsets.symmetric(horizontal: 32.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -79,25 +81,24 @@ class LandingPageEntryState extends State<LandingPageEntry> {
         ),
       ),
       rowDivider,
-      Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          OpenableImage(
-            displayedImage: widget.imagePath,
-            disableOpen: true,
-          ),
-        ],
+      OpenableImage(
+        displayedImage: widget.imagePath,
+        disableOpen: true,
+        imageCaptioning: widget.imageCaptioning,
       ),
     ];
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        ComponentGroupDecoration(
-            label: (widget.currentLocale == const Locale("de"))
-                ? widget.labelDE
-                : widget.labelEN,
-            children: <Widget>[...undecoratedChilds]),
-      ],
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 24),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          ComponentGroupDecoration(
+              label: (widget.currentLocale == const Locale("de"))
+                  ? widget.labelDE
+                  : widget.labelEN,
+              children: <Widget>[...undecoratedChilds]),
+        ],
+      ),
     );
   }
 }

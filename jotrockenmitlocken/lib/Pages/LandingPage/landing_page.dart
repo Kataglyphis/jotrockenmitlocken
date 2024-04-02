@@ -41,6 +41,7 @@ class LandingPageState extends State<LandingPage> {
         githubRepo: githubRepo,
         description: AppLocalizations.of(context)!.playgroundDescription,
         imagePath: blogPagesConfig[i].landingPageEntryImagePath,
+        imageCaptioning: blogPagesConfig[i].landingPageEntryImageCaptioning,
       );
       if (blogPagesConfig[i].landingPageAlignment == "left") {
         childWidgetsLeftPage += [

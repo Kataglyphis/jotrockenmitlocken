@@ -25,21 +25,18 @@ class _DonationState extends State<Donation> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              colDivider,
               Flexible(
                 child: OpenableImage(
                   displayedImage: "assets/images/paypal.jpg",
                   disableOpen: true,
                 ),
               ),
-              colDivider,
               Flexible(
                 child: OpenableImage(
                   displayedImage: "assets/images/Coffee-removebg.png",
                   disableOpen: false,
                 ),
               ),
-              colDivider,
             ],
           ),
           rowDivider,
