@@ -17,6 +17,10 @@ import 'package:jotrockenmitlockenrepo/Pages/stateful_branch_info_provider.dart'
 import 'package:jotrockenmitlockenrepo/Routing/screen_configurations.dart';
 
 class JotrockenmitLockenScreenConfigurations extends ScreenConfigurations {
+  //List<BlogPageConfig> blogPageConfigs;
+  // JotrockenmitLockenScreenConfigurations.fromJsonFile(
+  //     String blogEntriesConfigJson) {}
+
   @override
   bool disableFooter() {
     return false;

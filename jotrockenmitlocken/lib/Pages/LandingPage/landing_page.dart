@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 import 'package:jotrockenmitlockenrepo/Pages/Footer/footer.dart';
 import 'package:jotrockenmitlockenrepo/Layout/ResponsiveDesign/one_two_transition_widget.dart';
 import 'package:jotrockenmitlockenrepo/Pages/LandingPage/landing_page_entry.dart';
@@ -26,11 +28,11 @@ class LandingPageState extends State<LandingPage> {
       var landingPageEntry = LandingPageEntry(
         label: blogPagesConfig[i].getLabel(context),
         routerPath: blogPagesConfig[i].getRoutingName(),
-        headline: blogPagesConfig[i].getHeadline(context),
+        headline: AppLocalizations.of(context)!.visitBlogEntry,
         githubRepoName: blogPagesConfig[i].getGithubRepoName(),
         githubRepo: widget
             .appAttributes.userSettings.socialMediaLinksConfig!['GitHub']!,
-        description: blogPagesConfig[i].getDescription(context),
+        description: AppLocalizations.of(context)!.playgroundDescription,
         imagePath: blogPagesConfig[i].getImagePath(),
       );
       if (blogPagesConfig[i].getAlignment() == LandingPageAlignment.left) {

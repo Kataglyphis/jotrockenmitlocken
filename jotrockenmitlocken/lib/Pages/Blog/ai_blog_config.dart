@@ -14,18 +14,8 @@ class AiBlogPageConfig extends BlogPageConfig {
   }
 
   @override
-  String getDescription(BuildContext context) {
-    return AppLocalizations.of(context)!.playgroundDescription;
-  }
-
-  @override
   String getGithubRepoName() {
     return 'MachineLearningAlgorithms';
-  }
-
-  @override
-  String getHeadline(BuildContext context) {
-    return AppLocalizations.of(context)!.visitBlogEntry;
   }
 
   @override
@@ -60,12 +50,7 @@ class AiBlogPageConfig extends BlogPageConfig {
   }
 
   @override
-  String getFilePathDe() {
-    return '';
-  }
-
-  @override
-  String getFilePathEn() {
+  String getFilePath() {
     return 'assets/documents/blog/aiBlogPageEn.md';
   }
 

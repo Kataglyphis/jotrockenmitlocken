@@ -6,12 +6,9 @@ enum LandingPageAlignment { left, right }
 abstract class BlogPageConfig extends StatefulBranchInfoProvider {
   LandingPageAlignment getAlignment();
   String getLabel(BuildContext context);
-  String getHeadline(BuildContext context);
   String getImagePath();
   String getGithubRepoName();
-  String getDescription(BuildContext context);
-  String getFilePathDe();
-  String getFilePathEn();
+  String getFilePath();
   String getImageDirectory();
   List<Map<String, String>> getDocsDesc();
 }
