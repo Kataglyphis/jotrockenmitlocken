@@ -16,20 +16,18 @@ class ComponentGroupDecoration extends StatelessWidget {
         margin: EdgeInsets.zero,
         elevation: 0,
         color: Theme.of(context).colorScheme.surfaceVariant.withOpacity(0.3),
-        child: Center(
-          child: Column(
-            children: [
-              const SizedBox(
-                height: 10,
-              ),
-              Text(label, style: Theme.of(context).textTheme.headlineSmall),
-              colDivider,
-              ...children,
-              const SizedBox(
-                height: 10,
-              ),
-            ],
-          ),
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 10,
+            ),
+            Text(label, style: Theme.of(context).textTheme.headlineSmall),
+            colDivider,
+            ...children,
+            const SizedBox(
+              height: 10,
+            ),
+          ],
         ),
       ),
     );

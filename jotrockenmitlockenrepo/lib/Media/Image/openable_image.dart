@@ -39,7 +39,7 @@ class _OpenableImageState extends State<OpenableImage> {
     if (imageWidth < currentPageWidth) {
       return imageWidth;
     } else {
-      return currentPageWidth * 0.9;
+      return currentPageWidth;
     }
   }
 
@@ -48,7 +48,6 @@ class _OpenableImageState extends State<OpenableImage> {
   @override
   Widget build(BuildContext context) {
     if (!initializedImage) {
-      //mounted &&
       initializedImage = true;
       imageListener = ImageStreamListener((ImageInfo info, bool _) {
         if (mounted) {
@@ -63,53 +62,48 @@ class _OpenableImageState extends State<OpenableImage> {
           .resolve(const ImageConfiguration())
           .addListener(imageListener);
     } else {
-      //(mounted && initializedImage)
       widget.ourMainImage.image
           .resolve(const ImageConfiguration())
           .removeListener(imageListener);
     }
 
-    return Column(
-      children: [
-        Container(
-          constraints: BoxConstraints(
-            maxWidth: imageWidth,
-          ),
-          child: Stack(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: CenteredBoxDecoration(
-                  color: Theme.of(context).colorScheme.primary,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(0),
-                    child: widget.ourMainImage,
-                  ),
+    return Column(children: [
+      Container(
+        constraints: BoxConstraints(
+          maxWidth: imageWidth,
+        ),
+        child: Stack(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 32.0),
+              child: CenteredBoxDecoration(
+                color: Theme.of(context).colorScheme.primary,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(0),
+                  child: widget.ourMainImage,
                 ),
               ),
-              if (!widget.disableOpen)
-                Align(
-                    alignment: Alignment.topRight,
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: OpenButton(
-                        assetFullPath: widget.displayedImage,
-                      ),
-                    )),
-            ],
-          ),
+            ),
+            if (!widget.disableOpen)
+              Align(
+                  alignment: Alignment.topRight,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 32.0),
+                    child: OpenButton(
+                      assetFullPath: widget.displayedImage,
+                    ),
+                  )),
+          ],
         ),
-        if (widget.imageCaptioning != null) ...[
-          rowDivider,
-          Text(
-            widget.imageCaptioning!,
-            style: (widget.captioningStyle != null)
-                ? widget.captioningStyle!
-                : null,
-          ),
-          rowDivider,
-        ]
-      ],
-    );
+      ),
+      if (widget.imageCaptioning != null) ...[
+        rowDivider,
+        Text(
+          widget.imageCaptioning!,
+          textAlign: TextAlign.center,
+          style: widget.captioningStyle,
+        ),
+      ]
+    ]);
   }
 }

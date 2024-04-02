@@ -16,7 +16,7 @@ class CenteredImageBuilder extends MarkdownElementBuilder {
     String placeholderImage = "assets/images/Summy&Thundy_compressed.png";
     String displayedImage = placeholderImage;
 
-    String imageCaption = "placeholder";
+    String? imageCaption;
     if (element.attributes['src'] != null) {
       displayedImage = "$imageDir/${element.attributes['src']!}";
     }
@@ -34,7 +34,7 @@ class CenteredImageBuilder extends MarkdownElementBuilder {
           placeholderImage: placeholderImage,
           displayedImage: displayedImage,
           imageCaptioning: imageCaption,
-          captioningStyle: preferredStyle!,
+          captioningStyle: preferredStyle,
         )),
       ],
     );
