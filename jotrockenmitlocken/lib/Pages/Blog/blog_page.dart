@@ -34,21 +34,22 @@ class BlogPageState extends State<BlogPage> {
         )
         .toList();
     return SinglePage(
-        children: [
-          MarkdownFilePage(
-            currentLocale: Localizations.localeOf(context),
-            filePathDe: widget.blogPageConfig.getFilePathDe(),
-            filePathEn: widget.blogPageConfig.getFilePathEn(),
-            imageDirectory: widget.blogPageConfig.getImageDirectory(),
-            useLightMode: widget.appAttributes.useLightMode,
-          ),
-          FileTable(
-            title: 'Appendix',
-            docs: docs,
-          )
-        ],
-        footer: widget.footer,
-        showMediumSizeLayout: widget.appAttributes.showMediumSizeLayout,
-        showLargeSizeLayout: widget.appAttributes.showLargeSizeLayout);
+      footer: widget.footer,
+      showMediumSizeLayout: widget.appAttributes.showMediumSizeLayout,
+      showLargeSizeLayout: widget.appAttributes.showLargeSizeLayout,
+      children: [
+        MarkdownFilePage(
+          currentLocale: Localizations.localeOf(context),
+          filePathDe: '',
+          filePathEn: widget.blogPageConfig.getFilePath(),
+          imageDirectory: widget.blogPageConfig.getImageDirectory(),
+          useLightMode: widget.appAttributes.useLightMode,
+        ),
+        FileTable(
+          title: 'Appendix',
+          docs: docs,
+        )
+      ],
+    );
   }
 }
