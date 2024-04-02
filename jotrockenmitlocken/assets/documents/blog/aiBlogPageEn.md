@@ -72,7 +72,7 @@ struct cgroup_fs_context {
 	char		*name;			/* Hierarchy name */
 	char		*release_agent;		/* Path for release notifications */
 };
-```
+
 static inline struct cgroup_fs_context *cgroup_fc2context(struct fs_context *fc)
 {
 	struct kernfs_fs_context *kfc = fc->fs_private;
@@ -234,6 +234,7 @@ static inline void get_css_set(struct css_set *cset)
 	refcount_inc(&cset->refcount);
 }
 #endif /* __CGROUP_INTERNAL_H */
+```
 |        | Command      | Description                                   |
 | -----  | --------     | ---------------------------------             |
 |        | `git status` | List all new or modified files                |
