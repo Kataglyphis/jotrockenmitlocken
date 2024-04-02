@@ -67,43 +67,46 @@ class _OpenableImageState extends State<OpenableImage> {
           .removeListener(imageListener);
     }
 
-    return Column(children: [
-      Container(
-        constraints: BoxConstraints(
-          maxWidth: imageWidth,
-        ),
-        child: Stack(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 32.0),
-              child: CenteredBoxDecoration(
-                color: Theme.of(context).colorScheme.primary,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(0),
-                  child: widget.ourMainImage,
-                ),
-              ),
+    return Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+            constraints: BoxConstraints(
+              maxWidth: imageWidth,
             ),
-            if (!widget.disableOpen)
-              Align(
-                  alignment: Alignment.topRight,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 32.0),
-                    child: OpenButton(
-                      assetFullPath: widget.displayedImage,
+            child: Stack(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 32.0),
+                  child: CenteredBoxDecoration(
+                    color: Theme.of(context).colorScheme.primary,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(0),
+                      child: widget.ourMainImage,
                     ),
-                  )),
-          ],
-        ),
-      ),
-      if (widget.imageCaptioning != null) ...[
-        rowDivider,
-        Text(
-          widget.imageCaptioning!,
-          textAlign: TextAlign.center,
-          style: widget.captioningStyle,
-        ),
-      ]
-    ]);
+                  ),
+                ),
+                if (!widget.disableOpen)
+                  Align(
+                      alignment: Alignment.topRight,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 32.0),
+                        child: OpenButton(
+                          assetFullPath: widget.displayedImage,
+                        ),
+                      )),
+              ],
+            ),
+          ),
+          if (widget.imageCaptioning != null) ...[
+            rowDivider,
+            Text(
+              widget.imageCaptioning!,
+              textAlign: TextAlign.center,
+              style: widget.captioningStyle,
+            ),
+          ]
+        ]);
   }
 }

@@ -25,18 +25,12 @@ class CenteredImageBuilder extends MarkdownElementBuilder {
       imageCaption = element.attributes['alt']!;
     }
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        SelectionArea(
-            child: OpenableImage(
-          placeholderImage: placeholderImage,
-          displayedImage: displayedImage,
-          imageCaptioning: imageCaption,
-          captioningStyle: preferredStyle,
-        )),
-      ],
-    );
+    return SelectionArea(
+        child: OpenableImage(
+      placeholderImage: placeholderImage,
+      displayedImage: displayedImage,
+      imageCaptioning: imageCaption,
+      captioningStyle: preferredStyle,
+    ));
   }
 }
