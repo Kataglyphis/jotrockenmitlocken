@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:jotrockenmitlockenrepo/Layout/Widgets/Scrolling/scrollable_list.dart';
 import 'package:jotrockenmitlockenrepo/Layout/Widgets/Transitions/one_two_transition.dart';
 import 'package:jotrockenmitlockenrepo/Layout/Widgets/Scrolling/first_component_list.dart';
 import 'package:jotrockenmitlockenrepo/Pages/Footer/footer.dart';

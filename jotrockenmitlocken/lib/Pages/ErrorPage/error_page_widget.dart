@@ -18,13 +18,14 @@ class _ErrorPageWidget extends State<ErrorPageWidget> {
     return ComponentGroupDecoration(label: 'Error 404', children: <Widget>[
       colDivider,
       CenteredBoxDecoration(
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(0),
-            child: Image.asset("assets/images/error404.gif"),
-          ),
-          borderRadius: 0,
-          borderWidth: 5,
-          color: Theme.of(context).colorScheme.primary),
+        borderRadius: 0,
+        borderWidth: 5,
+        color: Theme.of(context).colorScheme.primary,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(0),
+          child: Image.asset("assets/images/error404.gif"),
+        ),
+      ),
       colDivider
     ]);
   }

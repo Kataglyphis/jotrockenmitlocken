@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CenteredBoxDecoration extends StatelessWidget {
-  CenteredBoxDecoration(
+  const CenteredBoxDecoration(
       {super.key,
       this.child,
       this.insets = const EdgeInsets.all(0),
@@ -10,11 +10,11 @@ class CenteredBoxDecoration extends StatelessWidget {
       this.borderWidth = 5,
       required this.color});
   final Widget? child;
-  EdgeInsets insets = const EdgeInsets.all(0);
-  double margin = 0;
-  double borderRadius = 10;
-  double borderWidth = 5;
-  Color color;
+  final EdgeInsets insets;
+  final double margin;
+  final double borderRadius;
+  final double borderWidth;
+  final Color color;
   @override
   Widget build(BuildContext context) {
     return Align(

@@ -11,7 +11,8 @@ import 'package:jotrockenmitlockenrepo/user_settings.dart';
 class AboutMePage extends StatefulWidget {
   final AppAttributes appAttributes;
   final Footer footer;
-  AboutMePage({required this.appAttributes, required this.footer});
+  const AboutMePage(
+      {super.key, required this.appAttributes, required this.footer});
 
   @override
   State<StatefulWidget> createState() => AboutMePageState();

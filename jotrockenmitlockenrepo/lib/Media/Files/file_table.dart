@@ -58,14 +58,15 @@ class FileTableState extends State<FileTable> {
           SizedBox(
             width: getDocumentTableWidth(),
             child: CenteredBoxDecoration(
-                child: Column(
-                    children: List.generate(widget.docs.length,
-                        (index) => _buildListItem(context, index),
-                        growable: true)),
-                insets: EdgeInsets.all(tablePadding),
-                borderRadius: 8,
-                borderWidth: 4,
-                color: Theme.of(context).colorScheme.primary),
+              borderRadius: 8,
+              borderWidth: 4,
+              color: Theme.of(context).colorScheme.primary,
+              insets: EdgeInsets.all(tablePadding),
+              child: Column(
+                  children: List.generate(widget.docs.length,
+                      (index) => _buildListItem(context, index),
+                      growable: true)),
+            ),
           ),
         ]);
   }

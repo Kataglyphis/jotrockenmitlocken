@@ -20,6 +20,7 @@ import 'package:jotrockenmitlockenrepo/Pages/stateful_branch_info_provider.dart'
 
 class JotrockenMitLockenRoutes extends RoutesCreator {
   //final _footerKey = GlobalKey<NavigatorState>(debugLabel: "_footerKey");
+  @override
   List<(Widget, StatefulBranchInfoProvider)> getAllPagesWithConfigs(
       AppAttributes appAttributes) {
     List<(Widget, StatefulBranchInfoProvider)> allPagesAndConfigs = [];
