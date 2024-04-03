@@ -26,11 +26,13 @@ class CenteredImageBuilder extends MarkdownElementBuilder {
     }
 
     return SelectionArea(
-        child: OpenableImage(
-      placeholderImage: placeholderImage,
-      displayedImage: displayedImage,
-      imageCaptioning: imageCaption,
-      captioningStyle: preferredStyle,
+        child: Center(
+      child: OpenableImage(
+        placeholderImage: placeholderImage,
+        displayedImage: displayedImage,
+        imageCaptioning: imageCaption,
+        captioningStyle: preferredStyle,
+      ),
     ));
   }
 }

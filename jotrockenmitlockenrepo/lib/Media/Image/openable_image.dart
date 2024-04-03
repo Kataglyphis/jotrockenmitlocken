@@ -68,7 +68,7 @@ class _OpenableImageState extends State<OpenableImage> {
     }
 
     return Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
