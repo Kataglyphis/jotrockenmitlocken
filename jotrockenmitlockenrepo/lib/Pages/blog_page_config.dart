@@ -14,7 +14,11 @@ class BlogPageConfig extends StatefulBranchInfoProvider {
         landingPageEntryImagePath =
             jsonFile["landingPageEntryImagePath"] as String,
         landingPageEntryImageCaptioning =
-            jsonFile["landingPageEntryImageCaptioning"] as String {
+            jsonFile["landingPageEntryImageCaptioning"] as String,
+        lastModified = jsonFile["lastModified"] as String,
+        fileTitle = jsonFile["fileTitle"] as String,
+        fileAdditionalInfo = jsonFile["fileAdditionalInfo"] as String,
+        fileBaseDir = jsonFile["fileBaseDir"] as String {
     var docsDescJsonFile = jsonFile["docsDesc"] as List<dynamic>;
     for (var element in docsDescJsonFile) {
       docsDesc.add({
@@ -33,6 +37,10 @@ class BlogPageConfig extends StatefulBranchInfoProvider {
   String landingPageAlignment;
   String landingPageEntryImagePath;
   String? landingPageEntryImageCaptioning;
+  String lastModified;
+  String fileTitle;
+  String fileAdditionalInfo;
+  String fileBaseDir;
   List<Map<String, String>> docsDesc = [];
 
   @override

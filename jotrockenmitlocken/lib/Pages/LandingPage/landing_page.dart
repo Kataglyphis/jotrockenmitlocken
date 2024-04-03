@@ -33,7 +33,12 @@ class LandingPageState extends State<LandingPage> {
           host: gitHub.host, path: gitHub.path + blogPagesConfig[i].githubRepo);
 
       var landingPageEntry = LandingPageEntry(
+        lastModified:
+            "${AppLocalizations.of(context)!.lastModified} ${blogPagesConfig[i].lastModified}",
         currentLocale: Localizations.localeOf(context),
+        fileTitle: blogPagesConfig[i].fileTitle,
+        fileAdditionalInfo: blogPagesConfig[i].fileAdditionalInfo,
+        fileBaseDir: blogPagesConfig[i].fileBaseDir,
         labelEN: blogPagesConfig[i].shortDescriptionEN,
         labelDE: blogPagesConfig[i].shortDescriptionDE,
         routerPath: blogPagesConfig[i].getRoutingName(),
