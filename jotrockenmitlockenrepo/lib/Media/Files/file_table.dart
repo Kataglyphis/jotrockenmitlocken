@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jotrockenmitlockenrepo/Decoration/centered_box_decoration.dart';
-
-import 'package:jotrockenmitlockenrepo/Media/Download/download_file_icon.dart';
 import 'package:jotrockenmitlockenrepo/Media/Files/file.dart';
-import 'package:jotrockenmitlockenrepo/Media/Open/open_button.dart';
+import 'package:jotrockenmitlockenrepo/Media/Files/file_tile.dart';
 import 'package:jotrockenmitlockenrepo/constants.dart';
 
 class FileTable extends StatefulWidget {
@@ -73,23 +71,6 @@ class FileTableState extends State<FileTable> {
 
   Widget _buildListItem(BuildContext context, int index) {
     File currentDocument = widget.docs.elementAt(index);
-    return Container(
-        alignment: Alignment.center,
-        padding: const EdgeInsets.all(0),
-        child: ListTile(
-          leading: FileDownloadIcon(document: currentDocument),
-          title: Text(
-            currentDocument.title,
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
-          subtitle: Text(
-            currentDocument.additionalInfo,
-            overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
-          trailing: OpenButton(
-            assetFullPath: currentDocument.baseDir + currentDocument.title,
-          ),
-        ));
+    return FileTile(currentDocument: currentDocument);
   }
 }
