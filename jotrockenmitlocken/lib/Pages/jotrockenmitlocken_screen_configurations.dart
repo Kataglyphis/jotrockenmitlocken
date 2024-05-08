@@ -1,4 +1,7 @@
 import 'package:jotrockenmitlocken/Pages/AboutMePage/about_me_page_navbar_config.dart';
+import 'package:jotrockenmitlocken/Pages/DataPage/BooksPage/books_page_config.dart';
+import 'package:jotrockenmitlocken/Pages/DataPage/FilmsPage/films_page_config.dart';
+import 'package:jotrockenmitlocken/Pages/DataPage/data_pages_navbar_page_config.dart';
 import 'package:jotrockenmitlocken/Pages/DocumentsPage/document_page_navbar_config.dart';
 import 'package:jotrockenmitlocken/Pages/ErrorPage/error_page_stateful_branch_info_provider.dart';
 import 'package:jotrockenmitlocken/Pages/Footer/Pages/configs/contact_footer_config.dart';
@@ -8,7 +11,7 @@ import 'package:jotrockenmitlocken/Pages/Footer/Pages/configs/declaration_on_acc
 import 'package:jotrockenmitlocken/Pages/Footer/Pages/configs/imprint_footer_config.dart';
 import 'package:jotrockenmitlocken/Pages/Footer/Pages/configs/privacy_policy_config.dart';
 import 'package:jotrockenmitlocken/Pages/LandingPage/landing_page_navbar_page_config.dart';
-import 'package:jotrockenmitlocken/Pages/QuotesPage/quotes_pages_navbar_page_config.dart';
+import 'package:jotrockenmitlocken/Pages/DataPage/QuotesPage/quotations_page_config.dart';
 import 'package:jotrockenmitlockenrepo/Pages/blog_page_config.dart';
 import 'package:jotrockenmitlockenrepo/Pages/Footer/footer_page_config.dart';
 import 'package:jotrockenmitlockenrepo/Pages/navbar_page_config.dart';
@@ -42,7 +45,15 @@ class JotrockenmitLockenScreenConfigurations extends ScreenConfigurations {
     for (StatefulBranchInfoProvider errorPageConfig in getErrorPagesConfig()) {
       pagesConfigs.add(errorPageConfig);
     }
+    for (StatefulBranchInfoProvider dataPageConfig in getDataPagesConfig()) {
+      pagesConfigs.add(dataPageConfig);
+    }
     return pagesConfigs;
+  }
+
+  @override
+  List<StatefulBranchInfoProvider> getDataPagesConfig() {
+    return [QuotationsPageConfig(), BooksPageConfig(), FilmsPageConfig()];
   }
 
   @override
@@ -55,7 +66,7 @@ class JotrockenmitLockenScreenConfigurations extends ScreenConfigurations {
     return [
       LandingPageNavBarConfig(),
       AboutMePageNavBarConfig(),
-      QuotationsPageNavBarConfig(),
+      DataPageNavBarConfig(),
       DocumentPageNavBarConfig(),
     ];
   }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jotrockenmitlockenrepo/Media/DataTable/data_list.dart';
-import 'package:jotrockenmitlocken/Pages/QuotesPage/quote.dart';
+import 'package:jotrockenmitlocken/Pages/DataPage/QuotesPage/quote.dart';
 
 class QuotesList extends DataList {
   const QuotesList({
