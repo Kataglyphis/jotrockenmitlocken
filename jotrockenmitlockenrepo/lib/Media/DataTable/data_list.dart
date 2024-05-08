@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:jotrockenmitlockenrepo/Decoration/centered_box_decoration.dart';
 
 import 'package:jotrockenmitlockenrepo/Decoration/row_divider.dart';
+import 'package:jotrockenmitlockenrepo/Media/DataTable/datacell_content_strategies.dart';
 import 'package:jotrockenmitlockenrepo/Media/DataTable/table_data.dart';
 import 'package:jotrockenmitlockenrepo/constants.dart';
 import 'package:flutter/services.dart';
+import 'package:go_router/go_router.dart';
 import 'dart:developer';
 
 class _MyDataTableSource extends DataTableSource {
@@ -46,6 +48,7 @@ abstract class DataListState<T extends TableData, U extends DataList>
   late Future<(List<T>, List<String>)> _rawCsvData;
 
   List<double> getSpacing();
+  List<DataCellContentStrategies> getDataCellContentStrategies();
   Future<(List<T>, List<String>)> convertRawCSVDataToFinalLayout(
       List<List<dynamic>> csvListData);
 
@@ -71,18 +74,35 @@ abstract class DataListState<T extends TableData, U extends DataList>
   List<DataRow> getDataRows(List<T> csvData, double maxWidth) {
     return csvData.map((T data) {
       return DataRow(
-          cells: data
-              .getCells()
-              .map((entry) => DataCell(SizedBox(
-                    width: (maxWidth) *
-                        getSpacing()[data.getCells().indexOf(entry)],
+          cells: data.getCells().map((entry) {
+        int entryIndex = data.getCells().indexOf(entry);
+        DataCellContentStrategies currentStrat =
+            getDataCellContentStrategies()[entryIndex];
+        bool returnText = currentStrat == DataCellContentStrategies.text ||
+            (currentStrat == DataCellContentStrategies.textButton &&
+                entry == "");
+        return DataCell(
+          SizedBox(
+            width: (maxWidth) * getSpacing()[entryIndex],
+            child: returnText
+                ? Text(
+                    entry,
+                    overflow: TextOverflow.visible,
+                    softWrap: true,
+                  )
+                : TextButton(
+                    onPressed: () {
+                      context.go(entry);
+                    },
                     child: Text(
-                      entry,
-                      overflow: TextOverflow.visible,
-                      softWrap: true,
-                    ),
-                  )))
-              .toList());
+                      textAlign: TextAlign.center,
+                      (Localizations.localeOf(context) == const Locale('de'))
+                          ? "Lese mehr darüber"
+                          : "Read more",
+                    )),
+          ),
+        );
+      }).toList());
     }).toList();
   }
 

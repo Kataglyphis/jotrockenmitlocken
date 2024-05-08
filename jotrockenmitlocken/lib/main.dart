@@ -16,6 +16,7 @@ import 'package:jotrockenmitlocken/Routing/jotrockenmitlocken_router.dart';
 import 'package:jotrockenmitlocken/Pages/Home/home_config.dart';
 import 'package:jotrockenmitlocken/Pages/jotrockenmitlocken_screen_configurations.dart';
 import 'package:jotrockenmitlockenrepo/Pages/blog_page_config.dart';
+import 'package:jotrockenmitlockenrepo/Pages/my_two_cents_config.dart';
 import 'package:jotrockenmitlockenrepo/app_attributes.dart';
 import 'package:jotrockenmitlockenrepo/Routing/screen_configurations.dart';
 import 'package:jotrockenmitlockenrepo/constants.dart';
@@ -54,9 +55,12 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
 
   late final AnimationController controller;
   late final CurvedAnimation railAnimation;
-  late Future<(UserSettings, List<BlogPageConfig>)> _settings;
+  late Future<(UserSettings, List<BlogPageConfig>, List<MyTwoCentsConfig>)>
+      _settings;
   final String userSettingsFilePath = "assets/data/user_settings.json";
   final String blogSettingsFilePath = "assets/data/blog_settings.json";
+  final String twoCentsSettingsFilePath =
+      "assets/data/my_two_cents_settings.json";
   final String appTitle = 'Artificial neurons are almost magic';
   final String appName = 'Jotrockenmitlocken';
   final List<Locale> supportedLanguages = [
@@ -120,7 +124,8 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
     }
   }
 
-  Future<(UserSettings, List<BlogPageConfig>)> _loadAppSettings() async {
+  Future<(UserSettings, List<BlogPageConfig>, List<MyTwoCentsConfig>)>
+      _loadAppSettings() async {
     final userSettingsJsonString =
         await rootBundle.loadString(userSettingsFilePath);
     final Map<String, dynamic> userSettingsJson =
@@ -135,7 +140,16 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
       blogConfigs.add(BlogPageConfig.fromJsonFile(e as Map<String, dynamic>));
     }
 
-    return (userSettings, blogConfigs);
+    final twoCentsSettingsJsonString =
+        await rootBundle.loadString(twoCentsSettingsFilePath);
+    final List<dynamic> twoCentsSettingsJson =
+        json.decode(twoCentsSettingsJsonString);
+    List<MyTwoCentsConfig> twoCentsConfigs = [];
+    for (var e in twoCentsSettingsJson) {
+      twoCentsConfigs
+          .add(MyTwoCentsConfig.fromJsonFile(e as Map<String, dynamic>));
+    }
+    return (userSettings, blogConfigs, twoCentsConfigs);
   }
 
   void handleBrightnessChange(bool useLightMode) {
@@ -181,8 +195,9 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
         builder: (context, data) {
           if (data.hasData) {
             ScreenConfigurations screenConfigurations =
-                JotrockenmitLockenScreenConfigurations.fromBlogConfigs(
-                    blogPageConfigs: data.requireData.$2);
+                JotrockenmitLockenScreenConfigurations.fromBlogAndDataConfigs(
+                    blogPageConfigs: data.requireData.$2,
+                    twoCentsConfigs: data.requireData.$3);
             AppAttributes appAttributes = AppAttributes(
               appTitle: appTitle,
               appName: appName,
@@ -190,6 +205,7 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
               footerConfig: JoTrockenMitLockenFooterConfig(),
               homeConfig: JotrockenMitLockenHomeConfig(),
               userSettings: data.requireData.$1,
+              twoCentsConfigs: data.requireData.$3,
               screenConfigurations: screenConfigurations,
               railAnimation: railAnimation,
               showMediumSizeLayout: showMediumSizeLayout,
