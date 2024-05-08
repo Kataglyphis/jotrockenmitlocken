@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jotrockenmitlockenrepo/Media/DataTable/data_list.dart';
-import 'package:jotrockenmitlocken/Widgets/Media/film.dart';
+import 'package:jotrockenmitlocken/Pages/DataPage/FilmsPage/film.dart';
 
 class FilmsList extends DataList {
   const FilmsList(
@@ -8,7 +8,6 @@ class FilmsList extends DataList {
       required super.dataFilePath,
       required super.title,
       required super.description});
-  // "assets/data/Filmliste.csv"
   // "Films/Series worth watching"
   @override
   State<FilmsList> createState() => _FilmsListState();
@@ -23,8 +22,10 @@ class _FilmsListState extends DataListState<Film, FilmsList> {
         .getRange(1, csvListData.length)
         .toList()
         .map((List e) => Film(
-              title: e.elementAt(0),
-              isan: e.elementAt(1),
+              title: e.elementAt(0).toString(),
+              genre: e.elementAt(1).toString(),
+              actor: e.elementAt(2).toString(),
+              sonstiges: e.elementAt(3).toString(),
             ))
         .toList();
     return (convertedCsvListData, dataCategories);
@@ -32,6 +33,6 @@ class _FilmsListState extends DataListState<Film, FilmsList> {
 
   @override
   List<double> getSpacing() {
-    return [0.33, 0.33, 0.33];
+    return [0.2, 0.2, 0.2, 0.2];
   }
 }
