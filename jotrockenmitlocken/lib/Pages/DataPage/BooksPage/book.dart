@@ -4,10 +4,17 @@ class Book extends TableData {
   String title = "placeholder";
   String author = "placeholder";
   String isbn = "placeholder";
-  Book({required this.title, required this.author, required this.isbn});
+  String comment = "placeholder";
+
+  Book({
+    required this.title,
+    required this.author,
+    required this.isbn,
+    required this.comment,
+  });
 
   @override
   List<String> getCells() {
-    return [title, author, isbn];
+    return [title, author, isbn, comment];
   }
 }
