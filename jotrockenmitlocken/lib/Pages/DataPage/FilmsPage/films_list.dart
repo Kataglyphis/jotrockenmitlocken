@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jotrockenmitlockenrepo/Media/DataTable/data_list.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/FilmsPage/film.dart';
+import 'package:jotrockenmitlockenrepo/Media/DataTable/datacell_content_strategies.dart';
 
 class FilmsList extends DataList {
   const FilmsList(
@@ -34,5 +35,15 @@ class _FilmsListState extends DataListState<Film, FilmsList> {
   @override
   List<double> getSpacing() {
     return [0.2, 0.2, 0.2, 0.2];
+  }
+
+  @override
+  List<DataCellContentStrategies> getDataCellContentStrategies() {
+    return [
+      DataCellContentStrategies.text,
+      DataCellContentStrategies.text,
+      DataCellContentStrategies.text,
+      DataCellContentStrategies.text
+    ];
   }
 }

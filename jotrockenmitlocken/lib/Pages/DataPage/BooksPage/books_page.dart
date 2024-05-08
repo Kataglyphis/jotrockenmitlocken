@@ -24,6 +24,7 @@ class BooksPageState extends State<BooksPage> {
       showLargeSizeLayout: widget.appAttributes.showLargeSizeLayout,
       children: [
         BooksList(
+            appAttributes: widget.appAttributes,
             title: AppLocalizations.of(context)!.books,
             description:
                 "${AppLocalizations.of(context)!.booksDescription}\u{1F63A}",

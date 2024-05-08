@@ -14,14 +14,16 @@ import 'package:jotrockenmitlocken/Pages/LandingPage/landing_page_navbar_page_co
 import 'package:jotrockenmitlocken/Pages/DataPage/QuotesPage/quotations_page_config.dart';
 import 'package:jotrockenmitlockenrepo/Pages/blog_page_config.dart';
 import 'package:jotrockenmitlockenrepo/Pages/Footer/footer_page_config.dart';
+import 'package:jotrockenmitlockenrepo/Pages/my_two_cents_config.dart';
 import 'package:jotrockenmitlockenrepo/Pages/navbar_page_config.dart';
 import 'package:jotrockenmitlockenrepo/Pages/stateful_branch_info_provider.dart';
 import 'package:jotrockenmitlockenrepo/Routing/screen_configurations.dart';
 
 class JotrockenmitLockenScreenConfigurations extends ScreenConfigurations {
   List<BlogPageConfig> blogPageConfigs;
-  JotrockenmitLockenScreenConfigurations.fromBlogConfigs(
-      {required this.blogPageConfigs});
+  List<MyTwoCentsConfig> twoCentsConfigs;
+  JotrockenmitLockenScreenConfigurations.fromBlogAndDataConfigs(
+      {required this.blogPageConfigs, required this.twoCentsConfigs});
 
   @override
   bool disableFooter() {
@@ -41,6 +43,10 @@ class JotrockenmitLockenScreenConfigurations extends ScreenConfigurations {
     }
     for (StatefulBranchInfoProvider blogPageConfig in getBlogPagesConfig()) {
       pagesConfigs.add(blogPageConfig);
+    }
+    for (StatefulBranchInfoProvider mediaCriticsPageConfig
+        in getMediaCriticsPagesConfig()) {
+      pagesConfigs.add(mediaCriticsPageConfig);
     }
     for (StatefulBranchInfoProvider errorPageConfig in getErrorPagesConfig()) {
       pagesConfigs.add(errorPageConfig);
@@ -74,6 +80,11 @@ class JotrockenmitLockenScreenConfigurations extends ScreenConfigurations {
   @override
   List<BlogPageConfig> getBlogPagesConfig() {
     return blogPageConfigs;
+  }
+
+  @override
+  List<MyTwoCentsConfig> getMediaCriticsPagesConfig() {
+    return twoCentsConfigs;
   }
 
   @override
