@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jotrockenmitlocken/Widgets/Media/book.dart';
+import 'package:jotrockenmitlocken/Pages/DataPage/BooksPage/book.dart';
 import 'package:jotrockenmitlockenrepo/Media/DataTable/data_list.dart';
 
 class BooksList extends DataList {
@@ -8,7 +8,6 @@ class BooksList extends DataList {
       required super.dataFilePath,
       required super.title,
       required super.description});
-  // "assets/data/Buecherliste.csv"
   //"Books worth reading"
   @override
   State<BooksList> createState() => _BooksListState();
@@ -23,9 +22,9 @@ class _BooksListState extends DataListState<Book, BooksList> {
         .getRange(1, csvListData.length)
         .toList()
         .map((List e) => Book(
-              title: e.elementAt(0),
-              author: e.elementAt(1),
-              isbn: e.elementAt(2),
+              title: e.elementAt(0).toString(),
+              author: e.elementAt(1).toString(),
+              isbn: e.elementAt(2).toString(),
             ))
         .toList();
     return (convertedCsvListData, dataCategories);
@@ -33,6 +32,6 @@ class _BooksListState extends DataListState<Book, BooksList> {
 
   @override
   List<double> getSpacing() {
-    return [0.25, 0.25, 0.25, 0.25];
+    return [0.25, 0.25, 0.25];
   }
 }

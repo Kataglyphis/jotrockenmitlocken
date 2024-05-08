@@ -6,10 +6,12 @@ import 'package:jotrockenmitlockenrepo/Pages/stateful_branch_info_provider.dart'
 
 abstract class ScreenConfigurations {
   List<StatefulBranchInfoProvider> getErrorPagesConfig();
+  List<StatefulBranchInfoProvider> getDataPagesConfig();
   List<StatefulBranchInfoProvider> getAllPagesConfigs();
   List<NavBarPageConfig> getNavRailPagesConfig();
   List<FooterPageConfig> getFooterPagesConfig();
   List<BlogPageConfig> getBlogPagesConfig();
+
   bool disableFooter();
 
   List<NavigationDestination> getAppBarDestinations(BuildContext context) {

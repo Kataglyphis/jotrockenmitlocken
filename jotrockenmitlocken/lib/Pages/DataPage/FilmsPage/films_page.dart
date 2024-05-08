@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:jotrockenmitlocken/Pages/DataPage/FilmsPage/films_list.dart';
 import 'package:jotrockenmitlockenrepo/Pages/Footer/footer.dart';
-import 'package:jotrockenmitlocken/Pages/QuotesPage/quotes_list.dart';
 import 'package:jotrockenmitlockenrepo/app_attributes.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:jotrockenmitlockenrepo/Layout/ResponsiveDesign/single_page.dart';
 
-class QuotesPage extends StatefulWidget {
+class FilmsPage extends StatefulWidget {
   final AppAttributes appAttributes;
   final Footer footer;
-  const QuotesPage(
+  const FilmsPage(
       {super.key, required this.appAttributes, required this.footer});
 
   @override
-  State<StatefulWidget> createState() => QuotesPageState();
+  State<StatefulWidget> createState() => FilmsPageState();
 }
 
-class QuotesPageState extends State<QuotesPage> {
+class FilmsPageState extends State<FilmsPage> {
   @override
   Widget build(BuildContext context) {
     return SinglePage(
@@ -23,11 +23,11 @@ class QuotesPageState extends State<QuotesPage> {
       showMediumSizeLayout: widget.appAttributes.showMediumSizeLayout,
       showLargeSizeLayout: widget.appAttributes.showLargeSizeLayout,
       children: [
-        QuotesList(
-            title: AppLocalizations.of(context)!.quotations,
+        FilmsList(
+            title: AppLocalizations.of(context)!.films,
             description:
-                "${AppLocalizations.of(context)!.quotationsDescription}\u{1F63A}",
-            dataFilePath: "assets/data/Zitate.csv"),
+                "${AppLocalizations.of(context)!.filmsDescription}\u{1F63A}",
+            dataFilePath: "assets/data/Filmliste_gesehen.csv"),
       ],
     );
   }

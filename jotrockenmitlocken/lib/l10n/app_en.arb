@@ -6,6 +6,11 @@
   "homepage": "Homepage",
   "aboutme": "About me",
   "quotations": "Quotations",
+  "books": "Books",
+  "booksDescription": "Books worth reading",
+  "films": "Films",
+  "filmsDescription": "Films worth watching",
+  "data": "Data",
   "documents": "Documents",
   "quotationsDescription": "Collection of various quotations I am inspired by or just can laugh about",
   "switchLang": "Switch (DE/EN)",
@@ -35,5 +40,6 @@
   "copyrightFooterTitle": "Copyright",
   "visitBlogEntry": "Visit blog entry",
   "externalLinks": "External links",
-  "lastModified": "Last modified"
+  "lastModified": "Last modified",
+  "follow": "Visit page"
 }
