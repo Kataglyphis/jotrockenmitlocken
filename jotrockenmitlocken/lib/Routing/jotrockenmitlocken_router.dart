@@ -8,6 +8,7 @@ import 'package:jotrockenmitlocken/Pages/DataPage/FilmsPage/films_page.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/FilmsPage/films_page_config.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/data_page.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/data_pages_navbar_page_config.dart';
+import 'package:jotrockenmitlocken/Pages/DataPage/media_critics_page.dart';
 import 'package:jotrockenmitlocken/Pages/DocumentsPage/document_page_navbar_config.dart';
 import 'package:jotrockenmitlocken/Pages/DocumentsPage/documents_page.dart';
 
@@ -19,6 +20,7 @@ import 'package:jotrockenmitlocken/Pages/DataPage/QuotesPage/quotations_page_con
 import 'package:jotrockenmitlockenrepo/Pages/Footer/footer.dart';
 import 'package:jotrockenmitlockenrepo/Pages/Footer/footer_page_config.dart';
 import 'package:jotrockenmitlockenrepo/Pages/blog_page_config.dart';
+import 'package:jotrockenmitlockenrepo/Pages/my_two_cents_config.dart';
 import 'package:jotrockenmitlockenrepo/Routing/router_creater.dart';
 
 import 'package:jotrockenmitlockenrepo/app_attributes.dart';
@@ -34,6 +36,7 @@ class JotrockenMitLockenRoutes extends RoutesCreator {
     allPagesAndConfigs += _getFooterPagesAndConfigs(appAttributes);
     allPagesAndConfigs += _getBlogPagesAndConfigs(appAttributes);
     allPagesAndConfigs += _getDataPagesAndConfigs(appAttributes);
+    allPagesAndConfigs += _getMediaCriticsPagesAndConfigs(appAttributes);
 
     return allPagesAndConfigs;
   }
@@ -83,6 +86,26 @@ class JotrockenMitLockenRoutes extends RoutesCreator {
         DocumentPageNavBarConfig()
       ),
     ];
+  }
+
+  List<(Widget, StatefulBranchInfoProvider)> _getMediaCriticsPagesAndConfigs(
+      AppAttributes appAttributes) {
+    List<MyTwoCentsConfig> blogPagesConfigs =
+        appAttributes.screenConfigurations.getMediaCriticsPagesConfig();
+    List<(Widget, StatefulBranchInfoProvider)> footerPages = blogPagesConfigs
+        .map(
+          (pageConfig) => (
+            MediaCriticsPage(
+              footer: getFooter(appAttributes),
+              appAttributes: appAttributes,
+              mediaCriticsPageConfig: pageConfig,
+            ),
+            pageConfig
+          ),
+        )
+        .toList();
+
+    return footerPages;
   }
 
   List<(Widget, StatefulBranchInfoProvider)> _getBlogPagesAndConfigs(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jotrockenmitlockenrepo/Media/DataTable/data_list.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/QuotesPage/quote.dart';
+import 'package:jotrockenmitlockenrepo/Media/DataTable/datacell_content_strategies.dart';
 
 class QuotesList extends DataList {
   const QuotesList({
@@ -37,5 +38,13 @@ class _QuotesListState extends DataListState<Quote, QuotesList> {
   @override
   List<double> getSpacing() {
     return [0.2, 0.65];
+  }
+
+  @override
+  List<DataCellContentStrategies> getDataCellContentStrategies() {
+    return [
+      DataCellContentStrategies.text,
+      DataCellContentStrategies.text,
+    ];
   }
 }
