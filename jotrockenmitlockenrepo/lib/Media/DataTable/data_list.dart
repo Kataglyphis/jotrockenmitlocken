@@ -30,21 +30,24 @@ class _MyDataTableSource extends DataTableSource {
 }
 
 abstract class DataList extends StatefulWidget {
-  const DataList(
+  DataList(
       {super.key,
       required this.dataFilePath,
       required this.title,
-      required this.description});
+      required this.description,
+      this.sortColumnIndex = 0,
+      this.sortOnLoaded = false,
+      this.isAscending = false});
   final String title;
   final String dataFilePath;
   final String description;
+  bool sortOnLoaded;
+  int sortColumnIndex;
+  bool isAscending;
 }
 
 abstract class DataListState<T extends TableData, U extends DataList>
     extends State<U> {
-  int sortColumnIndex = 0;
-  bool isAscending = true;
-
   late Future<(List<T>, List<String>)> _rawCsvData;
 
   List<double> getSpacing();
@@ -133,6 +136,14 @@ abstract class DataListState<T extends TableData, U extends DataList>
               builder: (context, data) {
                 if (data.hasData) {
                   List<T> csvData = data.requireData.$1;
+
+                  if (widget.sortOnLoaded) {
+                    csvData.sort((data1, data2) => _compareString(
+                        widget.isAscending,
+                        data1.getCells()[widget.sortColumnIndex],
+                        data2.getCells()[widget.sortColumnIndex]));
+                  }
+
                   List<String> dataCategories = data.requireData.$2;
 
                   final DataTableSource dataTableSource =
@@ -145,8 +156,8 @@ abstract class DataListState<T extends TableData, U extends DataList>
                       color: Theme.of(context).colorScheme.primary,
                       child: PaginatedDataTable(
                         dataRowMaxHeight: double.infinity,
-                        sortColumnIndex: sortColumnIndex,
-                        sortAscending: isAscending,
+                        sortColumnIndex: widget.sortColumnIndex,
+                        sortAscending: widget.isAscending,
                         columns: dataCategories
                             .map((String column) => DataColumn(
                                   label: Text(column),
@@ -154,12 +165,12 @@ abstract class DataListState<T extends TableData, U extends DataList>
                                     setState(() {
                                       csvData.sort((data1, data2) =>
                                           _compareString(
-                                              isAscending,
+                                              widget.isAscending,
                                               data1.getCells()[columnIndex],
                                               data2.getCells()[columnIndex]));
 
-                                      this.sortColumnIndex = columnIndex;
-                                      this.isAscending = ascending;
+                                      widget.sortColumnIndex = columnIndex;
+                                      widget.isAscending = ascending;
                                     });
                                   },
                                 ))

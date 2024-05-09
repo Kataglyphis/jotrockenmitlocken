@@ -4,7 +4,7 @@ import 'package:jotrockenmitlocken/Pages/DataPage/FilmsPage/film.dart';
 import 'package:jotrockenmitlockenrepo/Media/DataTable/datacell_content_strategies.dart';
 
 class FilmsList extends DataList {
-  const FilmsList(
+  FilmsList(
       {super.key,
       required super.dataFilePath,
       required super.title,

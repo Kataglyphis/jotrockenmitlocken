@@ -6,11 +6,15 @@ import 'package:jotrockenmitlockenrepo/Pages/my_two_cents_config.dart';
 import 'package:jotrockenmitlockenrepo/app_attributes.dart';
 
 class BooksList extends DataList {
-  const BooksList(
+  BooksList(
       {super.key,
       required super.dataFilePath,
       required super.title,
       required super.description,
+      // all entries with a critic should be displayed in the very beginning :)
+      super.sortColumnIndex = 3,
+      super.sortOnLoaded = true,
+      // super.isAscending = true,
       required this.appAttributes});
   //"Books worth reading"
   @override
@@ -20,6 +24,11 @@ class BooksList extends DataList {
 }
 
 class _BooksListState extends DataListState<Book, BooksList> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Future<(List<Book>, List<String>)> convertRawCSVDataToFinalLayout(
       List<List<dynamic>> csvListData) async {

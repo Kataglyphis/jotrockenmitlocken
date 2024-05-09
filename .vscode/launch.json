@@ -9,7 +9,7 @@
 			"request": "launch",
 			"type": "dart",
 			"program": "jotrockenmitlocken/lib/main.dart",
-			"args": ["--debug"], // "--web-renderer", "canvaskit"
+			"args": ["--debug", "--web-renderer","canvaskit"], //
 		},
 		{
 			"name": "jotrockenmitlocken (profile mode)",
@@ -25,7 +25,7 @@
 			"type": "dart",
 			"flutterMode": "release",
 			"program": "jotrockenmitlocken/lib/main.dart",
-			"args": ["--release"] //   "html", "--web-renderer","canvaskit"
+			"args": ["--release", "--web-renderer","canvaskit"] //   "html", 
 		}
 	]
 }
