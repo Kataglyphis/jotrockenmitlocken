@@ -6,6 +6,8 @@ import 'package:jotrockenmitlocken/Pages/DataPage/BooksPage/books_page.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/BooksPage/books_page_config.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/FilmsPage/films_page.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/FilmsPage/films_page_config.dart';
+import 'package:jotrockenmitlocken/Pages/DataPage/GamesPage/games_page.dart';
+import 'package:jotrockenmitlocken/Pages/DataPage/GamesPage/games_page_config.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/data_page.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/data_pages_navbar_page_config.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/media_critics_page.dart';
@@ -58,6 +60,11 @@ class JotrockenMitLockenRoutes extends RoutesCreator {
         FilmsPage(
             footer: getFooter(appAttributes), appAttributes: appAttributes),
         FilmsPageConfig()
+      ),
+      (
+        GamesPage(
+            footer: getFooter(appAttributes), appAttributes: appAttributes),
+        GamesPageConfig()
       ),
     ];
   }

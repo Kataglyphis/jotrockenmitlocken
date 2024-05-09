@@ -23,17 +23,17 @@ class DataPageState extends State<DataPage> {
       DataPageEntry(
         label: AppLocalizations.of(context)!.quotations,
         routerPath: '/quotations',
-        imagePath: 'assets/images/ScreenshotVulkanPathTracing.png',
+        imagePath: 'assets/images/Quotes_cover.jpg',
         description: AppLocalizations.of(context)!.quotationsDescription,
-        lastModified: 'yesterday',
+        lastModified: 'babbeln',
       ),
       rowDivider,
       DataPageEntry(
         label: AppLocalizations.of(context)!.films,
         routerPath: '/films',
-        imagePath: 'assets/images/ScreenshotVulkanPathTracing.png',
+        imagePath: 'assets/images/Film_cover.jpg',
         description: AppLocalizations.of(context)!.filmsDescription,
-        lastModified: 'yesterday',
+        lastModified: 'glotze',
       ),
       rowDivider,
     ];
@@ -41,9 +41,17 @@ class DataPageState extends State<DataPage> {
       DataPageEntry(
         label: AppLocalizations.of(context)!.books,
         routerPath: '/books',
-        imagePath: 'assets/images/ScreenshotVulkanPathTracing.png',
+        imagePath: 'assets/images/Book_cover.jpg',
         description: AppLocalizations.of(context)!.booksDescription,
-        lastModified: 'yesterday',
+        lastModified: '.._..',
+      ),
+      rowDivider,
+      DataPageEntry(
+        label: AppLocalizations.of(context)!.games,
+        routerPath: '/games',
+        imagePath: 'assets/images/Spiele_cover.jpg',
+        description: AppLocalizations.of(context)!.booksDescription,
+        lastModified: 'Go rust',
       ),
     ];
 

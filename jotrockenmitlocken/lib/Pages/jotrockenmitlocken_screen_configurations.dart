@@ -1,6 +1,7 @@
 import 'package:jotrockenmitlocken/Pages/AboutMePage/about_me_page_navbar_config.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/BooksPage/books_page_config.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/FilmsPage/films_page_config.dart';
+import 'package:jotrockenmitlocken/Pages/DataPage/GamesPage/games_page_config.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/data_pages_navbar_page_config.dart';
 import 'package:jotrockenmitlocken/Pages/DocumentsPage/document_page_navbar_config.dart';
 import 'package:jotrockenmitlocken/Pages/ErrorPage/error_page_stateful_branch_info_provider.dart';
@@ -59,7 +60,12 @@ class JotrockenmitLockenScreenConfigurations extends ScreenConfigurations {
 
   @override
   List<StatefulBranchInfoProvider> getDataPagesConfig() {
-    return [QuotationsPageConfig(), BooksPageConfig(), FilmsPageConfig()];
+    return [
+      QuotationsPageConfig(),
+      BooksPageConfig(),
+      FilmsPageConfig(),
+      GamesPageConfig()
+    ];
   }
 
   @override

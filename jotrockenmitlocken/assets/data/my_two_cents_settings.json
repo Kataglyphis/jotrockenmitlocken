@@ -22,5 +22,29 @@
 				"additionalInfo": "Use it for you own projects."
 			}
 		]
+	},
+	{
+		"routingName":"/games/Gothic1",
+		"filePath":"assets/documents/games/Gothic1.md",
+		"imageDir":"assets/images/aiBlog",
+		"mediaTitle":"Gothic 1",
+		"fileBaseDir": "assets/documents/games/",
+		"docsDesc": [
+			{
+				"baseDir":"assets/documents/",
+				"title":"CV_Jonas_Heinle_english.pdf",
+				"additionalInfo": "~3.7MB English"
+			},
+			{
+				"baseDir": "assets/documents/",
+				"title": "CV_Jonas_Heinle_german.pdf",
+				"additionalInfo": "~3.7MB German"
+			},
+			{
+				"baseDir": "assets/images/",
+				"title": "WorleyNoiseTextures.zip",
+				"additionalInfo": "Use it for you own projects."
+			}
+		]
 	}
 ]
