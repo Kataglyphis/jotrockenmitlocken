@@ -8,7 +8,6 @@ import 'dart:developer';
 abstract class DataList<T extends TableData> extends StatefulWidget {
   DataList(
       {super.key,
-      required this.dataFilePath,
       required this.title,
       required this.description,
       required this.data,
@@ -19,7 +18,6 @@ abstract class DataList<T extends TableData> extends StatefulWidget {
   List<T> data;
   List<String> dataCategories;
   final String title;
-  final String dataFilePath;
   final String description;
   bool sortOnLoaded;
   int sortColumnIndex;

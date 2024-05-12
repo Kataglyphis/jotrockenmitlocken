@@ -7,6 +7,7 @@ import 'package:jotrockenmitlockenrepo/Pages/LandingPage/landing_page_entry.dart
 import 'package:jotrockenmitlockenrepo/Url/external_link_config.dart';
 import 'package:jotrockenmitlockenrepo/app_attributes.dart';
 import 'package:jotrockenmitlockenrepo/Pages/blog_page_config.dart';
+import 'package:go_router/go_router.dart';
 
 class LandingPage extends StatefulWidget {
   final AppAttributes appAttributes;
@@ -25,6 +26,20 @@ class LandingPageState extends State<LandingPage> {
     List<Widget> childWidgetsRightPage = [];
     List<BlogPageConfig> blogPagesConfig =
         widget.appAttributes.screenConfigurations.getBlogPagesConfig();
+
+    // lets add a button to the overall overview of all blog entries as the first entry
+    childWidgetsLeftPage.add(
+      TextButton(
+          onPressed: () {
+            context.go('/blockEntries');
+          },
+          child: Text(
+            textAlign: TextAlign.center,
+            (Localizations.localeOf(context) == const Locale('de'))
+                ? "Gelange zur Übersicht aller Blogeinträge"
+                : "Go to the overview of all blog entries",
+          )),
+    );
 
     ExternalLinkConfig gitHub =
         widget.appAttributes.userSettings.socialMediaLinksConfig!['GitHub']!;
