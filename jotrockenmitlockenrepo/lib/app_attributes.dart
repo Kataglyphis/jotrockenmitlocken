@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jotrockenmitlockenrepo/Pages/Footer/footer_config.dart';
 import 'package:jotrockenmitlockenrepo/Pages/Home/home_config.dart';
+import 'package:jotrockenmitlockenrepo/Pages/blog_page_config.dart';
 import 'package:jotrockenmitlockenrepo/Pages/my_two_cents_config.dart';
 import 'package:jotrockenmitlockenrepo/Routing/screen_configurations.dart';
 import 'package:jotrockenmitlockenrepo/constants.dart';
@@ -12,6 +13,7 @@ class AppAttributes {
 
   UserSettings userSettings;
   List<MyTwoCentsConfig> twoCentsConfigs;
+  List<BlogPageConfig> blockSettings;
   FooterConfig footerConfig;
   HomeConfig homeConfig;
 
@@ -37,6 +39,7 @@ class AppAttributes {
       required this.appTitle,
       required this.appName,
       required this.userSettings,
+      required this.blockSettings,
       required this.twoCentsConfigs,
       required this.supportedLanguages,
       required this.screenConfigurations,

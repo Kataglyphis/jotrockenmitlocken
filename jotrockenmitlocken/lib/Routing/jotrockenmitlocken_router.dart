@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:jotrockenmitlocken/Pages/AboutMePage/about_me_page.dart';
 import 'package:jotrockenmitlocken/Pages/AboutMePage/about_me_page_navbar_config.dart';
 import 'package:jotrockenmitlocken/Pages/Blog/blog_page.dart';
+import 'package:jotrockenmitlocken/Pages/DataPage/BlockOverviewPage/block_overview_page.dart';
+import 'package:jotrockenmitlocken/Pages/DataPage/BlockOverviewPage/block_overview_page_config.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/BooksPage/books_page.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/BooksPage/books_page_config.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/FilmsPage/films_page.dart';
@@ -65,6 +67,13 @@ class JotrockenMitLockenRoutes extends RoutesCreator {
         GamesPage(
             footer: getFooter(appAttributes), appAttributes: appAttributes),
         GamesPageConfig()
+      ),
+      (
+        BlockOverviewPage(
+          footer: getFooter(appAttributes),
+          appAttributes: appAttributes,
+        ),
+        BlockOverviewPageConfig()
       ),
     ];
   }

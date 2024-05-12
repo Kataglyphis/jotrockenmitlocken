@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/GamesPage/game.dart';
-import 'package:jotrockenmitlockenrepo/Media/DataTable/data_list.dart';
+import 'package:jotrockenmitlockenrepo/Media/DataTable/csv_data_list.dart';
 import 'package:jotrockenmitlockenrepo/Media/DataTable/datacell_content_strategies.dart';
 import 'package:jotrockenmitlockenrepo/Pages/my_two_cents_config.dart';
 import 'package:jotrockenmitlockenrepo/app_attributes.dart';
 
-class GamesList extends DataList {
+class GamesList extends CsvDataList {
   GamesList(
       {super.key,
       required super.dataFilePath,
@@ -23,7 +23,7 @@ class GamesList extends DataList {
   final AppAttributes appAttributes;
 }
 
-class _GamesListState extends DataListState<Game, GamesList> {
+class _GamesListState extends CsvDataListState<Game, GamesList> {
   @override
   void initState() {
     super.initState();
