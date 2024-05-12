@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/BooksPage/book.dart';
-import 'package:jotrockenmitlockenrepo/Media/DataTable/data_list.dart';
+import 'package:jotrockenmitlockenrepo/Media/DataTable/csv_data_list.dart';
 import 'package:jotrockenmitlockenrepo/Media/DataTable/datacell_content_strategies.dart';
 import 'package:jotrockenmitlockenrepo/Pages/my_two_cents_config.dart';
 import 'package:jotrockenmitlockenrepo/app_attributes.dart';
 
-class BooksList extends DataList {
+class BooksList extends CsvDataList {
   BooksList(
       {super.key,
       required super.dataFilePath,
@@ -23,7 +23,7 @@ class BooksList extends DataList {
   final AppAttributes appAttributes;
 }
 
-class _BooksListState extends DataListState<Book, BooksList> {
+class _BooksListState extends CsvDataListState<Book, BooksList> {
   @override
   void initState() {
     super.initState();
