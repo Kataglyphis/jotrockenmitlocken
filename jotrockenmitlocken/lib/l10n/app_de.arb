@@ -6,6 +6,8 @@
   "homepage": "Startseite",
   "aboutme": "Über mich",
   "quotations": "Zitate",
+  "blockEntryOverview": "Übersicht aller meiner verfassten Blogbeiträge",
+  "blockEntryOverviewDescription": "Beinhaltet nicht die Kritiken zu Büchern/Filmen/Spielen",
   "books": "Bücher",
   "games": "Spiele",
   "gamesDescription": "Bemerkenswerte Spiele und was es zu wissen gibt",

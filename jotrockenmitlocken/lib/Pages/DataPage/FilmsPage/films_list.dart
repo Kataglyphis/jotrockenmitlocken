@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:jotrockenmitlockenrepo/Media/DataTable/data_list.dart';
+import 'package:jotrockenmitlockenrepo/Media/DataTable/csv_data_list.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/FilmsPage/film.dart';
 import 'package:jotrockenmitlockenrepo/Media/DataTable/datacell_content_strategies.dart';
 
-class FilmsList extends DataList {
+class FilmsList extends CsvDataList {
   FilmsList(
       {super.key,
       required super.dataFilePath,
@@ -14,7 +14,7 @@ class FilmsList extends DataList {
   State<FilmsList> createState() => _FilmsListState();
 }
 
-class _FilmsListState extends DataListState<Film, FilmsList> {
+class _FilmsListState extends CsvDataListState<Film, FilmsList> {
   @override
   Future<(List<Film>, List<String>)> convertRawCSVDataToFinalLayout(
       List<List<dynamic>> csvListData) async {

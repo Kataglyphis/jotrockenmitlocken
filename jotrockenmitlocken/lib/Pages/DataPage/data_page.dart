@@ -50,7 +50,7 @@ class DataPageState extends State<DataPage> {
         label: AppLocalizations.of(context)!.games,
         routerPath: '/games',
         imagePath: 'assets/images/Spiele_cover.jpg',
-        description: AppLocalizations.of(context)!.booksDescription,
+        description: AppLocalizations.of(context)!.gamesDescription,
         lastModified: 'Go rust',
       ),
     ];

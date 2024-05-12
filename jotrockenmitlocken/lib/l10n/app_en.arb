@@ -6,6 +6,8 @@
   "homepage": "Homepage",
   "aboutme": "About me",
   "quotations": "Quotations",
+  "blockEntryOverview": "Overview of all my blog posts",
+  "blockEntryOverviewDescription": "Does not include reviews of books/movies/games",
   "books": "Books",
   "games": "Games",
   "gamesDescription": "Funny Games and what there is to know about",

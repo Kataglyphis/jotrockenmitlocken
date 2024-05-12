@@ -1,4 +1,5 @@
 import 'package:jotrockenmitlocken/Pages/AboutMePage/about_me_page_navbar_config.dart';
+import 'package:jotrockenmitlocken/Pages/DataPage/BlockOverviewPage/block_overview_page_config.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/BooksPage/books_page_config.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/FilmsPage/films_page_config.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/GamesPage/games_page_config.dart';
@@ -64,7 +65,8 @@ class JotrockenmitLockenScreenConfigurations extends ScreenConfigurations {
       QuotationsPageConfig(),
       BooksPageConfig(),
       FilmsPageConfig(),
-      GamesPageConfig()
+      GamesPageConfig(),
+      BlockOverviewPageConfig(),
     ];
   }
 

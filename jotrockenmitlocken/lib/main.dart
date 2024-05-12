@@ -205,6 +205,7 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
               footerConfig: JoTrockenMitLockenFooterConfig(),
               homeConfig: JotrockenMitLockenHomeConfig(),
               userSettings: data.requireData.$1,
+              blockSettings: data.requireData.$2,
               twoCentsConfigs: data.requireData.$3,
               screenConfigurations: screenConfigurations,
               railAnimation: railAnimation,

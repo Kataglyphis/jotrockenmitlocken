@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:jotrockenmitlockenrepo/Media/DataTable/data_list.dart';
+import 'package:jotrockenmitlockenrepo/Media/DataTable/csv_data_list.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/QuotesPage/quote.dart';
 import 'package:jotrockenmitlockenrepo/Media/DataTable/datacell_content_strategies.dart';
 
-class QuotesList extends DataList {
+class QuotesList extends CsvDataList {
   QuotesList({
     super.key,
     required super.dataFilePath,
@@ -15,7 +15,7 @@ class QuotesList extends DataList {
   State<QuotesList> createState() => _QuotesListState();
 }
 
-class _QuotesListState extends DataListState<Quote, QuotesList> {
+class _QuotesListState extends CsvDataListState<Quote, QuotesList> {
   String _formatQuote(String unformattedQuote) {
     return "»$unformattedQuote«";
   }
