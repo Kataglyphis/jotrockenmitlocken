@@ -32,10 +32,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-          cd jotrockenmitlocken
           git submodule update --init --recursive
           flutter pub get
-          cd ..
           cd external/jotrockenmitlockenrepo
           flutter pub get
 
