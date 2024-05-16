@@ -1,1 +1,0 @@
-enum DataCellContentStrategies { text, textButton }

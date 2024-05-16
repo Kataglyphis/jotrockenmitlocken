@@ -8,7 +8,7 @@
 			"name": "jotrockenmitlocken (debug mode)",
 			"request": "launch",
 			"type": "dart",
-			"program": "jotrockenmitlocken/lib/main.dart",
+			"program": "lib/main.dart",
 			"args": ["--debug", "--web-renderer","canvaskit"], //
 		},
 		{
@@ -16,7 +16,7 @@
 			"request": "launch",
 			"type": "dart",
 			"flutterMode": "profile",
-			"program": "jotrockenmitlocken/lib/main.dart",
+			"program": "lib/main.dart",
 			"args": ["--profile", "--web-renderer", "html"] //
 		},
 		{
@@ -24,7 +24,7 @@
 			"request": "launch",
 			"type": "dart",
 			"flutterMode": "release",
-			"program": "jotrockenmitlocken/lib/main.dart",
+			"program": "lib/main.dart",
 			"args": ["--release", "--web-renderer","canvaskit"] //   "html", 
 		}
 	]

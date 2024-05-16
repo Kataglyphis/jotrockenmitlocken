@@ -22,7 +22,7 @@ jobs:
         uses: flutter-actions/setup-flutter@v2.3  
         with:
           channel: stable
-          version: 3.19.6
+          version: 3.22.0
       
       # Note: This workflow uses the latest stable version of the Dart SDK.
       # You can specify other versions if desired, see documentation here:
@@ -33,9 +33,10 @@ jobs:
       - name: Install dependencies
         run: |
           cd jotrockenmitlocken
+          git submodule update --init --recursive
           flutter pub get
           cd ..
-          cd jotrockenmitlockenrepo
+          cd external/jotrockenmitlockenrepo
           flutter pub get
 
       # Uncomment this step to verify the use of 'dart format' on each commit.
