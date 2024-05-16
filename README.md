@@ -1,24 +1,24 @@
 <h1 align="center">
   <br>
-  <a href="https://jotrockenmitlocken.de"><img src="images/logo.png" alt="My website" width="200"></a>
+  <a href="https://jonasheinle.de"><img src="images/logo.png" alt="My website" width="200"></a>
   <br>
-  Cataglyphis template
+  Jotrockenmitlocken
   <br>
 </h1>
 
 <!-- <h1 align="center">
   <br>
-  <a href="https://jotrockenmitlocken.de"><img src="images/vulkan-logo.png" alt="VulkanEngine" width="200"></a>
-  <a href="https://jotrockenmitlocken.de"><img src="images/Engine_logo.png" alt="VulkanEngine" width="200"></a>
-  <a href="https://jotrockenmitlocken.de"><img src="images/glm_logo.png" alt="VulkanEngine" width="200"></a>
+  <a href="https://jonasheinle.de"><img src="images/vulkan-logo.png" alt="VulkanEngine" width="200"></a>
+  <a href="https://jonasheinle.de"><img src="images/Engine_logo.png" alt="VulkanEngine" width="200"></a>
+  <a href="https://jonasheinle.de"><img src="images/glm_logo.png" alt="VulkanEngine" width="200"></a>
 </h1> -->
 
-<h4 align="center">A template <a href="https://jotrockenmitlocken.de" target="_blank"></a>.</h4>
+<h4 align="center">Source control of my personal website.<a href="https://jonasheinle.de" target="_blank"></a>.</h4>
 
 <!-- [![Linux build](https://github.com/Kataglyphis/GraphicsEngineVulkan/actions/workflows/Linux.yml/badge.svg)](https://github.com/Kataglyphis/GraphicsEngineVulkan/actions/workflows/Linux.yml)
 [![Windows build](https://github.com/Kataglyphis/GraphicsEngineVulkan/actions/workflows/Windows.yml/badge.svg)](https://github.com/Kataglyphis/GraphicsEngineVulkan/actions/workflows/Windows.yml)
 [![TopLang](https://img.shields.io/github/languages/top/Kataglyphis/GraphicsEngineVulkan)]() -->
-[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/donate/?hosted_button_id=BX9AVVES2P9LN)
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/paypalme/JonasHeinle)
 [![Twitter](https://img.shields.io/twitter/follow/Cataglyphis_?style=social)](https://twitter.com/Cataglyphis_)
 
 <p align="center">
@@ -29,42 +29,6 @@
   <a href="#related">Related</a> •
   <a href="#license">License</a>
 </p>
-
-# jotrockenmitlocken
-
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application that follows the
-[simple app state management
-tutorial](https://flutter.dev/docs/development/data-and-backend/state-mgmt/simple).
-
-For help getting started with Flutter development, view the
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-
-## Run Web Server locally for Debugging
-```bash
-flutter run -d web-server --web-renderer canvaskit --profile --web-port 8080 --web-hostname 0.0.0.0
-```
-
-## Assets
-
-The `assets` directory houses images, fonts, and any other files you want to
-include with your application.
-
-The `assets/images` directory contains [resolution-aware
-images](https://flutter.dev/docs/development/ui/assets-and-images#resolution-aware).
-
-## Localization
-
-This project generates localized messages based on arb files found in
-the `lib/src/localization` directory.
-
-To support additional languages, please visit the tutorial on
-[Internationalizing Flutter
-apps](https://flutter.dev/docs/development/accessibility-and-localization/internationalization)
 
 <!-- TABLE OF CONTENTS -->
 <details open="open">
@@ -98,16 +62,31 @@ apps](https://flutter.dev/docs/development/accessibility-and-localization/intern
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
+The `assets` directory houses images, fonts, and any other files you want to
+include with your application.
+
+The `assets/images` directory contains [resolution-aware
+images](https://flutter.dev/docs/development/ui/assets-and-images#resolution-aware).
+
+### Localization
+
+This project generates localized messages based on arb files found in
+the `lib/src/localization` directory.
+
+To support additional languages, please visit the tutorial on
+[Internationalizing Flutter
+apps](https://flutter.dev/docs/development/accessibility-and-localization/internationalization)
+
 <!-- <h1 align="center">
   <br>
-  <a href="https://jotrockenmitlocken.de"><img src="images/Screenshot1.png" alt="VulkanEngine" width="400"></a>
-  <a href="https://jotrockenmitlocken.de"><img src="images/Screenshot2.png" alt="VulkanEngine" width="400"></a>
-  <a href="https://jotrockenmitlocken.de"><img src="images/Screenshot3.png" alt="VulkanEngine" width="700"></a>
+  <a href="https://jonasheinle.de"><img src="images/Screenshot1.png" alt="VulkanEngine" width="400"></a>
+  <a href="https://jonasheinle.de"><img src="images/Screenshot2.png" alt="VulkanEngine" width="400"></a>
+  <a href="https://jonasheinle.de"><img src="images/Screenshot3.png" alt="VulkanEngine" width="700"></a>
 </h1> -->
 
-<!-- [![Kataglyphis Engine][product-screenshot1]](https://jotrockenmitlocken.de)
-[![Kataglyphis Engine][product-screenshot2]](https://jotrockenmitlocken.de)
-[![Kataglyphis Engine][product-screenshot3]](https://jotrockenmitlocken.de) -->
+<!-- [![Kataglyphis Engine][product-screenshot1]](https://jonasheinle.de)
+[![Kataglyphis Engine][product-screenshot2]](https://jonasheinle.de)
+[![Kataglyphis Engine][product-screenshot3]](https://jonasheinle.de) -->
 
 This project is a template. 
 
@@ -134,16 +113,15 @@ This project is a template.
 <!-- GETTING STARTED -->
 ## Getting Started
 
-When building for web use: 
-```sh
-   flutter build web --web-renderer=html
-```
-When debugging locally: 
-```sh
-   flutter run -d chrome --web-renderer=html
-```
+For help getting started with Flutter development, view the
+[online documentation](https://flutter.dev/docs), which offers tutorials,
+samples, guidance on mobile development, and a full API reference.
 
-Flag explanation: --web-renderer=html --> high resolution images are displayed correctly !! :)
+### Run Web Server locally for Debugging
+
+```bash
+flutter run -d web-server --web-renderer canvaskit --profile --web-port 8080 --web-hostname 0.0.0.0
+```
 
 ### Prerequisites
 
@@ -151,7 +129,7 @@ Flag explanation: --web-renderer=html --> high resolution images are displayed c
 
 1. Clone the repo
    ```sh
-   git clone --recurse-submodules git@github.com:Kataglyphis/jotrockenmitlocken.de.git
+   git clone --recurse-submodules git@github.com:Kataglyphis/jotrockenmitlocken.git
    ```
 
 ## Tests
@@ -189,7 +167,7 @@ blockquote.
 
 Jonas Heinle - [@Cataglyphis_](https://twitter.com/Cataglyphis_) - jonasheinle@googlemail.com
 
-Project Link: [https://github.com/Kataglyphis/jotrockenmitlocken.de](https://github.com/Kataglyphis/jotrockenmitlocken.de)
+Project Link: [https://github.com/Kataglyphis/jonasheinle.de](https://github.com/Kataglyphis/jonasheinle.de)
 
 
 <!-- ACKNOWLEDGEMENTS -->
