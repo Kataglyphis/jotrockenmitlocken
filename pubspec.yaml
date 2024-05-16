@@ -14,7 +14,7 @@ dependencies:
   flutter:
     sdk: flutter
   jotrockenmitlockenrepo:
-    path: ../jotrockenmitlockenrepo
+    path: external/jotrockenmitlockenrepo
   provider: ^6.1.1
   cupertino_icons: ^1.0.8
   flutter_localizations:
