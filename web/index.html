@@ -19,7 +19,7 @@
 
 	<meta charset="UTF-8">
 	<meta content="IE=Edge" http-equiv="X-UA-Compatible">
-	<meta name="description" content="Personal website by Jonas Heinle.">
+	<meta name="description" content="A new Flutter project.">
 
 	<!-- iOS meta tags & icons -->
 	<meta name="apple-mobile-web-app-capable" content="yes">
@@ -33,12 +33,6 @@
 	<title>jotrockenmitlocken</title>
 	<link rel="manifest" href="manifest.json">
 
-	<script>
-		// The value below is injected by flutter build, do not touch.
-		const serviceWorkerVersion = null;
-	</script>
-	<!-- This script adds the flutter initialization JS code -->
-	<script src="flutter.js" defer></script>
 	<script src="javascript/utils.js"></script>
 	<script src="javascript/cookies.js"></script>
 
@@ -49,6 +43,7 @@
 			--kPrimaryColor: rgb(105, 240, 174);
 		}
 	</style>
+
 </head>
 
 <body>
@@ -75,32 +70,18 @@
 	</script>
 
 	<div id="background-animation"></div>
+
 	<div class="loading">
 		<div class="loader"></div>
-		<div id="loading-message">You will be there soon ... </div>
+		<div id="loading-message"></div>
 		<script>
 			var messageEn = `You will be there soon ...`;
 			var messageDe = `Noch etwas Geduld ... `;
 			setMessage(userLanguage.substring(0, 2), 'loading-message', messageDe, messageEn);
 		</script>
-		<!-- </div> -->
-		<script>
+	</div>
 
-			window.addEventListener('load', function (ev) {
-				// Download main.dart.js
-				_flutter.loader.loadEntrypoint({
-					serviceWorker: {
-						serviceWorkerVersion: serviceWorkerVersion,
-					},
-					onEntrypointLoaded: function (engineInitializer) {
-						engineInitializer.initializeEngine().then(function (appRunner) {
-							appRunner.runApp();
-						});
-					}
-				});
-			});
-
-		</script>
+	<script src="flutter_bootstrap.js" async></script>
 </body>
 
 </html>

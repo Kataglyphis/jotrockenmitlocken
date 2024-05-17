@@ -5,27 +5,28 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"name": "jotrockenmitlocken (debug mode)",
+			"name": "jotrockenmitlocken",
 			"request": "launch",
 			"type": "dart",
 			"program": "lib/main.dart",
-			"args": ["--debug", "--web-renderer","canvaskit"], //
+			"flutterMode": "debug",
+			"args": ["--web-renderer canvaskit --wasm"]
 		},
 		{
 			"name": "jotrockenmitlocken (profile mode)",
 			"request": "launch",
 			"type": "dart",
-			"flutterMode": "profile",
 			"program": "lib/main.dart",
-			"args": ["--profile", "--web-renderer", "html"] //
+			"flutterMode": "profile",
+			"args": ["--web-renderer canvaskit", "--wasm"]
 		},
 		{
 			"name": "jotrockenmitlocken (release mode)",
 			"request": "launch",
 			"type": "dart",
-			"flutterMode": "release",
 			"program": "lib/main.dart",
-			"args": ["--release", "--web-renderer","canvaskit"] //   "html", 
-		}
+			"flutterMode": "release",
+			"args": ["--web-renderer canvaskit", "--wasm"]
+		},
 	]
 }
