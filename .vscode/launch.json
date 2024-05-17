@@ -10,7 +10,7 @@
 			"type": "dart",
 			"program": "lib/main.dart",
 			"flutterMode": "debug",
-			"args": ["--wasm"]
+			"args": ["--web-renderer canvaskit"]
 		},
 		{
 			"name": "jotrockenmitlocken (profile mode)",
@@ -18,7 +18,7 @@
 			"type": "dart",
 			"program": "lib/main.dart",
 			"flutterMode": "profile",
-			"args": ["--wasm"]
+			"args": ["--web-renderer canvaskit"]
 		},
 		{
 			"name": "jotrockenmitlocken (release mode)",
@@ -26,7 +26,7 @@
 			"type": "dart",
 			"program": "lib/main.dart",
 			"flutterMode": "release",
-			"args": ["--wasm"]
+			"args": ["--web-renderer canvaskit"]
 		},
 	]
 }
