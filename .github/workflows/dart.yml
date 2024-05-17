@@ -57,8 +57,15 @@ jobs:
       - name: Enable flutter web
         run: |
           flutter config --enable-web
+
+      # for production I do not use wasm yet!
       - name: 'Build Web App'
-      # canvaskit
+        if: github.ref == 'refs/heads/main'
+        run: | 
+          flutter build web --release --web-renderer canvaskit
+
+      - name: 'Build Web App'
+        if: github.ref == 'refs/heads/dev'
         run: | 
           flutter build web --release --wasm
 
@@ -75,7 +82,7 @@ jobs:
         if: github.ref == 'refs/heads/dev'
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          server: ${{ secrets.DEVSERVER }}
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PW }}
+          server: ${{ secrets.SERVER }}
+          username: ${{ secrets.DEV_USERNAME }}
+          password: ${{ secrets.DEV_PW }}
           local-dir: "./build/web/"
