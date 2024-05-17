@@ -5,6 +5,7 @@ import 'package:jotrockenmitlockenrepo/Media/Files/file.dart';
 import 'package:jotrockenmitlockenrepo/Layout/ResponsiveDesign/single_page.dart';
 import 'package:jotrockenmitlockenrepo/Media/Files/file_table.dart';
 import 'package:jotrockenmitlockenrepo/app_attributes.dart';
+import 'package:jotrockenmitlockenrepo/constants.dart';
 
 class DocumentPage extends StatefulWidget {
   final AppAttributes appAttributes;
@@ -19,21 +20,39 @@ class DocumentPage extends StatefulWidget {
 class DocumentPageState extends State<DocumentPage> {
   @override
   Widget build(BuildContext context) {
+    bool isMobileDevice =
+        MediaQuery.of(context).size.width <= narrowScreenWidthThreshold;
+    Locale currentLocale = Localizations.localeOf(context);
     List<File> docs = [
       File(
         baseDir: 'assets/documents/',
-        title: 'CV_Jonas_Heinle_english.pdf',
+        title: currentLocale == Locale("de")
+            ? 'CV_englisch.pdf'
+            : 'CV_english.pdf',
         additionalInfo: '~3.7MB English',
       ),
       File(
         baseDir: 'assets/documents/',
-        title: 'CV_Jonas_Heinle_german.pdf',
-        additionalInfo: '~3.7MB German',
+        title:
+            currentLocale == Locale("de") ? 'CV_deutsch.pdf' : 'CV_german.pdf',
+        additionalInfo: '~3.7MB DE',
       ),
       File(
           baseDir: 'assets/documents/',
           title: 'Bachelor_Thesis.pdf',
-          additionalInfo: '~33MB German')
+          additionalInfo: (isMobileDevice)
+              ? '~33MB'
+              : (currentLocale == Locale("de"))
+                  ? '~33MB DE\nZeitlich stabile blue noise Fehlerverteilung im Bildraum für Echtzeitanwendungen'
+                  : '~33MB DE\nTemporally stable blue noise error distribution in image space for real-time applications'),
+      File(
+          baseDir: 'assets/documents/',
+          title: 'Master_Thesis.pdf',
+          additionalInfo: (isMobileDevice)
+              ? '~33MB'
+              : (currentLocale == Locale("de"))
+                  ? '~47MB EN\nGestaltung von nutzeradaptiven Inhalten für Mixed Reality mit Hilfe von Eye- und Hand-Tracking'
+                  : '~47MB EN\nDesigning User-adaptive Content for Mixed Reality Using Eye and Hand Tracking'),
     ];
     return SinglePage(
       footer: widget.footer,

@@ -2,12 +2,12 @@ name: jotrockenmitlocken
 description: "Find out sth. interesting about me."
 
 # Prevent accidental publishing to pub.dev.
-publish_to: 'none'
+publish_to: "none"
 
 version: 1.3.0+3
 
 environment:
-  sdk: '>=3.2.0 <4.0.0'
+  sdk: ">=3.4.0 <4.0.0"
   flutter: ">=3.22.0"
 
 dependencies:
@@ -34,7 +34,7 @@ flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
   image_path: "assets/images/barbell.png"
-  min_sdk_android: 21 
+  min_sdk_android: 21
   web:
     generate: true
 
@@ -43,7 +43,6 @@ flutter_launcher_icons:
     icon_size: 48 # min:48, max:256, default: 48
   macos:
     generate: true
-
 
 flutter:
   generate: true
@@ -61,58 +60,58 @@ flutter:
     - assets/data/
 
 fonts:
-    - family: Montserrat
-      fonts:
-        - asset: static/Montserrat-Thin.ttf
-        - asset: static/Montserrat-ExtraLight.ttf
-        - asset: static/Montserrat-Light.ttf
-        - asset: static/Montserrat-Regular.ttf
-        - asset: static/Montserrat-Medium.ttf
-        - asset: static/Montserrat-SemiBold.ttf
-        - asset: static/Montserrat-Bold.ttf
-        - asset: static/Montserrat-ExtraBold.ttf
-        - asset: static/Montserrat-Black.ttf
-        - asset: static/Montserrat-ThinItalic.ttf
-          style: italic
-        - asset: static/Montserrat-ExtraLightItalic.ttf
-          style: italic
-        - asset: static/Montserrat-LightItalic.ttf
-          style: italic
-        - asset: static/Montserrat-Italic.ttf
-          style: italic
-        - asset: static/Montserrat-MediumItalic.ttf
-          style: italic
-        - asset: static/Montserrat-SemiBoldItalic.ttf
-          style: italic
-        - asset: static/Montserrat-BoldItalic.ttf
-          style: italic
-        - asset: static/Montserrat-ExtraBoldItalic.ttf
-          style: italic
-        - asset: static/Montserrat-BlackItalic.ttf
-          style: italic
-    - family: Roboto
-      fonts:
-        - asset: Roboto-Black.ttf
-        - asset: Roboto-BlackItalic.ttf
-          style: italic
-        - asset: Roboto-Bold.ttf
-          weight: 700
-        - asset: Roboto-BoldItalic.ttf
-          style: italic
-          weight: 700
-        - asset: Roboto-Italic.ttf
-          style: italic
-        - asset: Roboto-Light.ttf
-        - asset: Roboto-LightItalic.ttf
-          style: italic
-        - asset: Roboto-Medium.ttf
-          weight: 400
-        - asset: Roboto-MediumItalic.ttf
-          weight: 400
-          style: italic
-        - asset: Roboto-Regular.ttf
-        - asset: Roboto-Thin.ttf
-          weight: 200
-        - asset: Roboto-ThinItalic.ttf
-          weight: 200
-          style: italic
+  - family: Montserrat
+    fonts:
+      - asset: static/Montserrat-Thin.ttf
+      - asset: static/Montserrat-ExtraLight.ttf
+      - asset: static/Montserrat-Light.ttf
+      - asset: static/Montserrat-Regular.ttf
+      - asset: static/Montserrat-Medium.ttf
+      - asset: static/Montserrat-SemiBold.ttf
+      - asset: static/Montserrat-Bold.ttf
+      - asset: static/Montserrat-ExtraBold.ttf
+      - asset: static/Montserrat-Black.ttf
+      - asset: static/Montserrat-ThinItalic.ttf
+        style: italic
+      - asset: static/Montserrat-ExtraLightItalic.ttf
+        style: italic
+      - asset: static/Montserrat-LightItalic.ttf
+        style: italic
+      - asset: static/Montserrat-Italic.ttf
+        style: italic
+      - asset: static/Montserrat-MediumItalic.ttf
+        style: italic
+      - asset: static/Montserrat-SemiBoldItalic.ttf
+        style: italic
+      - asset: static/Montserrat-BoldItalic.ttf
+        style: italic
+      - asset: static/Montserrat-ExtraBoldItalic.ttf
+        style: italic
+      - asset: static/Montserrat-BlackItalic.ttf
+        style: italic
+  - family: Roboto
+    fonts:
+      - asset: Roboto-Black.ttf
+      - asset: Roboto-BlackItalic.ttf
+        style: italic
+      - asset: Roboto-Bold.ttf
+        weight: 700
+      - asset: Roboto-BoldItalic.ttf
+        style: italic
+        weight: 700
+      - asset: Roboto-Italic.ttf
+        style: italic
+      - asset: Roboto-Light.ttf
+      - asset: Roboto-LightItalic.ttf
+        style: italic
+      - asset: Roboto-Medium.ttf
+        weight: 400
+      - asset: Roboto-MediumItalic.ttf
+        weight: 400
+        style: italic
+      - asset: Roboto-Regular.ttf
+      - asset: Roboto-Thin.ttf
+        weight: 200
+      - asset: Roboto-ThinItalic.ttf
+        weight: 200
+        style: italic
