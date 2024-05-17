@@ -7,7 +7,6 @@
     Header set X-Frame-Options "DENY"
     Header set X-XSS-Protection "1; mode=block"
     Header set Strict-Transport-Security "max-age=31536000; includeSubDomains"
-    Header set Content-Security-Policy "default-src 'self';"
     
     # Add Cross-Origin headers
     Header set Cross-Origin-Embedder-Policy "credentialless"
