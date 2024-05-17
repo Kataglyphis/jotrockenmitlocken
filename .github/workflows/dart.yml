@@ -83,6 +83,20 @@ jobs:
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.SERVER }}
+          username: ${{ secrets.DEV_WASM_USERNAME }}
+          password: ${{ secrets.DEV_WASM_PW }}
+          local-dir: "./build/web/"
+
+      - name: 'Build Web App'
+        if: github.ref == 'refs/heads/dev'
+        run: | 
+          flutter build web --release --web-renderer canvaskit
+      
+      - name: 📂 Sync files to dev domain
+        if: github.ref == 'refs/heads/dev'
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.SERVER }}
           username: ${{ secrets.DEV_USERNAME }}
           password: ${{ secrets.DEV_PW }}
           local-dir: "./build/web/"
