@@ -26,15 +26,12 @@ class DocumentPageState extends State<DocumentPage> {
     List<File> docs = [
       File(
         baseDir: 'assets/documents/',
-        title: currentLocale == Locale("de")
-            ? 'CV_englisch.pdf'
-            : 'CV_english.pdf',
+        title: 'CV_Jonas_Heinle_english.pdf',
         additionalInfo: '~3.7MB English',
       ),
       File(
         baseDir: 'assets/documents/',
-        title:
-            currentLocale == Locale("de") ? 'CV_deutsch.pdf' : 'CV_german.pdf',
+        title: 'CV_Jonas_Heinle_german.pdf',
         additionalInfo: '~3.7MB DE',
       ),
       File(
