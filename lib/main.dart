@@ -62,7 +62,7 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
   final String twoCentsSettingsFilePath =
       "assets/data/my_two_cents_settings.json";
   final String appTitle = 'Artificial neurons are almost magic';
-  final String appName = 'Jotrockenmitlocken';
+  final String appName = 'Blog by Jonas Heinle';
   final List<Locale> supportedLanguages = [
     const Locale('de'), // Deutsch
     const Locale('en'), // English
