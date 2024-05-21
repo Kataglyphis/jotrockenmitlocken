@@ -25,17 +25,17 @@ class DocumentPageState extends State<DocumentPage> {
     Locale currentLocale = Localizations.localeOf(context);
     List<File> docs = [
       File(
-        baseDir: 'assets/documents/',
+        baseDir: 'assets/documents/cv/',
         title: 'CV_Jonas_Heinle_english.pdf',
         additionalInfo: '~3.7MB English',
       ),
       File(
-        baseDir: 'assets/documents/',
+        baseDir: 'assets/documents/cv/',
         title: 'CV_Jonas_Heinle_german.pdf',
         additionalInfo: '~3.7MB DE',
       ),
       File(
-          baseDir: 'assets/documents/',
+          baseDir: 'assets/documents/thesis/',
           title: 'Bachelor_Thesis.pdf',
           additionalInfo: (isMobileDevice)
               ? '~33MB'
@@ -43,7 +43,7 @@ class DocumentPageState extends State<DocumentPage> {
                   ? '~33MB DE\nZeitlich stabile blue noise Fehlerverteilung im Bildraum für Echtzeitanwendungen'
                   : '~33MB DE\nTemporally stable blue noise error distribution in image space for real-time applications'),
       File(
-          baseDir: 'assets/documents/',
+          baseDir: 'assets/documents/thesis/',
           title: 'Master_Thesis.pdf',
           additionalInfo: (isMobileDevice)
               ? '~47MB'

@@ -26,13 +26,14 @@ class _DonationState extends State<Donation> {
             children: <Widget>[
               Flexible(
                 child: OpenableImage(
-                  displayedImage: "assets/images/paypal.jpg",
+                  displayedImage: "assets/images/Pages/AboutMe/paypal.jpg",
                   disableOpen: true,
                 ),
               ),
               Flexible(
                 child: OpenableImage(
-                  displayedImage: "assets/images/Coffee-removebg.png",
+                  displayedImage:
+                      "assets/images/Pages/AboutMe/Coffee-removebg.png",
                   disableOpen: false,
                 ),
               ),

@@ -23,7 +23,7 @@ class _ErrorPageWidget extends State<ErrorPageWidget> {
         color: Theme.of(context).colorScheme.primary,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(0),
-          child: Image.asset("assets/images/error404.gif"),
+          child: Image.asset("assets/images/Pages/Error/error404.gif"),
         ),
       ),
       colDivider
