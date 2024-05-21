@@ -46,7 +46,7 @@ class DocumentPageState extends State<DocumentPage> {
           baseDir: 'assets/documents/',
           title: 'Master_Thesis.pdf',
           additionalInfo: (isMobileDevice)
-              ? '~33MB'
+              ? '~47MB'
               : (currentLocale == Locale("de"))
                   ? '~47MB EN\nGestaltung von nutzeradaptiven Inhalten für Mixed Reality mit Hilfe von Eye- und Hand-Tracking'
                   : '~47MB EN\nDesigning User-adaptive Content for Mixed Reality Using Eye and Hand Tracking'),
