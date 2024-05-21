@@ -6,8 +6,8 @@
     "lastName": "Heinle",
     "assetPathImgOfMe":
         "assets/images/Bewerbungsbilder/a95a64ca_runterskaliert.jpg",
-    "aboutMeFileDe": "assets/data/aboutme_de.json",
-    "aboutMeFileEn": "assets/data/aboutme_en.json",
+    "aboutMeFileDe": "assets/settings/user_settings/user_skills_de.json",
+    "aboutMeFileEn": "assets/settings/user_settings/user_skills_en.json",
 	"socialMediaLinksConfig": {
 		"Facebook": {
 			"host": "www.facebook.com",
@@ -37,7 +37,5 @@
 			"host":"www.paypal.me",
 			"path":"/JonasHeinle"
 		}
-
 	}
-
 }

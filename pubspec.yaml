@@ -4,7 +4,7 @@ description: "Find out sth. interesting about me."
 # Prevent accidental publishing to pub.dev.
 publish_to: "none"
 
-version: 1.3.0+3
+version: 1.3.1
 
 environment:
   sdk: ">=3.4.0 <4.0.0"
@@ -58,6 +58,8 @@ flutter:
     - assets/documents/books/
     - assets/documents/games/
     - assets/data/
+    - assets/settings/
+    - assets/settings/user_settings/
 
 fonts:
   - family: Montserrat
