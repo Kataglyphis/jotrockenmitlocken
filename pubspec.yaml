@@ -50,7 +50,13 @@ flutter:
 
   assets:
     - assets/images/
-    - assets/images/Bewerbungsbilder/
+    - assets/images/Pages/AboutMe/
+    - assets/images/Pages/AboutMe/Bewerbungsbilder/
+    - assets/images/Pages/Data/
+    - assets/images/Pages/Error/
+    - assets/images/Pages/Blog/
+    - assets/images/Pages/Blog/VulkanRenderer/
+    - assets/images/cats/
     - assets/images/aiBlog/
     - assets/documents/
     - assets/documents/footer/

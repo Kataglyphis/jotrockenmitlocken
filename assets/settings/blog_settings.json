@@ -16,17 +16,17 @@
 		"landingPageEntryImageCaptioning": "image source: https://learnopengl.com",
 		"docsDesc": [
 			{
-				"baseDir":"assets/documents/",
+				"baseDir":"assets/documents/cv/",
 				"title":"CV_Jonas_Heinle_english.pdf",
 				"additionalInfo": "~3.7MB English"
 			},
 			{
-				"baseDir": "assets/documents/",
+				"baseDir": "assets/documents/cv/",
 				"title": "CV_Jonas_Heinle_german.pdf",
 				"additionalInfo": "~3.7MB German"
 			},
 			{
-				"baseDir": "assets/images/",
+				"baseDir": "assets/data/",
 				"title": "WorleyNoiseTextures.zip",
 				"additionalInfo": "Use it for you own projects."
 			}
@@ -48,17 +48,17 @@
 		"landingPageEntryImageCaptioning": "image source: https://pyimagesearch.com/2023/03/30/machine-learning-computer-vision/",
 		"docsDesc": [
 			{
-				"baseDir":"assets/documents/",
+				"baseDir":"assets/documents/cv/",
 				"title":"CV_Jonas_Heinle_english.pdf",
 				"additionalInfo": "~3.7MB English"
 			},
 			{
-				"baseDir": "assets/documents/",
+				"baseDir": "assets/documents/cv/",
 				"title": "CV_Jonas_Heinle_german.pdf",
 				"additionalInfo": "~3.7MB German"
 			},
 			{
-				"baseDir": "assets/images/",
+				"baseDir": "assets/data/",
 				"title": "WorleyNoiseTextures.zip",
 				"additionalInfo": "Use it for you own projects."
 			}
@@ -80,17 +80,17 @@
 		"landingPageEntryImageCaptioning": "image source: https://tenor.com/de/view/cat-computer-typing-fast-gif-5368357",
 		"docsDesc": [
 			{
-				"baseDir":"assets/documents/",
+				"baseDir":"assets/documents/cv/",
 				"title":"CV_Jonas_Heinle_english.pdf",
 				"additionalInfo": "~3.7MB English"
 			},
 			{
-				"baseDir": "assets/documents/",
+				"baseDir": "assets/documents/cv/",
 				"title": "CV_Jonas_Heinle_german.pdf",
 				"additionalInfo": "~3.7MB German"
 			},
 			{
-				"baseDir": "assets/images/",
+				"baseDir": "assets/data/",
 				"title": "WorleyNoiseTextures.zip",
 				"additionalInfo": "Use it for you own projects."
 			}

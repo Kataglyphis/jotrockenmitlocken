@@ -68,8 +68,6 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
   final String blogSettingsFilePath = "assets/settings/blog_settings.json";
   final String twoCentsSettingsFilePath =
       "assets/settings/my_two_cents_settings.json";
-  final String appTitle = 'Artificial neurons are almost magic';
-  final String appName = 'Blog by Jonas Heinle';
   final List<Locale> supportedLanguages = [
     const Locale('de'), // Deutsch
     const Locale('en'), // English
@@ -205,7 +203,6 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
     ThemeData lightTheme = ThemeData(
       fontFamily: 'Roboto',
       colorSchemeSeed: colorSelected.color,
-      colorScheme: null,
       useMaterial3: true,
       brightness: Brightness.light,
     );
@@ -218,7 +215,6 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
                     blogPageConfigs: data.requireData.$3,
                     twoCentsConfigs: data.requireData.$4);
             AppAttributes appAttributes = AppAttributes(
-              appTitle: appTitle,
               supportedLanguages: supportedLanguages,
               footerConfig: JoTrockenMitLockenFooterConfig(),
               homeConfig: JotrockenMitLockenHomeConfig(),
@@ -248,7 +244,10 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
                 debugShowCheckedModeBanner: false,
                 localizationsDelegates: localizationsDelegate,
                 supportedLocales: supportedLanguages,
-                title: appTitle,
+                onGenerateTitle: (context) =>
+                    (Localizations.localeOf(context) == const Locale("de"))
+                        ? appAttributes.appSettings.appTitleDe
+                        : appAttributes.appSettings.appTitleEn,
                 themeMode: themeMode,
                 theme: lightTheme,
                 darkTheme: darkTheme,
@@ -258,7 +257,7 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
                 debugShowCheckedModeBanner: false,
                 localizationsDelegates: localizationsDelegate,
                 supportedLocales: supportedLanguages,
-                title: appTitle,
+                title: "Error",
                 themeMode: themeMode,
                 theme: lightTheme,
                 darkTheme: darkTheme,
@@ -268,7 +267,10 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
                 debugShowCheckedModeBanner: false,
                 localizationsDelegates: localizationsDelegate,
                 supportedLocales: supportedLanguages,
-                title: appTitle,
+                onGenerateTitle: (context) =>
+                    Localizations.localeOf(context) == const Locale("de")
+                        ? 'Laden'
+                        : 'Loading...',
                 themeMode: themeMode,
                 theme: lightTheme,
                 darkTheme: darkTheme,
