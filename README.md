@@ -184,9 +184,10 @@ But here in general some good sources of information:
 
 Some very helpful literature, tutorials, etc. 
 
-Flutter 
+Flutter/Dart
 * [Johannes Milke](https://www.youtube.com/@JohannesMilke)
 * [package repository for Dart and Flutter apps](https://pub.dev/)
+* [Official flutter web example](https://flutter.github.io/samples/material_3.html)
 <!-- CMake/C++
 * [Cpp best practices](https://github.com/cpp-best-practices/cppbestpractices)
 

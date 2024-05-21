@@ -1,4 +1,3 @@
-// Copyright 2021 The Flutter team. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -19,6 +18,7 @@ import 'package:jotrockenmitlockenrepo/Pages/blog_page_config.dart';
 import 'package:jotrockenmitlockenrepo/Pages/my_two_cents_config.dart';
 import 'package:jotrockenmitlockenrepo/app_attributes.dart';
 import 'package:jotrockenmitlockenrepo/Routing/screen_configurations.dart';
+import 'package:jotrockenmitlockenrepo/app_settings.dart';
 import 'package:jotrockenmitlockenrepo/constants.dart';
 import 'package:jotrockenmitlockenrepo/Routing/router_creater.dart';
 import 'package:jotrockenmitlockenrepo/user_settings.dart';
@@ -55,14 +55,19 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
 
   late final AnimationController controller;
   late final CurvedAnimation railAnimation;
-  late Future<(UserSettings, List<BlogPageConfig>, List<MyTwoCentsConfig>)>
-      _settings;
-  final String userSettingsFilePath = "assets/data/user_settings.json";
-  final String blogSettingsFilePath = "assets/data/blog_settings.json";
+  late Future<
+      (
+        AppSettings,
+        UserSettings,
+        List<BlogPageConfig>,
+        List<MyTwoCentsConfig>
+      )> _settings;
+  final String userSettingsFilePath =
+      "assets/settings/user_settings/global_user_settings.json";
+  final String appSettingsFilePath = "assets/settings/app_settings.json";
+  final String blogSettingsFilePath = "assets/settings/blog_settings.json";
   final String twoCentsSettingsFilePath =
-      "assets/data/my_two_cents_settings.json";
-  final String appTitle = 'Artificial neurons are almost magic';
-  final String appName = 'Blog by Jonas Heinle';
+      "assets/settings/my_two_cents_settings.json";
   final List<Locale> supportedLanguages = [
     const Locale('de'), // Deutsch
     const Locale('en'), // English
@@ -124,13 +129,24 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
     }
   }
 
-  Future<(UserSettings, List<BlogPageConfig>, List<MyTwoCentsConfig>)>
-      _loadAppSettings() async {
+  Future<
+      (
+        AppSettings,
+        UserSettings,
+        List<BlogPageConfig>,
+        List<MyTwoCentsConfig>
+      )> _loadAppSettings() async {
     final userSettingsJsonString =
         await rootBundle.loadString(userSettingsFilePath);
     final Map<String, dynamic> userSettingsJson =
         json.decode(userSettingsJsonString);
     UserSettings userSettings = UserSettings.fromJsonFile(userSettingsJson);
+
+    final appSettingsJsonString =
+        await rootBundle.loadString(appSettingsFilePath);
+    final Map<String, dynamic> appSettingsJson =
+        json.decode(appSettingsJsonString);
+    AppSettings appSettings = AppSettings.fromJsonFile(appSettingsJson);
 
     final blogSettingsJsonString =
         await rootBundle.loadString(blogSettingsFilePath);
@@ -149,7 +165,7 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
       twoCentsConfigs
           .add(MyTwoCentsConfig.fromJsonFile(e as Map<String, dynamic>));
     }
-    return (userSettings, blogConfigs, twoCentsConfigs);
+    return (appSettings, userSettings, blogConfigs, twoCentsConfigs);
   }
 
   void handleBrightnessChange(bool useLightMode) {
@@ -179,14 +195,14 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     ThemeData darkTheme = ThemeData(
+      fontFamily: 'Roboto',
       colorSchemeSeed: colorSelected.color,
       useMaterial3: true,
       brightness: Brightness.dark,
     );
     ThemeData lightTheme = ThemeData(
-      //fontFamily: 'Montserrat',
+      fontFamily: 'Roboto',
       colorSchemeSeed: colorSelected.color,
-      colorScheme: null,
       useMaterial3: true,
       brightness: Brightness.light,
     );
@@ -196,17 +212,16 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
           if (data.hasData) {
             ScreenConfigurations screenConfigurations =
                 JotrockenmitLockenScreenConfigurations.fromBlogAndDataConfigs(
-                    blogPageConfigs: data.requireData.$2,
-                    twoCentsConfigs: data.requireData.$3);
+                    blogPageConfigs: data.requireData.$3,
+                    twoCentsConfigs: data.requireData.$4);
             AppAttributes appAttributes = AppAttributes(
-              appTitle: appTitle,
-              appName: appName,
               supportedLanguages: supportedLanguages,
               footerConfig: JoTrockenMitLockenFooterConfig(),
               homeConfig: JotrockenMitLockenHomeConfig(),
-              userSettings: data.requireData.$1,
-              blockSettings: data.requireData.$2,
-              twoCentsConfigs: data.requireData.$3,
+              appSettings: data.requireData.$1,
+              userSettings: data.requireData.$2,
+              blockSettings: data.requireData.$3,
+              twoCentsConfigs: data.requireData.$4,
               screenConfigurations: screenConfigurations,
               railAnimation: railAnimation,
               showMediumSizeLayout: showMediumSizeLayout,
@@ -229,7 +244,10 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
                 debugShowCheckedModeBanner: false,
                 localizationsDelegates: localizationsDelegate,
                 supportedLocales: supportedLanguages,
-                title: appTitle,
+                onGenerateTitle: (context) =>
+                    (Localizations.localeOf(context) == const Locale("de"))
+                        ? appAttributes.appSettings.appTitleDe
+                        : appAttributes.appSettings.appTitleEn,
                 themeMode: themeMode,
                 theme: lightTheme,
                 darkTheme: darkTheme,
@@ -239,7 +257,7 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
                 debugShowCheckedModeBanner: false,
                 localizationsDelegates: localizationsDelegate,
                 supportedLocales: supportedLanguages,
-                title: appTitle,
+                title: "Error",
                 themeMode: themeMode,
                 theme: lightTheme,
                 darkTheme: darkTheme,
@@ -249,7 +267,10 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
                 debugShowCheckedModeBanner: false,
                 localizationsDelegates: localizationsDelegate,
                 supportedLocales: supportedLanguages,
-                title: appTitle,
+                onGenerateTitle: (context) =>
+                    Localizations.localeOf(context) == const Locale("de")
+                        ? 'Laden'
+                        : 'Loading...',
                 themeMode: themeMode,
                 theme: lightTheme,
                 darkTheme: darkTheme,
