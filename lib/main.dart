@@ -197,12 +197,13 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     ThemeData darkTheme = ThemeData(
+      fontFamily: 'Roboto',
       colorSchemeSeed: colorSelected.color,
       useMaterial3: true,
       brightness: Brightness.dark,
     );
     ThemeData lightTheme = ThemeData(
-      //fontFamily: 'Montserrat',
+      fontFamily: 'Roboto',
       colorSchemeSeed: colorSelected.color,
       colorScheme: null,
       useMaterial3: true,
