@@ -8,6 +8,7 @@ class BlockEntryList extends DataList {
   BlockEntryList({
     super.key,
     required super.data,
+    required super.entryRedirectText,
     required super.dataCategories,
     required super.title,
     required super.description,

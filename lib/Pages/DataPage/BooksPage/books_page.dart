@@ -20,10 +20,12 @@ class BooksPageState extends State<BooksPage> {
   Widget build(BuildContext context) {
     return SinglePage(
       footer: widget.footer,
+      appAttributes: widget.appAttributes,
       showMediumSizeLayout: widget.appAttributes.showMediumSizeLayout,
       showLargeSizeLayout: widget.appAttributes.showLargeSizeLayout,
       children: [
         BooksList(
+            entryRedirectText: AppLocalizations.of(context)!.entryRedirectText,
             appAttributes: widget.appAttributes,
             title: AppLocalizations.of(context)!.books,
             description:

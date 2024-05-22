@@ -8,6 +8,7 @@ class FilmsList extends CsvDataList {
       {super.key,
       required super.dataFilePath,
       required super.title,
+      required super.entryRedirectText,
       required super.description});
   // "Films/Series worth watching"
   @override

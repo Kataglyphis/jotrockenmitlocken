@@ -20,10 +20,12 @@ class QuotesPageState extends State<QuotesPage> {
   Widget build(BuildContext context) {
     return SinglePage(
       footer: widget.footer,
+      appAttributes: widget.appAttributes,
       showMediumSizeLayout: widget.appAttributes.showMediumSizeLayout,
       showLargeSizeLayout: widget.appAttributes.showLargeSizeLayout,
       children: [
         QuotesList(
+            entryRedirectText: AppLocalizations.of(context)!.entryRedirectText,
             title: AppLocalizations.of(context)!.quotations,
             description:
                 "${AppLocalizations.of(context)!.quotationsDescription}\u{1F63A}",

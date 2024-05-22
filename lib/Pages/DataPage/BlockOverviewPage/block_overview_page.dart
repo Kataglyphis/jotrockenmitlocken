@@ -31,10 +31,12 @@ class BlockOverviewPageState extends State<BlockOverviewPage> {
         .toList();
     return SinglePage(
       footer: widget.footer,
+      appAttributes: widget.appAttributes,
       showMediumSizeLayout: widget.appAttributes.showMediumSizeLayout,
       showLargeSizeLayout: widget.appAttributes.showLargeSizeLayout,
       children: [
         BlockEntryList(
+          entryRedirectText: AppLocalizations.of(context)!.entryRedirectText,
           appAttributes: widget.appAttributes,
           title: AppLocalizations.of(context)!.blockEntryOverview,
           description:
