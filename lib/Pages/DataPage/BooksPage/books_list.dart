@@ -10,6 +10,7 @@ class BooksList extends CsvDataList {
       {super.key,
       required super.dataFilePath,
       required super.title,
+      required super.entryRedirectText,
       required super.description,
       // all entries with a critic should be displayed in the very beginning :)
       super.sortColumnIndex = 3,

@@ -45,5 +45,6 @@
   "visitBlogEntry": "Besuche Blogeintrag",
   "externalLinks": "Externe Links",
   "lastModified": "Zuletzt geändert",
-  "follow": "Hier geht's weiter"
+  "follow": "Hier geht's weiter",
+  "entryRedirectText": "Lese mehr darüber"
 }

@@ -6,6 +6,7 @@ import 'package:jotrockenmitlockenrepo/Media/DataTable/datacell_content_strategi
 class QuotesList extends CsvDataList {
   QuotesList({
     super.key,
+    required super.entryRedirectText,
     required super.dataFilePath,
     required super.title,
     required super.description,

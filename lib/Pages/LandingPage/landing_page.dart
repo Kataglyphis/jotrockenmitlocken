@@ -50,12 +50,12 @@ class LandingPageState extends State<LandingPage> {
       var landingPageEntry = LandingPageEntry(
         lastModified:
             "${AppLocalizations.of(context)!.lastModified} ${blogPagesConfig[i].lastModified}",
-        currentLocale: Localizations.localeOf(context),
         fileTitle: blogPagesConfig[i].fileTitle,
         fileAdditionalInfo: blogPagesConfig[i].fileAdditionalInfo,
         fileBaseDir: blogPagesConfig[i].fileBaseDir,
-        labelEN: blogPagesConfig[i].shortDescriptionEN,
-        labelDE: blogPagesConfig[i].shortDescriptionDE,
+        label: Localizations.localeOf(context) == Locale("de")
+            ? blogPagesConfig[i].shortDescriptionDE
+            : blogPagesConfig[i].shortDescriptionEN,
         routerPath: blogPagesConfig[i].getRoutingName(),
         headline: AppLocalizations.of(context)!.visitBlogEntry,
         githubRepo: githubRepo,
@@ -87,6 +87,7 @@ class LandingPageState extends State<LandingPage> {
     return OneTwoTransitionPage(
         childWidgetsLeftPage: homePagesLeftRight[0],
         childWidgetsRightPage: homePagesLeftRight[1],
+        appAttributes: widget.appAttributes,
         footer: widget.footer,
         showMediumSizeLayout: widget.appAttributes.showMediumSizeLayout,
         showLargeSizeLayout: widget.appAttributes.showLargeSizeLayout,
