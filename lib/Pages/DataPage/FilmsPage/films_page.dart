@@ -24,6 +24,7 @@ class FilmsPageState extends State<FilmsPage> {
       showLargeSizeLayout: widget.appAttributes.showLargeSizeLayout,
       children: [
         FilmsList(
+            entryRedirectText: AppLocalizations.of(context)!.entryRedirectText,
             title: AppLocalizations.of(context)!.films,
             description:
                 "${AppLocalizations.of(context)!.filmsDescription}\u{1F63A}",

@@ -68,10 +68,6 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
   final String blogSettingsFilePath = "assets/settings/blog_settings.json";
   final String twoCentsSettingsFilePath =
       "assets/settings/my_two_cents_settings.json";
-  final List<Locale> supportedLanguages = [
-    const Locale('de'), // Deutsch
-    const Locale('en'), // English
-  ];
   bool controllerInitialized = false;
   bool showMediumSizeLayout = false;
   bool showLargeSizeLayout = false;
@@ -215,7 +211,6 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
                     blogPageConfigs: data.requireData.$3,
                     twoCentsConfigs: data.requireData.$4);
             AppAttributes appAttributes = AppAttributes(
-              supportedLanguages: supportedLanguages,
               footerConfig: JoTrockenMitLockenFooterConfig(),
               homeConfig: JotrockenMitLockenHomeConfig(),
               appSettings: data.requireData.$1,
@@ -240,15 +235,19 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
               appAttributes,
               controller,
             );
+            var supportedLanguages = data.requireData.$1.supportedLocales!
+                .map((element) => Locale(element))
+                .toList();
             return MaterialApp.router(
                 debugShowCheckedModeBanner: false,
                 localizationsDelegates: localizationsDelegate,
-                supportedLocales: supportedLanguages,
                 onGenerateTitle: (context) =>
                     (Localizations.localeOf(context) == const Locale("de"))
                         ? appAttributes.appSettings.appTitleDe
                         : appAttributes.appSettings.appTitleEn,
                 themeMode: themeMode,
+                locale: supportedLanguages[0],
+                supportedLocales: supportedLanguages,
                 theme: lightTheme,
                 darkTheme: darkTheme,
                 routerConfig: routerConfig);
@@ -256,7 +255,6 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
             return MaterialApp(
                 debugShowCheckedModeBanner: false,
                 localizationsDelegates: localizationsDelegate,
-                supportedLocales: supportedLanguages,
                 title: "Error",
                 themeMode: themeMode,
                 theme: lightTheme,
@@ -265,8 +263,6 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
           } else {
             return MaterialApp(
                 debugShowCheckedModeBanner: false,
-                localizationsDelegates: localizationsDelegate,
-                supportedLocales: supportedLanguages,
                 onGenerateTitle: (context) =>
                     Localizations.localeOf(context) == const Locale("de")
                         ? 'Laden'

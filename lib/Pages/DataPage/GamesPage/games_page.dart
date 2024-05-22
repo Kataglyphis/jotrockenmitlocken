@@ -24,6 +24,7 @@ class GamesPageState extends State<GamesPage> {
       showLargeSizeLayout: widget.appAttributes.showLargeSizeLayout,
       children: [
         GamesList(
+            entryRedirectText: AppLocalizations.of(context)!.entryRedirectText,
             appAttributes: widget.appAttributes,
             title: AppLocalizations.of(context)!.games,
             description:

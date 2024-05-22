@@ -35,6 +35,7 @@ class BlockOverviewPageState extends State<BlockOverviewPage> {
       showLargeSizeLayout: widget.appAttributes.showLargeSizeLayout,
       children: [
         BlockEntryList(
+          entryRedirectText: AppLocalizations.of(context)!.entryRedirectText,
           appAttributes: widget.appAttributes,
           title: AppLocalizations.of(context)!.blockEntryOverview,
           description:
