@@ -27,10 +27,10 @@ class JotrockenmitLockenScreenConfigurations extends ScreenConfigurations {
   JotrockenmitLockenScreenConfigurations.fromBlogAndDataConfigs(
       {required this.blogPageConfigs, required this.twoCentsConfigs});
 
-  @override
-  bool disableFooter() {
-    return false;
-  }
+  // @override
+  // bool disableFooter() {
+  //   return false;
+  // }
 
   @override
   List<StatefulBranchInfoProvider> getAllPagesConfigs() {
