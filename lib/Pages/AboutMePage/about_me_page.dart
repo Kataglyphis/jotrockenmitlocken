@@ -52,6 +52,7 @@ class AboutMePageState extends State<AboutMePage> {
     return OneTwoTransitionPage(
         childWidgetsLeftPage: aboutMePagesLeftRight[0],
         childWidgetsRightPage: aboutMePagesLeftRight[1],
+        appAttributes: widget.appAttributes,
         footer: widget.footer,
         showMediumSizeLayout: widget.appAttributes.showMediumSizeLayout,
         showLargeSizeLayout: widget.appAttributes.showLargeSizeLayout,

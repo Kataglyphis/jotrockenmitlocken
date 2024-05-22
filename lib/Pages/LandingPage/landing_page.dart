@@ -87,6 +87,7 @@ class LandingPageState extends State<LandingPage> {
     return OneTwoTransitionPage(
         childWidgetsLeftPage: homePagesLeftRight[0],
         childWidgetsRightPage: homePagesLeftRight[1],
+        appAttributes: widget.appAttributes,
         footer: widget.footer,
         showMediumSizeLayout: widget.appAttributes.showMediumSizeLayout,
         showLargeSizeLayout: widget.appAttributes.showLargeSizeLayout,

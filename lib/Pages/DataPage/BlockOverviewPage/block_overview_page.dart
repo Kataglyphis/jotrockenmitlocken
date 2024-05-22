@@ -31,6 +31,7 @@ class BlockOverviewPageState extends State<BlockOverviewPage> {
         .toList();
     return SinglePage(
       footer: widget.footer,
+      appAttributes: widget.appAttributes,
       showMediumSizeLayout: widget.appAttributes.showMediumSizeLayout,
       showLargeSizeLayout: widget.appAttributes.showLargeSizeLayout,
       children: [
