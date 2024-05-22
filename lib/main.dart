@@ -252,27 +252,13 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
                 darkTheme: darkTheme,
                 routerConfig: routerConfig);
           } else if (data.hasError) {
-            return MaterialApp(
-                debugShowCheckedModeBanner: false,
-                localizationsDelegates: localizationsDelegate,
-                title: "Error",
-                themeMode: themeMode,
-                theme: lightTheme,
-                darkTheme: darkTheme,
-                home: Text("${data.error}"));
+            return Text("${data.error}");
           } else {
-            return MaterialApp(
-                debugShowCheckedModeBanner: false,
-                onGenerateTitle: (context) =>
-                    Localizations.localeOf(context) == const Locale("de")
-                        ? 'Laden'
-                        : 'Loading...',
-                themeMode: themeMode,
-                theme: lightTheme,
-                darkTheme: darkTheme,
-                home: const Center(
-                  child: CircularProgressIndicator(),
-                ));
+            return Center(
+              child: CircularProgressIndicator(
+                color: ColorSeed.baseColor.color,
+              ),
+            );
           }
         });
   }
