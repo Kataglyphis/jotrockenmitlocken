@@ -13,8 +13,17 @@
   <a href="https://jonasheinle.de"><img src="images/glm_logo.png" alt="VulkanEngine" width="200"></a>
 </h1> -->
 
-<h4 align="center">Source control of my personal website.<a href="https://jonasheinle.de" target="_blank"></a>.</h4>
+<h4 align="center">My personal blog as responsive web app using Flutter/Dart. It is highly customizable for your needs, your personal web blog or you next Frontend project (<b>not only</b> web but also native Linux/Windows/Android/App)<a href="https://jonasheinle.de" target="_blank"></a>.</h4>
 
+<p align="center">
+  <br>
+  <a href="https://jonasheinle.de"><img src="images/overview.gif" alt="My website", width="800"></a>
+  <br>
+  <br>
+</p>
+
+Visit [JonasHeinle](https://jonasheinle.de/) for the full experience of my personal web blog. Cheers! :beers: </br>
+Visit my repo [jotrockenmitlockenrepo](https://github.com/Kataglyphis/jotrockenmitlockenrepo) if you are interested in Flutter/Dart development in general. All components in this repo are reusable for any target available (Linux/Windows/Android/Web).
 <!-- [![Linux build](https://github.com/Kataglyphis/GraphicsEngineVulkan/actions/workflows/Linux.yml/badge.svg)](https://github.com/Kataglyphis/GraphicsEngineVulkan/actions/workflows/Linux.yml)
 [![Windows build](https://github.com/Kataglyphis/GraphicsEngineVulkan/actions/workflows/Windows.yml/badge.svg)](https://github.com/Kataglyphis/GraphicsEngineVulkan/actions/workflows/Windows.yml)
 [![TopLang](https://img.shields.io/github/languages/top/Kataglyphis/GraphicsEngineVulkan)]() -->
