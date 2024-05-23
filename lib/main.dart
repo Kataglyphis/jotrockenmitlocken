@@ -18,7 +18,6 @@ import 'package:jotrockenmitlocken/blog_dependent_app_attributes.dart';
 import 'package:jotrockenmitlocken/blog_page_config.dart';
 import 'package:jotrockenmitlocken/my_two_cents_config.dart';
 import 'package:jotrockenmitlockenrepo/app_attributes.dart';
-import 'package:jotrockenmitlockenrepo/Routing/screen_configurations.dart';
 import 'package:jotrockenmitlockenrepo/app_settings.dart';
 import 'package:jotrockenmitlockenrepo/constants.dart';
 import 'package:jotrockenmitlockenrepo/Routing/router_creater.dart';
