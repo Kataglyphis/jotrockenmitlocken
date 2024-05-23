@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/BooksPage/books_list.dart';
+import 'package:jotrockenmitlocken/blog_dependent_app_attributes.dart';
 import 'package:jotrockenmitlockenrepo/Pages/Footer/footer.dart';
 import 'package:jotrockenmitlockenrepo/app_attributes.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -7,9 +8,13 @@ import 'package:jotrockenmitlockenrepo/Layout/ResponsiveDesign/single_page.dart'
 
 class BooksPage extends StatefulWidget {
   final AppAttributes appAttributes;
+  final BlogDependentAppAttributes blogDependentAppAttributes;
   final Footer footer;
   const BooksPage(
-      {super.key, required this.appAttributes, required this.footer});
+      {super.key,
+      required this.appAttributes,
+      required this.footer,
+      required this.blogDependentAppAttributes});
 
   @override
   State<StatefulWidget> createState() => BooksPageState();
@@ -25,6 +30,7 @@ class BooksPageState extends State<BooksPage> {
       showLargeSizeLayout: widget.appAttributes.showLargeSizeLayout,
       children: [
         BooksList(
+            blogDependentAppAttributes: widget.blogDependentAppAttributes,
             entryRedirectText: AppLocalizations.of(context)!.entryRedirectText,
             appAttributes: widget.appAttributes,
             title: AppLocalizations.of(context)!.books,

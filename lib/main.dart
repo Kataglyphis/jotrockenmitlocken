@@ -14,8 +14,9 @@ import 'package:jotrockenmitlocken/Pages/Footer/jotrockenmitlocken_footer.dart';
 import 'package:jotrockenmitlocken/Routing/jotrockenmitlocken_router.dart';
 import 'package:jotrockenmitlocken/Pages/Home/home_config.dart';
 import 'package:jotrockenmitlocken/Pages/jotrockenmitlocken_screen_configurations.dart';
-import 'package:jotrockenmitlockenrepo/Pages/blog_page_config.dart';
-import 'package:jotrockenmitlockenrepo/Pages/my_two_cents_config.dart';
+import 'package:jotrockenmitlocken/blog_dependent_app_attributes.dart';
+import 'package:jotrockenmitlocken/blog_page_config.dart';
+import 'package:jotrockenmitlocken/my_two_cents_config.dart';
 import 'package:jotrockenmitlockenrepo/app_attributes.dart';
 import 'package:jotrockenmitlockenrepo/Routing/screen_configurations.dart';
 import 'package:jotrockenmitlockenrepo/app_settings.dart';
@@ -206,17 +207,20 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
         future: _settings,
         builder: (context, data) {
           if (data.hasData) {
-            ScreenConfigurations screenConfigurations =
+            JotrockenmitLockenScreenConfigurations screenConfigurations =
                 JotrockenmitLockenScreenConfigurations.fromBlogAndDataConfigs(
                     blogPageConfigs: data.requireData.$3,
                     twoCentsConfigs: data.requireData.$4);
+            BlogDependentAppAttributes blogDependentAppAttributes =
+                BlogDependentAppAttributes(
+                    blogDependentScreenConfigurations: screenConfigurations,
+                    twoCentsConfigs: data.requireData.$4,
+                    blockSettings: data.requireData.$3);
             AppAttributes appAttributes = AppAttributes(
               footerConfig: JoTrockenMitLockenFooterConfig(),
               homeConfig: JotrockenMitLockenHomeConfig(),
               appSettings: data.requireData.$1,
               userSettings: data.requireData.$2,
-              blockSettings: data.requireData.$3,
-              twoCentsConfigs: data.requireData.$4,
               screenConfigurations: screenConfigurations,
               railAnimation: railAnimation,
               showMediumSizeLayout: showMediumSizeLayout,
@@ -229,7 +233,8 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
               handleColorSelect: handleColorSelect,
             );
 
-            RoutesCreator routesCreator = JotrockenMitLockenRoutes();
+            RoutesCreator routesCreator = JotrockenMitLockenRoutes(
+                blogDependentAppAttributes: blogDependentAppAttributes);
 
             final GoRouter routerConfig = routesCreator.getRouterConfig(
               appAttributes,
