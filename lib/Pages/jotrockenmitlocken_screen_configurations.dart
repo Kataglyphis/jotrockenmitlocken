@@ -27,11 +27,6 @@ class JotrockenmitLockenScreenConfigurations extends ScreenConfigurations {
   JotrockenmitLockenScreenConfigurations.fromBlogAndDataConfigs(
       {required this.blogPageConfigs, required this.twoCentsConfigs});
 
-  // @override
-  // bool disableFooter() {
-  //   return false;
-  // }
-
   @override
   List<StatefulBranchInfoProvider> getAllPagesConfigs() {
     List<StatefulBranchInfoProvider> pagesConfigs = [];
@@ -60,22 +55,6 @@ class JotrockenmitLockenScreenConfigurations extends ScreenConfigurations {
   }
 
   @override
-  List<StatefulBranchInfoProvider> getDataPagesConfig() {
-    return [
-      QuotationsPageConfig(),
-      BooksPageConfig(),
-      FilmsPageConfig(),
-      GamesPageConfig(),
-      BlockOverviewPageConfig(),
-    ];
-  }
-
-  @override
-  List<StatefulBranchInfoProvider> getErrorPagesConfig() {
-    return [ErrorPageStatefulBranchInfoProvider()];
-  }
-
-  @override
   List<NavBarPageConfig> getNavRailPagesConfig() {
     return [
       LandingPageNavBarConfig(),
@@ -86,6 +65,11 @@ class JotrockenmitLockenScreenConfigurations extends ScreenConfigurations {
   }
 
   @override
+  List<StatefulBranchInfoProvider> getErrorPagesConfig() {
+    return [ErrorPageStatefulBranchInfoProvider()];
+  }
+
+  @override
   List<BlogPageConfig> getBlogPagesConfig() {
     return blogPageConfigs;
   }
@@ -93,6 +77,17 @@ class JotrockenmitLockenScreenConfigurations extends ScreenConfigurations {
   @override
   List<MyTwoCentsConfig> getMediaCriticsPagesConfig() {
     return twoCentsConfigs;
+  }
+
+  @override
+  List<StatefulBranchInfoProvider> getDataPagesConfig() {
+    return [
+      QuotationsPageConfig(),
+      BooksPageConfig(),
+      FilmsPageConfig(),
+      GamesPageConfig(),
+      BlockOverviewPageConfig(),
+    ];
   }
 
   @override

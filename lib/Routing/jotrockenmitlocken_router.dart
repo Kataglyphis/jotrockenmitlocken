@@ -15,6 +15,8 @@ import 'package:jotrockenmitlocken/Pages/DataPage/data_pages_navbar_page_config.
 import 'package:jotrockenmitlocken/Pages/DataPage/media_critics_page.dart';
 import 'package:jotrockenmitlocken/Pages/DocumentsPage/document_page_navbar_config.dart';
 import 'package:jotrockenmitlocken/Pages/DocumentsPage/documents_page.dart';
+import 'package:jotrockenmitlocken/Pages/ErrorPage/error_page.dart';
+import 'package:jotrockenmitlocken/Pages/ErrorPage/error_page_stateful_branch_info_provider.dart';
 
 import 'package:jotrockenmitlockenrepo/Pages/Footer/footer_page.dart';
 import 'package:jotrockenmitlocken/Pages/LandingPage/landing_page.dart';
@@ -31,7 +33,6 @@ import 'package:jotrockenmitlockenrepo/app_attributes.dart';
 import 'package:jotrockenmitlockenrepo/Pages/stateful_branch_info_provider.dart';
 
 class JotrockenMitLockenRoutes extends RoutesCreator {
-  //final _footerKey = GlobalKey<NavigatorState>(debugLabel: "_footerKey");
   @override
   List<(Widget, StatefulBranchInfoProvider)> getAllPagesWithConfigs(
       AppAttributes appAttributes) {
@@ -41,8 +42,20 @@ class JotrockenMitLockenRoutes extends RoutesCreator {
     allPagesAndConfigs += _getBlogPagesAndConfigs(appAttributes);
     allPagesAndConfigs += _getDataPagesAndConfigs(appAttributes);
     allPagesAndConfigs += _getMediaCriticsPagesAndConfigs(appAttributes);
+    allPagesAndConfigs += _getErrorPagesAndConfigs(appAttributes);
 
     return allPagesAndConfigs;
+  }
+
+  List<(Widget, StatefulBranchInfoProvider)> _getErrorPagesAndConfigs(
+      appAttributes) {
+    return [
+      (
+        ErrorPage(
+            footer: getFooter(appAttributes), appAttributes: appAttributes),
+        ErrorPageStatefulBranchInfoProvider()
+      )
+    ];
   }
 
   List<(Widget, StatefulBranchInfoProvider)> _getDataPagesAndConfigs(
