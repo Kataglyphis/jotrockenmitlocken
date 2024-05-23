@@ -17,6 +17,7 @@ import 'package:jotrockenmitlocken/Pages/DocumentsPage/document_page_navbar_conf
 import 'package:jotrockenmitlocken/Pages/DocumentsPage/documents_page.dart';
 import 'package:jotrockenmitlocken/Pages/ErrorPage/error_page.dart';
 import 'package:jotrockenmitlocken/Pages/ErrorPage/error_page_stateful_branch_info_provider.dart';
+import 'package:jotrockenmitlocken/blog_dependent_app_attributes.dart';
 
 import 'package:jotrockenmitlockenrepo/Pages/Footer/footer_page.dart';
 import 'package:jotrockenmitlocken/Pages/LandingPage/landing_page.dart';
@@ -25,14 +26,18 @@ import 'package:jotrockenmitlocken/Pages/DataPage/QuotesPage/quotes_page.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/QuotesPage/quotations_page_config.dart';
 import 'package:jotrockenmitlockenrepo/Pages/Footer/footer.dart';
 import 'package:jotrockenmitlockenrepo/Pages/Footer/footer_page_config.dart';
-import 'package:jotrockenmitlockenrepo/Pages/blog_page_config.dart';
-import 'package:jotrockenmitlockenrepo/Pages/my_two_cents_config.dart';
+import 'package:jotrockenmitlocken/blog_page_config.dart';
+import 'package:jotrockenmitlocken/my_two_cents_config.dart';
 import 'package:jotrockenmitlockenrepo/Routing/router_creater.dart';
 
 import 'package:jotrockenmitlockenrepo/app_attributes.dart';
 import 'package:jotrockenmitlockenrepo/Pages/stateful_branch_info_provider.dart';
 
 class JotrockenMitLockenRoutes extends RoutesCreator {
+  BlogDependentAppAttributes blogDependentAppAttributes;
+
+  JotrockenMitLockenRoutes({required this.blogDependentAppAttributes});
+
   @override
   List<(Widget, StatefulBranchInfoProvider)> getAllPagesWithConfigs(
       AppAttributes appAttributes) {
@@ -68,7 +73,10 @@ class JotrockenMitLockenRoutes extends RoutesCreator {
       ),
       (
         BooksPage(
-            footer: getFooter(appAttributes), appAttributes: appAttributes),
+          footer: getFooter(appAttributes),
+          appAttributes: appAttributes,
+          blogDependentAppAttributes: blogDependentAppAttributes,
+        ),
         BooksPageConfig()
       ),
       (
@@ -78,13 +86,17 @@ class JotrockenMitLockenRoutes extends RoutesCreator {
       ),
       (
         GamesPage(
-            footer: getFooter(appAttributes), appAttributes: appAttributes),
+          footer: getFooter(appAttributes),
+          appAttributes: appAttributes,
+          blogDependentAppAttributes: blogDependentAppAttributes,
+        ),
         GamesPageConfig()
       ),
       (
         BlockOverviewPage(
           footer: getFooter(appAttributes),
           appAttributes: appAttributes,
+          blogDependentAppAttributes: blogDependentAppAttributes,
         ),
         BlockOverviewPageConfig()
       ),
@@ -96,7 +108,10 @@ class JotrockenMitLockenRoutes extends RoutesCreator {
     return [
       (
         LandingPage(
-            footer: getFooter(appAttributes), appAttributes: appAttributes),
+          footer: getFooter(appAttributes),
+          appAttributes: appAttributes,
+          blogDependentAppAttributes: blogDependentAppAttributes,
+        ),
         LandingPageNavBarConfig()
       ),
       (
@@ -119,8 +134,9 @@ class JotrockenMitLockenRoutes extends RoutesCreator {
 
   List<(Widget, StatefulBranchInfoProvider)> _getMediaCriticsPagesAndConfigs(
       AppAttributes appAttributes) {
-    List<MyTwoCentsConfig> blogPagesConfigs =
-        appAttributes.screenConfigurations.getMediaCriticsPagesConfig();
+    List<MyTwoCentsConfig> blogPagesConfigs = blogDependentAppAttributes
+        .blogDependentScreenConfigurations
+        .getMediaCriticsPagesConfig();
     List<(Widget, StatefulBranchInfoProvider)> footerPages = blogPagesConfigs
         .map(
           (pageConfig) => (
@@ -139,8 +155,9 @@ class JotrockenMitLockenRoutes extends RoutesCreator {
 
   List<(Widget, StatefulBranchInfoProvider)> _getBlogPagesAndConfigs(
       AppAttributes appAttributes) {
-    List<BlogPageConfig> blogPagesConfigs =
-        appAttributes.screenConfigurations.getBlogPagesConfig();
+    List<BlogPageConfig> blogPagesConfigs = blogDependentAppAttributes
+        .blogDependentScreenConfigurations
+        .getBlogPagesConfig();
     List<(Widget, StatefulBranchInfoProvider)> footerPages = blogPagesConfigs
         .map(
           (pageConfig) => (
