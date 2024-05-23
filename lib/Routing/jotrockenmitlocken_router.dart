@@ -1,29 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:jotrockenmitlocken/Pages/AboutMePage/about_me_page.dart';
-import 'package:jotrockenmitlocken/Pages/AboutMePage/about_me_page_navbar_config.dart';
 import 'package:jotrockenmitlocken/Pages/Blog/blog_page.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/BlockOverviewPage/block_overview_page.dart';
-import 'package:jotrockenmitlocken/Pages/DataPage/BlockOverviewPage/block_overview_page_config.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/BooksPage/books_page.dart';
-import 'package:jotrockenmitlocken/Pages/DataPage/BooksPage/books_page_config.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/FilmsPage/films_page.dart';
-import 'package:jotrockenmitlocken/Pages/DataPage/FilmsPage/films_page_config.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/GamesPage/games_page.dart';
-import 'package:jotrockenmitlocken/Pages/DataPage/GamesPage/games_page_config.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/data_page.dart';
-import 'package:jotrockenmitlocken/Pages/DataPage/data_pages_navbar_page_config.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/media_critics_page.dart';
-import 'package:jotrockenmitlocken/Pages/DocumentsPage/document_page_navbar_config.dart';
 import 'package:jotrockenmitlocken/Pages/DocumentsPage/documents_page.dart';
 import 'package:jotrockenmitlocken/Pages/ErrorPage/error_page.dart';
-import 'package:jotrockenmitlocken/Pages/ErrorPage/error_page_stateful_branch_info_provider.dart';
 import 'package:jotrockenmitlocken/blog_dependent_app_attributes.dart';
 
 import 'package:jotrockenmitlockenrepo/Pages/Footer/footer_page.dart';
 import 'package:jotrockenmitlocken/Pages/LandingPage/landing_page.dart';
-import 'package:jotrockenmitlocken/Pages/LandingPage/landing_page_navbar_page_config.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/QuotesPage/quotes_page.dart';
-import 'package:jotrockenmitlocken/Pages/DataPage/QuotesPage/quotations_page_config.dart';
 import 'package:jotrockenmitlockenrepo/Pages/Footer/footer.dart';
 import 'package:jotrockenmitlockenrepo/Pages/Footer/footer_page_config.dart';
 import 'package:jotrockenmitlocken/blog_page_config.dart';
@@ -54,81 +44,70 @@ class JotrockenMitLockenRoutes extends RoutesCreator {
 
   List<(Widget, StatefulBranchInfoProvider)> _getErrorPagesAndConfigs(
       appAttributes) {
+    List<StatefulBranchInfoProvider> errorPageConfigs =
+        appAttributes.screenConfigurations.getErrorPagesConfig();
+    List<Widget> errorPages = [
+      ErrorPage(footer: getFooter(appAttributes), appAttributes: appAttributes)
+    ];
+    assert(errorPages.length == errorPageConfigs.length);
     return [
-      (
-        ErrorPage(
-            footer: getFooter(appAttributes), appAttributes: appAttributes),
-        ErrorPageStatefulBranchInfoProvider()
-      )
+      for (int i = 0; i < errorPages.length; i += 1)
+        (errorPages[i], errorPageConfigs[i])
     ];
   }
 
   List<(Widget, StatefulBranchInfoProvider)> _getDataPagesAndConfigs(
       AppAttributes appAttributes) {
+    List<StatefulBranchInfoProvider> dataPagesConfigs =
+        blogDependentAppAttributes.blogDependentScreenConfigurations
+            .getDataPagesConfig();
+    List<Widget> dataPages = [
+      QuotesPage(
+          footer: getFooter(appAttributes), appAttributes: appAttributes),
+      BooksPage(
+        footer: getFooter(appAttributes),
+        appAttributes: appAttributes,
+        blogDependentAppAttributes: blogDependentAppAttributes,
+      ),
+      FilmsPage(footer: getFooter(appAttributes), appAttributes: appAttributes),
+      GamesPage(
+        footer: getFooter(appAttributes),
+        appAttributes: appAttributes,
+        blogDependentAppAttributes: blogDependentAppAttributes,
+      ),
+      BlockOverviewPage(
+        footer: getFooter(appAttributes),
+        appAttributes: appAttributes,
+        blogDependentAppAttributes: blogDependentAppAttributes,
+      ),
+    ];
+    assert(dataPages.length == dataPagesConfigs.length);
     return [
-      (
-        QuotesPage(
-            footer: getFooter(appAttributes), appAttributes: appAttributes),
-        QuotationsPageConfig()
-      ),
-      (
-        BooksPage(
-          footer: getFooter(appAttributes),
-          appAttributes: appAttributes,
-          blogDependentAppAttributes: blogDependentAppAttributes,
-        ),
-        BooksPageConfig()
-      ),
-      (
-        FilmsPage(
-            footer: getFooter(appAttributes), appAttributes: appAttributes),
-        FilmsPageConfig()
-      ),
-      (
-        GamesPage(
-          footer: getFooter(appAttributes),
-          appAttributes: appAttributes,
-          blogDependentAppAttributes: blogDependentAppAttributes,
-        ),
-        GamesPageConfig()
-      ),
-      (
-        BlockOverviewPage(
-          footer: getFooter(appAttributes),
-          appAttributes: appAttributes,
-          blogDependentAppAttributes: blogDependentAppAttributes,
-        ),
-        BlockOverviewPageConfig()
-      ),
+      for (int i = 0; i < dataPages.length; i += 1)
+        (dataPages[i], dataPagesConfigs[i])
     ];
   }
 
   List<(Widget, StatefulBranchInfoProvider)> _getNavBarPagesAndConfigs(
       AppAttributes appAttributes) {
+    List<StatefulBranchInfoProvider> navBarPageConfigs =
+        appAttributes.screenConfigurations.getNavRailPagesConfig();
+    List<Widget> navBarPages = [
+      LandingPage(
+        footer: getFooter(appAttributes),
+        appAttributes: appAttributes,
+        blogDependentAppAttributes: blogDependentAppAttributes,
+      ),
+      AboutMePage(
+          footer: getFooter(appAttributes), appAttributes: appAttributes),
+      DataPage(footer: getFooter(appAttributes), appAttributes: appAttributes),
+      DocumentPage(
+          footer: getFooter(appAttributes), appAttributes: appAttributes),
+    ];
+    assert(navBarPages.length == navBarPageConfigs.length);
     return [
-      (
-        LandingPage(
-          footer: getFooter(appAttributes),
-          appAttributes: appAttributes,
-          blogDependentAppAttributes: blogDependentAppAttributes,
-        ),
-        LandingPageNavBarConfig()
-      ),
-      (
-        AboutMePage(
-            footer: getFooter(appAttributes), appAttributes: appAttributes),
-        AboutMePageNavBarConfig()
-      ),
-      (
-        DataPage(
-            footer: getFooter(appAttributes), appAttributes: appAttributes),
-        DataPageNavBarConfig()
-      ),
-      (
-        DocumentPage(
-            footer: getFooter(appAttributes), appAttributes: appAttributes),
-        DocumentPageNavBarConfig()
-      ),
+      for (int i = 0; i < navBarPages.length; i += 1)
+        (navBarPages[i], navBarPageConfigs[i])
     ];
   }
 
