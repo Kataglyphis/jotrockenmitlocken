@@ -4,7 +4,7 @@ import 'package:jotrockenmitlockenrepo/Layout/ResponsiveDesign/single_page.dart'
 import 'package:jotrockenmitlockenrepo/Media/Files/file.dart';
 import 'package:jotrockenmitlockenrepo/Media/Files/file_table.dart';
 import 'package:jotrockenmitlockenrepo/Media/Markdown/markdown_page.dart';
-import 'package:jotrockenmitlockenrepo/Pages/my_two_cents_config.dart';
+import 'package:jotrockenmitlocken/my_two_cents_config.dart';
 import 'package:jotrockenmitlockenrepo/app_attributes.dart';
 
 class MediaCriticsPage extends StatefulWidget {

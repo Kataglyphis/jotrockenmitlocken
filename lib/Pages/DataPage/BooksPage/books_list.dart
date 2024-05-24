@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/BooksPage/book.dart';
+import 'package:jotrockenmitlocken/blog_dependent_app_attributes.dart';
 import 'package:jotrockenmitlockenrepo/Media/DataTable/csv_data_list.dart';
 import 'package:jotrockenmitlockenrepo/Media/DataTable/datacell_content_strategies.dart';
-import 'package:jotrockenmitlockenrepo/Pages/my_two_cents_config.dart';
+import 'package:jotrockenmitlocken/my_two_cents_config.dart';
 import 'package:jotrockenmitlockenrepo/app_attributes.dart';
 
 class BooksList extends CsvDataList {
@@ -16,12 +17,14 @@ class BooksList extends CsvDataList {
       super.sortColumnIndex = 3,
       super.sortOnLoaded = true,
       // super.isAscending = true,
-      required this.appAttributes});
+      required this.appAttributes,
+      required this.blogDependentAppAttributes});
   //"Books worth reading"
   @override
   State<BooksList> createState() => _BooksListState();
 
   final AppAttributes appAttributes;
+  final BlogDependentAppAttributes blogDependentAppAttributes;
 }
 
 class _BooksListState extends CsvDataListState<Book, BooksList> {
@@ -33,7 +36,8 @@ class _BooksListState extends CsvDataListState<Book, BooksList> {
   @override
   Future<(List<Book>, List<String>)> convertRawCSVDataToFinalLayout(
       List<List<dynamic>> csvListData) async {
-    List<MyTwoCentsConfig> configs = widget.appAttributes.twoCentsConfigs;
+    List<MyTwoCentsConfig> configs =
+        widget.blogDependentAppAttributes.twoCentsConfigs;
     List<String> dataCategories = List<String>.from(csvListData.first);
     List<Book> convertedCsvListData =
         csvListData.getRange(1, csvListData.length).toList().map((List e) {

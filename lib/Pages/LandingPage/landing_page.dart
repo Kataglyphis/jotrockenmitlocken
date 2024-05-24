@@ -1,19 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:jotrockenmitlocken/blog_dependent_app_attributes.dart';
 
 import 'package:jotrockenmitlockenrepo/Pages/Footer/footer.dart';
 import 'package:jotrockenmitlockenrepo/Layout/ResponsiveDesign/one_two_transition_widget.dart';
 import 'package:jotrockenmitlockenrepo/Pages/LandingPage/landing_page_entry.dart';
 import 'package:jotrockenmitlockenrepo/Url/external_link_config.dart';
 import 'package:jotrockenmitlockenrepo/app_attributes.dart';
-import 'package:jotrockenmitlockenrepo/Pages/blog_page_config.dart';
+import 'package:jotrockenmitlocken/blog_page_config.dart';
 import 'package:go_router/go_router.dart';
 
 class LandingPage extends StatefulWidget {
   final AppAttributes appAttributes;
+  final BlogDependentAppAttributes blogDependentAppAttributes;
   final Footer footer;
   const LandingPage(
-      {super.key, required this.appAttributes, required this.footer});
+      {super.key,
+      required this.appAttributes,
+      required this.footer,
+      required this.blogDependentAppAttributes});
 
   @override
   State<StatefulWidget> createState() => LandingPageState();
@@ -24,8 +29,9 @@ class LandingPageState extends State<LandingPage> {
     const colDivider = SizedBox(height: 10);
     List<Widget> childWidgetsLeftPage = [];
     List<Widget> childWidgetsRightPage = [];
-    List<BlogPageConfig> blogPagesConfig =
-        widget.appAttributes.screenConfigurations.getBlogPagesConfig();
+    List<BlogPageConfig> blogPagesConfig = widget
+        .blogDependentAppAttributes.blogDependentScreenConfigurations
+        .getBlogPagesConfig();
 
     // lets add a button to the overall overview of all blog entries as the first entry
     childWidgetsLeftPage.add(

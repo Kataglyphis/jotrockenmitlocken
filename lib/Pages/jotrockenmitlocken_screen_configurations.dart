@@ -14,23 +14,20 @@ import 'package:jotrockenmitlocken/Pages/Footer/Pages/configs/imprint_footer_con
 import 'package:jotrockenmitlocken/Pages/Footer/Pages/configs/privacy_policy_config.dart';
 import 'package:jotrockenmitlocken/Pages/LandingPage/landing_page_navbar_page_config.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/QuotesPage/quotations_page_config.dart';
-import 'package:jotrockenmitlockenrepo/Pages/blog_page_config.dart';
+import 'package:jotrockenmitlocken/Pages/blog_dependent_screen_configurations.dart';
+import 'package:jotrockenmitlocken/blog_page_config.dart';
 import 'package:jotrockenmitlockenrepo/Pages/Footer/footer_page_config.dart';
-import 'package:jotrockenmitlockenrepo/Pages/my_two_cents_config.dart';
+import 'package:jotrockenmitlocken/my_two_cents_config.dart';
 import 'package:jotrockenmitlockenrepo/Pages/navbar_page_config.dart';
 import 'package:jotrockenmitlockenrepo/Pages/stateful_branch_info_provider.dart';
 import 'package:jotrockenmitlockenrepo/Routing/screen_configurations.dart';
 
-class JotrockenmitLockenScreenConfigurations extends ScreenConfigurations {
+class JotrockenmitLockenScreenConfigurations extends ScreenConfigurations
+    with BlogDependentScreenConfigurations {
   List<BlogPageConfig> blogPageConfigs;
   List<MyTwoCentsConfig> twoCentsConfigs;
   JotrockenmitLockenScreenConfigurations.fromBlogAndDataConfigs(
       {required this.blogPageConfigs, required this.twoCentsConfigs});
-
-  // @override
-  // bool disableFooter() {
-  //   return false;
-  // }
 
   @override
   List<StatefulBranchInfoProvider> getAllPagesConfigs() {
@@ -60,22 +57,6 @@ class JotrockenmitLockenScreenConfigurations extends ScreenConfigurations {
   }
 
   @override
-  List<StatefulBranchInfoProvider> getDataPagesConfig() {
-    return [
-      QuotationsPageConfig(),
-      BooksPageConfig(),
-      FilmsPageConfig(),
-      GamesPageConfig(),
-      BlockOverviewPageConfig(),
-    ];
-  }
-
-  @override
-  List<StatefulBranchInfoProvider> getErrorPagesConfig() {
-    return [ErrorPageStatefulBranchInfoProvider()];
-  }
-
-  @override
   List<NavBarPageConfig> getNavRailPagesConfig() {
     return [
       LandingPageNavBarConfig(),
@@ -86,13 +67,8 @@ class JotrockenmitLockenScreenConfigurations extends ScreenConfigurations {
   }
 
   @override
-  List<BlogPageConfig> getBlogPagesConfig() {
-    return blogPageConfigs;
-  }
-
-  @override
-  List<MyTwoCentsConfig> getMediaCriticsPagesConfig() {
-    return twoCentsConfigs;
+  List<StatefulBranchInfoProvider> getErrorPagesConfig() {
+    return [ErrorPageStatefulBranchInfoProvider()];
   }
 
   @override
@@ -104,6 +80,28 @@ class JotrockenmitLockenScreenConfigurations extends ScreenConfigurations {
       CookieDeclarationFooterConfig(),
       DeclarationOnAccessibilityFooterConfig(),
       CopyRightFooterConfig()
+    ];
+  }
+
+  // from here on everything is blog dependend
+  @override
+  List<BlogPageConfig> getBlogPagesConfig() {
+    return blogPageConfigs;
+  }
+
+  @override
+  List<MyTwoCentsConfig> getMediaCriticsPagesConfig() {
+    return twoCentsConfigs;
+  }
+
+  @override
+  List<StatefulBranchInfoProvider> getDataPagesConfig() {
+    return [
+      QuotationsPageConfig(),
+      BooksPageConfig(),
+      FilmsPageConfig(),
+      GamesPageConfig(),
+      BlockOverviewPageConfig(),
     ];
   }
 }
