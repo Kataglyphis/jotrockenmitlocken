@@ -13,11 +13,21 @@
   <a href="https://jonasheinle.de"><img src="images/glm_logo.png" alt="VulkanEngine" width="200"></a>
 </h1> -->
 
-<h4 align="center">Source control of my personal website.<a href="https://jonasheinle.de" target="_blank"></a>.</h4>
 
-<!-- [![Linux build](https://github.com/Kataglyphis/GraphicsEngineVulkan/actions/workflows/Linux.yml/badge.svg)](https://github.com/Kataglyphis/GraphicsEngineVulkan/actions/workflows/Linux.yml)
-[![Windows build](https://github.com/Kataglyphis/GraphicsEngineVulkan/actions/workflows/Windows.yml/badge.svg)](https://github.com/Kataglyphis/GraphicsEngineVulkan/actions/workflows/Windows.yml)
-[![TopLang](https://img.shields.io/github/languages/top/Kataglyphis/GraphicsEngineVulkan)]() -->
+<h4 align="center">My personal blog as responsive web app using Flutter/Dart. Every blog post is written in pure markdown and therefore very lightweight to use and add new content. It is highly customizable for your needs, your personal web blog or you next Frontend project (<b>not only</b> web but also native Linux/Windows/Android/Web/iOS)<a href="https://jonasheinle.de" target="_blank"></a>.</h4>
+
+<p align="center">
+  <br>
+  <a href="https://jonasheinle.de"><img src="images/overview.gif" alt="My website", width="800"></a>
+  <br>
+  <br>
+</p>
+
+Visit [JonasHeinle.de](https://jonasheinle.de/) for the full experience of my personal web blog. Cheers! :beers: </br>
+Visit my repo [jotrockenmitlockenrepo](https://github.com/Kataglyphis/jotrockenmitlockenrepo) if you are interested in Flutter/Dart development in general. All components in this repo are reusable for any target available (Linux/Windows/Android/Web).
+
+[![Build](https://github.com/Kataglyphis/jotrockenmitlocken/actions/workflows/dart.yml/badge.svg)](https://github.com/Kataglyphis/jotrockenmitlocken/actions/workflows/dart.yml)
+[![TopLang](https://img.shields.io/github/languages/top/Kataglyphis/jotrockenmitlocken)]() 
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/paypalme/JonasHeinle)
 [![Twitter](https://img.shields.io/twitter/follow/Cataglyphis_?style=social)](https://twitter.com/Cataglyphis_)
 
@@ -62,11 +72,19 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-The `assets` directory houses images, fonts, and any other files you want to
-include with your application.
-
-The `assets/images` directory contains [resolution-aware
-images](https://flutter.dev/docs/development/ui/assets-and-images#resolution-aware).
+The `assets` directory houses all files you want to include within your application namely:
+* images
+* videos
+* data (.zip, .csv, ...)
+* documents (f.e. .md for blog posts)
+* fonts 
+* and the settings directory which harbors many different options for your own needs:
+  * global user settings: Here you can easily customize the blog for you. Set all necessary user related options (like email, name, image, etc...)
+  * All entries in the user_skills.json will be displayed in the corresponding section.
+* app settings: set the app name, title. You are able to disable the footer; the **supportedLocales** field can have the following values:
+  * ["de"]: build a web app in pure german
+  * ["en"]: build a web app in pure english
+  * ["de","en"] or :["en","de"] You can switch between english and german
 
 ### Localization
 
@@ -93,14 +111,10 @@ This project is a template.
 ### Key Features
 
 <!-- ❌  -->
-<!-- |          Feature                    |   Implement Status |
-| ------------------------------------| :----------------: |
-| Rasterizer                          |         ✔️         |
-| Raytracing                          |         ✔️         |
-| Path tracing                        |         ✔️         |
-| PBR support (UE4,disney,... etc.)   |         ✔️         |
-| .obj Model loading                  |         ✔️         |
-| Mip Mapping                         |         ✔️         | -->
+|          Feature                            |   Implement Status |
+| :-----------------------------------------: | :----------------: |
+| Markdown rendering                          |         ✔️         |
+| Publish blog posts by only editing a .json  |         ✔️         |
 
 ### Built With
 
