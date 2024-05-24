@@ -40,6 +40,7 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
   ThemeMode themeMode = ThemeMode.dark;
   ColorSeed colorSelected = ColorSeed.baseColor;
   bool useOtherLanguageMode = false;
+  int currentPageIndex = 0;
 
   bool get useLightMode {
     switch (themeMode) {
@@ -170,6 +171,10 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
     });
   }
 
+  void handlePageChange(int pageIndex) {
+    currentPageIndex = pageIndex;
+  }
+
   void handleLanguageChange() {
     setState(() {
       useOtherLanguageMode = useOtherLanguageMode ? false : true;
@@ -236,9 +241,7 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
                 blogDependentAppAttributes: blogDependentAppAttributes);
 
             final GoRouter routerConfig = routesCreator.getRouterConfig(
-              appAttributes,
-              controller,
-            );
+                appAttributes, controller, handlePageChange, currentPageIndex);
             var supportedLanguages = data.requireData.$1.supportedLocales!
                 .map((element) => Locale(element))
                 .toList();
