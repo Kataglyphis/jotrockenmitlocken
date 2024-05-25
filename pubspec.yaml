@@ -1,5 +1,6 @@
 name: jotrockenmitlocken
 description: "Find out sth. interesting about me."
+homepage: https://jonasheinle.de
 
 # Prevent accidental publishing to pub.dev.
 publish_to: "none"
