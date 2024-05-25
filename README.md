@@ -23,7 +23,7 @@
   <br>
 </p>
 
-Visit [JonasHeinle.de](https://jonasheinle.de/) for the full experience of my personal web blog. Cheers! :beers: </br>
+Visit [jonasheinle.de](https://jonasheinle.de/) for the full experience of my personal web blog. Cheers! :beers: </br>
 Visit my repo [jotrockenmitlockenrepo](https://github.com/Kataglyphis/jotrockenmitlockenrepo) if you are interested in Flutter/Dart development in general. All components in this repo are reusable for any target available (Linux/Windows/Android/Web).
 
 [![Build](https://github.com/Kataglyphis/jotrockenmitlocken/actions/workflows/dart.yml/badge.svg)](https://github.com/Kataglyphis/jotrockenmitlocken/actions/workflows/dart.yml)
@@ -72,6 +72,20 @@ Visit my repo [jotrockenmitlockenrepo](https://github.com/Kataglyphis/jotrockenm
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
+I always wanted an easy way to publish new content (blog posts, thoughts about books,...) fast. But why not just using a CMS? Here are my reasons:
+  * as the content is pure markdown my approach allows me to always change the technology easily, many CMS integrate the content very strongly into their technology
+    * therefore you will not make yourself dependent from my repo. You are always able to switch :cat2:
+  * what if I want to build an UI for a native Linux application? Than all effort brought
+    into building a web blog with a CMS is more or less useless. With this project I have
+    a very huge reusable part leverage me to build also native UIs (with a Rust backend :rocket: f.e.)
+  * I want a very unique look and feel for my website. Therefore I want all power over my
+  application which can be difficult with some drag-and-drop solutions.
+  * I want to learn front-end development and its challenges. Just using wordpress won't bring you there
+
+
+### Content
+I truly believe in open source. Hence you will get all source code for free use and ready to go.</br>
+My approach allows me to separate the website data from its view (MVC best practice). You will not see my blog posts(only the dummy entries) in this repo. They are my intellectual property :wink:</br>
 The `assets` directory houses all files you want to include within your application namely:
 * images
 * videos
@@ -86,6 +100,77 @@ The `assets` directory houses all files you want to include within your applicat
   * ["en"]: build a web app in pure english
   * ["de","en"] or :["en","de"] You can switch between english and german
 
+### Publish a new blog post
+If you want to add a new blog bost do the following steps:
+
+* Open the file `assets\settings\blog_settings.json`
+* Append an entry like the following:
+```json
+{
+		"routingName":"/aiBlog2",
+		"shortDescriptionEN":"AI playground 2",
+		"shortDescriptionDE":"AI Spielwiese 2",
+		"filePath":"assets/documents/blog/aiBlogPageEn.md",
+		"imageDir":"assets/images/aiBlog",
+		"githubRepo":"MachineLearningAlgorithms",
+		"fileTitle": "AIBlog.pdf",
+		"fileAdditionalInfo": "PDF version",
+		"fileBaseDir": "assets/documents/blog/",
+		"lastModified":"03.04.2024",
+		"landingPageAlignment":"left",
+		"landingPageEntryImagePath": "assets/images/ML_CV.jpeg",
+		"landingPageEntryImageCaptioning": "image source: https://pyimagesearch.com/2023/03/30/machine-learning-computer-vision/",
+		"docsDesc": [
+			{
+				"baseDir":"assets/documents/cv/",
+				"title":"CV_Jonas_Heinle_english.pdf",
+				"additionalInfo": "~3.7MB English"
+			},
+			{
+				"baseDir": "assets/documents/cv/",
+				"title": "CV_Jonas_Heinle_german.pdf",
+				"additionalInfo": "~3.7MB German"
+			},
+			{
+				"baseDir": "assets/data/",
+				"title": "WorleyNoiseTextures.zip",
+				"additionalInfo": "Use it for you own projects."
+			}
+		]
+	},
+```
+
+### Publishing posts over a book
+
+* Open the file `assets\settings\my_two_cents_settings.json`
+* Add an entry like the following
+```json
+{
+		"routingName":"/books/fuenfGeheimnisse",
+		"filePath":"assets/documents/books/fuenfGeheimnisse.md",
+		"imageDir":"assets/images/aiBlog",
+		"mediaTitle":"Die fünf Geheimnisse, die Sie entdecken sollten, bevor Sie sterben",
+		"fileBaseDir": "assets/documents/books/",
+		"docsDesc": [
+			{
+				"baseDir":"assets/documents/cv/",
+				"title":"CV_Jonas_Heinle_english.pdf",
+				"additionalInfo": "~3.7MB English"
+			},
+			{
+				"baseDir": "assets/documents/cv/",
+				"title": "CV_Jonas_Heinle_german.pdf",
+				"additionalInfo": "~3.7MB German"
+			},
+			{
+				"baseDir": "assets/data/",
+				"title": "WorleyNoiseTextures.zip",
+				"additionalInfo": "Use it for you own projects."
+			}
+		]
+	},
+```
+* Make sure that the mediaTitle you add here is availabale in the `assets\data\Buecherliste_gelesen.csv` file.
 ### Localization
 
 This project generates localized messages based on arb files found in
@@ -106,23 +191,21 @@ apps](https://flutter.dev/docs/development/accessibility-and-localization/intern
 [![Kataglyphis Engine][product-screenshot2]](https://jonasheinle.de)
 [![Kataglyphis Engine][product-screenshot3]](https://jonasheinle.de) -->
 
-This project is a template. 
-
 ### Key Features
 
 <!-- ❌  -->
-|          Feature                            |   Implement Status |
-| :-----------------------------------------: | :----------------: |
-| Markdown rendering                          |         ✔️         |
-| Publish blog posts by only editing a .json  |         ✔️         |
+|          Feature                                 |   Implement Status |
+| :-----------------------------------------:      | :----------------: |
+| Add you media critics(books,films,..) easily     |         ✔️         |
+| Markdown rendering                               |         ✔️         |
+| Publish blog posts by only editing a .json       |         ✔️         |
+| Display .csv data                                |         ✔️         |
+| High degree of customization for yourself        |         ✔️         |
+| Make your files (CV,thesis,..) open-/downloadable|         ✔️         |
 
 ### Built With
 
-<!-- * [Vulkan 1.3](https://www.vulkan.org/) -->
-
-### Useful tools (you might also considering :) )
-
-<!-- * [cppcheck](https://cppcheck.sourceforge.io/) -->
+* [Flutter/Dart](https://flutter.dev/)
 
 <!-- GETTING STARTED -->
 ## Getting Started
@@ -146,8 +229,6 @@ flutter run -d web-server --web-renderer canvaskit --profile --web-port 8080 --w
    git clone --recurse-submodules git@github.com:Kataglyphis/jotrockenmitlocken.git
    ```
 
-## Tests
-
 <!-- ROADMAP -->
 ## Roadmap
 Upcoming :)
@@ -167,6 +248,7 @@ Contributions are what make the open source community such an amazing place to b
 
 <!-- LICENSE -->
 ## License
+MIT.
 
 ## Known Issues
 flutter_highlighter needs and update in line 94 from RichText to Text.rich to make it
@@ -185,10 +267,10 @@ Project Link: [https://github.com/Kataglyphis/jonasheinle.de](https://github.com
 
 
 <!-- ACKNOWLEDGEMENTS -->
-## Acknowledgements
+<!-- ## Acknowledgements
 
 You will find important links to information in the code.
-But here in general some good sources of information:
+But here in general some good sources of information: -->
 
 <!-- Thanks for free 3D Models: 
 * [Morgan McGuire, Computer Graphics Archive, July 2017 (https://casual-effects.com/data)](http://casual-effects.com/data/)
