@@ -64,6 +64,8 @@ flutter:
     - assets/documents/blog/
     - assets/documents/books/
     - assets/documents/games/
+    - assets/documents/thesis/
+    - assets/documents/cv/
     - assets/data/
     - assets/settings/
     - assets/settings/user_settings/
