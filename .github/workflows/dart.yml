@@ -12,8 +12,8 @@ on:
 jobs:
   build:
     name: 🚀 Deploy website on push
-    runs-on: windows-latest
-    # runs-on: ubuntu-latest
+    # runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - name: 🚚 Get latest code
         uses: actions/checkout@v4
@@ -64,10 +64,14 @@ jobs:
         run: | 
           flutter build web --release --web-renderer canvaskit
 
-      - name: 'Build Web App'
+      - name: 'Build Web App (WASM)'
         if: github.ref == 'refs/heads/dev'
+        id: build-wasm
+        continue-on-error: true
         run: | 
+          should_run=false
           flutter build web --release --wasm
+          should_run=true
 
       - name: 📂 Sync files to main domain
         if: github.ref == 'refs/heads/main'
@@ -79,7 +83,7 @@ jobs:
           local-dir: "./build/web/"
 
       - name: 📂 Sync files to dev domain
-        if: github.ref == 'refs/heads/dev'
+        if: github.ref == 'refs/heads/dev' && steps.build-wasm.outputs.should_run == 'true'
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.SERVER }}
