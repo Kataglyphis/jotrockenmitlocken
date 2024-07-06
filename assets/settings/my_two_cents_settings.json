@@ -24,6 +24,14 @@
 		]
 	},
 	{
+		"routingName":"/books/ArnoAnzenbacherEinführungPhilosophie",
+		"filePath":"assets/documents/books/Einführung in die Philosophie - Arno Anzenbacher.md",
+		"imageDir":"assets/images/books/EinführungPhilosophie",
+		"mediaTitle":"Einführung in die Philosophie",
+		"fileBaseDir": "assets/documents/books/",
+		"docsDesc": []
+	},
+	{
 		"routingName":"/games/Gothic1",
 		"filePath":"assets/documents/games/Gothic1.md",
 		"imageDir":"assets/images/aiBlog",
