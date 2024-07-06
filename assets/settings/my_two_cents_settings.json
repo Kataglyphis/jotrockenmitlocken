@@ -24,9 +24,9 @@
 		]
 	},
 	{
-		"routingName":"/books/ArnoAnzenbacherEinführungPhilosophie",
+		"routingName":"/books/ArnoAnzenbacherEinfuehrungPhilosophie",
 		"filePath":"assets/documents/books/Einführung in die Philosophie - Arno Anzenbacher.md",
-		"imageDir":"assets/images/books/EinführungPhilosophie",
+		"imageDir":"assets/images/books/",
 		"mediaTitle":"Einführung in die Philosophie",
 		"fileBaseDir": "assets/documents/books/",
 		"docsDesc": []
