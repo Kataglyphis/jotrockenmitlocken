@@ -59,6 +59,7 @@ flutter:
     - assets/images/Pages/Blog/VulkanRenderer/
     - assets/images/cats/
     - assets/images/aiBlog/
+    - assets/images/books/
     - assets/documents/
     - assets/documents/footer/
     - assets/documents/blog/
