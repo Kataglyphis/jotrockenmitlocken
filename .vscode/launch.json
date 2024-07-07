@@ -10,7 +10,14 @@
 			"type": "dart",
 			"program": "lib/main.dart",
 			"flutterMode": "debug",
-			"args": ["--web-renderer canvaskit"]
+			"args": [
+				// "--web-renderer",
+				// "canvaskit",
+				"--web-port",
+				"8081",
+				"--web-hostname",
+				"localhost"
+			]
 		},
 		{
 			"name": "jotrockenmitlocken (profile mode)",
@@ -18,7 +25,9 @@
 			"type": "dart",
 			"program": "lib/main.dart",
 			"flutterMode": "profile",
-			"args": ["--web-renderer canvaskit"]
+			"args": [
+				"--web-renderer canvaskit"
+			]
 		},
 		{
 			"name": "jotrockenmitlocken (release mode)",
@@ -26,7 +35,9 @@
 			"type": "dart",
 			"program": "lib/main.dart",
 			"flutterMode": "release",
-			"args": ["--web-renderer canvaskit"]
+			"args": [
+				"--web-renderer canvaskit"
+			]
 		},
 	]
 }
