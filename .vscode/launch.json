@@ -11,8 +11,8 @@
 			"program": "lib/main.dart",
 			"flutterMode": "debug",
 			"args": [
-				"--web-renderer",
-				"canvaskit",
+				// "--web-renderer",
+				// "canvaskit",
 				"--web-port",
 				"8081",
 				"--web-hostname",
