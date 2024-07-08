@@ -106,6 +106,8 @@ class WebDavClient:
         self.logger.setLevel(logging.DEBUG)
         # Create handlers
         console_handler = logging.StreamHandler()
+
+        self.ensure_folder_exists("logs")
         file_handler = logging.FileHandler("logs/downloadMd_s.log")
 
         # Set levels for handlers
