@@ -25,6 +25,7 @@ jobs:
       - name: Download blog content
         run: |
           echo $(pwd)
+          ls
           python -c "import sys; print(sys.version)"
           pip install -r scripts/requirements.txt
           python scripts/download_markdown_files.py ${{ secrets.WEBDAV_HOSTNAME }} ${{ secrets.WEBDAV_USERNAME }} ${{ secrets.WEBDAV_PASSWORD }} ${{ secrets.REMOTE_BASE_PATH }} assets
