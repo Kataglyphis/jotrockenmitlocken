@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 🚚 Get latest code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.7
       - name: Set up Python 3.12
         uses: actions/setup-python@v5.1.0
         with:
@@ -29,7 +29,7 @@ jobs:
           python scripts/download_markdown_files.py ${{ secrets.WEBDAV_HOSTNAME }} ${{ secrets.WEBDAV_USERNAME }} ${{ secrets.WEBDAV_PASSWORD }} ${{ secrets.REMOTE_BASE_PATH }} assets
 
       - name: Setup Flutter SDK
-        uses: flutter-actions/setup-flutter@v2.3  
+        uses: flutter-actions/setup-flutter@v3.6  
         with:
           channel: stable
           version: 3.22.2
