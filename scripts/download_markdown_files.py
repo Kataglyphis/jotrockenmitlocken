@@ -166,6 +166,7 @@ class WebDavClient:
         for response in tree.findall("{DAV:}response"):
             href = response.find("{DAV:}href").text
             if not href.endswith("/"):
+                self.logger.debug("Found file: %s for the following url: %s", href, url)
                 files.append(href)
         return files
 
@@ -209,13 +210,15 @@ class WebDavClient:
         for response in tree.findall("{DAV:}response"):
             href = response.find("{DAV:}href").text
             folder = os.path.basename(os.path.normpath(href))
-            # aux = args.remote_base_path.split("/")[-1]
             if (
                 href.endswith("/")
                 and href != url + "/"
                 and not folder.startswith(".")
                 and folder != parent_folder.split("/")[-1]
             ):
+                self.logger.debug(
+                    "Found folder: %s in the parent folder: %s", folder, parent_folder
+                )
                 folders.append(folder)
         return folders
 
@@ -235,6 +238,12 @@ class WebDavClient:
         """
         search_str = "/" + remote_base_path + "/"
         if search_str in path:
+            self.logger.debug(
+                "Found folder %s for path %s and remote base path: %s",
+                search_str,
+                path,
+                remote_base_path,
+            )
             return path.split(search_str, 1)[1]
         return path
 
@@ -359,6 +368,7 @@ class WebDavClient:
 
         while stack:
             current_remote_path: str = stack.pop()
+            self.logger.debug("Current remote path is: %s", current_remote_path)
 
             # Download files in the current directory
             self.download_files(current_remote_path, local_base_path)
