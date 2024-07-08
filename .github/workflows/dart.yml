@@ -17,13 +17,16 @@ jobs:
     steps:
       - name: 🚚 Get latest code
         uses: actions/checkout@v4.1.7
-      - name: Set up Python 3.10
+      - name: Set up Python 3.12
         uses: actions/setup-python@v5.1.0
         with:
-          python-version: "3.10"
+          python-version: "3.12"
       # You can test your matrix by printing the current Python version
       - name: Display Python version
-        run: python -c "import sys; print(sys.version)"
+        run: | 
+          python -c "import sys; print(sys.version)"
+          pip install requests
+          python scripts/download_markdown_files.py ${{ secrets.WEBDAV_HOSTNAME }} ${{ secrets.WEBDAV_USERNAME }} ${{ secrets.WEBDAV_PASSWORD }} ${{ secrets.REMOTE_BASE_PATH }} assets
 
       - name: Setup Flutter SDK
         uses: flutter-actions/setup-flutter@v3.6  
