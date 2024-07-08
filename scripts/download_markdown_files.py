@@ -5,15 +5,19 @@ import urllib.parse
 from xml.etree import ElementTree
 import argparse
 
-# Parse command-line arguments
-parser = argparse.ArgumentParser(description="Download files from WebDAV server.")
-parser.add_argument("hostname", help="WebDAV server hostname")
-parser.add_argument("username", help="WebDAV server username")
-parser.add_argument("password", help="WebDAV server password")
-parser.add_argument("remote_base_path", help="Remote base path on the WebDAV server")
-parser.add_argument("local_base_path", help="Local base path to save files")
 
-args = parser.parse_args()
+# Parse command-line arguments
+def parse_args():
+    parser = argparse.ArgumentParser(description="Download files from WebDAV server.")
+    parser.add_argument("hostname", help="WebDAV server hostname")
+    parser.add_argument("username", help="WebDAV server username")
+    parser.add_argument("password", help="WebDAV server password")
+    parser.add_argument(
+        "remote_base_path", help="Remote base path on the WebDAV server"
+    )
+    parser.add_argument("local_base_path", help="Local base path to save files")
+
+    return parser.parse_args()
 
 
 def list_files(url, auth):
@@ -115,21 +119,8 @@ def download_all_files_iterative(hostname, auth, remote_base_path, local_base_pa
 
 if __name__ == "__main__":
 
+    args = parse_args()
     auth = HTTPBasicAuth(args.username, args.password)
     download_all_files_iterative(
         args.hostname, auth, args.remote_base_path, args.local_base_path
     )
-    # # download all files in the root directory
-    # download_files(args.hostname, auth, args.remote_base_path, args.local_base_path)
-
-    # # List all folders in the specified remote base path
-    # base_url = os.path.join(args.hostname, args.remote_base_path)
-    # folders = list_folders(base_url, auth)
-
-    # # Loop over each folder and download files
-    # for folder in folders:
-    #     relative_folder_path = os.path.relpath(folder, args.hostname)
-    #     local_folder_path = os.path.join(
-    #         args.local_base_path, os.path.basename(relative_folder_path)
-    #     )
-    #     download_files(args.hostname, auth, relative_folder_path, local_folder_path)
