@@ -25,6 +25,7 @@ jobs:
       - name: Display Python version
         run: | 
           python -c "import sys; print(sys.version)"
+          pip install requests
           python scripts/download_markdown_files.py ${{ secrets.WEBDAV_HOSTNAME }} ${{ secrets.WEBDAV_USERNAME }} ${{ secrets.WEBDAV_PASSWORD }} ${{ secrets.REMOTE_BASE_PATH }} assets
 
       - name: Setup Flutter SDK
