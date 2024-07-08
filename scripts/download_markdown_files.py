@@ -314,7 +314,9 @@ class WebDavClient:
                 self.hostname, remote_base_path, file_path.split("/")[-1]
             )
             local_file_path = os.path.join(local_base_path, decoded_filename)
-
+            self.logger.debug(
+                "The current that is stored has the full path: %s", local_file_path
+            )
             response = requests.get(remote_file_url, auth=self.auth, stream=True)
             if response.status_code == 200:
                 folder_path = os.path.dirname(local_file_path)
