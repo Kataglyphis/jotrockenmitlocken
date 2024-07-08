@@ -305,9 +305,7 @@ class WebDavClient:
 
         files = self.list_files(os.path.join(self.hostname, remote_base_path))
         for file_path in files:
-            file_name = self.filter_after_global_base_path(
-                file_path, remote_base_path
-            )  # file_path.split("/")[-1]
+            file_name = self.filter_after_global_base_path(file_path, remote_base_path)
             # Decoding the URL-encoded string
             decoded_filename = urllib.parse.unquote(file_name)
             remote_file_url = os.path.join(
@@ -315,7 +313,7 @@ class WebDavClient:
             )
             local_file_path = os.path.join(local_base_path, decoded_filename)
             self.logger.debug(
-                "The current that is stored has the full path: %s", local_file_path
+                "The current file that is stored has the full path: %s", local_file_path
             )
             response = requests.get(remote_file_url, auth=self.auth, stream=True)
             if response.status_code == 200:
