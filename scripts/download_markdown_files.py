@@ -1,9 +1,31 @@
 import os
+import logging
 import requests
 from requests.auth import HTTPBasicAuth
 import urllib.parse
 from xml.etree import ElementTree
 import argparse
+
+# create global logger
+logger = logging.getLogger(__name__)
+# Set the default log level
+logger.setLevel(logging.DEBUG)
+# Create handlers
+console_handler = logging.StreamHandler()
+file_handler = logging.FileHandler("logs/downloadMd_s.log")
+
+# Set levels for handlers
+console_handler.setLevel(logging.DEBUG)
+file_handler.setLevel(logging.DEBUG)
+
+# Create formatters and add them to handlers
+formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+console_handler.setFormatter(formatter)
+file_handler.setFormatter(formatter)
+
+# Add handlers to the logger
+logger.addHandler(console_handler)
+logger.addHandler(file_handler)
 
 
 # Parse command-line arguments
@@ -39,6 +61,7 @@ def list_folders(url, auth, parent_folder):
     headers = {"Content-Type": "application/xml", "Depth": "1"}
     response = requests.request("PROPFIND", url, auth=auth, headers=headers)
     if response.status_code != 207:
+        logger.error("Failed to list directory contents: %s", response.status_code)
         raise Exception(f"Failed to list directory contents: {response.status_code}")
 
     tree = ElementTree.fromstring(response.content)
@@ -67,9 +90,9 @@ def filter_after_global_base_path(path):
 def ensure_folder_exists(path):
     if not os.path.exists(path):
         os.makedirs(path)
-        print(f"Folder created: {path}")
+        logger.debug("Folder created: %s", path)
     else:
-        print(f"Folder already exists: {path}")
+        logger.debug("Folder already exists: %s", path)
 
 
 def download_files(webdevurl, auth, remote_base_path, local_base_path):
@@ -94,7 +117,9 @@ def download_files(webdevurl, auth, remote_base_path, local_base_path):
                 for chunk in response.iter_content(chunk_size=8192):
                     f.write(chunk)
         else:
-            print(f"Failed to download {remote_file_url}: {response.status_code}")
+            logger.debug(
+                "Failed to download %s: %s", remote_file_url, response.status_code
+            )
 
 
 def download_all_files_iterative(hostname, auth, remote_base_path, local_base_path):
