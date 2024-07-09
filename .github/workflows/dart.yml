@@ -90,7 +90,11 @@ jobs:
           should_run=false
           flutter build web --release --wasm
           should_run=true
-
+      
+      - name: Debug
+        run: |
+          ls "./build/web/"
+          ls "./build/web/assets/assets/"
       - name: 📂 Sync files to main domain
         if: github.ref == 'refs/heads/main'
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
