@@ -36,6 +36,11 @@ jobs:
           echo "After executing .md deploy script the asset folder has following content:"
           ls "$(pwd)/$LOCAL_ASSETS_FOLDER"
 
+      - name: Verify downloaded files
+        run: |
+          echo "Verifying downloaded files in assets folder:"
+          ls -R "$(pwd)/$LOCAL_ASSETS_FOLDER"
+
       - name: Setup Flutter SDK
         uses: flutter-actions/setup-flutter@v3.6  
         with:
