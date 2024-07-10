@@ -25,6 +25,9 @@ jobs:
         with:
           python-version: "3.12"
       # You can test your matrix by printing the current Python version
+      - name: Setup python env
+        run: |
+          pip install git+https://github.com/Kataglyphis/WebDavClient
       - name: Download blog content
         run: |
           echo $(pwd)
