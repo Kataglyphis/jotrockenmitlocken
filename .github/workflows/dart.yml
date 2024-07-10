@@ -40,6 +40,8 @@ jobs:
           echo "Verifying downloaded files in assets folder:"
           ls -R "$(pwd)/$LOCAL_ASSETS_FOLDER"
           echo "Verifying downloaded files in assets/documents/books/ folder:"
+          ls -R "$LOCAL_ASSETS_FOLDER/documents/books"
+          echo "Verifying downloaded files in $(pwd)/assets/documents/books/ folder:"
           ls -R "$(pwd)/$LOCAL_ASSETS_FOLDER/documents/books"
 
       - name: Verify downloaded files
