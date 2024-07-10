@@ -34,7 +34,7 @@ jobs:
           ls
           python -c "import sys; print(sys.version)"
           echo "$(pwd)/$LOCAL_ASSETS_FOLDER"
-          python download_markdown_files.py ${{ secrets.WEBDAV_HOSTNAME }} ${{ secrets.WEBDAV_USERNAME }} ${{ secrets.WEBDAV_PASSWORD }} ${{ secrets.REMOTE_BASE_PATH }} "$(pwd)/$LOCAL_ASSETS_FOLDER"
+          python download_markdown_files.py ${{ secrets.WEBDAV_HOSTNAME }} ${{ secrets.WEBDAV_USERNAME }} ${{ secrets.WEBDAV_PASSWORD }} ${{ secrets.REMOTE_BASE_PATH }} "$LOCAL_ASSETS_FOLDER"
           echo "After executing .md deploy script the asset folder has following content:"
           ls "$(pwd)/$LOCAL_ASSETS_FOLDER"
           echo "Verifying downloaded files in assets folder:"
