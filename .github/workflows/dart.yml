@@ -3,7 +3,10 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Dart
+name: Deploy website with all dependencies
+
+env:
+  LOCAL_ASSETS_FOLDER: 'assets'
 
 on:
   push:
@@ -22,11 +25,29 @@ jobs:
         with:
           python-version: "3.12"
       # You can test your matrix by printing the current Python version
-      - name: Display Python version
-        run: | 
+      - name: Setup python env
+        run: |
+          pip install git+https://github.com/Kataglyphis/WebDavClient
+      - name: Download blog content
+        run: |
+          echo $(pwd)
+          ls
           python -c "import sys; print(sys.version)"
-          pip install requests
-          python scripts/download_markdown_files.py ${{ secrets.WEBDAV_HOSTNAME }} ${{ secrets.WEBDAV_USERNAME }} ${{ secrets.WEBDAV_PASSWORD }} ${{ secrets.REMOTE_BASE_PATH }} assets
+          echo "$(pwd)/$LOCAL_ASSETS_FOLDER"
+          python download_markdown_files.py ${{ secrets.WEBDAV_HOSTNAME }} ${{ secrets.WEBDAV_USERNAME }} ${{ secrets.WEBDAV_PASSWORD }} ${{ secrets.REMOTE_BASE_PATH }} "$LOCAL_ASSETS_FOLDER"
+          echo "After executing .md deploy script the asset folder has following content:"
+          ls "$(pwd)/$LOCAL_ASSETS_FOLDER"
+          echo "Verifying downloaded files in assets folder:"
+          ls -R "$(pwd)/$LOCAL_ASSETS_FOLDER"
+          echo "Verifying downloaded files in assets/documents/books/ folder:"
+          ls -R "$LOCAL_ASSETS_FOLDER/documents/books"
+          echo "Verifying downloaded files in $(pwd)/assets/documents/books/ folder:"
+          ls -R "$(pwd)/$LOCAL_ASSETS_FOLDER/documents/books"
+
+      - name: Verify downloaded files
+        run: |
+          echo "Verifying downloaded files in assets folder:"
+          ls -R "$(pwd)/$LOCAL_ASSETS_FOLDER"
 
       - name: Setup Flutter SDK
         uses: flutter-actions/setup-flutter@v3.6  
@@ -82,7 +103,7 @@ jobs:
           should_run=false
           flutter build web --release --wasm
           should_run=true
-
+      
       - name: 📂 Sync files to main domain
         if: github.ref == 'refs/heads/main'
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
@@ -92,20 +113,25 @@ jobs:
           password: ${{ secrets.PW }}
           local-dir: "./build/web/"
 
-      - name: 📂 Sync files to dev domain
+      - name: 📂 Sync files to dev wasm domain
         if: github.ref == 'refs/heads/dev' && steps.build-wasm.outputs.should_run == 'true'
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5 
         with:
           server: ${{ secrets.SERVER }}
           username: ${{ secrets.DEV_WASM_USERNAME }}
           password: ${{ secrets.DEV_WASM_PW }}
           local-dir: "./build/web/"
 
-      - name: 'Build Web App'
+      - name: 'Build Web App with cnavaskit'
         if: github.ref == 'refs/heads/dev'
-        run: | 
+        run: |
+          ls -R assets/
           flutter build web --release --web-renderer canvaskit
-      
+          
+      - name: Debug
+        run: |
+          ls -R "./build/web/"
+
       - name: 📂 Sync files to dev domain
         if: github.ref == 'refs/heads/dev'
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
