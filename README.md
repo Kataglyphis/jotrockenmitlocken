@@ -13,7 +13,6 @@
   <a href="https://jonasheinle.de"><img src="images/glm_logo.png" alt="VulkanEngine" width="200"></a>
 </h1> -->
 
-
 <h4 align="center">My personal blog as responsive web app using Flutter/Dart. Every blog post is written in pure markdown and therefore very lightweight to use and add new content. It is highly customizable for your needs, your personal web blog or you next Frontend project (<b>not only</b> web but also native Linux/Windows/Android/Web/iOS)<a href="https://jonasheinle.de" target="_blank"></a>.</h4>
 
 <p align="center">
@@ -22,6 +21,11 @@
   <br>
   <br>
 </p>
+
+> **__Note__**: If your run locally this website you are not able to
+neither navigate to the blog entries nor the book/film/... critics. 
+Their "source content .md files" are my intellectual property and therefore only visible to me :) The flutter/dart source code stays
+**__Open Source__** of course
 
 Visit [jonasheinle.de](https://jonasheinle.de/) for the full experience of my personal web blog. Cheers! :beers: </br>
 Visit my repo [jotrockenmitlockenrepo](https://github.com/Kataglyphis/jotrockenmitlockenrepo) if you are interested in Flutter/Dart development in general. All components in this repo are reusable for any target available (Linux/Windows/Android/Web).
@@ -206,6 +210,7 @@ apps](https://flutter.dev/docs/development/accessibility-and-localization/intern
 ### Built With
 
 * [Flutter/Dart](https://flutter.dev/)
+* [WebDavClient]() Wrote my own WebDavClient for this repo :)
 
 <!-- GETTING STARTED -->
 ## Getting Started
