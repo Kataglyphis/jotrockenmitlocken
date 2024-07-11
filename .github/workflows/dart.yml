@@ -113,7 +113,7 @@ jobs:
           password: ${{ secrets.PW }}
           local-dir: "./build/web/"
 
-      - name: 📂 Sync files to dev domain
+      - name: 📂 Sync files to dev wasm domain
         if: github.ref == 'refs/heads/dev' && steps.build-wasm.outputs.should_run == 'true'
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5 
         with:
@@ -122,14 +122,15 @@ jobs:
           password: ${{ secrets.DEV_WASM_PW }}
           local-dir: "./build/web/"
 
-      - name: 'Build Web App'
+      - name: 'Build Web App with cnavaskit'
         if: github.ref == 'refs/heads/dev'
-        run: | 
+        run: |
+          ls -R assets/
           flutter build web --release --web-renderer canvaskit
+          
       - name: Debug
         run: |
-          ls "./build/web/"
-          ls "./build/web/assets/assets/"
+          ls -R "./build/web/"
 
       - name: 📂 Sync files to dev domain
         if: github.ref == 'refs/heads/dev'
