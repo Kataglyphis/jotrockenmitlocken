@@ -20,6 +20,7 @@ if __name__ == "__main__":
 
     args: argparse.Namespace = parse_args()
     webdevclient = WebDavClient(args.hostname, args.username, args.password)
+
     webdevclient.download_all_files_iterative(
         args.remote_base_path, args.local_base_path
     )
