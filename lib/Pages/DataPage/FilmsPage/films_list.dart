@@ -34,8 +34,12 @@ class _FilmsListState extends CsvDataListState<Film, FilmsList> {
   }
 
   @override
-  List<double> getSpacing() {
-    return [0.2, 0.2, 0.2, 0.2];
+  List<double> getSpacing(bool isMobileDevice) {
+    if (isMobileDevice) {
+      return [0.35, 0.3, 0.3, 0.2];
+    } else {
+      return [0.2, 0.2, 0.2, 0.2];
+    }
   }
 
   @override
