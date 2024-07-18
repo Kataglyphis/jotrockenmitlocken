@@ -122,7 +122,7 @@ jobs:
           password: ${{ secrets.DEV_WASM_PW }}
           local-dir: "./build/web/"
 
-      - name: "Build Web App with cnavaskit"
+      - name: "Build Web App with canavaskit"
         if: github.ref == 'refs/heads/dev'
         run: |
           ls -R assets/
