@@ -95,14 +95,14 @@ jobs:
         run: |
           flutter build web --release --web-renderer canvaskit
 
-      - name: "Build Web App (WASM)"
-        if: github.ref == 'refs/heads/dev'
-        id: build-wasm
-        continue-on-error: true
-        run: |
-          should_run=false
-          flutter build web --release --wasm
-          should_run=true
+      # - name: "Build Web App (WASM)"
+      #   if: github.ref == 'refs/heads/dev'
+      #   id: build-wasm
+      #   continue-on-error: true
+      #   run: |
+      #     should_run=false
+      #     flutter build web --release --wasm
+      #     should_run=true
 
       - name: 📂 Sync files to main domain
         if: github.ref == 'refs/heads/main'
