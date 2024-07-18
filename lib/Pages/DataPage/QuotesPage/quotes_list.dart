@@ -37,8 +37,12 @@ class _QuotesListState extends CsvDataListState<Quote, QuotesList> {
   }
 
   @override
-  List<double> getSpacing() {
-    return [0.2, 0.65];
+  List<double> getSpacing(bool isMobileDevice) {
+    if (isMobileDevice) {
+      return [0.2, 0.65];
+    } else {
+      return [0.2, 0.65];
+    }
   }
 
   @override
