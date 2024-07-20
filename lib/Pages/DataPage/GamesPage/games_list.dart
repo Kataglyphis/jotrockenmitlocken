@@ -53,8 +53,12 @@ class _GamesListState extends CsvDataListState<Game, GamesList> {
   }
 
   @override
-  List<double> getSpacing() {
-    return [0.3, 0.3, 0.3];
+  List<double> getSpacing(bool isMobileDevice) {
+    if (isMobileDevice) {
+      return [0.3, 0.3, 0.3];
+    } else {
+      return [0.3, 0.3, 0.3];
+    }
   }
 
   @override
