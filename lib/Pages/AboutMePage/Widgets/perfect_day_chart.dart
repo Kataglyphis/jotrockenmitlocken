@@ -33,7 +33,7 @@ class PerfectDayState extends State<PerfectDay> {
       chartData.add(PieChartDataEntry(entryName, valueInPercentage));
     });
     double currentWidth = MediaQuery.of(context).size.width;
-    return PieChart(
+    return PieChartWidget(
       chartConfig: chartConfig,
       title: AppLocalizations.of(context)!.myPerfectDay,
       animate: currentWidth > narrowScreenWidthThreshold,
