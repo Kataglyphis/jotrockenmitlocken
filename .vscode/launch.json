@@ -13,10 +13,10 @@
 			"args": [
 				// "--web-renderer",
 				// "canvaskit",
-				"--web-port",
-				"8081",
-				"--web-hostname",
-				"localhost"
+				// "--web-port",
+				// "8081",
+				// "--web-hostname",
+				// "localhost"
 			]
 		},
 		{
