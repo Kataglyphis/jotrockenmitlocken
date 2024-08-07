@@ -33,13 +33,10 @@ class PerfectDayState extends State<PerfectDay> {
       chartData.add(PieChartDataEntry(entryName, valueInPercentage));
     });
     double currentWidth = MediaQuery.of(context).size.width;
-    return SizedBox(
-      height: 10,
+    return PieChartWidget(
+      chartConfig: chartConfig,
+      title: AppLocalizations.of(context)!.myPerfectDay,
+      animate: currentWidth > narrowScreenWidthThreshold,
     );
-    // PieChartWidget(
-    //   chartConfig: chartConfig,
-    //   title: AppLocalizations.of(context)!.myPerfectDay,
-    //   animate: currentWidth > narrowScreenWidthThreshold,
-    // );
   }
 }
