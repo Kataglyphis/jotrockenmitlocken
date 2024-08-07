@@ -93,7 +93,7 @@ jobs:
       - name: "Build Web App"
         if: github.ref == 'refs/heads/main'
         run: |
-          flutter build web --release --web-renderer canvaskit
+          flutter build web --release --wasm
 
       - name: "Build Web App (WASM)"
         if: github.ref == 'refs/heads/dev'
