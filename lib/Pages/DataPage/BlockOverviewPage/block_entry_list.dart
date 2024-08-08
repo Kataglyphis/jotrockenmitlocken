@@ -25,10 +25,6 @@ class BlockEntryList extends DataList {
 }
 
 class _BlockEntryListState extends DataListState<Book, BlockEntryList> {
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   List<double> getSpacing(bool isMobileDevice) {

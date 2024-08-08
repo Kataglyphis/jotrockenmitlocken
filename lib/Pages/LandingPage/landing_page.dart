@@ -59,7 +59,7 @@ class LandingPageState extends State<LandingPage> {
         fileTitle: blogPagesConfig[i].fileTitle,
         fileAdditionalInfo: blogPagesConfig[i].fileAdditionalInfo,
         fileBaseDir: blogPagesConfig[i].fileBaseDir,
-        label: Localizations.localeOf(context) == Locale("de")
+        label: Localizations.localeOf(context) == const Locale("de")
             ? blogPagesConfig[i].shortDescriptionDE
             : blogPagesConfig[i].shortDescriptionEN,
         routerPath: blogPagesConfig[i].getRoutingName(),
