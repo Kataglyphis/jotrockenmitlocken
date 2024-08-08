@@ -4,7 +4,7 @@ import 'package:jotrockenmitlocken/Pages/DataPage/QuotesPage/quote.dart';
 import 'package:jotrockenmitlockenrepo/Media/DataTable/datacell_content_strategies.dart';
 
 class QuotesList extends CsvDataList {
-  QuotesList({
+  const QuotesList({
     super.key,
     required super.entryRedirectText,
     required super.dataFilePath,
