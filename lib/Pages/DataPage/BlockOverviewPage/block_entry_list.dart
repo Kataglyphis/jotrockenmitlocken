@@ -5,7 +5,7 @@ import 'package:jotrockenmitlockenrepo/Media/DataTable/datacell_content_strategi
 import 'package:jotrockenmitlockenrepo/app_attributes.dart';
 
 class BlockEntryList extends DataList {
-  BlockEntryList({
+  const BlockEntryList({
     super.key,
     required super.data,
     required super.entryRedirectText,
@@ -25,7 +25,6 @@ class BlockEntryList extends DataList {
 }
 
 class _BlockEntryListState extends DataListState<Book, BlockEntryList> {
-
   @override
   List<double> getSpacing(bool isMobileDevice) {
     if (isMobileDevice) {
