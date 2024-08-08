@@ -28,10 +28,6 @@ class BooksList extends CsvDataList {
 }
 
 class _BooksListState extends CsvDataListState<Book, BooksList> {
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Future<(List<Book>, List<String>)> convertRawCSVDataToFinalLayout(

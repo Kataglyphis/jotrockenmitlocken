@@ -39,7 +39,7 @@ class DocumentPageState extends State<DocumentPage> {
           title: 'Bachelor_Thesis.pdf',
           additionalInfo: (isMobileDevice)
               ? '~33MB'
-              : (currentLocale == Locale("de"))
+              : (currentLocale == const Locale("de"))
                   ? '~33MB DE\nZeitlich stabile blue noise Fehlerverteilung im Bildraum für Echtzeitanwendungen'
                   : '~33MB DE\nTemporally stable blue noise error distribution in image space for real-time applications'),
       File(
@@ -47,7 +47,7 @@ class DocumentPageState extends State<DocumentPage> {
           title: 'Master_Thesis.pdf',
           additionalInfo: (isMobileDevice)
               ? '~47MB'
-              : (currentLocale == Locale("de"))
+              : (currentLocale == const Locale("de"))
                   ? '~47MB EN\nGestaltung von nutzeradaptiven Inhalten für Mixed Reality mit Hilfe von Eye- und Hand-Tracking'
                   : '~47MB EN\nDesigning User-adaptive Content for Mixed Reality Using Eye and Hand Tracking'),
     ];
