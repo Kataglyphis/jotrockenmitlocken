@@ -7,7 +7,7 @@ import 'package:jotrockenmitlocken/my_two_cents_config.dart';
 import 'package:jotrockenmitlockenrepo/app_attributes.dart';
 
 class BooksList extends CsvDataList {
-  BooksList(
+  const BooksList(
       {super.key,
       required super.dataFilePath,
       required super.title,
@@ -28,11 +28,6 @@ class BooksList extends CsvDataList {
 }
 
 class _BooksListState extends CsvDataListState<Book, BooksList> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
   @override
   Future<(List<Book>, List<String>)> convertRawCSVDataToFinalLayout(
       List<List<dynamic>> csvListData) async {
