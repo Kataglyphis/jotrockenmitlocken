@@ -19,9 +19,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 🚚 Get latest code
-        uses: actions/checkout@v4.1.7
+        uses: actions/checkout@v4.2.0
       - name: Set up Python 3.11
-        uses: actions/setup-python@v5.1.0
+        uses: actions/setup-python@v5.2.0
         with:
           python-version: "3.11"
       # You can test your matrix by printing the current Python version
@@ -33,27 +33,27 @@ jobs:
           echo $(pwd)
           ls
           python -c "import sys; print(sys.version)"
-          echo "$(pwd)/$LOCAL_ASSETS_FOLDER"
+          # echo "$(pwd)/$LOCAL_ASSETS_FOLDER"
           python scripts/download_markdown_files.py ${{ secrets.WEBDAV_HOSTNAME }} ${{ secrets.WEBDAV_USERNAME }} ${{ secrets.WEBDAV_PASSWORD }} ${{ secrets.REMOTE_BASE_PATH }} "$LOCAL_ASSETS_FOLDER"
-          echo "After executing .md deploy script the asset folder has following content:"
-          ls "$(pwd)/$LOCAL_ASSETS_FOLDER"
-          echo "Verifying downloaded files in assets folder:"
-          ls -R "$(pwd)/$LOCAL_ASSETS_FOLDER"
-          echo "Verifying downloaded files in assets/documents/books/ folder:"
-          ls -R "$LOCAL_ASSETS_FOLDER/documents/books"
-          echo "Verifying downloaded files in $(pwd)/assets/documents/books/ folder:"
-          ls -R "$(pwd)/$LOCAL_ASSETS_FOLDER/documents/books"
+          # echo "After executing .md deploy script the asset folder has following content:"
+          # ls "$(pwd)/$LOCAL_ASSETS_FOLDER"
+          # echo "Verifying downloaded files in assets folder:"
+          # ls -R "$(pwd)/$LOCAL_ASSETS_FOLDER"
+          # echo "Verifying downloaded files in assets/documents/books/ folder:"
+          # ls -R "$LOCAL_ASSETS_FOLDER/documents/books"
+          # echo "Verifying downloaded files in $(pwd)/assets/documents/books/ folder:"
+          # ls -R "$(pwd)/$LOCAL_ASSETS_FOLDER/documents/books"
 
-      - name: Verify downloaded files
-        run: |
-          echo "Verifying downloaded files in assets folder:"
-          ls -R "$(pwd)/$LOCAL_ASSETS_FOLDER"
+      # - name: Verify downloaded files
+      #   run: |
+      #     echo "Verifying downloaded files in assets folder:"
+      #     ls -R "$(pwd)/$LOCAL_ASSETS_FOLDER"
 
       - name: Setup Flutter SDK
         uses: flutter-actions/setup-flutter@v3.6
         with:
           channel: stable
-          version: 3.24.1
+          version: 3.24.3
 
       # Note: This workflow uses the latest stable version of the Dart SDK.
       # You can specify other versions if desired, see documentation here:
