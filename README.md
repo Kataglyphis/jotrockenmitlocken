@@ -48,6 +48,7 @@ my [md2pdf](https://github.com/Kataglyphis/Kataglyphis-mdToPdf)-project that eve
 [![TopLang](https://img.shields.io/github/languages/top/Kataglyphis/jotrockenmitlocken)]() 
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/paypalme/JonasHeinle)
 [![Twitter](https://img.shields.io/twitter/follow/Cataglyphis_?style=social)](https://twitter.com/Cataglyphis_)
+[![YouTube](https://img.shields.io/youtube/channel/subscribers/UC3LZiH4sZzzaVBCUV8knYeg?style=social)](https://www.youtube.com/channel/UC3LZiH4sZzzaVBCUV8knYeg)
 
 <p align="center">
   <a href="#key-features">Key Features</a> •
@@ -102,6 +103,11 @@ But why not just using a CMS? Here are my reasons:
   * I want a very unique look and feel for my website. Therefore I want all power over my
   application which can be difficult with some drag-and-drop solutions.
   * I want to learn front-end development and its challenges. Just using wordpress won't bring you there
+  * I developed my own [WebDavClient](https://github.com/Kataglyphis/Kataglyphis-WebDavClient)
+    that allows me to keep the content (.md files, images, videos, .csv, etc.) private while
+    the source code stays **Open Source**. You might also be interested in **keeping your data private**.
+    Have a look into my [Build Pipeline File](.github\workflows\dart.yml) for more 
+    information  
 
 
 ### Content
