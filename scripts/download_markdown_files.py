@@ -1,5 +1,5 @@
 import argparse
-from webdavclient.webdavclient import WebDavClient
+from kataglyphis_webdavclient.webdavclient import WebDavClient
 
 
 # Parse command-line arguments

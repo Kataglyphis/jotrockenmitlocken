@@ -13,7 +13,12 @@
   <a href="https://jonasheinle.de"><img src="images/glm_logo.png" alt="VulkanEngine" width="200"></a>
 </h1> -->
 
-<h4 align="center">My personal blog as responsive web app using Flutter/Dart. Every blog post is written in pure markdown and therefore very lightweight to use and add new content. It is highly customizable for your needs, your personal web blog or you next Frontend project (<b>not only</b> web but also native Linux/Windows/Android/Web/iOS)<a href="https://jonasheinle.de" target="_blank"></a>.</h4>
+<h4 align="center">My personal blog as responsive web app using Flutter/Dart. 
+Every blog post is written in pure markdown :boom: and therefore very lightweight to use 
+and add new content. 
+It is highly customizable for your needs, your personal web blog or you next Frontend 
+project (<b>not only</b> web but also native Linux/Windows/Android/Web/iOS)
+<a href="https://jonasheinle.de" target="_blank"></a>.</h4>
 
 <p align="center">
   <br>
@@ -24,16 +29,26 @@
 
 > **__Note__**: If your run locally this website you are not able to
 neither navigate to the blog entries nor the book/film/... critics. 
-Their "source content .md files" are my intellectual property and therefore only visible to me :) The flutter/dart source code stays
+Their "source content .md files" are my intellectual property and therefore only visible to me :) 
+The flutter/dart source code stays
 **__Open Source__** of course
 
 Visit [jonasheinle.de](https://jonasheinle.de/) for the full experience of my personal web blog. Cheers! :beers: </br>
-Visit my repo [jotrockenmitlockenrepo](https://github.com/Kataglyphis/jotrockenmitlockenrepo) if you are interested in Flutter/Dart development in general. All components in this repo are reusable for any target available (Linux/Windows/Android/Web).
+Visit my repo [jotrockenmitlockenrepo](https://github.com/Kataglyphis/jotrockenmitlockenrepo) if you are interested 
+in Flutter/Dart development in general. 
+All components in this repo are reusable for any target available (Linux/Windows/Android/Web).  
+
+🚀 Markdown is great 🚀:  
+If you also love the lightweight markdown approach you might be interested in 
+my [md2pdf](https://github.com/Kataglyphis/Kataglyphis-mdToPdf)-project that even allows you to convert markdown to a a4paper PDF or presentation slides PDF :satisfied:   
+🎉🎉🎉
+
 
 [![Build](https://github.com/Kataglyphis/jotrockenmitlocken/actions/workflows/dart.yml/badge.svg)](https://github.com/Kataglyphis/jotrockenmitlocken/actions/workflows/dart.yml)
 [![TopLang](https://img.shields.io/github/languages/top/Kataglyphis/jotrockenmitlocken)]() 
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/paypalme/JonasHeinle)
 [![Twitter](https://img.shields.io/twitter/follow/Cataglyphis_?style=social)](https://twitter.com/Cataglyphis_)
+[![YouTube](https://img.shields.io/youtube/channel/subscribers/UC3LZiH4sZzzaVBCUV8knYeg?style=social)](https://www.youtube.com/channel/UC3LZiH4sZzzaVBCUV8knYeg)
 
 <p align="center">
   <a href="#key-features">Key Features</a> •
@@ -76,8 +91,11 @@ Visit my repo [jotrockenmitlockenrepo](https://github.com/Kataglyphis/jotrockenm
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-I always wanted an easy way to publish new content (blog posts, thoughts about books,...) fast. But why not just using a CMS? Here are my reasons:
-  * as the content is pure markdown my approach allows me to always change the technology easily, many CMS integrate the content very strongly into their technology
+I always wanted an easy way to publish new content :metal: 
+(blog posts, thoughts about books,...) fast. 
+But why not just using a CMS? Here are my reasons:
+  * as the content is pure markdown my approach allows me to always change the technology easily, 
+    many CMS integrate the content very strongly into their technology
     * therefore you will not make yourself dependent from my repo. You are always able to switch :cat2:
   * what if I want to build an UI for a native Linux application? Than all effort brought
     into building a web blog with a CMS is more or less useless. With this project I have
@@ -85,11 +103,17 @@ I always wanted an easy way to publish new content (blog posts, thoughts about b
   * I want a very unique look and feel for my website. Therefore I want all power over my
   application which can be difficult with some drag-and-drop solutions.
   * I want to learn front-end development and its challenges. Just using wordpress won't bring you there
+  * I developed my own [WebDavClient](https://github.com/Kataglyphis/Kataglyphis-WebDavClient)
+    that allows me to keep the content (.md files, images, videos, .csv, etc.) private while
+    the source code stays **Open Source**. You might also be interested in **keeping your data private**.
+    Have a look into my [Build Pipeline File](.github\workflows\dart.yml) for more 
+    information  
 
 
 ### Content
 I truly believe in open source. Hence you will get all source code for free use and ready to go.</br>
-My approach allows me to separate the website data from its view (MVC best practice). You will not see my blog posts(only the dummy entries) in this repo. They are my intellectual property :wink:</br>
+My approach allows me to separate the website data from its view (MVC best practice). 
+You will not see my blog posts(only the dummy entries) in this repo. They are my intellectual property :wink:</br>
 The `assets` directory houses all files you want to include within your application namely:
 * images
 * videos
@@ -97,9 +121,11 @@ The `assets` directory houses all files you want to include within your applicat
 * documents (f.e. .md for blog posts)
 * fonts 
 * and the settings directory which harbors many different options for your own needs:
-  * global user settings: Here you can easily customize the blog for you. Set all necessary user related options (like email, name, image, etc...)
+  * global user settings: Here you can easily customize the blog for you. 
+    Set all necessary user related options (like email, name, image, etc...)
   * All entries in the user_skills.json will be displayed in the corresponding section.
-* app settings: set the app name, title. You are able to disable the footer; the **supportedLocales** field can have the following values:
+* app settings: set the app name, title. You are able to disable the footer; 
+  the **supportedLocales** field can have the following values:
   * ["de"]: build a web app in pure german
   * ["en"]: build a web app in pure english
   * ["de","en"] or :["en","de"] You can switch between english and german
@@ -210,7 +236,7 @@ apps](https://flutter.dev/docs/development/accessibility-and-localization/intern
 ### Built With
 
 * [Flutter/Dart](https://flutter.dev/)
-* [WebDavClient]() Wrote my own WebDavClient for this repo :)
+* [WebDavClient](https://github.com/Kataglyphis/Kataglyphis-WebDavClient) Wrote my own WebDavClient for this repo :)
 
 <!-- GETTING STARTED -->
 ## Getting Started
@@ -268,7 +294,7 @@ blockquote.
 
 Jonas Heinle - [@Cataglyphis_](https://twitter.com/Cataglyphis_) - jonasheinle@googlemail.com
 
-Project Link: [https://github.com/Kataglyphis/jonasheinle.de](https://github.com/Kataglyphis/jonasheinle.de)
+Project Link: [https://github.com/Kataglyphis/jonasheinle.de](https://github.com/Kataglyphis/jotrockenmitlocken)
 
 
 <!-- ACKNOWLEDGEMENTS -->
