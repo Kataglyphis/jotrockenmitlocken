@@ -106,7 +106,7 @@ jobs:
       - name: "Build Web App"
         if: github.ref == 'refs/heads/main'
         run: |
-          flutter build web --release --web-renderer canvaskit
+          flutter build web --release
 
       - name: "Build Web App (WASM)"
         if: github.ref == 'refs/heads/dev'
@@ -137,7 +137,7 @@ jobs:
         if: github.ref == 'refs/heads/dev'
         run: |
           ls -R assets/
-          flutter build web --release --web-renderer canvaskit
+          flutter build web --release
 
       - name: 📂 Sync files to dev domain
         if: github.ref == 'refs/heads/dev'
