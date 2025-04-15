@@ -1,4 +1,5 @@
 {
-	"cmake.configureOnOpen": false,
-	"FSharp.suggestGitignore": false
+    "cmake.configureOnOpen": false,
+    "FSharp.suggestGitignore": false,
+    "idf.pythonInstallPath": "/home/jones/miniforge3/bin/python"
 }
