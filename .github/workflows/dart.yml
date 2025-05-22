@@ -21,7 +21,7 @@ jobs:
       - name: 🚚 Get latest code
         uses: actions/checkout@v4.2.2
       - name: Set up Python 3.11
-        uses: actions/setup-python@v5.3.0
+        uses: actions/setup-python@v5.5.0
         with:
           python-version: "3.11"
       # You can test your matrix by printing the current Python version
@@ -66,7 +66,7 @@ jobs:
         uses: flutter-actions/setup-flutter@v4.0
         with:
           channel: stable
-          version: 3.27.0
+          version: 3.32.0
 
       # Note: This workflow uses the latest stable version of the Dart SDK.
       # You can specify other versions if desired, see documentation here:
@@ -106,7 +106,7 @@ jobs:
       - name: "Build Web App"
         if: github.ref == 'refs/heads/main'
         run: |
-          flutter build web --release --web-renderer canvaskit
+          flutter build web --release
 
       - name: "Build Web App (WASM)"
         if: github.ref == 'refs/heads/dev'
@@ -137,7 +137,7 @@ jobs:
         if: github.ref == 'refs/heads/dev'
         run: |
           ls -R assets/
-          flutter build web --release --web-renderer canvaskit
+          flutter build web --release
 
       - name: 📂 Sync files to dev domain
         if: github.ref == 'refs/heads/dev'
