@@ -21,7 +21,7 @@ jobs:
       - name: 🚚 Get latest code
         uses: actions/checkout@v4.2.2
       - name: Set up Python 3.11
-        uses: actions/setup-python@v5.5.0
+        uses: actions/setup-python@v5.6.0
         with:
           python-version: "3.11"
       # You can test your matrix by printing the current Python version
