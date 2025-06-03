@@ -156,6 +156,6 @@ jobs:
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.DOC_WEBSITE_SERVER }}
-          username: ${{ secrets.DOC_WEBSITE_USERNAME }}
+          username: ${{ secrets.DOC_WEBSITE_USER }}
           password: ${{ secrets.DOC_WEBSITE_PW }}
           local-dir: "./doc/api/"
