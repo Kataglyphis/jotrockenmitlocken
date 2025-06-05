@@ -1,5 +1,5 @@
 {
     "cmake.configureOnOpen": false,
     "FSharp.suggestGitignore": false,
-    "idf.pythonInstallPath": "C:\\Users\\JSH\\.espressif\\tools\\idf-python\\3.11.2\\python.exe"
+    "idf.pythonInstallPath": "/home/jones/miniforge3/bin/python"
 }
