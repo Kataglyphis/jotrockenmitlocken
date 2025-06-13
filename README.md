@@ -33,6 +33,8 @@ Their "source content .md files" are my intellectual property and therefore only
 The flutter/dart source code stays
 **__Open Source__** of course
 
+**__Official docs__** are located [here](https://holdmydocs.jonasheinle.de).
+
 Visit [jonasheinle.de](https://jonasheinle.de/) for the full experience of my personal web blog. Cheers! :beers: </br>
 Visit my repo [jotrockenmitlockenrepo](https://github.com/Kataglyphis/jotrockenmitlockenrepo) if you are interested 
 in Flutter/Dart development in general. 
