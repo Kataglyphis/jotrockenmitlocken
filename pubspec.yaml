@@ -8,8 +8,8 @@ publish_to: "none"
 version: 1.3.5
 
 environment:
-  sdk: ">=3.8.1 <4.0.0"
-  flutter: ">=3.32.8"
+  sdk: ">=3.9.0 <4.0.0"
+  flutter: ">=3.35.1"
 
 dependencies:
   flutter:
@@ -21,7 +21,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   intl: ^0.20.2
-  go_router: ^16.0.0
+  go_router: ^16.1.0
   font_awesome_flutter: any
 dev_dependencies:
   mockito: ^5.4.6
