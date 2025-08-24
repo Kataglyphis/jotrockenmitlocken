@@ -148,7 +148,7 @@ jobs:
           password: ${{ secrets.DEV_PW }}
           local-dir: "./build/web/"
 
-      - name: Build docs 
+      - name: Build docs
         run: |
           dart doc
 
