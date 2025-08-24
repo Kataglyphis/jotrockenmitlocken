@@ -225,15 +225,24 @@ apps](https://flutter.dev/docs/development/accessibility-and-localization/intern
 
 ### Key Features
 
-<!-- ❌  -->
-|          Feature                                 |   Implement Status |
-| :-----------------------------------------:      | :----------------: |
-| Add you media critics(books,films,..) easily     |         ✔️         |
-| Markdown rendering                               |         ✔️         |
-| Publish blog posts by only editing a .json       |         ✔️         |
-| Display .csv data                                |         ✔️         |
-| High degree of customization for yourself        |         ✔️         |
-| Make your files (CV,thesis,..) open-/downloadable|         ✔️         |
+<div align="center">
+
+|         Category                        |                   Feature                                                             |  Implement Status  |
+|--------------------------------------------|------------------------------------------------------------------------------------|:------------------------------:|
+|  **Media Management**    | Add your media critics (books, films, ...) easily          |         ✔️                      |
+|  **Content Rendering**      | Markdown rendering                                                        |         ✔️                     |
+|                                                 | Display .csv data                                                               |         ✔️                      |
+|  **Publishing**                     |  Publish blog posts by only editing a .json                    |         ✔️                     |
+|  **Customization**              | High degree of customization for yourself                   |         ✔️                      |
+|  **File Access**                    | Make your files (CV, thesis, ...) open-/downloadable  |         ✔️                     |  
+
+</div>
+
+**Legend:**  
+- ✔️ – completed  
+- 🔶 – in progress  
+- ❌ – not started
+
 
 ### Built With
 
@@ -300,14 +309,7 @@ Project Link: [https://github.com/Kataglyphis/jonasheinle.de](https://github.com
 
 
 <!-- ACKNOWLEDGEMENTS -->
-<!-- ## Acknowledgements
-
-You will find important links to information in the code.
-But here in general some good sources of information: -->
-
-<!-- Thanks for free 3D Models: 
-* [Morgan McGuire, Computer Graphics Archive, July 2017 (https://casual-effects.com/data)](http://casual-effects.com/data/)
-* [Viking room](https://sketchfab.com/3d-models/viking-room-a49f1b8e4f5c4ecf9e1fe7d81915ad38) -->
+## Acknowledgements
 
 ## Literature 
 
@@ -317,40 +319,3 @@ Flutter/Dart
 * [Johannes Milke](https://www.youtube.com/@JohannesMilke)
 * [package repository for Dart and Flutter apps](https://pub.dev/)
 * [Official flutter web example](https://flutter.github.io/samples/material_3.html)
-<!-- CMake/C++
-* [Cpp best practices](https://github.com/cpp-best-practices/cppbestpractices)
-
-Vulkan
-* [Udemy course by Ben Cook](https://www.udemy.com/share/102M903@JMHgpMsdMW336k2s5Ftz9FMx769wYAEQ7p6GMAPBsFuVUbWRgq7k2uY6qBCG6UWNPQ==/)
-* [Vulkan Tutorial](https://vulkan-tutorial.com/)
-* [Vulkan Raytracing Tutorial](https://developer.nvidia.com/rtx/raytracing/vkray)
-* [Vulkan Tutorial; especially chapter about integrating imgui](https://frguthmann.github.io/posts/vulkan_imgui/)
-* [NVidia Raytracing tutorial with Vulkan](https://nvpro-samples.github.io/vk_raytracing_tutorial_KHR/)
-* [Blog from Sascha Willems](https://www.saschawillems.de/)
-
-Physically Based Shading
-* [Advanced Global Illumination by Dutre, Bala, Bekaert](https://www.oreilly.com/library/view/advanced-global-illumination/9781439864951/)
-* [The Bible: PBR book](https://pbr-book.org/3ed-2018/Reflection_Models/Microfacet_Models)
-* [Real shading in Unreal engine 4](https://blog.selfshadow.com/publications/s2013-shading-course/karis/s2013_pbs_epic_notes_v2.pdf)
-* [Physically Based Shading at Disney](https://blog.selfshadow.com/publications/s2012-shading-course/burley/s2012_pbs_disney_brdf_notes_v3.pdf)
-* [RealTimeRendering](https://www.realtimerendering.com/)
-* [Understanding the Masking-Shadowing Function in Microfacet-Based BRDFs](https://hal.inria.fr/hal-01024289/)
-* [Sampling the GGX Distribution of Visible Normals](https://pdfs.semanticscholar.org/63bc/928467d760605cdbf77a25bb7c3ad957e40e.pdf)
-
-Path tracing
-* [NVIDIA Path tracing Tutorial](https://github.com/nvpro-samples/vk_mini_path_tracer/blob/main/vk_mini_path_tracer/main.cpp) -->
-
-<!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/othneildrew/Best-README-Template.svg?style=for-the-badge
-[contributors-url]: https://github.com/othneildrew/Best-README-Template/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/othneildrew/Best-README-Template.svg?style=for-the-badge
-[forks-url]: https://github.com/othneildrew/Best-README-Template/network/members
-[stars-shield]: https://img.shields.io/github/stars/othneildrew/Best-README-Template.svg?style=for-the-badge
-[stars-url]: https://github.com/othneildrew/Best-README-Template/stargazers
-[issues-shield]: https://img.shields.io/github/issues/othneildrew/Best-README-Template.svg?style=for-the-badge
-[issues-url]: https://github.com/othneildrew/Best-README-Template/issues
-[license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
-[license-url]: https://github.com/othneildrew/Best-README-Template/blob/master/LICENSE.txt
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://www.linkedin.com/in/jonas-heinle-0b2a301a0/
