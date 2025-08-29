@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 🚚 Get latest code
-        uses: actions/checkout@v4.2.2
+        uses: actions/checkout@v5.0.0
       - name: Set up Python 3.11
         uses: actions/setup-python@v5.6.0
         with:
@@ -66,7 +66,7 @@ jobs:
         uses: flutter-actions/setup-flutter@v4.0
         with:
           channel: stable
-          version: 3.35.1
+          version: 3.35.2
 
       # Note: This workflow uses the latest stable version of the Dart SDK.
       # You can specify other versions if desired, see documentation here:
@@ -117,7 +117,7 @@ jobs:
 
       - name: 📂 Sync files to main domain
         if: github.ref == 'refs/heads/main'
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
         with:
           server: ${{ secrets.SERVER }}
           username: ${{ secrets.USERNAME }}
@@ -126,7 +126,7 @@ jobs:
 
       - name: 📂 Sync files to dev wasm domain
         if: github.ref == 'refs/heads/dev' #&& steps.build-wasm.outputs.should_run == 'true'
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
         with:
           server: ${{ secrets.SERVER }}
           username: ${{ secrets.DEV_WASM_USERNAME }}
@@ -141,7 +141,7 @@ jobs:
 
       - name: 📂 Sync files to dev domain
         if: github.ref == 'refs/heads/dev'
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
         with:
           server: ${{ secrets.SERVER }}
           username: ${{ secrets.DEV_USERNAME }}
@@ -153,7 +153,7 @@ jobs:
           dart doc
 
       - name: 📂 Sync files to doc domain
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
         with:
           server: ${{ secrets.DOC_WEBSITE_SERVER }}
           username: ${{ secrets.DOC_WEBSITE_USER }}
