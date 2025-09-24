@@ -47,7 +47,7 @@ my [md2pdf](https://github.com/Kataglyphis/Kataglyphis-mdToPdf)-project that eve
 
 
 [![Build](https://github.com/Kataglyphis/jotrockenmitlocken/actions/workflows/dart.yml/badge.svg)](https://github.com/Kataglyphis/jotrockenmitlocken/actions/workflows/dart.yml)
-[![CodeQL](https://github.com/Kataglyphis/jotrockenmitlockenrepo/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/Kataglyphis/jotrockenmitlockenrepo/actions/workflows/github-code-scanning/codeql)
+[![CodeQL](https://github.com/Kataglyphis/jotrockenmitlocken/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/Kataglyphis/jotrockenmitlocken/actions/workflows/github-code-scanning/codeql)
 [![TopLang](https://img.shields.io/github/languages/top/Kataglyphis/jotrockenmitlocken)]() 
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/paypalme/JonasHeinle)
 [![Twitter](https://img.shields.io/twitter/follow/Cataglyphis_?style=social)](https://twitter.com/Cataglyphis_)
