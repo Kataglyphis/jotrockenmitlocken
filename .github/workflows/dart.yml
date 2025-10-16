@@ -35,10 +35,10 @@ jobs:
           pip install git+https://github.com/Kataglyphis/Kataglyphis-WebDavClient
 
       - name: Setup Flutter SDK
-        uses: flutter-actions/setup-flutter@v4.0
+        uses: flutter-actions/setup-flutter@v4.1
         with:
           channel: stable
-          version: 3.35.4
+          version: 3.35.6
 
       # git submodule update --init --recursive
       - name: Install dependencies
