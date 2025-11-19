@@ -33,6 +33,7 @@ jobs:
       - name: Setup python env
         run: |
           pip install git+https://github.com/Kataglyphis/Kataglyphis-WebDavClient
+          python scripts/download_markdown_files.py ${{ secrets.WEBDAV_HOSTNAME }} ${{ secrets.WEBDAV_USERNAME }} ${{ secrets.WEBDAV_PASSWORD }} ${{ secrets.REMOTE_BASE_PATH }} "$LOCAL_ASSETS_FOLDER"
 
       - name: Setup Flutter SDK
         uses: flutter-actions/setup-flutter@v4.1
