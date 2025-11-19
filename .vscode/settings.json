@@ -1,5 +1,5 @@
 {
     "cmake.configureOnOpen": false,
     "FSharp.suggestGitignore": false,
-    "idf.pythonInstallPath": "/home/jones/miniconda3/bin/python"
+    "idf.pythonInstallPath": "/usr/bin/python3"
 }
