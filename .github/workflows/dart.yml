@@ -24,16 +24,17 @@ jobs:
           fetch-depth: 0
           submodules: recursive
 
-      - name: Set up Python 3.13
-        uses: actions/setup-python@v6.0.0
-        with:
-          python-version: "3.13"
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+
+      - name: Set up Python 3.14
+        run: uv venv --python=3.14
 
       # You can test your matrix by printing the current Python version
-      - name: Setup python env
+      - name: Install WebDav Client and Sync content
         run: |
-          pip install git+https://github.com/Kataglyphis/Kataglyphis-WebDavClient
-          python scripts/download_markdown_files.py ${{ secrets.WEBDAV_HOSTNAME }} ${{ secrets.WEBDAV_USERNAME }} ${{ secrets.WEBDAV_PASSWORD }} ${{ secrets.REMOTE_BASE_PATH }} "$LOCAL_ASSETS_FOLDER"
+          uv pip install git+https://github.com/Kataglyphis/Kataglyphis-WebDavClient
+          uv run python scripts/download_markdown_files.py ${{ secrets.WEBDAV_HOSTNAME }} ${{ secrets.WEBDAV_USERNAME }} ${{ secrets.WEBDAV_PASSWORD }} ${{ secrets.REMOTE_BASE_PATH }} "$LOCAL_ASSETS_FOLDER"
 
       - name: Setup Flutter SDK
         uses: flutter-actions/setup-flutter@v4.1
