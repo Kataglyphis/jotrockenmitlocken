@@ -70,11 +70,10 @@ jobs:
         run: |
           flutter config --enable-web
 
-      # for production I do not use wasm yet!
       - name: "Build Web App"
         if: github.ref == 'refs/heads/main'
         run: |
-          flutter build web --release
+          flutter build web --release --wasm
 
       - name: "Build Web App (WASM)"
         if: github.ref == 'refs/heads/dev'
