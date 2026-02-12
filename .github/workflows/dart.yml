@@ -10,7 +10,7 @@ env:
 
 on:
   push:
-    branches: ["main", "dev"]
+    branches: ["main", "develop"]
 
 jobs:
   build:
@@ -76,7 +76,7 @@ jobs:
           flutter build web --release --wasm
 
       - name: "Build Web App (WASM)"
-        if: github.ref == 'refs/heads/dev'
+        if: github.ref == 'refs/heads/develop'
         id: build-wasm
         continue-on-error: true
         run: |
@@ -92,7 +92,7 @@ jobs:
           local-dir: "./build/web/"
 
       - name: 📂 Sync files to dev wasm domain
-        if: github.ref == 'refs/heads/dev' #&& steps.build-wasm.outputs.should_run == 'true'
+        if: github.ref == 'refs/heads/develop' #&& steps.build-wasm.outputs.should_run == 'true'
         uses: SamKirkland/FTP-Deploy-Action@v4.3.6
         with:
           server: ${{ secrets.SERVER }}
@@ -101,13 +101,13 @@ jobs:
           local-dir: "./build/web/"
 
       - name: "Build Web App with canavaskit"
-        if: github.ref == 'refs/heads/dev'
+        if: github.ref == 'refs/heads/develop'
         run: |
           ls -R assets/
           flutter build web --release
 
       - name: 📂 Sync files to dev domain
-        if: github.ref == 'refs/heads/dev'
+        if: github.ref == 'refs/heads/develop'
         uses: SamKirkland/FTP-Deploy-Action@v4.3.6
         with:
           server: ${{ secrets.SERVER }}
