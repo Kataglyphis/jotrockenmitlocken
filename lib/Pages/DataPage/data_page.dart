@@ -22,6 +22,15 @@ class DataPage extends StatefulWidget {
 
 class DataPageState extends State<DataPage> {
   List<List<Widget>> _createLandingPageChildWidgets(BuildContext context) {
+    final sqliteTestLabel =
+        (Localizations.localeOf(context) == const Locale('de'))
+        ? 'SQLite Self-Test'
+        : 'SQLite self test';
+    final sqliteTestDescription =
+        (Localizations.localeOf(context) == const Locale('de'))
+        ? 'Prüft sqlite3 im Browser (WASM) mit einer Test-Query.'
+        : 'Checks sqlite3 in the browser (WASM) with a test query.';
+
     List<Widget> childWidgetsLeftPage = [
       DataPageEntry(
         label: AppLocalizations.of(context)!.quotations,
@@ -37,6 +46,14 @@ class DataPageState extends State<DataPage> {
         imagePath: 'assets/images/Pages/Data/Film_cover.jpg',
         description: AppLocalizations.of(context)!.filmsDescription,
         lastModified: 'glotze',
+      ),
+      rowDivider,
+      DataPageEntry(
+        label: sqliteTestLabel,
+        routerPath: '/sqliteTest',
+        imagePath: 'assets/images/Pages/Data/Book_cover.jpg',
+        description: sqliteTestDescription,
+        lastModified: 'sqlite3',
       ),
       rowDivider,
     ];
