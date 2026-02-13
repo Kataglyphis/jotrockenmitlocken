@@ -4,6 +4,7 @@ import 'package:jotrockenmitlocken/Pages/DataPage/BooksPage/books_page_config.da
 import 'package:jotrockenmitlocken/Pages/DataPage/FilmsPage/films_page_config.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/GamesPage/games_page_config.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/data_pages_navbar_page_config.dart';
+import 'package:jotrockenmitlocken/Pages/DataPage/SqliteTestPage/sqlite_test_page_config.dart';
 import 'package:jotrockenmitlocken/Pages/DocumentsPage/document_page_navbar_config.dart';
 import 'package:jotrockenmitlocken/Pages/ErrorPage/error_page_stateful_branch_info_provider.dart';
 import 'package:jotrockenmitlocken/Pages/Footer/Pages/configs/contact_footer_config.dart';
@@ -26,8 +27,10 @@ class JotrockenmitLockenScreenConfigurations extends ScreenConfigurations
     with BlogDependentScreenConfigurations {
   List<BlogPageConfig> blogPageConfigs;
   List<MyTwoCentsConfig> twoCentsConfigs;
-  JotrockenmitLockenScreenConfigurations.fromBlogAndDataConfigs(
-      {required this.blogPageConfigs, required this.twoCentsConfigs});
+  JotrockenmitLockenScreenConfigurations.fromBlogAndDataConfigs({
+    required this.blogPageConfigs,
+    required this.twoCentsConfigs,
+  });
 
   @override
   List<StatefulBranchInfoProvider> getAllPagesConfigs() {
@@ -79,7 +82,7 @@ class JotrockenmitLockenScreenConfigurations extends ScreenConfigurations
       PrivacyPolicyFooterConfig(),
       CookieDeclarationFooterConfig(),
       DeclarationOnAccessibilityFooterConfig(),
-      CopyRightFooterConfig()
+      CopyRightFooterConfig(),
     ];
   }
 
@@ -102,6 +105,7 @@ class JotrockenmitLockenScreenConfigurations extends ScreenConfigurations
       FilmsPageConfig(),
       GamesPageConfig(),
       BlockOverviewPageConfig(),
+      SqliteTestPageConfig(),
     ];
   }
 }

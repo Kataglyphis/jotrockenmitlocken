@@ -5,6 +5,7 @@ import 'package:jotrockenmitlocken/Pages/DataPage/BlockOverviewPage/block_overvi
 import 'package:jotrockenmitlocken/Pages/DataPage/BooksPage/books_page.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/FilmsPage/films_page.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/GamesPage/games_page.dart';
+import 'package:jotrockenmitlocken/Pages/DataPage/SqliteTestPage/sqlite_test_page.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/data_page.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/media_critics_page.dart';
 import 'package:jotrockenmitlocken/Pages/DocumentsPage/documents_page.dart';
@@ -30,7 +31,8 @@ class JotrockenMitLockenRoutes extends RoutesCreator {
 
   @override
   List<(Widget, StatefulBranchInfoProvider)> getAllPagesWithConfigs(
-      AppAttributes appAttributes) {
+    AppAttributes appAttributes,
+  ) {
     List<(Widget, StatefulBranchInfoProvider)> allPagesAndConfigs = [];
     allPagesAndConfigs += _getNavBarPagesAndConfigs(appAttributes);
     allPagesAndConfigs += _getFooterPagesAndConfigs(appAttributes);
@@ -43,27 +45,32 @@ class JotrockenMitLockenRoutes extends RoutesCreator {
   }
 
   List<(Widget, StatefulBranchInfoProvider)> _getErrorPagesAndConfigs(
-      appAttributes) {
-    List<StatefulBranchInfoProvider> errorPageConfigs =
-        appAttributes.screenConfigurations.getErrorPagesConfig();
+    appAttributes,
+  ) {
+    List<StatefulBranchInfoProvider> errorPageConfigs = appAttributes
+        .screenConfigurations
+        .getErrorPagesConfig();
     List<Widget> errorPages = [
-      ErrorPage(footer: getFooter(appAttributes), appAttributes: appAttributes)
+      ErrorPage(footer: getFooter(appAttributes), appAttributes: appAttributes),
     ];
     assert(errorPages.length == errorPageConfigs.length);
     return [
       for (int i = 0; i < errorPages.length; i += 1)
-        (errorPages[i], errorPageConfigs[i])
+        (errorPages[i], errorPageConfigs[i]),
     ];
   }
 
   List<(Widget, StatefulBranchInfoProvider)> _getDataPagesAndConfigs(
-      AppAttributes appAttributes) {
+    AppAttributes appAttributes,
+  ) {
     List<StatefulBranchInfoProvider> dataPagesConfigs =
         blogDependentAppAttributes.blogDependentScreenConfigurations
             .getDataPagesConfig();
     List<Widget> dataPages = [
       QuotesPage(
-          footer: getFooter(appAttributes), appAttributes: appAttributes),
+        footer: getFooter(appAttributes),
+        appAttributes: appAttributes,
+      ),
       BooksPage(
         footer: getFooter(appAttributes),
         appAttributes: appAttributes,
@@ -80,18 +87,24 @@ class JotrockenMitLockenRoutes extends RoutesCreator {
         appAttributes: appAttributes,
         blogDependentAppAttributes: blogDependentAppAttributes,
       ),
+      SqliteTestPage(
+        footer: getFooter(appAttributes),
+        appAttributes: appAttributes,
+      ),
     ];
     assert(dataPages.length == dataPagesConfigs.length);
     return [
       for (int i = 0; i < dataPages.length; i += 1)
-        (dataPages[i], dataPagesConfigs[i])
+        (dataPages[i], dataPagesConfigs[i]),
     ];
   }
 
   List<(Widget, StatefulBranchInfoProvider)> _getNavBarPagesAndConfigs(
-      AppAttributes appAttributes) {
-    List<StatefulBranchInfoProvider> navBarPageConfigs =
-        appAttributes.screenConfigurations.getNavRailPagesConfig();
+    AppAttributes appAttributes,
+  ) {
+    List<StatefulBranchInfoProvider> navBarPageConfigs = appAttributes
+        .screenConfigurations
+        .getNavRailPagesConfig();
     List<Widget> navBarPages = [
       LandingPage(
         footer: getFooter(appAttributes),
@@ -99,20 +112,25 @@ class JotrockenMitLockenRoutes extends RoutesCreator {
         blogDependentAppAttributes: blogDependentAppAttributes,
       ),
       AboutMePage(
-          footer: getFooter(appAttributes), appAttributes: appAttributes),
+        footer: getFooter(appAttributes),
+        appAttributes: appAttributes,
+      ),
       DataPage(footer: getFooter(appAttributes), appAttributes: appAttributes),
       DocumentPage(
-          footer: getFooter(appAttributes), appAttributes: appAttributes),
+        footer: getFooter(appAttributes),
+        appAttributes: appAttributes,
+      ),
     ];
     assert(navBarPages.length == navBarPageConfigs.length);
     return [
       for (int i = 0; i < navBarPages.length; i += 1)
-        (navBarPages[i], navBarPageConfigs[i])
+        (navBarPages[i], navBarPageConfigs[i]),
     ];
   }
 
   List<(Widget, StatefulBranchInfoProvider)> _getMediaCriticsPagesAndConfigs(
-      AppAttributes appAttributes) {
+    AppAttributes appAttributes,
+  ) {
     List<MyTwoCentsConfig> blogPagesConfigs = blogDependentAppAttributes
         .blogDependentScreenConfigurations
         .getMediaCriticsPagesConfig();
@@ -124,7 +142,7 @@ class JotrockenMitLockenRoutes extends RoutesCreator {
               appAttributes: appAttributes,
               mediaCriticsPageConfig: pageConfig,
             ),
-            pageConfig
+            pageConfig,
           ),
         )
         .toList();
@@ -133,7 +151,8 @@ class JotrockenMitLockenRoutes extends RoutesCreator {
   }
 
   List<(Widget, StatefulBranchInfoProvider)> _getBlogPagesAndConfigs(
-      AppAttributes appAttributes) {
+    AppAttributes appAttributes,
+  ) {
     List<BlogPageConfig> blogPagesConfigs = blogDependentAppAttributes
         .blogDependentScreenConfigurations
         .getBlogPagesConfig();
@@ -145,7 +164,7 @@ class JotrockenMitLockenRoutes extends RoutesCreator {
               appAttributes: appAttributes,
               blogPageConfig: pageConfig,
             ),
-            pageConfig
+            pageConfig,
           ),
         )
         .toList();
@@ -154,9 +173,11 @@ class JotrockenMitLockenRoutes extends RoutesCreator {
   }
 
   List<(Widget, StatefulBranchInfoProvider)> _getFooterPagesAndConfigs(
-      AppAttributes appAttributes) {
-    List<FooterPageConfig> footerPagesConfigs =
-        appAttributes.screenConfigurations.getFooterPagesConfig();
+    AppAttributes appAttributes,
+  ) {
+    List<FooterPageConfig> footerPagesConfigs = appAttributes
+        .screenConfigurations
+        .getFooterPagesConfig();
     List<(Widget, StatefulBranchInfoProvider)> footerPages = footerPagesConfigs
         .map(
           (pageConfig) => (
@@ -166,7 +187,7 @@ class JotrockenMitLockenRoutes extends RoutesCreator {
               filePathDe: pageConfig.getFilePathDe(),
               filePathEn: pageConfig.getFilePathEn(),
             ),
-            pageConfig
+            pageConfig,
           ),
         )
         .toList();
@@ -177,8 +198,8 @@ class JotrockenMitLockenRoutes extends RoutesCreator {
   @override
   Footer getFooter(AppAttributes appAttributes) {
     return Footer(
-      footerPagesConfigs:
-          appAttributes.screenConfigurations.getFooterPagesConfig(),
+      footerPagesConfigs: appAttributes.screenConfigurations
+          .getFooterPagesConfig(),
       userSettings: appAttributes.userSettings,
       footerConfig: appAttributes.footerConfig,
     );
