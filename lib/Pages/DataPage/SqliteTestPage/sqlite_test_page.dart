@@ -28,7 +28,12 @@ class SqliteTestPageState extends State<SqliteTestPage> {
       _result = null;
     });
 
-    final result = await runSqliteSelfTest();
+    String result;
+    try {
+      result = await runSqliteSelfTest();
+    } catch (e) {
+      result = 'FEHLER: $e';
+    }
 
     if (!mounted) return;
     setState(() {
