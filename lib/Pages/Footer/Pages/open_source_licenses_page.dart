@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:jotrockenmitlocken/l10n/app_localizations.dart';
 import 'package:jotrockenmitlockenrepo/Layout/ResponsiveDesign/single_page.dart';
