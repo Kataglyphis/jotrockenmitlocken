@@ -134,6 +134,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String get copyrightFooterTitle => 'Copyright';
 
   @override
+  String get openSourceLicenses => 'Open source licenses';
+
+  @override
+  String get openSourceLicensesDescription =>
+      'This page lists third-party packages and their license texts used in this app.';
+
+  @override
+  String get openSourceLicensesError =>
+      'The open source licenses could not be loaded.';
+
+  @override
+  String get openSourceLicensesEmpty =>
+      'No open source licenses are currently available.';
+
+  @override
   String get visitBlogEntry => 'Visit blog entry';
 
   @override
