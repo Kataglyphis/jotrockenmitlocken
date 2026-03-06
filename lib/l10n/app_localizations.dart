@@ -338,6 +338,30 @@ abstract class AppLocalizations {
   /// **'Copyright'**
   String get copyrightFooterTitle;
 
+  /// No description provided for @openSourceLicenses.
+  ///
+  /// In en, this message translates to:
+  /// **'Open source licenses'**
+  String get openSourceLicenses;
+
+  /// No description provided for @openSourceLicensesDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'This page lists third-party packages and their license texts used in this app.'**
+  String get openSourceLicensesDescription;
+
+  /// No description provided for @openSourceLicensesError.
+  ///
+  /// In en, this message translates to:
+  /// **'The open source licenses could not be loaded.'**
+  String get openSourceLicensesError;
+
+  /// No description provided for @openSourceLicensesEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No open source licenses are currently available.'**
+  String get openSourceLicensesEmpty;
+
   /// No description provided for @visitBlogEntry.
   ///
   /// In en, this message translates to:

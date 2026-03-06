@@ -10,6 +10,8 @@ import 'package:jotrockenmitlocken/Pages/DataPage/data_page.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/media_critics_page.dart';
 import 'package:jotrockenmitlocken/Pages/DocumentsPage/documents_page.dart';
 import 'package:jotrockenmitlocken/Pages/ErrorPage/error_page.dart';
+import 'package:jotrockenmitlocken/Pages/Footer/Pages/configs/open_source_licenses_footer_config.dart';
+import 'package:jotrockenmitlocken/Pages/Footer/Pages/open_source_licenses_page.dart';
 import 'package:jotrockenmitlocken/blog_dependent_app_attributes.dart';
 
 import 'package:jotrockenmitlockenrepo/Pages/Footer/footer_page.dart';
@@ -179,8 +181,18 @@ class JotrockenMitLockenRoutes extends RoutesCreator {
         .screenConfigurations
         .getFooterPagesConfig();
     List<(Widget, StatefulBranchInfoProvider)> footerPages = footerPagesConfigs
-        .map(
-          (pageConfig) => (
+        .map((pageConfig) {
+          if (pageConfig is OpenSourceLicensesFooterConfig) {
+            return (
+              OpenSourceLicensesPage(
+                footer: getFooter(appAttributes),
+                appAttributes: appAttributes,
+              ),
+              pageConfig,
+            );
+          }
+
+          return (
             FooterPage(
               footer: getFooter(appAttributes),
               appAttributes: appAttributes,
@@ -188,8 +200,8 @@ class JotrockenMitLockenRoutes extends RoutesCreator {
               filePathEn: pageConfig.getFilePathEn(),
             ),
             pageConfig,
-          ),
-        )
+          );
+        })
         .toList();
 
     return footerPages;
