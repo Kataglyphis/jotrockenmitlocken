@@ -73,13 +73,13 @@ jobs:
       - name: "Build Web App"
         if: github.ref == 'refs/heads/main'
         run: |
-          flutter build web --release --wasm
+          flutter build web --release --wasm --no-tree-shake-icons
 
       - name: "Build Web App (WASM)"
         if: github.ref == 'refs/heads/develop'
         id: build-wasm
         run: |
-          flutter build web --release --wasm
+          flutter build web --release --wasm --no-tree-shake-icons
 
       - name: 📂 Sync files to main domain
         if: github.ref == 'refs/heads/main'
@@ -103,7 +103,7 @@ jobs:
         if: github.ref == 'refs/heads/develop'
         run: |
           rm -r ./build/web/
-          flutter build web --release
+          flutter build web --release --no-tree-shake-icons
 
       - name: 📂 Sync files to dev domain
         if: github.ref == 'refs/heads/develop'
