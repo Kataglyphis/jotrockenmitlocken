@@ -12,6 +12,7 @@ import 'package:jotrockenmitlocken/Pages/Footer/Pages/configs/cookie_declaration
 import 'package:jotrockenmitlocken/Pages/Footer/Pages/configs/copyright_footer_config.dart';
 import 'package:jotrockenmitlocken/Pages/Footer/Pages/configs/declaration_on_accessibility_footer_config.dart';
 import 'package:jotrockenmitlocken/Pages/Footer/Pages/configs/imprint_footer_config.dart';
+import 'package:jotrockenmitlocken/Pages/Footer/Pages/configs/open_source_licenses_footer_config.dart';
 import 'package:jotrockenmitlocken/Pages/Footer/Pages/configs/privacy_policy_config.dart';
 import 'package:jotrockenmitlocken/Pages/LandingPage/landing_page_navbar_page_config.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/QuotesPage/quotations_page_config.dart';
@@ -83,6 +84,7 @@ class JotrockenmitLockenScreenConfigurations extends ScreenConfigurations
       CookieDeclarationFooterConfig(),
       DeclarationOnAccessibilityFooterConfig(),
       CopyRightFooterConfig(),
+      OpenSourceLicensesFooterConfig(),
     ];
   }
 
