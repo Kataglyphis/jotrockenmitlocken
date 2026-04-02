@@ -78,7 +78,6 @@ jobs:
       - name: "Build Web App (WASM)"
         if: github.ref == 'refs/heads/develop'
         id: build-wasm
-        continue-on-error: true
         run: |
           flutter build web --release --wasm
 
@@ -103,7 +102,7 @@ jobs:
       - name: "Build Web App with canavaskit"
         if: github.ref == 'refs/heads/develop'
         run: |
-          ls -R assets/
+          rm -r ./build/web/
           flutter build web --release
 
       - name: 📂 Sync files to dev domain
