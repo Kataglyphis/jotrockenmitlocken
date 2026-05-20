@@ -5,7 +5,6 @@ import 'package:jotrockenmitlockenrepo/Widgets/skill_table.dart';
 import 'package:jotrockenmitlockenrepo/Layout/ResponsiveDesign/one_two_transition_widget.dart';
 import 'package:jotrockenmitlockenrepo/Pages/Footer/footer.dart';
 import 'package:jotrockenmitlockenrepo/app_attributes.dart';
-import 'package:jotrockenmitlockenrepo/constants.dart';
 import 'package:jotrockenmitlockenrepo/user_settings.dart';
 
 class AboutMePage extends StatefulWidget {
@@ -24,7 +23,6 @@ class AboutMePage extends StatefulWidget {
 class AboutMePageState extends State<AboutMePage> {
   List<List<Widget>> _createAboutMeChildPages(
     UserSettings userSettings,
-    ColorSeed colorSelected,
     BuildContext context,
   ) {
     String aboutMeFile = userSettings.aboutMeFileEn!;
@@ -46,9 +44,8 @@ class AboutMePageState extends State<AboutMePage> {
 
   @override
   Widget build(BuildContext context) {
-    var aboutMePagesLeftRight = _createAboutMeChildPages(
+    final aboutMePagesLeftRight = _createAboutMeChildPages(
       widget.appAttributes.userSettings,
-      widget.appAttributes.colorSelected,
       context,
     );
     return OneTwoTransitionPage(

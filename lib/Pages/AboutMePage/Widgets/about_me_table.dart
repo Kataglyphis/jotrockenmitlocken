@@ -18,8 +18,6 @@ class AboutMeTable extends StatefulWidget {
 }
 
 class AboutMeTableState extends State<AboutMeTable> {
-  AboutMeTableState({Key? key});
-
   @override
   Widget build(BuildContext context) {
     return Column(
