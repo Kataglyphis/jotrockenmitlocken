@@ -25,7 +25,7 @@ import 'package:jotrockenmitlockenrepo/app_attributes.dart';
 import 'package:jotrockenmitlockenrepo/Pages/stateful_branch_info_provider.dart';
 
 class JotrockenMitLockenRoutes extends RoutesCreator {
-  BlogDependentAppAttributes blogDependentAppAttributes;
+  final BlogDependentAppAttributes blogDependentAppAttributes;
 
   JotrockenMitLockenRoutes({required this.blogDependentAppAttributes});
 

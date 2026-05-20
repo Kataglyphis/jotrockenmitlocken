@@ -1,12 +1,16 @@
 {
     "name": "jotrockenmitlocken",
     "short_name": "jotrockenmitlocken",
-    "start_url": ".",
+    "id": "/",
+    "start_url": "/",
+    "scope": "/",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
     "description": "Find out about ME",
-    "orientation": "portrait-primary",
+    "orientation": "any",
+    "lang": "de",
+    "categories": ["personal", "blog"],
     "prefer_related_applications": false,
     "icons": [
         {
