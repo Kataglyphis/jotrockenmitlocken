@@ -4,21 +4,23 @@ import 'package:jotrockenmitlocken/blog_dependent_app_attributes.dart';
 import 'package:jotrockenmitlockenrepo/Media/DataTable/csv_data_list.dart';
 import 'package:jotrockenmitlockenrepo/Media/DataTable/datacell_content_strategies.dart';
 import 'package:jotrockenmitlocken/my_two_cents_config.dart';
+import 'package:jotrockenmitlocken/Pages/DataPage/media_config_helper.dart';
 import 'package:jotrockenmitlockenrepo/app_attributes.dart';
 
 class GamesList extends CsvDataList {
-  const GamesList(
-      {super.key,
-      required super.dataFilePath,
-      required super.title,
-      required super.entryRedirectText,
-      required super.description,
-      required this.blogDependentAppAttributes,
-      // all entries with a critic should be displayed in the very beginning :)
-      super.sortColumnIndex = 2,
-      super.sortOnLoaded = true,
-      // super.isAscending = true,
-      required this.appAttributes});
+  const GamesList({
+    super.key,
+    required super.dataFilePath,
+    required super.title,
+    required super.entryRedirectText,
+    required super.description,
+    required this.blogDependentAppAttributes,
+    // all entries with a critic should be displayed in the very beginning :)
+    super.sortColumnIndex = 2,
+    super.sortOnLoaded = true,
+    // super.isAscending = true,
+    required this.appAttributes,
+  });
   //"Books worth reading"
   @override
   State<GamesList> createState() => _GamesListState();
@@ -30,20 +32,25 @@ class GamesList extends CsvDataList {
 class _GamesListState extends CsvDataListState<Game, GamesList> {
   @override
   Future<(List<Game>, List<String>)> convertRawCSVDataToFinalLayout(
-      List<List<dynamic>> csvListData) async {
+    List<List<dynamic>> csvListData,
+  ) async {
     List<MyTwoCentsConfig> configs =
         widget.blogDependentAppAttributes.twoCentsConfigs;
     List<String> dataCategories = List<String>.from(csvListData.first);
-    List<Game> convertedCsvListData =
-        csvListData.getRange(1, csvListData.length).toList().map((List e) {
-      int index = configs
-          .indexWhere((item) => item.mediaTitle == e.elementAt(0).toString());
-      return Game(
-        title: e.elementAt(0).toString(),
-        developer: e.elementAt(1).toString(),
-        comment: index != -1 ? configs[index].routingName : "",
-      );
-    }).toList();
+    List<Game> convertedCsvListData = csvListData
+        .getRange(1, csvListData.length)
+        .toList()
+        .map((List e) {
+          return Game(
+            title: e.elementAt(0).toString(),
+            developer: e.elementAt(1).toString(),
+            comment: resolveMediaCommentRoute(
+              configs,
+              e.elementAt(0).toString(),
+            ),
+          );
+        })
+        .toList();
     return (convertedCsvListData, dataCategories);
   }
 
@@ -61,7 +68,7 @@ class _GamesListState extends CsvDataListState<Game, GamesList> {
     return [
       DataCellContentStrategies.text,
       DataCellContentStrategies.text,
-      DataCellContentStrategies.textButton
+      DataCellContentStrategies.textButton,
     ];
   }
 }

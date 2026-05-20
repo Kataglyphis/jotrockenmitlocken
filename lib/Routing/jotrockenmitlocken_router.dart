@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:jotrockenmitlocken/Pages/AboutMePage/about_me_page.dart';
-import 'package:jotrockenmitlocken/Pages/Blog/blog_page.dart';
+import 'package:jotrockenmitlockenrepo/Pages/markdown_content_page.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/BlockOverviewPage/block_overview_page.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/BooksPage/books_page.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/FilmsPage/films_page.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/GamesPage/games_page.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/SqliteTestPage/sqlite_test_page.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/data_page.dart';
-import 'package:jotrockenmitlocken/Pages/DataPage/media_critics_page.dart';
 import 'package:jotrockenmitlocken/Pages/DocumentsPage/documents_page.dart';
 import 'package:jotrockenmitlocken/Pages/ErrorPage/error_page.dart';
-import 'package:jotrockenmitlocken/Pages/Footer/Pages/configs/open_source_licenses_footer_config.dart';
 import 'package:jotrockenmitlocken/Pages/Footer/Pages/open_source_licenses_page.dart';
 import 'package:jotrockenmitlocken/blog_dependent_app_attributes.dart';
 
@@ -47,7 +45,7 @@ class JotrockenMitLockenRoutes extends RoutesCreator {
   }
 
   List<(Widget, StatefulBranchInfoProvider)> _getErrorPagesAndConfigs(
-    appAttributes,
+    AppAttributes appAttributes,
   ) {
     List<StatefulBranchInfoProvider> errorPageConfigs = appAttributes
         .screenConfigurations
@@ -139,10 +137,12 @@ class JotrockenMitLockenRoutes extends RoutesCreator {
     List<(Widget, StatefulBranchInfoProvider)> footerPages = blogPagesConfigs
         .map(
           (pageConfig) => (
-            MediaCriticsPage(
+            MarkdownContentPage(
               footer: getFooter(appAttributes),
               appAttributes: appAttributes,
-              mediaCriticsPageConfig: pageConfig,
+              filePath: pageConfig.filePath,
+              imageDir: pageConfig.imageDir,
+              docsDesc: pageConfig.docsDesc,
             ),
             pageConfig,
           ),
@@ -161,10 +161,12 @@ class JotrockenMitLockenRoutes extends RoutesCreator {
     List<(Widget, StatefulBranchInfoProvider)> footerPages = blogPagesConfigs
         .map(
           (pageConfig) => (
-            BlogPage(
+            MarkdownContentPage(
               footer: getFooter(appAttributes),
               appAttributes: appAttributes,
-              blogPageConfig: pageConfig,
+              filePath: pageConfig.filePath,
+              imageDir: pageConfig.imageDir,
+              docsDesc: pageConfig.docsDesc,
             ),
             pageConfig,
           ),
@@ -182,7 +184,7 @@ class JotrockenMitLockenRoutes extends RoutesCreator {
         .getFooterPagesConfig();
     List<(Widget, StatefulBranchInfoProvider)> footerPages = footerPagesConfigs
         .map((pageConfig) {
-          if (pageConfig is OpenSourceLicensesFooterConfig) {
+          if (pageConfig.getRoutingName() == '/openSourceLicenses') {
             return (
               OpenSourceLicensesPage(
                 footer: getFooter(appAttributes),

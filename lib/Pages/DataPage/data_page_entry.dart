@@ -27,8 +27,6 @@ class DataPageEntry extends StatefulWidget {
 }
 
 class DataPageEntryState extends State<DataPageEntry> {
-  bool isDisabled = false;
-
   @override
   Widget build(BuildContext context) {
     List<Widget> undecoratedChilds = [
@@ -50,12 +48,9 @@ class DataPageEntryState extends State<DataPageEntry> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           FilledButton.tonal(
-            onPressed:
-                isDisabled
-                    ? null
-                    : () {
-                      context.go(widget.routerPath);
-                    },
+            onPressed: () {
+              context.go(widget.routerPath);
+            },
             child: Text(
               AppLocalizations.of(context)!.follow,
               style: Theme.of(context).textTheme.titleSmall,
