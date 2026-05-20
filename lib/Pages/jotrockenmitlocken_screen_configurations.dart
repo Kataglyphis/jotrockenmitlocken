@@ -1,21 +1,11 @@
-import 'package:jotrockenmitlocken/Pages/AboutMePage/about_me_page_navbar_config.dart';
-import 'package:jotrockenmitlocken/Pages/DataPage/BlockOverviewPage/block_overview_page_config.dart';
-import 'package:jotrockenmitlocken/Pages/DataPage/BooksPage/books_page_config.dart';
-import 'package:jotrockenmitlocken/Pages/DataPage/FilmsPage/films_page_config.dart';
-import 'package:jotrockenmitlocken/Pages/DataPage/GamesPage/games_page_config.dart';
-import 'package:jotrockenmitlocken/Pages/DataPage/data_pages_navbar_page_config.dart';
+import 'package:flutter/material.dart';
+
 import 'package:jotrockenmitlocken/Pages/DataPage/SqliteTestPage/sqlite_test_page_config.dart';
-import 'package:jotrockenmitlocken/Pages/DocumentsPage/document_page_navbar_config.dart';
 import 'package:jotrockenmitlocken/Pages/ErrorPage/error_page_stateful_branch_info_provider.dart';
-import 'package:jotrockenmitlocken/Pages/Footer/Pages/configs/contact_footer_config.dart';
-import 'package:jotrockenmitlocken/Pages/Footer/Pages/configs/cookie_declaration_footer_config.dart';
-import 'package:jotrockenmitlocken/Pages/Footer/Pages/configs/copyright_footer_config.dart';
-import 'package:jotrockenmitlocken/Pages/Footer/Pages/configs/declaration_on_accessibility_footer_config.dart';
-import 'package:jotrockenmitlocken/Pages/Footer/Pages/configs/imprint_footer_config.dart';
-import 'package:jotrockenmitlocken/Pages/Footer/Pages/configs/open_source_licenses_footer_config.dart';
-import 'package:jotrockenmitlocken/Pages/Footer/Pages/configs/privacy_policy_config.dart';
-import 'package:jotrockenmitlocken/Pages/LandingPage/landing_page_navbar_page_config.dart';
-import 'package:jotrockenmitlocken/Pages/DataPage/QuotesPage/quotations_page_config.dart';
+import 'package:jotrockenmitlockenrepo/Pages/Footer/generic_footer_page_config.dart';
+import 'package:jotrockenmitlocken/l10n/app_localizations.dart';
+import 'package:jotrockenmitlockenrepo/Pages/simple_page_config.dart';
+import 'package:jotrockenmitlocken/Pages/generic_navbar_page_config.dart';
 import 'package:jotrockenmitlocken/Pages/blog_dependent_screen_configurations.dart';
 import 'package:jotrockenmitlocken/blog_page_config.dart';
 import 'package:jotrockenmitlockenrepo/Pages/Footer/footer_page_config.dart';
@@ -63,10 +53,30 @@ class JotrockenmitLockenScreenConfigurations extends ScreenConfigurations
   @override
   List<NavBarPageConfig> getNavRailPagesConfig() {
     return [
-      LandingPageNavBarConfig(),
-      AboutMePageNavBarConfig(),
-      DataPageNavBarConfig(),
-      DocumentPageNavBarConfig(),
+      GenericNavBarPageConfig(
+        icon: Icons.house_outlined,
+        selectedIcon: Icons.house,
+        labelSelector: (l10n) => l10n.homepage,
+        routingName: '/landingPage',
+      ),
+      GenericNavBarPageConfig(
+        icon: Icons.person_outlined,
+        selectedIcon: Icons.person,
+        labelSelector: (l10n) => l10n.aboutme,
+        routingName: '/aboutMe',
+      ),
+      GenericNavBarPageConfig(
+        icon: Icons.folder_open_outlined,
+        selectedIcon: Icons.folder_open,
+        labelSelector: (l10n) => l10n.data,
+        routingName: '/data',
+      ),
+      GenericNavBarPageConfig(
+        icon: Icons.description_outlined,
+        selectedIcon: Icons.description,
+        labelSelector: (l10n) => l10n.documents,
+        routingName: '/documents',
+      ),
     ];
   }
 
@@ -78,13 +88,53 @@ class JotrockenmitLockenScreenConfigurations extends ScreenConfigurations
   @override
   List<FooterPageConfig> getFooterPagesConfig() {
     return [
-      ImprintFooterConfig(),
-      ContactFooterConfig(),
-      PrivacyPolicyFooterConfig(),
-      CookieDeclarationFooterConfig(),
-      DeclarationOnAccessibilityFooterConfig(),
-      CopyRightFooterConfig(),
-      OpenSourceLicensesFooterConfig(),
+      GenericFooterPageConfig(
+        routingName: '/imprint',
+        headingBuilder: (context) => AppLocalizations.of(context)!.imprint,
+        filePathDe: 'assets/documents/footer/imprintDe.md',
+        filePathEn: 'assets/documents/footer/imprintEn.md',
+      ),
+      GenericFooterPageConfig(
+        routingName: '/contact',
+        headingBuilder: (context) => AppLocalizations.of(context)!.contact,
+        filePathDe: 'assets/documents/footer/contactDe.md',
+        filePathEn: 'assets/documents/footer/contactEn.md',
+      ),
+      GenericFooterPageConfig(
+        routingName: '/privacyPolicy',
+        headingBuilder: (context) =>
+            AppLocalizations.of(context)!.privacyPolicy,
+        filePathDe: 'assets/documents/footer/privacyPolicyDe.md',
+        filePathEn: 'assets/documents/footer/privacyPolicyEn.md',
+      ),
+      GenericFooterPageConfig(
+        routingName: '/cookieDeclaration',
+        headingBuilder: (context) =>
+            AppLocalizations.of(context)!.cookieStatement,
+        filePathDe: 'assets/documents/footer/cookieDeclarationDe.md',
+        filePathEn: 'assets/documents/footer/cookieDeclarationEn.md',
+      ),
+      GenericFooterPageConfig(
+        routingName: '/declarationOnAccessibility',
+        headingBuilder: (context) =>
+            AppLocalizations.of(context)!.declarationOnAccessibility,
+        filePathDe: 'assets/documents/footer/declarationOnAccessibilityDe.md',
+        filePathEn: 'assets/documents/footer/declarationOnAccessibilityEn.md',
+      ),
+      GenericFooterPageConfig(
+        routingName: '/copyright',
+        headingBuilder: (context) =>
+            AppLocalizations.of(context)!.copyrightFooterTitle,
+        filePathDe: 'assets/documents/footer/copyRightDe.md',
+        filePathEn: 'assets/documents/footer/copyRightEn.md',
+      ),
+      GenericFooterPageConfig(
+        routingName: '/openSourceLicenses',
+        headingBuilder: (context) =>
+            AppLocalizations.of(context)!.openSourceLicenses,
+        filePathDe: '',
+        filePathEn: '',
+      ),
     ];
   }
 
@@ -102,11 +152,11 @@ class JotrockenmitLockenScreenConfigurations extends ScreenConfigurations
   @override
   List<StatefulBranchInfoProvider> getDataPagesConfig() {
     return [
-      QuotationsPageConfig(),
-      BooksPageConfig(),
-      FilmsPageConfig(),
-      GamesPageConfig(),
-      BlockOverviewPageConfig(),
+      const SimplePageConfig('/quotations'),
+      const SimplePageConfig('/books'),
+      const SimplePageConfig('/films'),
+      const SimplePageConfig('/games'),
+      const SimplePageConfig('/blockEntries'),
       SqliteTestPageConfig(),
     ];
   }

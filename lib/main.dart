@@ -1,10 +1,4 @@
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
-
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:jotrockenmitlocken/l10n/app_localizations.dart';
 
@@ -17,6 +11,7 @@ import 'package:jotrockenmitlocken/Pages/jotrockenmitlocken_screen_configuration
 import 'package:jotrockenmitlocken/blog_dependent_app_attributes.dart';
 import 'package:jotrockenmitlocken/blog_page_config.dart';
 import 'package:jotrockenmitlocken/my_two_cents_config.dart';
+import 'package:jotrockenmitlocken/settings_loader.dart';
 import 'package:jotrockenmitlockenrepo/app_attributes.dart';
 import 'package:jotrockenmitlockenrepo/app_settings.dart';
 import 'package:jotrockenmitlockenrepo/constants.dart';
@@ -80,7 +75,12 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
       parent: controller,
       curve: const Interval(0.5, 1.0),
     );
-    _settings = _loadAppSettings();
+    _settings = SettingsLoader().loadAll(
+      userSettingsPath: userSettingsFilePath,
+      appSettingsPath: appSettingsFilePath,
+      blogSettingsPath: blogSettingsFilePath,
+      twoCentsSettingsPath: twoCentsSettingsFilePath,
+    );
   }
 
   @override
@@ -119,50 +119,6 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
       controllerInitialized = true;
       controller.value = width > mediumWidthBreakpoint ? 1 : 0;
     }
-  }
-
-  Future<
-    (AppSettings, UserSettings, List<BlogPageConfig>, List<MyTwoCentsConfig>)
-  >
-  _loadAppSettings() async {
-    final userSettingsJsonString = await rootBundle.loadString(
-      userSettingsFilePath,
-    );
-    final Map<String, dynamic> userSettingsJson = json.decode(
-      userSettingsJsonString,
-    );
-    UserSettings userSettings = UserSettings.fromJsonFile(userSettingsJson);
-
-    final appSettingsJsonString = await rootBundle.loadString(
-      appSettingsFilePath,
-    );
-    final Map<String, dynamic> appSettingsJson = json.decode(
-      appSettingsJsonString,
-    );
-    AppSettings appSettings = AppSettings.fromJsonFile(appSettingsJson);
-
-    final blogSettingsJsonString = await rootBundle.loadString(
-      blogSettingsFilePath,
-    );
-    final List<dynamic> blogSettingsJson = json.decode(blogSettingsJsonString);
-    List<BlogPageConfig> blogConfigs = [];
-    for (var e in blogSettingsJson) {
-      blogConfigs.add(BlogPageConfig.fromJsonFile(e as Map<String, dynamic>));
-    }
-
-    final twoCentsSettingsJsonString = await rootBundle.loadString(
-      twoCentsSettingsFilePath,
-    );
-    final List<dynamic> twoCentsSettingsJson = json.decode(
-      twoCentsSettingsJsonString,
-    );
-    List<MyTwoCentsConfig> twoCentsConfigs = [];
-    for (var e in twoCentsSettingsJson) {
-      twoCentsConfigs.add(
-        MyTwoCentsConfig.fromJsonFile(e as Map<String, dynamic>),
-      );
-    }
-    return (appSettings, userSettings, blogConfigs, twoCentsConfigs);
   }
 
   void handleBrightnessChange(bool useLightMode) {
@@ -249,18 +205,16 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
             handlePageChange,
             currentPageIndex,
           );
-          var supportedLanguages =
-              data.requireData.$1.supportedLocales!
-                  .map((element) => Locale(element))
-                  .toList();
+          var supportedLanguages = data.requireData.$1.supportedLocales!
+              .map((element) => Locale(element))
+              .toList();
           return MaterialApp.router(
             debugShowCheckedModeBanner: false,
             localizationsDelegates: localizationsDelegate,
-            onGenerateTitle:
-                (context) =>
-                    (Localizations.localeOf(context) == const Locale("de"))
-                        ? appAttributes.appSettings.appTitleDe
-                        : appAttributes.appSettings.appTitleEn,
+            onGenerateTitle: (context) =>
+                (Localizations.localeOf(context) == const Locale("de"))
+                ? appAttributes.appSettings.appTitleDe
+                : appAttributes.appSettings.appTitleEn,
             themeMode: themeMode,
             locale: supportedLanguages[0],
             supportedLocales: supportedLanguages,

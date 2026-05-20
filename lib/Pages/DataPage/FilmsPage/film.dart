@@ -5,11 +5,12 @@ class Film extends TableData {
   String genre = "placeholder";
   String actor = "placeholder";
   String sonstiges = "placeholder";
-  Film(
-      {required this.title,
-      required this.genre,
-      required this.actor,
-      required this.sonstiges});
+  Film({
+    required this.title,
+    required this.genre,
+    required this.actor,
+    required this.sonstiges,
+  });
 
   @override
   List<String> getCells() {
