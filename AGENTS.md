@@ -110,4 +110,4 @@ external/jotrockenmitlockenrepo/ # Git submodule — shared component library
 - **Flow:** Checkout → sync WebDAV content → `flutter pub get` (both dirs) → `dart analyze` → `flutter test` → `flutter build web --release` → FTP deploy
 - **main branch:** WASM build deployed to production domain
 - **develop branch:** Both WASM and CanvasKit builds deployed to dev domains
-- `dart analyze` and `dart format` are `continue-on-error` in CI so formatting issues don't block deployment, but fix them anyway.
+- CI: `dart analyze` and `dart format` must pass (zero tolerance) before builds proceed.
