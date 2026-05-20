@@ -50,7 +50,8 @@ class LandingPageState extends State<LandingPage> {
       ),
     );
 
-    final socialLinks = widget.appAttributes.userSettings.socialMediaLinksConfig;
+    final socialLinks =
+        widget.appAttributes.userSettings.socialMediaLinksConfig;
     final gitHub = socialLinks != null && socialLinks.containsKey('GitHub')
         ? socialLinks['GitHub']!
         : ExternalLinkConfig(host: 'github.com', path: '/Kataglyphis');
