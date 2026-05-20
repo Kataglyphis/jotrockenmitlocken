@@ -84,20 +84,14 @@
 	<script src="javascript/cookies.js"></script>
 	<script src="javascript/init.js"></script>
 	<script>
-		var observer = new MutationObserver(function(mutations) {
-			for (var i = 0; i < mutations.length; i++) {
-				for (var j = 0; j < mutations[i].addedNodes.length; j++) {
-					var node = mutations[i].addedNodes[j];
-					if (node.nodeType === 1 && (node.tagName === 'FLT-CANVASWASM' || node.tagName === 'FLT-CANVASKIT' || node.tagName === 'CANVAS')) {
-						document.querySelector('.loading')?.remove();
-						document.getElementById('background-animation')?.remove();
-						observer.disconnect();
-						return;
-					}
-				}
-			}
+		window.addEventListener('load', function() {
+			var loader = document.querySelector('.loading');
+			var bg = document.getElementById('background-animation');
+			setTimeout(function() {
+				if (loader) loader.remove();
+				if (bg) bg.remove();
+			}, 4000);
 		});
-		observer.observe(document.body, { childList: true, subtree: true });
 	</script>
 	<script src="flutter_bootstrap.js" async></script>
 </body>
