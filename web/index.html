@@ -2,7 +2,7 @@
 <html lang="de">
 
 <head>
-	<!--
+    <!--
     If you are serving your web app in a path other than the root, change the
     href value below to reflect the base path you are serving from.
 
@@ -15,89 +15,112 @@
     This is a placeholder for base href that will be replaced by the value of
     the `--base-href` argument provided to `flutter build`.
   -->
-	<base href="$FLUTTER_BASE_HREF">
+    <base href="$FLUTTER_BASE_HREF">
 
-	<meta charset="UTF-8">
-	<meta content="IE=Edge" http-equiv="X-UA-Compatible">
-	<meta name="description" content="Personal blog of Jonas Heinle — programming, books, films, and more.">
-	<meta name="theme-color" content="#0175C2">
-	<meta name="color-scheme" content="light dark">
-	<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' blob:; worker-src 'self' blob:; media-src 'self' blob:">
+    <meta charset="UTF-8">
+    <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+    <meta name="description" content="Personal blog of Jonas Heinle — programming, books, films, and more.">
+    <meta name="theme-color" content="#0175C2">
+    <meta name="color-scheme" content="light dark">
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' https://www.gstatic.com; img-src 'self' data: blob:; font-src 'self' https://fonts.gstatic.com; connect-src 'self' blob: https://www.gstatic.com https://fonts.gstatic.com; worker-src 'self' blob:; media-src 'self' blob:">
 
-	<!-- Open Graph -->
-	<meta property="og:title" content="jotrockenmitlocken">
-	<meta property="og:description" content="Personal blog of Jonas Heinle — programming, books, films, and more.">
-	<meta property="og:image" content="https://jonasheinle.de/icons/Icon-512.png">
-	<meta property="og:url" content="https://jonasheinle.de/">
-	<meta property="og:type" content="website">
-	<link rel="canonical" href="https://jonasheinle.de/">
+    <!-- Open Graph -->
+    <meta property="og:title" content="jotrockenmitlocken">
+    <meta property="og:description" content="Personal blog of Jonas Heinle — programming, books, films, and more.">
+    <meta property="og:image" content="https://jonasheinle.de/icons/Icon-512.png">
+    <meta property="og:url" content="https://jonasheinle.de/">
+    <meta property="og:type" content="website">
+    <link rel="canonical" href="https://jonasheinle.de/">
 
-	<!-- iOS meta tags & icons -->
-	<meta name="apple-mobile-web-app-capable" content="yes">
-	<meta name="apple-mobile-web-app-status-bar-style" content="black">
-	<meta name="apple-mobile-web-app-title" content="jotrockenmitlocken">
-	<link rel="apple-touch-icon" href="icons/Icon-192.png">
+    <!-- iOS meta tags & icons -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="jotrockenmitlocken">
+    <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
-	<!-- Favicon -->
-	<link rel="icon" type="image/png" href="favicon.png" />
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="favicon.png" />
 
-	<title>jotrockenmitlocken</title>
-	<link rel="manifest" href="manifest.json">
+    <title>jotrockenmitlocken</title>
+    <link rel="manifest" href="manifest.json">
 
-	<link rel="preload" href="flutter_bootstrap.js" as="script">
-	<link rel="stylesheet" type="text/css" href="css/cookie.css">
-	<link rel="stylesheet" type="text/css" href="css/loading_animation.css">
-	<style>
-		:root {
-			--kPrimaryColor: rgb(105, 240, 174);
-			--kTextColor: #000000;
-		}
+    <link rel="preload" href="flutter_bootstrap.js" as="script">
+    <link rel="stylesheet" type="text/css" href="css/cookie.css">
+    <link rel="stylesheet" type="text/css" href="css/loading_animation.css">
+    <style>
+        :root {
+            --kPrimaryColor: rgb(105, 240, 174);
+            --kTextColor: #000000;
+        }
 
-		@media (prefers-color-scheme: dark) {
-			:root {
-				--kTextColor: #e0e0e0;
-			}
-		}
-	</style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --kTextColor: #e0e0e0;
+            }
+        }
+    </style>
 
 </head>
 
 <body>
-	<div>
-		<!-- Cookie notice -->
-		<section id="cookie-notice">
-			<div class="container">
-				<div id="message"></div>
-				<button id="cookie-consent">Okay</button>
-			</div>
-		</section>
-	</div>
+    <div>
+        <!-- Cookie notice -->
+        <section id="cookie-notice">
+            <div class="container">
+                <div id="message"></div>
+                <button id="cookie-consent">Okay</button>
+            </div>
+        </section>
+    </div>
 
-	<div id="background-animation"></div>
+    <div id="background-animation"></div>
 
-	<div class="loading">
-		<div class="loader"></div>
-		<div id="loading-message"></div>
-	</div>
+    <div class="loading">
+        <div class="loader"></div>
+        <div id="loading-message"></div>
+    </div>
 
-	<script src="javascript/utils.js"></script>
-	<script src="javascript/cookies.js"></script>
-	<script src="javascript/init.js"></script>
-	<script>
-		window.addEventListener('load', function() {
-			var loader = document.querySelector('.loading');
-			var bg = document.getElementById('background-animation');
-			setTimeout(function() {
-				if (loader) { loader.classList.add('fade-out'); }
-				if (bg) { bg.classList.add('fade-out'); }
-			}, 3000);
-			setTimeout(function() {
-				if (loader) loader.remove();
-				if (bg) bg.remove();
-			}, 3500);
-		});
-	</script>
-	<script src="flutter_bootstrap.js" async></script>
+    <script src="javascript/utils.js"></script>
+    <script src="javascript/cookies.js"></script>
+    <script src="javascript/init.js"></script>
+    <script>
+        (function () {
+            var loader = document.querySelector('.loading');
+            var bg = document.getElementById('background-animation');
+            var hidden = false;
+
+            function hideLoading() {
+                if (hidden) return;
+                hidden = true;
+                if (loader) { loader.classList.add('fade-out'); }
+                if (bg) { bg.classList.add('fade-out'); }
+                setTimeout(function () {
+                    if (loader) loader.remove();
+                    if (bg) bg.remove();
+                }, 500);
+            }
+
+            // Detect Flutter render by watching for its DOM elements
+            var observer = new MutationObserver(function (mutations) {
+                for (var i = 0; i < mutations.length; i++) {
+                    var added = mutations[i].addedNodes;
+                    for (var j = 0; j < added.length; j++) {
+                        if (added[j].nodeType === 1) {
+                            // Flutter started rendering — hide loading
+                            setTimeout(hideLoading, 100);
+                            observer.disconnect();
+                            return;
+                        }
+                    }
+                }
+            });
+            observer.observe(document.body, { childList: true, subtree: true }
+			// Fallback: max 10 seconds
+			setTimeout(hideLoading, 10000);
+        })();
+    </script>
+    <script src="flutter_bootstrap.js" async></script>
 </body>
 
 </html>
