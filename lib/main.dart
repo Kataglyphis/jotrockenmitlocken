@@ -205,9 +205,10 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
             handlePageChange,
             currentPageIndex,
           );
-          var supportedLanguages = (data.requireData.$1.supportedLocales ?? <String>[])
-              .map((element) => Locale(element))
-              .toList();
+          var supportedLanguages =
+              (data.requireData.$1.supportedLocales ?? <String>[])
+                  .map((element) => Locale(element))
+                  .toList();
           if (supportedLanguages.isEmpty) {
             supportedLanguages = [const Locale('en')];
           }
