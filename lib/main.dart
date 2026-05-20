@@ -205,9 +205,12 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
             handlePageChange,
             currentPageIndex,
           );
-          var supportedLanguages = data.requireData.$1.supportedLocales!
+          var supportedLanguages = (data.requireData.$1.supportedLocales ?? <String>[])
               .map((element) => Locale(element))
               .toList();
+          if (supportedLanguages.isEmpty) {
+            supportedLanguages = [const Locale('en')];
+          }
           return MaterialApp.router(
             debugShowCheckedModeBanner: false,
             localizationsDelegates: localizationsDelegate,
@@ -223,7 +226,18 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
             routerConfig: routerConfig,
           );
         } else if (data.hasError) {
-          return Text("${data.error}");
+          return Material(
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.all(24),
+                child: Text(
+                  "Error: ${data.error}",
+                  style: Theme.of(context).textTheme.bodyLarge,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+          );
         } else {
           return Center(
             child: CircularProgressIndicator(color: ColorSeed.baseColor.color),
