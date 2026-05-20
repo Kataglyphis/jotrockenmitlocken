@@ -20,7 +20,16 @@ flutter test
 # Local web dev (no real blog content without WebDAV secrets)
 flutter run -d web-server --profile --web-port 8080 --web-hostname 0.0.0.0
 
-# Build web release (default: WASM)
+# Run integration smoke tests (Flutter Chrome)
+flutter test integration_test/ --platform chrome
+
+# Run integration smoke tests (built web app via HTTP server)
+bash scripts/run_nginx_integration_test.sh
+
+# Or manually: build, serve, test
+flutter build web --release --wasm --no-tree-shake-icons
+cd build/web && python3 -m http.server 8080 &
+cd .. && bash scripts/integration_smoke_test.sh http://localhost:8080
 flutter build web --release --wasm --no-tree-shake-icons
 
 # Build web release (CanvasKit fallback, for non-WASM browsers)

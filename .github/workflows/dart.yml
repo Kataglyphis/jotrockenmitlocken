@@ -74,6 +74,18 @@ jobs:
         run: |
           flutter build web --release --wasm --no-tree-shake-icons
 
+      - name: 🔍 Integration smoke test
+        run: |
+          cd build/web
+          python3 -m http.server 8080 --bind 127.0.0.1 &
+          SERVER_PID=$!
+          sleep 1
+          cd ../..
+          bash scripts/integration_smoke_test.sh http://localhost:8080
+          RESULT=$?
+          kill $SERVER_PID 2>/dev/null
+          exit $RESULT
+
       - name: 📂 Sync files to main domain
         if: github.ref == 'refs/heads/main'
         uses: SamKirkland/FTP-Deploy-Action@v4.4.0
