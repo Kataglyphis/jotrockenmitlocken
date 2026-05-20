@@ -44,10 +44,6 @@
 	<title>jotrockenmitlocken</title>
 	<link rel="manifest" href="manifest.json">
 
-	<script src="javascript/utils.js"></script>
-	<script src="javascript/cookies.js"></script>
-	<script src="javascript/init.js"></script>
-
 	<link rel="preload" href="flutter_bootstrap.js" as="script">
 	<link rel="stylesheet" type="text/css" href="css/cookie.css">
 	<link rel="stylesheet" type="text/css" href="css/loading_animation.css">
@@ -84,6 +80,25 @@
 		<div id="loading-message"></div>
 	</div>
 
+	<script src="javascript/utils.js"></script>
+	<script src="javascript/cookies.js"></script>
+	<script src="javascript/init.js"></script>
+	<script>
+		var observer = new MutationObserver(function(mutations) {
+			for (var i = 0; i < mutations.length; i++) {
+				for (var j = 0; j < mutations[i].addedNodes.length; j++) {
+					var node = mutations[i].addedNodes[j];
+					if (node.nodeType === 1 && (node.tagName === 'FLT-CANVASWASM' || node.tagName === 'FLT-CANVASKIT' || node.tagName === 'CANVAS')) {
+						document.querySelector('.loading')?.remove();
+						document.getElementById('background-animation')?.remove();
+						observer.disconnect();
+						return;
+					}
+				}
+			}
+		});
+		observer.observe(document.body, { childList: true, subtree: true });
+	</script>
 	<script src="flutter_bootstrap.js" async></script>
 </body>
 
