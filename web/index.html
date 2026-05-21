@@ -115,9 +115,10 @@
                     }
                 }
             });
-            observer.observe(document.body, { childList: true, subtree: true }
-			// Fallback: max 10 seconds
-			setTimeout(hideLoading, 10000);
+            observer.observe(document.body, { childList: true, subtree: true });
+
+            // Fallback: max 10 seconds
+            setTimeout(hideLoading, 10000);
         })();
     </script>
     <script src="flutter_bootstrap.js" async></script>
