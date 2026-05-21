@@ -30,13 +30,98 @@ bash scripts/run_nginx_integration_test.sh
 flutter build web --release --wasm --no-tree-shake-icons
 cd build/web && python3 -m http.server 8080 &
 cd .. && bash scripts/integration_smoke_test.sh http://localhost:8080
+
+# Run E2E browser console error capture (Playwright + flatpak Chromium)
+python3 scripts/capture_console_errors.py
+```
+
+## E2E Testing
+
+Two complementary E2E test methods — **run both** before committing.
+
+### Method 1: Integration Smoke Test (HTTP-level)
+
+Checks HTTP responses, MIME types, CSP headers, and file availability. No browser required.
+
+```bash
+# Build the web app (WASM)
 flutter build web --release --wasm --no-tree-shake-icons
 
+# Serve and test
+cd build/web && python3 -m http.server 8080 &
+cd .. && bash scripts/integration_smoke_test.sh http://localhost:8080
+```
+
+**What it checks:**
+- `index.html` returns HTTP 200
+- `main.dart.wasm` serves with `application/wasm` MIME type
+- `main.dart.js` and `flutter_bootstrap.js` exist and are non-empty
+- `manifest.json` is valid
+- CSP permits CanvasKit CDN (`www.gstatic.com`) and Google Fonts (`fonts.gstatic.com`)
+- `script-src` allows gstatic.com
+- Loading screen uses `MutationObserver` and has `hideLoading` function
+
+### Method 2: Browser Console Error Capture (Playwright + flatpak Chromium)
+
+Launches a real headless browser to capture console logs, page errors, and runtime exceptions.
+
+#### Prerequisites
+
+**Install Chromium via flatpak** (works on all architectures including ARM64):
+
+```bash
+flatpak install flathub org.chromium.Chromium
+
+# Install Firefox via flatpak (optional, for manual testing)
+flatpak install flathub org.mozilla.firefox
+```
+
+**Install Python dependencies** (first time only):
+
+```bash
+python3 -m pip install --break-system-packages playwright
+```
+
+#### Running the test
+
+```bash
+# 1. Build the web app (WASM)
+flutter build web --release --wasm --no-tree-shake-icons
+
+# 2. Run the console error capture script
+python3 scripts/capture_console_errors.py
+```
+
+**What it does:**
+1. Starts an HTTP server serving `build/web` on port 8080
+2. Launches headless Chromium via Playwright using the flatpak binary
+3. Runs comprehensive test suite:
+   - **Navigation & Routing**: Verifies all routes (/, /aboutMe, /data, /documents, /error404) load correctly
+   - **Responsive Layouts**: Tests mobile (375px), tablet (768px), desktop (1280px), and Full HD (1920px) viewports
+   - **Assets & Rendering**: Checks WASM build config, Flutter glass pane, canvas/renderer, and failed resources
+   - **Performance Metrics**: Measures DOM content loaded, page load time, resource count, and WASM load time
+   - **UI Interactions**: Tests loading screen fade-out, cookie notice, cookie consent button, navigation, and dark mode
+4. Reports errors (❌), warnings (⚠️), and info (ℹ️) messages
+5. Saves a screenshot to `/tmp/flutter_web_screenshot.png`
+6. Cleans up server and browser on exit
+
+**Expected output:** Only a WebGL GPU stall warning in headless mode — no runtime errors.
+
+#### Troubleshooting
+
+- **`No module named 'playwright'`**: Run `python3 -m pip install --break-system-packages playwright`
+- **Chromium not found**: Verify with `flatpak list | grep chromium`
+- **Port 8080 in use**: Kill existing process with `kill $(lsof -t -i:8080)`
+- **Browser launch fails**: Ensure flatpak Chromium is installed and `--no-sandbox` is passed (required in containers/WSL)
+
+```bash
 # Build web release (CanvasKit fallback, for non-WASM browsers)
 flutter build web --release --no-tree-shake-icons
+```
 
 CRITICAL: Always build with `--wasm`. The CanvasKit build is only a fallback for browsers that don't support WASM.
 
+```bash
 # Generate localization code from ARB files
 flutter gen-l10n
 ```
@@ -47,7 +132,7 @@ flutter gen-l10n
 
 **Before committing changes:**
 ```bash
-dart analyze && flutter test && dart format --output=none --set-exit-if-changed . && bash scripts/integration_smoke_test.sh http://localhost:8080
+dart analyze && flutter test && dart format --output=none --set-exit-if-changed . && bash scripts/integration_smoke_test.sh http://localhost:8080 && python3 scripts/capture_console_errors.py
 ```
 
 Only commit if all commands exit with code 0.
@@ -121,6 +206,7 @@ external/jotrockenmitlockenrepo/ # Git submodule — shared component library
 - **SQLite on web:** The `setup_sqlite3_wasm.sh` script must be run to download `sqlite3.wasm` for web targets.
 - **iOS/macOS builders:** Do not touch `ios/`, `macos/`, `android/`, `windows/`, `linux/` directories unless specifically requested — they contain platform-specific boilerplate.
 - **Known issues:** `flutter_highlighter` needs a patch; `flutter_markdown` has a blockquote rendering issue.
+- **ARM64 browser automation:** Playwright's `playwright install chromium` fails on ARM64, but Playwright **works** with `flatpak install flathub org.chromium.Chromium` + `executable_path` to use the flatpak binary.
 
 ## CI/CD
 
