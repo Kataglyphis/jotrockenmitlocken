@@ -43,6 +43,15 @@ flutter gen-l10n
 
 **Verification order:** `dart analyze` → `flutter test` → `dart format --output=none --set-exit-if-changed .`
 
+> **MANDATORY for agents:** After making any code changes, you MUST run all three verification commands in order (analyze → test → format) and ensure they all pass with zero errors. If any command fails, fix the issues and re-run before considering the task complete. The CI pipeline enforces zero tolerance on `dart analyze` and `dart format` — failures block deployment.
+
+**Before committing changes:**
+```bash
+dart analyze && flutter test && dart format --output=none --set-exit-if-changed . && bash scripts/integration_smoke_test.sh http://localhost:8080
+```
+
+Only commit if all commands exit with code 0.
+
 ## Project Structure
 
 ```
