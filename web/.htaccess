@@ -1,6 +1,9 @@
+# Shared template lives in ExternalLib/Kataglyphis-ContainerHub:
+# linux/webserver/templates/flutter-web.htaccess
+
 # Begin .htaccess
 
-# WASM MIME type (critical — WASM won't serve without this)
+# WASM MIME type (critical: WASM will not serve without this)
 AddType application/wasm .wasm
 
 # Ensure mod_headers is enabled

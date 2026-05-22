@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jotrockenmitlocken/l10n/app_localizations.dart';
-import 'package:jotrockenmitlocken/Pages/DataPage/data_page_entry.dart';
 import 'package:jotrockenmitlockenrepo/Decoration/row_divider.dart';
+import 'package:jotrockenmitlockenrepo/Pages/data_page_entry.dart';
 
 import 'package:jotrockenmitlockenrepo/Pages/Footer/footer.dart';
 import 'package:jotrockenmitlockenrepo/Layout/ResponsiveDesign/one_two_transition_widget.dart';
@@ -38,6 +38,7 @@ class DataPageState extends State<DataPage> {
         imagePath: 'assets/images/Pages/Data/Quotes_cover.jpg',
         description: AppLocalizations.of(context)!.quotationsDescription,
         lastModified: 'babbeln',
+        followLabel: AppLocalizations.of(context)!.follow,
       ),
       rowDivider,
       DataPageEntry(
@@ -46,6 +47,7 @@ class DataPageState extends State<DataPage> {
         imagePath: 'assets/images/Pages/Data/Film_cover.jpg',
         description: AppLocalizations.of(context)!.filmsDescription,
         lastModified: 'glotze',
+        followLabel: AppLocalizations.of(context)!.follow,
       ),
       rowDivider,
       DataPageEntry(
@@ -54,6 +56,7 @@ class DataPageState extends State<DataPage> {
         imagePath: 'assets/images/Pages/Data/Book_cover.jpg',
         description: sqliteTestDescription,
         lastModified: 'sqlite3',
+        followLabel: AppLocalizations.of(context)!.follow,
       ),
       rowDivider,
     ];
@@ -64,6 +67,7 @@ class DataPageState extends State<DataPage> {
         imagePath: 'assets/images/Pages/Data/Book_cover.jpg',
         description: AppLocalizations.of(context)!.booksDescription,
         lastModified: '.._..',
+        followLabel: AppLocalizations.of(context)!.follow,
       ),
       rowDivider,
       DataPageEntry(
@@ -72,6 +76,7 @@ class DataPageState extends State<DataPage> {
         imagePath: 'assets/images/Pages/Data/Spiele_cover.jpg',
         description: AppLocalizations.of(context)!.gamesDescription,
         lastModified: 'Go rust',
+        followLabel: AppLocalizations.of(context)!.follow,
       ),
     ];
 

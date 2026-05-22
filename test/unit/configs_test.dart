@@ -5,9 +5,9 @@ import 'package:jotrockenmitlocken/l10n/app_localizations.dart';
 import 'package:jotrockenmitlocken/my_two_cents_config.dart';
 import 'package:jotrockenmitlocken/Pages/ErrorPage/error_page_stateful_branch_info_provider.dart';
 import 'package:jotrockenmitlockenrepo/Pages/Footer/generic_footer_page_config.dart';
+import 'package:jotrockenmitlockenrepo/Pages/generic_navbar_page_config.dart';
 import 'package:jotrockenmitlockenrepo/Pages/simple_page_config.dart';
-import 'package:jotrockenmitlocken/Pages/DataPage/SqliteTestPage/sqlite_test_page_config.dart';
-import 'package:jotrockenmitlocken/Pages/generic_navbar_page_config.dart';
+import 'package:jotrockenmitlockenrepo/Pages/Sqlite/sqlite_test_page_config.dart';
 import 'package:jotrockenmitlockenrepo/Url/external_link_config.dart';
 import 'package:jotrockenmitlockenrepo/app_settings.dart';
 import 'package:jotrockenmitlockenrepo/constants.dart';
@@ -512,7 +512,7 @@ void main() {
       final config = GenericNavBarPageConfig(
         icon: Icons.home,
         selectedIcon: Icons.home_filled,
-        labelSelector: (l10n) => l10n.homepage,
+        labelBuilder: (_) => 'Homepage',
         routingName: '/home',
       );
 
@@ -525,22 +525,22 @@ void main() {
       final config = GenericNavBarPageConfig(
         icon: Icons.home,
         selectedIcon: Icons.home_filled,
-        labelSelector: (l10n) => l10n.homepage,
+        labelBuilder: (_) => 'Homepage',
         routingName: '/customRoute',
       );
 
       expect(config.getRoutingName(), '/customRoute');
     });
 
-    test('labelSelector closure works correctly', () {
+    test('labelBuilder closure works correctly', () {
       final config = GenericNavBarPageConfig(
         icon: Icons.home,
         selectedIcon: Icons.home_filled,
-        labelSelector: (l10n) => 'label-${l10n.homepage}',
+        labelBuilder: (_) => 'label-Homepage',
         routingName: '/home',
       );
 
-      expect(config.labelSelector, isNotNull);
+      expect(config.labelBuilder, isNotNull);
     });
   });
 
@@ -631,7 +631,7 @@ void main() {
     });
 
     test('SqliteTestPageConfig.getRoutingName() → /sqliteTest', () {
-      expect(SqliteTestPageConfig().getRoutingName(), '/sqliteTest');
+      expect(const SqliteTestPageConfig().getRoutingName(), '/sqliteTest');
     });
 
     test(
