@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:jotrockenmitlocken/Pages/jotrockenmitlocken_screen_configurations.dart';
-import 'package:jotrockenmitlocken/Pages/generic_navbar_page_config.dart';
 import 'package:jotrockenmitlocken/Routing/jotrockenmitlocken_router.dart';
 import 'package:jotrockenmitlocken/blog_dependent_app_attributes.dart';
 import 'package:jotrockenmitlocken/l10n/app_localizations.dart';
-import 'package:jotrockenmitlocken/l10n/app_localizations_en.dart';
 import 'package:jotrockenmitlockenrepo/Pages/Footer/footer.dart';
 import 'package:jotrockenmitlockenrepo/Pages/Footer/footer_config.dart';
 import 'package:jotrockenmitlockenrepo/Pages/Home/button_names.dart';
 import 'package:jotrockenmitlockenrepo/Pages/Home/home_config.dart';
+import 'package:jotrockenmitlockenrepo/Pages/generic_navbar_page_config.dart';
 import 'package:jotrockenmitlockenrepo/Url/external_link_config.dart';
 import 'package:jotrockenmitlockenrepo/app_attributes.dart';
 import 'package:jotrockenmitlockenrepo/app_settings.dart';
@@ -177,30 +176,56 @@ void main() {
   });
 
   group('GenericNavBarPageConfig', () {
-    test('labelSelector produces correct string from AppLocalizations', () {
-      final l10n = AppLocalizationsEn();
+    testWidgets('labelBuilder produces correct string from AppLocalizations', (
+      tester,
+    ) async {
       final config = GenericNavBarPageConfig(
         icon: Icons.home,
         selectedIcon: Icons.home_filled,
-        labelSelector: (l10n) => l10n.homepage,
+        labelBuilder: (context) => AppLocalizations.of(context)!.homepage,
         routingName: '/home',
       );
 
-      final label = config.labelSelector(l10n);
+      String? label;
+
+      await tester.pumpWidget(
+        MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: Builder(
+            builder: (context) {
+              label = config.labelBuilder(context);
+              return const SizedBox.shrink();
+            },
+          ),
+        ),
+      );
 
       expect(label, 'Homepage');
     });
 
-    test('labelSelector works with different getter', () {
-      final l10n = AppLocalizationsEn();
+    testWidgets('labelBuilder works with different getter', (tester) async {
       final config = GenericNavBarPageConfig(
         icon: Icons.person,
         selectedIcon: Icons.person_outlined,
-        labelSelector: (l10n) => l10n.aboutme,
+        labelBuilder: (context) => AppLocalizations.of(context)!.aboutme,
         routingName: '/about',
       );
 
-      final label = config.labelSelector(l10n);
+      String? label;
+
+      await tester.pumpWidget(
+        MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: Builder(
+            builder: (context) {
+              label = config.labelBuilder(context);
+              return const SizedBox.shrink();
+            },
+          ),
+        ),
+      );
 
       expect(label, 'About me');
     });
@@ -210,7 +235,7 @@ void main() {
       final config = GenericNavBarPageConfig(
         icon: Icons.folder_open_outlined,
         selectedIcon: Icons.folder_open,
-        labelSelector: (l10n) => l10n.data,
+        labelBuilder: (context) => AppLocalizations.of(context)!.data,
         routingName: '/data',
       );
 
@@ -248,7 +273,7 @@ void main() {
       final config = GenericNavBarPageConfig(
         icon: Icons.home,
         selectedIcon: Icons.home_filled,
-        labelSelector: (l10n) => l10n.homepage,
+        labelBuilder: (context) => AppLocalizations.of(context)!.homepage,
         routingName: '/customRoute',
       );
 

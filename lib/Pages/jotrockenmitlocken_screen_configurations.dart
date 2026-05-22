@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import 'package:jotrockenmitlocken/Pages/DataPage/SqliteTestPage/sqlite_test_page_config.dart';
 import 'package:jotrockenmitlocken/Pages/ErrorPage/error_page_stateful_branch_info_provider.dart';
 import 'package:jotrockenmitlockenrepo/Pages/Footer/generic_footer_page_config.dart';
+import 'package:jotrockenmitlockenrepo/Pages/generic_navbar_page_config.dart';
+import 'package:jotrockenmitlockenrepo/Pages/Sqlite/sqlite_test_page_config.dart';
 import 'package:jotrockenmitlocken/l10n/app_localizations.dart';
 import 'package:jotrockenmitlockenrepo/Pages/simple_page_config.dart';
-import 'package:jotrockenmitlocken/Pages/generic_navbar_page_config.dart';
 import 'package:jotrockenmitlocken/Pages/blog_dependent_screen_configurations.dart';
 import 'package:jotrockenmitlocken/blog_page_config.dart';
 import 'package:jotrockenmitlockenrepo/Pages/Footer/footer_page_config.dart';
@@ -56,25 +56,25 @@ class JotrockenmitLockenScreenConfigurations extends ScreenConfigurations
       GenericNavBarPageConfig(
         icon: Icons.house_outlined,
         selectedIcon: Icons.house,
-        labelSelector: (l10n) => l10n.homepage,
+        labelBuilder: (context) => AppLocalizations.of(context)!.homepage,
         routingName: '/landingPage',
       ),
       GenericNavBarPageConfig(
         icon: Icons.person_outlined,
         selectedIcon: Icons.person,
-        labelSelector: (l10n) => l10n.aboutme,
+        labelBuilder: (context) => AppLocalizations.of(context)!.aboutme,
         routingName: '/aboutMe',
       ),
       GenericNavBarPageConfig(
         icon: Icons.folder_open_outlined,
         selectedIcon: Icons.folder_open,
-        labelSelector: (l10n) => l10n.data,
+        labelBuilder: (context) => AppLocalizations.of(context)!.data,
         routingName: '/data',
       ),
       GenericNavBarPageConfig(
         icon: Icons.description_outlined,
         selectedIcon: Icons.description,
-        labelSelector: (l10n) => l10n.documents,
+        labelBuilder: (context) => AppLocalizations.of(context)!.documents,
         routingName: '/documents',
       ),
     ];
@@ -157,7 +157,7 @@ class JotrockenmitLockenScreenConfigurations extends ScreenConfigurations
       const SimplePageConfig('/films'),
       const SimplePageConfig('/games'),
       const SimplePageConfig('/blockEntries'),
-      SqliteTestPageConfig(),
+      const SqliteTestPageConfig(),
     ];
   }
 }

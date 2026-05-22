@@ -5,22 +5,23 @@ import 'package:jotrockenmitlocken/Pages/DataPage/BlockOverviewPage/block_overvi
 import 'package:jotrockenmitlocken/Pages/DataPage/BooksPage/books_page.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/FilmsPage/films_page.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/GamesPage/games_page.dart';
-import 'package:jotrockenmitlocken/Pages/DataPage/SqliteTestPage/sqlite_test_page.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/data_page.dart';
 import 'package:jotrockenmitlocken/Pages/DocumentsPage/documents_page.dart';
 import 'package:jotrockenmitlocken/Pages/ErrorPage/error_page.dart';
-import 'package:jotrockenmitlocken/Pages/Footer/Pages/open_source_licenses_page.dart';
 import 'package:jotrockenmitlocken/blog_dependent_app_attributes.dart';
 
 import 'package:jotrockenmitlockenrepo/Pages/Footer/footer_page.dart';
+import 'package:jotrockenmitlockenrepo/Pages/Footer/open_source_licenses_page.dart';
 import 'package:jotrockenmitlocken/Pages/LandingPage/landing_page.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/QuotesPage/quotes_page.dart';
 import 'package:jotrockenmitlockenrepo/Pages/Footer/footer.dart';
 import 'package:jotrockenmitlockenrepo/Pages/Footer/footer_page_config.dart';
+import 'package:jotrockenmitlockenrepo/Pages/Sqlite/sqlite_test_page.dart';
 import 'package:jotrockenmitlocken/blog_page_config.dart';
 import 'package:jotrockenmitlocken/my_two_cents_config.dart';
 import 'package:jotrockenmitlockenrepo/Routing/router_creater.dart';
 
+import 'package:jotrockenmitlocken/l10n/app_localizations.dart';
 import 'package:jotrockenmitlockenrepo/app_attributes.dart';
 import 'package:jotrockenmitlockenrepo/Pages/stateful_branch_info_provider.dart';
 
@@ -90,6 +91,23 @@ class JotrockenMitLockenRoutes extends RoutesCreator {
       SqliteTestPage(
         footer: getFooter(appAttributes),
         appAttributes: appAttributes,
+        titleBuilder: (context) =>
+            Localizations.localeOf(context) == const Locale('de')
+            ? 'SQLite Self-Test'
+            : 'SQLite self test',
+        descriptionBuilder: (context) =>
+            Localizations.localeOf(context) == const Locale('de')
+            ? 'Führt eine minimale Query aus und zeigt das Ergebnis.'
+            : 'Runs a minimal query and shows the result.',
+        runLabelBuilder: (context) =>
+            Localizations.localeOf(context) == const Locale('de')
+            ? 'Test ausführen'
+            : 'Run test',
+        runningLabelBuilder: (context) =>
+            Localizations.localeOf(context) == const Locale('de')
+            ? 'Läuft…'
+            : 'Running…',
+        errorPrefix: 'FEHLER: ',
       ),
     ];
     assert(dataPages.length == dataPagesConfigs.length);
@@ -189,6 +207,12 @@ class JotrockenMitLockenRoutes extends RoutesCreator {
               OpenSourceLicensesPage(
                 footer: getFooter(appAttributes),
                 appAttributes: appAttributes,
+                descriptionTextBuilder: (context) =>
+                    AppLocalizations.of(context)!.openSourceLicensesDescription,
+                errorTextBuilder: (context) =>
+                    AppLocalizations.of(context)!.openSourceLicensesError,
+                emptyTextBuilder: (context) =>
+                    AppLocalizations.of(context)!.openSourceLicensesEmpty,
               ),
               pageConfig,
             );
