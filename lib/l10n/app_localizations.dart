@@ -7,6 +7,7 @@ import 'package:intl/intl.dart' as intl;
 
 import 'app_localizations_de.dart';
 import 'app_localizations_en.dart';
+import 'app_localizations_fr.dart';
 
 // ignore_for_file: type=lint
 
@@ -96,6 +97,7 @@ abstract class AppLocalizations {
   static const List<Locale> supportedLocales = <Locale>[
     Locale('de'),
     Locale('en'),
+    Locale('fr'),
   ];
 
   /// Switch between dark and light mode!
@@ -191,7 +193,7 @@ abstract class AppLocalizations {
   /// No description provided for @switchLang.
   ///
   /// In en, this message translates to:
-  /// **'Switch (DE/EN)'**
+  /// **'Language'**
   String get switchLang;
 
   /// No description provided for @mailMe.
@@ -338,6 +340,30 @@ abstract class AppLocalizations {
   /// **'Copyright'**
   String get copyrightFooterTitle;
 
+  /// No description provided for @openSourceLicenses.
+  ///
+  /// In en, this message translates to:
+  /// **'Open source licenses'**
+  String get openSourceLicenses;
+
+  /// No description provided for @openSourceLicensesDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'This page lists third-party packages and their license texts used in this app.'**
+  String get openSourceLicensesDescription;
+
+  /// No description provided for @openSourceLicensesError.
+  ///
+  /// In en, this message translates to:
+  /// **'The open source licenses could not be loaded.'**
+  String get openSourceLicensesError;
+
+  /// No description provided for @openSourceLicensesEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No open source licenses are currently available.'**
+  String get openSourceLicensesEmpty;
+
   /// No description provided for @visitBlogEntry.
   ///
   /// In en, this message translates to:
@@ -380,7 +406,7 @@ class _AppLocalizationsDelegate
 
   @override
   bool isSupported(Locale locale) =>
-      <String>['de', 'en'].contains(locale.languageCode);
+      <String>['de', 'en', 'fr'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
@@ -393,6 +419,8 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
       return AppLocalizationsDe();
     case 'en':
       return AppLocalizationsEn();
+    case 'fr':
+      return AppLocalizationsFr();
   }
 
   throw FlutterError(

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:jotrockenmitlockenrepo/Pages/Footer/footer.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/QuotesPage/quotes_list.dart';
+import 'package:jotrockenmitlockenrepo/Pages/Footer/footer.dart';
 import 'package:jotrockenmitlockenrepo/app_attributes.dart';
 import 'package:jotrockenmitlocken/l10n/app_localizations.dart';
-import 'package:jotrockenmitlockenrepo/Layout/ResponsiveDesign/single_page.dart';
+import 'package:jotrockenmitlockenrepo/Pages/csv_data_page.dart';
 
-class QuotesPage extends StatefulWidget {
+class QuotesPage extends StatelessWidget {
   final AppAttributes appAttributes;
   final Footer footer;
   const QuotesPage({
@@ -15,26 +15,17 @@ class QuotesPage extends StatefulWidget {
   });
 
   @override
-  State<StatefulWidget> createState() => QuotesPageState();
-}
-
-class QuotesPageState extends State<QuotesPage> {
-  @override
   Widget build(BuildContext context) {
-    return SinglePage(
-      footer: widget.footer,
-      appAttributes: widget.appAttributes,
-      showMediumSizeLayout: widget.appAttributes.showMediumSizeLayout,
-      showLargeSizeLayout: widget.appAttributes.showLargeSizeLayout,
-      children: [
-        QuotesList(
-          entryRedirectText: AppLocalizations.of(context)!.entryRedirectText,
-          title: AppLocalizations.of(context)!.quotations,
-          description:
-              "${AppLocalizations.of(context)!.quotationsDescription}\u{1F63A}",
-          dataFilePath: "assets/data/Zitate.csv",
-        ),
-      ],
+    return CsvDataPage(
+      appAttributes: appAttributes,
+      footer: footer,
+      child: QuotesList(
+        entryRedirectText: AppLocalizations.of(context)!.entryRedirectText,
+        title: AppLocalizations.of(context)!.quotations,
+        description:
+            "${AppLocalizations.of(context)!.quotationsDescription}\u{1F63A}",
+        dataFilePath: "assets/data/Zitate.csv",
+      ),
     );
   }
 }

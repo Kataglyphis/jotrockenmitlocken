@@ -10,7 +10,7 @@ env:
 
 on:
   push:
-    branches: ["main", "dev"]
+    branches: ["main", "develop"]
 
 jobs:
   build:
@@ -19,72 +19,76 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 🚚 Get latest code
-        uses: actions/checkout@v5.0.1
+        uses: actions/checkout@v7.0.1
         with:
           fetch-depth: 0
           submodules: recursive
 
-      - name: Set up Python 3.13
-        uses: actions/setup-python@v6.0.0
-        with:
-          python-version: "3.13"
+      - name: Install uv
+        uses: astral-sh/setup-uv@v9.0.0
+
+      - name: Set up Python 3.14
+        run: uv venv --python=3.14
 
       # You can test your matrix by printing the current Python version
-      - name: Setup python env
+      - name: Install WebDav Client and Sync content
         run: |
-          pip install git+https://github.com/Kataglyphis/Kataglyphis-WebDavClient
-          python scripts/download_markdown_files.py ${{ secrets.WEBDAV_HOSTNAME }} ${{ secrets.WEBDAV_USERNAME }} ${{ secrets.WEBDAV_PASSWORD }} ${{ secrets.REMOTE_BASE_PATH }} "$LOCAL_ASSETS_FOLDER"
+          uv pip install git+https://github.com/Kataglyphis/Kataglyphis-WebDavClient
+          uv run python scripts/download_markdown_files.py ${{ secrets.WEBDAV_HOSTNAME }} ${{ secrets.WEBDAV_USERNAME }} ${{ secrets.WEBDAV_PASSWORD }} ${{ secrets.REMOTE_BASE_PATH }} "$LOCAL_ASSETS_FOLDER"
 
       - name: Setup Flutter SDK
-        uses: flutter-actions/setup-flutter@v4.1
+        uses: flutter-actions/setup-flutter@v4.3
         with:
           channel: stable
-          version: 3.38.2
+          version: 3.44.0
 
       # git submodule update --init --recursive
       - name: Install dependencies
         run: |
           flutter pub get
-          cd external/jotrockenmitlockenrepo
+          cd ExternalLib/jotrockenmitlockenrepo
           flutter pub get
 
-      # Uncomment this step to verify the use of 'dart format' on each commit.
-      - name: Verify formatting
-        continue-on-error: true
-        run: dart format --output=none --set-exit-if-changed .
-
-      # Consider passing '--fatal-infos' for slightly stricter analysis.
+      # Verification order matches AGENTS.md: analyze → test → format
       - name: Analyze project source
-        continue-on-error: true
         run: dart analyze
 
-      # Your project will need to have tests in test/ and a dependency on
-      # package:test for this step to succeed. Note that Flutter projects will
-      # want to change this to 'flutter test'.
       - name: Run tests
-        run: |
-          flutter test
+        run: flutter test
+
+      - name: Verify formatting
+        run: dart format --output=none --set-exit-if-changed .
 
       - name: Enable flutter web
         run: |
           flutter config --enable-web
 
-      # for production I do not use wasm yet!
       - name: "Build Web App"
         if: github.ref == 'refs/heads/main'
         run: |
-          flutter build web --release
+          flutter build web --release --wasm --no-tree-shake-icons
 
       - name: "Build Web App (WASM)"
-        if: github.ref == 'refs/heads/dev'
+        if: github.ref == 'refs/heads/develop'
         id: build-wasm
-        continue-on-error: true
         run: |
-          flutter build web --release --wasm
+          flutter build web --release --wasm --no-tree-shake-icons
+
+      - name: 🔍 Integration smoke test
+        run: |
+          cd build/web
+          python3 -m http.server 8080 --bind 127.0.0.1 &
+          SERVER_PID=$!
+          sleep 1
+          cd ../..
+          bash scripts/integration_smoke_test.sh http://localhost:8080
+          RESULT=$?
+          kill $SERVER_PID 2>/dev/null
+          exit $RESULT
 
       - name: 📂 Sync files to main domain
         if: github.ref == 'refs/heads/main'
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
+        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
         with:
           server: ${{ secrets.SERVER }}
           username: ${{ secrets.USERNAME }}
@@ -92,8 +96,8 @@ jobs:
           local-dir: "./build/web/"
 
       - name: 📂 Sync files to dev wasm domain
-        if: github.ref == 'refs/heads/dev' #&& steps.build-wasm.outputs.should_run == 'true'
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
+        if: github.ref == 'refs/heads/develop' #&& steps.build-wasm.outputs.should_run == 'true'
+        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
         with:
           server: ${{ secrets.SERVER }}
           username: ${{ secrets.DEV_WASM_USERNAME }}
@@ -101,14 +105,14 @@ jobs:
           local-dir: "./build/web/"
 
       - name: "Build Web App with canavaskit"
-        if: github.ref == 'refs/heads/dev'
+        if: github.ref == 'refs/heads/develop'
         run: |
-          ls -R assets/
-          flutter build web --release
+          rm -r ./build/web/
+          flutter build web --release --no-tree-shake-icons
 
       - name: 📂 Sync files to dev domain
-        if: github.ref == 'refs/heads/dev'
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
+        if: github.ref == 'refs/heads/develop'
+        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
         with:
           server: ${{ secrets.SERVER }}
           username: ${{ secrets.DEV_USERNAME }}
@@ -120,7 +124,7 @@ jobs:
           dart doc
 
       - name: 📂 Sync files to doc domain
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
+        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
         with:
           server: ${{ secrets.DOC_WEBSITE_SERVER }}
           username: ${{ secrets.DOC_WEBSITE_USER }}

@@ -5,11 +5,7 @@ class Game extends TableData {
   String developer = "placeholder";
   String comment = "placeholder";
 
-  Game({
-    required this.title,
-    required this.developer,
-    required this.comment,
-  });
+  Game({required this.title, required this.developer, required this.comment});
 
   @override
   List<String> getCells() {

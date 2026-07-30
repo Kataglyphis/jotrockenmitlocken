@@ -58,7 +58,7 @@ class AppLocalizationsDe extends AppLocalizations {
       'Sammlung verschiedener Zitate, die mich inspirieren oder über die ich einfach lachen kann';
 
   @override
-  String get switchLang => 'Wechsel (DE/EN)';
+  String get switchLang => 'Sprache';
 
   @override
   String get mailMe => 'Schreib mir';
@@ -134,6 +134,21 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get copyrightFooterTitle => 'Urheberrecht';
+
+  @override
+  String get openSourceLicenses => 'Open-Source-Lizenzen';
+
+  @override
+  String get openSourceLicensesDescription =>
+      'Diese Seite listet Drittanbieter-Pakete und deren Lizenztexte auf, die in dieser App verwendet werden.';
+
+  @override
+  String get openSourceLicensesError =>
+      'Die Open-Source-Lizenzen konnten nicht geladen werden.';
+
+  @override
+  String get openSourceLicensesEmpty =>
+      'Derzeit sind keine Open-Source-Lizenzen verfugbar.';
 
   @override
   String get visitBlogEntry => 'Besuche Blogeintrag';

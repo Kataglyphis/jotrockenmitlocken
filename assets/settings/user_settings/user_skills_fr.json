@@ -1,0 +1,20 @@
+{
+    "Langages de programmation (expérience approfondie en projets)":["C++", "Python", "Java", "GLSL", "C", "Dart"],
+    "Langages de programmation (connaissances de base et expérience personnelle en projets)": ["Rust","C#", "JavaScript", "R", "PHP", "SQL", "TypeScript", "Pascal", "Bash/Shell"],
+    "Langages de programmation (connaissances de base)": ["Haskell", "Prolog", "Matlab", "NoSQL", "PowerShell"],
+    "Autres langages":["LaTeX", "HTML", "CSS", "Markdown"],
+    "Bases de données (connaissances de base et expérience personnelle en projets)": ["MySQL", "MariaDB", "SQLite", "Firebase Realtime Database"],
+    "Bases de données (connaissances de base)": ["PostgreSQL", "Microsoft SQL Server", "MongoDB"],
+	"Frameworks et technologies web (expérience approfondie en projets)": ["Node.js", "React.js"],
+    "Frameworks et technologies web (connaissances de base et expérience personnelle en projets)": ["jQuery", "Express"],
+    "Frameworks et technologies web (connaissances de base)": ["Django", "Angular"],
+    "Systèmes d'exploitation (utilisation fréquente)": ["Windows", "Linux (principalement différentes dérivées de Debian)"],
+    "Autres frameworks et bibliothèques": [".NET", "NumPy", "Spring", "Pandas", "TensorFlow", "Flutter", "Scikit-learn", "Torch/PyTorch", "Qt", "Keras", "Matplotlib"],
+    "APIs": ["Vulkan","OpenGL"],
+    "IDEs": ["Visual Studio (Code)", "Eclipse", "IntelliJ"],
+    "Autres outils":["Git","Unity 3D", "npm", "Docker", "Raspberry Pi", "Jupyter"],
+    "Langues": ["Allemand langue maternelle", "Souabe", "Anglais niveau B2", "Français niveau B1", "Latin"],
+    "Loisirs": ["Force athlétique", "Guitare", "Politique", "Philosophie"],
+    "Permis de conduire": ["Catégorie B", "Catégorie L", "Catégorie AM"],
+    "Autres licences": ["Tronçonneuse"]
+}
