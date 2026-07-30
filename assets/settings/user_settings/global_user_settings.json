@@ -8,6 +8,7 @@
         "assets/images/Pages/AboutMe/Bewerbungsbilder/a95a64ca_runterskaliert.jpg",
     "aboutMeFileDe": "assets/settings/user_settings/user_skills_de.json",
     "aboutMeFileEn": "assets/settings/user_settings/user_skills_en.json",
+    "aboutMeFileFr": "assets/settings/user_settings/user_skills_fr.json",
 	"socialMediaLinksConfig": {
 		"Facebook": {
 			"host": "www.facebook.com",

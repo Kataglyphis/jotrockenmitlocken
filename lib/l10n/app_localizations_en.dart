@@ -56,7 +56,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Collection of various quotations I am inspired by or just can laugh about';
 
   @override
-  String get switchLang => 'Switch (DE/EN)';
+  String get switchLang => 'Language';
 
   @override
   String get mailMe => 'Mail Me';

@@ -26,8 +26,12 @@ class AboutMePageState extends State<AboutMePage> {
     BuildContext context,
   ) {
     String aboutMeFile = userSettings.aboutMeFileEn!;
-    if (Localizations.localeOf(context) == const Locale('de')) {
+    final locale = Localizations.localeOf(context);
+    if (locale == const Locale('de')) {
       aboutMeFile = userSettings.aboutMeFileDe!;
+    } else if (locale == const Locale('fr') &&
+        userSettings.aboutMeFileFr != null) {
+      aboutMeFile = userSettings.aboutMeFileFr!;
     }
     List<Widget> childWidgetsLeftPage = [
       AboutMeTable(userSettings: userSettings),

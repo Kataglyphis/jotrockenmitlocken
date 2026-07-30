@@ -33,7 +33,6 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
   ThemeMode themeMode = ThemeMode.dark;
   ColorSeed colorSelected = ColorSeed.baseColor;
   int currentLanguageIndex = 0;
-  int _supportedLocaleCount = 1;
   int currentPageIndex = 0;
 
   bool get useLightMode {
@@ -132,9 +131,9 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
     currentPageIndex = pageIndex;
   }
 
-  void handleLanguageChange() {
+  void handleLanguageSelect(int index) {
     setState(() {
-      currentLanguageIndex = (currentLanguageIndex + 1) % _supportedLocaleCount;
+      currentLanguageIndex = index;
     });
   }
 
@@ -192,7 +191,7 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
             useLightMode: useLightMode,
             colorSelected: colorSelected,
             handleBrightnessChange: handleBrightnessChange,
-            handleLanguageChange: handleLanguageChange,
+            handleLanguageSelect: handleLanguageSelect,
             handleColorSelect: handleColorSelect,
           );
 
@@ -213,7 +212,6 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
           if (supportedLanguages.isEmpty) {
             supportedLanguages = [const Locale('en')];
           }
-          _supportedLocaleCount = supportedLanguages.length;
           return MaterialApp.router(
             debugShowCheckedModeBanner: false,
             localizationsDelegates: localizationsDelegate,

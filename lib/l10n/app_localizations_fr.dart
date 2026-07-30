@@ -56,7 +56,7 @@ class AppLocalizationsFr extends AppLocalizations {
       'Collection de diverses citations qui m\'inspirent ou qui me font simplement rire';
 
   @override
-  String get switchLang => 'Changer de langue (DE/EN/FR)';
+  String get switchLang => 'Langue';
 
   @override
   String get mailMe => 'Envoyez-moi un e-mail';
