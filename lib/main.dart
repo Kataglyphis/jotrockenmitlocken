@@ -32,7 +32,8 @@ class App extends StatefulWidget {
 class _AppState extends State<App> with SingleTickerProviderStateMixin {
   ThemeMode themeMode = ThemeMode.dark;
   ColorSeed colorSelected = ColorSeed.baseColor;
-  bool useOtherLanguageMode = false;
+  int currentLanguageIndex = 0;
+  int _supportedLocaleCount = 1;
   int currentPageIndex = 0;
 
   bool get useLightMode {
@@ -133,7 +134,7 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
 
   void handleLanguageChange() {
     setState(() {
-      useOtherLanguageMode = useOtherLanguageMode ? false : true;
+      currentLanguageIndex = (currentLanguageIndex + 1) % _supportedLocaleCount;
     });
   }
 
@@ -187,7 +188,7 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
             railAnimation: railAnimation,
             showMediumSizeLayout: showMediumSizeLayout,
             showLargeSizeLayout: showLargeSizeLayout,
-            useOtherLanguageMode: useOtherLanguageMode,
+            currentLanguageIndex: currentLanguageIndex,
             useLightMode: useLightMode,
             colorSelected: colorSelected,
             handleBrightnessChange: handleBrightnessChange,
@@ -212,6 +213,7 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
           if (supportedLanguages.isEmpty) {
             supportedLanguages = [const Locale('en')];
           }
+          _supportedLocaleCount = supportedLanguages.length;
           return MaterialApp.router(
             debugShowCheckedModeBanner: false,
             localizationsDelegates: localizationsDelegate,
@@ -220,7 +222,9 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
                 ? appAttributes.appSettings.appTitleDe
                 : appAttributes.appSettings.appTitleEn,
             themeMode: themeMode,
-            locale: supportedLanguages[0],
+            locale:
+                supportedLanguages[currentLanguageIndex %
+                    supportedLanguages.length],
             supportedLocales: supportedLanguages,
             theme: lightTheme,
             darkTheme: darkTheme,
