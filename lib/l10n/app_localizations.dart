@@ -193,7 +193,7 @@ abstract class AppLocalizations {
   /// No description provided for @switchLang.
   ///
   /// In en, this message translates to:
-  /// **'Switch (DE/EN)'**
+  /// **'Language'**
   String get switchLang;
 
   /// No description provided for @mailMe.
