@@ -6,7 +6,7 @@ Personal blog as a responsive cross-platform Flutter/Dart web app by Jonas Heinl
 
 ```bash
 # Install dependencies (root + external submodule)
-flutter pub get && cd external/jotrockenmitlockenrepo && flutter pub get && cd -
+flutter pub get && cd ExternalLib/jotrockenmitlockenrepo && flutter pub get && cd -
 
 # Lint & analyze (zero tolerance for errors)
 dart analyze
@@ -152,10 +152,10 @@ lib/
     Footer/                     #   Footer config
     Home/                       #   Home button config
   Routing/                      # RoutesCreator: wires all page configs to GoRouter routes
-  l10n/                         # ARB-based localization (German + English, 53 strings, auto-generated)
+  l10n/                         # ARB-based localization (German + English + French, 53 strings, auto-generated)
   *.dart                        # Config models: BlogPageConfig, MyTwoCentsConfig, BlogDependentAppAttributes, settings_loader
 
-external/jotrockenmitlockenrepo/ # Git submodule — shared component library
+ExternalLib/jotrockenmitlockenrepo/ # Git submodule — shared component library
   lib/
     app_attributes.dart         # Core data models (AppAttributes, AppSettings, UserSettings)
     Pages/
@@ -176,13 +176,13 @@ external/jotrockenmitlockenrepo/ # Git submodule — shared component library
 
 - **State management:** Provider (`package:provider`)
 - **Routing:** GoRouter (`package:go_router ^17.1.0`) with declarative named routes
-- **Responsive layout:** Switch between single-page and two-column layout based on screen width breakpoints (defined in `external/jotrockenmitlockenrepo/lib/constants.dart`)
+- **Responsive layout:** Switch between single-page and two-column layout based on screen width breakpoints (defined in `ExternalLib/jotrockenmitlockenrepo/lib/constants.dart`)
 - **Content:** Blog posts in Markdown, rendered via `markdown_widget` / `flutter_markdown_plus`. Book/film/game reviews via `my_two_cents_config.json`.
 - **Localization:** ARB files in `lib/l10n/` (template: `app_en.arb`), output auto-generated to `app_localizations.dart`. Always run `flutter gen-l10n` after editing ARB files.
 - **Page pattern:** Each page implements `StatefulBranchInfoProvider` (from shared repo) which provides `getRoutingName()` and a GoRouter-compatible page builder. Config classes hold route metadata, icon, label, and page builder.
 - **Fonts:** Montserrat (18 variants) and Roboto (14 variants) bundled as assets.
 - **Lint rules:** Standard `flutter_lints ^6.0.0` (`package:flutter_lints/flutter.yaml`). No custom overrides.
-- **Git submodules:** Clone with `--recurse-submodules`. The external repo (`external/jotrockenmitlockenrepo`) is a path dependency in `pubspec.yaml`.
+- **Git submodules:** Clone with `--recurse-submodules`. The external repo (`ExternalLib/jotrockenmitlockenrepo`) is a path dependency in `pubspec.yaml`.
 
 ## Dependencies
 
@@ -193,7 +193,7 @@ external/jotrockenmitlockenrepo/ # Git submodule — shared component library
 | Icons | `cupertino_icons ^1.0.9`, `font_awesome_flutter ^11.0.0` |
 | Localization | `intl ^0.20.2` |
 | Database | `sqlite3 ^3.3.1` (WASM + native) |
-| Shared library | `jotrockenmitlockenrepo` (local path: `external/jotrockenmitlockenrepo`) |
+| Shared library | `jotrockenmitlockenrepo` (local path: `ExternalLib/jotrockenmitlockenrepo`) |
 | Testing | `flutter_test`, `integration_test`, `mockito ^5.7.0` |
 | Charts (in shared repo) | `fl_chart ^1.2.0` |
 | Markdown (in shared repo) | `markdown ^7.3.1`, `markdown_widget ^2.3.2+8`, `flutter_markdown_plus ^1.0.7` |
@@ -201,7 +201,7 @@ external/jotrockenmitlockenrepo/ # Git submodule — shared component library
 ## Gotchas
 
 - **No real content locally:** Blog markdown files are downloaded from WebDAV via CI secrets. Running locally will show placeholder/dummy content from `dummy_assets/`.
-- **Submodule required:** Always clone with `--recurse-submodules`. Run `flutter pub get` in both root and `external/jotrockenmitlockenrepo/`.
+- **Submodule required:** Always clone with `--recurse-submodules`. Run `flutter pub get` in both root and `ExternalLib/jotrockenmitlockenrepo/`.
 - **ARB generation:** After editing `.arb` files, run `flutter gen-l10n` to regenerate `app_localizations*.dart`.
 - **SQLite on web:** The `setup_sqlite3_wasm.sh` script must be run to download `sqlite3.wasm` for web targets.
 - **iOS/macOS builders:** Do not touch `ios/`, `macos/`, `android/`, `windows/`, `linux/` directories unless specifically requested — they contain platform-specific boilerplate.

@@ -46,7 +46,7 @@ jobs:
       - name: Install dependencies
         run: |
           flutter pub get
-          cd external/jotrockenmitlockenrepo
+          cd ExternalLib/jotrockenmitlockenrepo
           flutter pub get
 
       # Verification order matches AGENTS.md: analyze → test → format
