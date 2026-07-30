@@ -56,7 +56,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Collection of various quotations I am inspired by or just can laugh about';
 
   @override
-  String get switchLang => 'Switch (DE/EN)';
+  String get switchLang => 'Language';
 
   @override
   String get mailMe => 'Mail Me';
@@ -132,6 +132,21 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get copyrightFooterTitle => 'Copyright';
+
+  @override
+  String get openSourceLicenses => 'Open source licenses';
+
+  @override
+  String get openSourceLicensesDescription =>
+      'This page lists third-party packages and their license texts used in this app.';
+
+  @override
+  String get openSourceLicensesError =>
+      'The open source licenses could not be loaded.';
+
+  @override
+  String get openSourceLicensesEmpty =>
+      'No open source licenses are currently available.';
 
   @override
   String get visitBlogEntry => 'Visit blog entry';

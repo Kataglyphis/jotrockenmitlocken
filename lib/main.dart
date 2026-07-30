@@ -1,10 +1,4 @@
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
-
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:jotrockenmitlocken/l10n/app_localizations.dart';
 
@@ -17,6 +11,7 @@ import 'package:jotrockenmitlocken/Pages/jotrockenmitlocken_screen_configuration
 import 'package:jotrockenmitlocken/blog_dependent_app_attributes.dart';
 import 'package:jotrockenmitlocken/blog_page_config.dart';
 import 'package:jotrockenmitlocken/my_two_cents_config.dart';
+import 'package:jotrockenmitlocken/settings_loader.dart';
 import 'package:jotrockenmitlockenrepo/app_attributes.dart';
 import 'package:jotrockenmitlockenrepo/app_settings.dart';
 import 'package:jotrockenmitlockenrepo/constants.dart';
@@ -37,7 +32,7 @@ class App extends StatefulWidget {
 class _AppState extends State<App> with SingleTickerProviderStateMixin {
   ThemeMode themeMode = ThemeMode.dark;
   ColorSeed colorSelected = ColorSeed.baseColor;
-  bool useOtherLanguageMode = false;
+  int currentLanguageIndex = 0;
   int currentPageIndex = 0;
 
   bool get useLightMode {
@@ -80,7 +75,12 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
       parent: controller,
       curve: const Interval(0.5, 1.0),
     );
-    _settings = _loadAppSettings();
+    _settings = SettingsLoader().loadAll(
+      userSettingsPath: userSettingsFilePath,
+      appSettingsPath: appSettingsFilePath,
+      blogSettingsPath: blogSettingsFilePath,
+      twoCentsSettingsPath: twoCentsSettingsFilePath,
+    );
   }
 
   @override
@@ -121,50 +121,6 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
     }
   }
 
-  Future<
-    (AppSettings, UserSettings, List<BlogPageConfig>, List<MyTwoCentsConfig>)
-  >
-  _loadAppSettings() async {
-    final userSettingsJsonString = await rootBundle.loadString(
-      userSettingsFilePath,
-    );
-    final Map<String, dynamic> userSettingsJson = json.decode(
-      userSettingsJsonString,
-    );
-    UserSettings userSettings = UserSettings.fromJsonFile(userSettingsJson);
-
-    final appSettingsJsonString = await rootBundle.loadString(
-      appSettingsFilePath,
-    );
-    final Map<String, dynamic> appSettingsJson = json.decode(
-      appSettingsJsonString,
-    );
-    AppSettings appSettings = AppSettings.fromJsonFile(appSettingsJson);
-
-    final blogSettingsJsonString = await rootBundle.loadString(
-      blogSettingsFilePath,
-    );
-    final List<dynamic> blogSettingsJson = json.decode(blogSettingsJsonString);
-    List<BlogPageConfig> blogConfigs = [];
-    for (var e in blogSettingsJson) {
-      blogConfigs.add(BlogPageConfig.fromJsonFile(e as Map<String, dynamic>));
-    }
-
-    final twoCentsSettingsJsonString = await rootBundle.loadString(
-      twoCentsSettingsFilePath,
-    );
-    final List<dynamic> twoCentsSettingsJson = json.decode(
-      twoCentsSettingsJsonString,
-    );
-    List<MyTwoCentsConfig> twoCentsConfigs = [];
-    for (var e in twoCentsSettingsJson) {
-      twoCentsConfigs.add(
-        MyTwoCentsConfig.fromJsonFile(e as Map<String, dynamic>),
-      );
-    }
-    return (appSettings, userSettings, blogConfigs, twoCentsConfigs);
-  }
-
   void handleBrightnessChange(bool useLightMode) {
     setState(() {
       themeMode = useLightMode ? ThemeMode.light : ThemeMode.dark;
@@ -175,9 +131,9 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
     currentPageIndex = pageIndex;
   }
 
-  void handleLanguageChange() {
+  void handleLanguageSelect(int index) {
     setState(() {
-      useOtherLanguageMode = useOtherLanguageMode ? false : true;
+      currentLanguageIndex = index;
     });
   }
 
@@ -231,11 +187,11 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
             railAnimation: railAnimation,
             showMediumSizeLayout: showMediumSizeLayout,
             showLargeSizeLayout: showLargeSizeLayout,
-            useOtherLanguageMode: useOtherLanguageMode,
+            currentLanguageIndex: currentLanguageIndex,
             useLightMode: useLightMode,
             colorSelected: colorSelected,
             handleBrightnessChange: handleBrightnessChange,
-            handleLanguageChange: handleLanguageChange,
+            handleLanguageSelect: handleLanguageSelect,
             handleColorSelect: handleColorSelect,
           );
 
@@ -250,26 +206,41 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
             currentPageIndex,
           );
           var supportedLanguages =
-              data.requireData.$1.supportedLocales!
+              (data.requireData.$1.supportedLocales ?? <String>[])
                   .map((element) => Locale(element))
                   .toList();
+          if (supportedLanguages.isEmpty) {
+            supportedLanguages = [const Locale('en')];
+          }
           return MaterialApp.router(
             debugShowCheckedModeBanner: false,
             localizationsDelegates: localizationsDelegate,
-            onGenerateTitle:
-                (context) =>
-                    (Localizations.localeOf(context) == const Locale("de"))
-                        ? appAttributes.appSettings.appTitleDe
-                        : appAttributes.appSettings.appTitleEn,
+            onGenerateTitle: (context) =>
+                (Localizations.localeOf(context) == const Locale("de"))
+                ? appAttributes.appSettings.appTitleDe
+                : appAttributes.appSettings.appTitleEn,
             themeMode: themeMode,
-            locale: supportedLanguages[0],
+            locale:
+                supportedLanguages[currentLanguageIndex %
+                    supportedLanguages.length],
             supportedLocales: supportedLanguages,
             theme: lightTheme,
             darkTheme: darkTheme,
             routerConfig: routerConfig,
           );
         } else if (data.hasError) {
-          return Text("${data.error}");
+          return Material(
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.all(24),
+                child: Text(
+                  "Error: ${data.error}",
+                  style: Theme.of(context).textTheme.bodyLarge,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+          );
         } else {
           return Center(
             child: CircularProgressIndicator(color: ColorSeed.baseColor.color),

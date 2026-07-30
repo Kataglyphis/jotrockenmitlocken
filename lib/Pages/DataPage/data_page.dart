@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jotrockenmitlocken/l10n/app_localizations.dart';
-import 'package:jotrockenmitlocken/Pages/DataPage/data_page_entry.dart';
 import 'package:jotrockenmitlockenrepo/Decoration/row_divider.dart';
+import 'package:jotrockenmitlockenrepo/Pages/data_page_entry.dart';
 
 import 'package:jotrockenmitlockenrepo/Pages/Footer/footer.dart';
 import 'package:jotrockenmitlockenrepo/Layout/ResponsiveDesign/one_two_transition_widget.dart';
@@ -22,6 +22,15 @@ class DataPage extends StatefulWidget {
 
 class DataPageState extends State<DataPage> {
   List<List<Widget>> _createLandingPageChildWidgets(BuildContext context) {
+    final sqliteTestLabel =
+        (Localizations.localeOf(context) == const Locale('de'))
+        ? 'SQLite Self-Test'
+        : 'SQLite self test';
+    final sqliteTestDescription =
+        (Localizations.localeOf(context) == const Locale('de'))
+        ? 'Prüft sqlite3 im Browser (WASM) mit einer Test-Query.'
+        : 'Checks sqlite3 in the browser (WASM) with a test query.';
+
     List<Widget> childWidgetsLeftPage = [
       DataPageEntry(
         label: AppLocalizations.of(context)!.quotations,
@@ -29,6 +38,7 @@ class DataPageState extends State<DataPage> {
         imagePath: 'assets/images/Pages/Data/Quotes_cover.jpg',
         description: AppLocalizations.of(context)!.quotationsDescription,
         lastModified: 'babbeln',
+        followLabel: AppLocalizations.of(context)!.follow,
       ),
       rowDivider,
       DataPageEntry(
@@ -37,6 +47,16 @@ class DataPageState extends State<DataPage> {
         imagePath: 'assets/images/Pages/Data/Film_cover.jpg',
         description: AppLocalizations.of(context)!.filmsDescription,
         lastModified: 'glotze',
+        followLabel: AppLocalizations.of(context)!.follow,
+      ),
+      rowDivider,
+      DataPageEntry(
+        label: sqliteTestLabel,
+        routerPath: '/sqliteTest',
+        imagePath: 'assets/images/Pages/Data/Book_cover.jpg',
+        description: sqliteTestDescription,
+        lastModified: 'sqlite3',
+        followLabel: AppLocalizations.of(context)!.follow,
       ),
       rowDivider,
     ];
@@ -47,6 +67,7 @@ class DataPageState extends State<DataPage> {
         imagePath: 'assets/images/Pages/Data/Book_cover.jpg',
         description: AppLocalizations.of(context)!.booksDescription,
         lastModified: '.._..',
+        followLabel: AppLocalizations.of(context)!.follow,
       ),
       rowDivider,
       DataPageEntry(
@@ -55,6 +76,7 @@ class DataPageState extends State<DataPage> {
         imagePath: 'assets/images/Pages/Data/Spiele_cover.jpg',
         description: AppLocalizations.of(context)!.gamesDescription,
         lastModified: 'Go rust',
+        followLabel: AppLocalizations.of(context)!.follow,
       ),
     ];
 

@@ -3,21 +3,27 @@
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	margin: 0;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	-ms-transform: translate(-50%, -50%);
-	transform: translate(-50%, -50%);
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 9999;
+	pointer-events: none;
+}
+
+.loading.fade-out {
+	opacity: 0;
+	transition: opacity 0.5s ease-out;
 }
 
 #loading-message {
-	color: #000000;
-	font-size: 24px;
-	margin-left: 15px;
+	color: var(--kTextColor, #000000);
+	font-size: clamp(14px, 4vw, 24px);
+	text-align: center;
+	margin-top: 10px;
 }
 
-/* #69f0ae */
 #background-animation {
 	position: fixed;
 	top: 0;
@@ -28,54 +34,43 @@
 	background: linear-gradient(45deg, #ffffff, #69f0ae);
 	background-size: 400% 400%;
 	animation: gradientAnimation 5s ease infinite;
+	transition: opacity 0.5s ease-out;
 }
 
-/* #ffffff, #69f0ae */
+#background-animation.fade-out {
+	opacity: 0;
+}
+
 .loader {
-	border: 16px solid #f3f3f3;
+	border: clamp(8px, 2.5vw, 16px) solid;
+	border-top-color: var(--kPrimaryColor);
+	border-right-color: #ffffff;
+	border-bottom-color: var(--kPrimaryColor);
+	border-left-color: #ffffff;
 	border-radius: 50%;
-	border: 15px solid;
-	border-top: 16px solid var(--kPrimaryColor);
-	border-right: 16px solid white;
-	border-bottom: 16px solid var(--kPrimaryColor);
-	border-left: 16px solid white;
-	width: 120px;
-	height: 120px;
-	-webkit-animation: spin 2s linear infinite;
+	width: clamp(60px, 20vw, 120px);
+	height: clamp(60px, 20vw, 120px);
 	animation: spin 2s linear infinite;
 	margin: 10px 0;
 }
 
-@-webkit-keyframes spin {
-	0% {
-		-webkit-transform: rotate(0deg);
-	}
-
-	100% {
-		-webkit-transform: rotate(360deg);
-	}
-}
-
 @keyframes spin {
-	0% {
-		transform: rotate(0deg);
-	}
-
-	100% {
-		transform: rotate(360deg);
-	}
+	0% { transform: rotate(0deg); }
+	100% { transform: rotate(360deg); }
 }
 
 @keyframes gradientAnimation {
-	0% {
-		background-position: 0% 50%;
+	0% { background-position: 0% 50%; }
+	50% { background-position: 100% 50%; }
+	100% { background-position: 0% 50%; }
+}
+
+@media (prefers-color-scheme: dark) {
+	#loading-message {
+		color: #e0e0e0;
 	}
 
-	50% {
-		background-position: 100% 50%;
-	}
-
-	100% {
-		background-position: 0% 50%;
+	#background-animation {
+		background: linear-gradient(45deg, #1a1a2e, #16213e);
 	}
 }

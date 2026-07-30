@@ -30,9 +30,10 @@ class LandingPageState extends State<LandingPage> {
     const colDivider = SizedBox(height: 10);
     List<Widget> childWidgetsLeftPage = [];
     List<Widget> childWidgetsRightPage = [];
-    List<BlogPageConfig> blogPagesConfig =
-        widget.blogDependentAppAttributes.blogDependentScreenConfigurations
-            .getBlogPagesConfig();
+    List<BlogPageConfig> blogPagesConfig = widget
+        .blogDependentAppAttributes
+        .blogDependentScreenConfigurations
+        .getBlogPagesConfig();
 
     // lets add a button to the overall overview of all blog entries as the first entry
     childWidgetsLeftPage.add(
@@ -49,24 +50,26 @@ class LandingPageState extends State<LandingPage> {
       ),
     );
 
-    ExternalLinkConfig gitHub =
-        widget.appAttributes.userSettings.socialMediaLinksConfig!['GitHub']!;
+    final socialLinks =
+        widget.appAttributes.userSettings.socialMediaLinksConfig;
+    final gitHub = socialLinks != null && socialLinks.containsKey('GitHub')
+        ? socialLinks['GitHub']!
+        : ExternalLinkConfig(host: 'github.com', path: '/Kataglyphis');
     for (int i = 0; i < blogPagesConfig.length; i++) {
       ExternalLinkConfig githubRepo = ExternalLinkConfig(
         host: gitHub.host,
         path: gitHub.path + blogPagesConfig[i].githubRepo,
       );
 
-      var landingPageEntry = LandingPageEntry(
+      final landingPageEntry = LandingPageEntry(
         lastModified:
             "${AppLocalizations.of(context)!.lastModified} ${blogPagesConfig[i].lastModified}",
         fileTitle: blogPagesConfig[i].fileTitle,
         fileAdditionalInfo: blogPagesConfig[i].fileAdditionalInfo,
         fileBaseDir: blogPagesConfig[i].fileBaseDir,
-        label:
-            Localizations.localeOf(context) == const Locale("de")
-                ? blogPagesConfig[i].shortDescriptionDE
-                : blogPagesConfig[i].shortDescriptionEN,
+        label: Localizations.localeOf(context) == const Locale("de")
+            ? blogPagesConfig[i].shortDescriptionDE
+            : blogPagesConfig[i].shortDescriptionEN,
         routerPath: blogPagesConfig[i].getRoutingName(),
         headline: AppLocalizations.of(context)!.visitBlogEntry,
         githubRepo: githubRepo,

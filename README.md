@@ -1,31 +1,16 @@
-<h1 align="center">
-  <br>
-  <a href="https://jonasheinle.de"><img src="images/logo.png" alt="My website" width="200"></a>
-  <br>
-  Jotrockenmitlocken
-  <br>
-</h1>
+<div align="center">
+  <a href="https://jonasheinle.de">
+    <img src="images/logo.png" alt="logo" width="200" />
+  </a>
 
-<!-- <h1 align="center">
-  <br>
-  <a href="https://jonasheinle.de"><img src="images/vulkan-logo.png" alt="VulkanEngine" width="200"></a>
-  <a href="https://jonasheinle.de"><img src="images/Engine_logo.png" alt="VulkanEngine" width="200"></a>
-  <a href="https://jonasheinle.de"><img src="images/glm_logo.png" alt="VulkanEngine" width="200"></a>
-</h1> -->
+  <h1>jotrockenmitlocken</h1>
 
-<h4 align="center">My personal blog as responsive web app using Flutter/Dart. 
+  <h4>My personal blog as responsive web app using Flutter/Dart. 
 Every blog post is written in pure markdown :boom: and therefore very lightweight to use 
 and add new content. 
 It is highly customizable for your needs, your personal web blog or you next Frontend 
-project (<b>not only</b> web but also native Linux/Windows/Android/Web/iOS)
-<a href="https://jonasheinle.de" target="_blank"></a>.</h4>
-
-<p align="center">
-  <br>
-  <a href="https://jonasheinle.de"><img src="images/overview.gif" alt="My website", width="800"></a>
-  <br>
-  <br>
-</p>
+project (<b>not only</b> web but also native Linux/Windows/Android/Web/iOS)</h4>
+</div>
 
 > **__Note__**: If your run locally this website you are not able to
 neither navigate to the blog entries nor the book/film/... critics. 
@@ -62,34 +47,26 @@ my [md2pdf](https://github.com/Kataglyphis/Kataglyphis-mdToPdf)-project that eve
   <a href="#license">License</a>
 </p>
 
-<!-- TABLE OF CONTENTS -->
-<details open="open">
-  <summary>Table of Contents</summary>
-  <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
-      <ul>
-        <li><a href="#key-features">Key Features</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
-    </li>
-    <li><a href="#tests">Tests</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgements">Acknowledgements</a></li>
-  </ol>
-</details>
+## Table of Contents
+
+- [About The Project](#about-the-project)
+  - [Built With](#built-with)
+  - [Content](#content)
+  - [Publish a new blog post](#publish-a-new-blog-post)
+  - [Publishing posts over a book](#publishing-posts-over-a-book)
+  - [Localization](#localization)
+  - [Key Features](#key-features)
+- [Getting Started](#getting-started)
+  - [Run Web Server locally for Debugging](#run-web-server-locally-for-debugging)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+- [Roadmap](#roadmap)
+- [Contributing](#contributing)
+- [License](#license)
+- [Known Issues](#known-issues)
+- [Contact](#contact)
+- [Acknowledgements](#acknowledgements)
+- [Literature](#literature)
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project

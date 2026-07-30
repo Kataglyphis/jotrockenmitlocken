@@ -1,0 +1,11 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "instructions": [
+    "README.md",
+    "AGENTS.md",
+    "analysis_options.yaml",
+    "pubspec.yaml",
+    "l10n.yaml",
+    "ExternalLib/jotrockenmitlockenrepo/pubspec.yaml"
+  ]
+}
