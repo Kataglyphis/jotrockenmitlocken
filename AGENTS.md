@@ -137,6 +137,39 @@ dart analyze && flutter test && dart format --output=none --set-exit-if-changed 
 
 Only commit if all commands exit with code 0.
 
+## What ContainerHub owns — links only
+
+This repo has a second submodule besides the shared component library:
+`ExternalLib/Kataglyphis-ContainerHub`. It owns every reusable script, container
+recipe and build doc shared across the Kataglyphis repos, and **four scripts here
+are thin wrappers over it** — editing the wrapper when the behaviour lives
+upstream is the mistake to avoid:
+
+| Wrapper | Delegates to |
+| --- | --- |
+| `scripts/build-in-container.sh` | ContainerHub's container bootstrap |
+| `scripts/integration-smoke-test.sh` | shared Flutter-web smoke test |
+| `scripts/run-nginx-integration-test.sh` | shared nginx integration harness |
+| `scripts/capture_console_errors.py` | shared Flutter-web console-error test |
+
+**Do not restate upstream procedures here.** Start at
+[`ExternalLib/Kataglyphis-ContainerHub/docs/INDEX.md`](ExternalLib/Kataglyphis-ContainerHub/docs/INDEX.md)
+— it maps topic → owning document, so links survive upstream reorganisation. The
+rule that decides where anything belongs: *would this still be true in a
+different project?* Yes → ContainerHub owns it, link to it. No → write it out
+here.
+
+Two upstream facts worth knowing before you reach a doc:
+
+- ContainerHub's PowerShell modules declare `#requires -Version 7.0` — launch
+  with `pwsh`, never `powershell`. (Not used by this repo's CI today, which is
+  Linux-only, but true if you add a Windows lane.)
+- Workflows resolve ContainerHub's composite actions at `@main`, so an upstream
+  change a workflow depends on must be pushed **before** the consumer change.
+
+Clone with `--recurse-submodules` or the wrappers fail with an explicit
+"did you run `git submodule update --init`?" message rather than a confusing one.
+
 ## Project Structure
 
 ```

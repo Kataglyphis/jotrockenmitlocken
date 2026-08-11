@@ -1,2 +1,17 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# `text=auto` normalises the stored blob to LF but still converts on checkout
+# according to the client's core.autocrlf, so a Windows working copy gets CRLF.
+# These scripts run inside a Linux container, where a lone CR makes bash read
+# `\r` as part of a token - `set: pipefail\r: invalid option name`, or
+# "$'\r': command not found" with exit 127 - which reads as a missing tool
+# rather than a line-ending fault. Pin them so the working copy matches the blob.
+*.sh    text eol=lf
+*.bash  text eol=lf
+
+# Windows-only scripts stay CRLF-friendly; they never run under bash.
+*.ps1   text eol=crlf
+*.psm1  text eol=crlf
+*.cmd   text eol=crlf
+*.bat   text eol=crlf
