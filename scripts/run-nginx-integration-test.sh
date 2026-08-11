@@ -41,7 +41,7 @@ for i in $(seq 1 10); do
 done
 
 echo ""
-"$SCRIPT_DIR/integration_smoke_test.sh" http://localhost:8080
+"$SCRIPT_DIR/integration-smoke-test.sh" http://localhost:8080
 RESULT=$?
 
 if [ -n "${CONTAINER:-}" ]; then
