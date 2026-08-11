@@ -1,6 +1,8 @@
 [submodule "ExternalLib/jotrockenmitlockenrepo"]
 	path = ExternalLib/jotrockenmitlockenrepo
 	url = https://github.com/Kataglyphis/jotrockenmitlockenrepo.git
+	branch = main
 [submodule "ExternalLib/Kataglyphis-ContainerHub"]
 	path = ExternalLib/Kataglyphis-ContainerHub
 	url = https://github.com/Kataglyphis/Kataglyphis-ContainerHub.git
+	branch = main
