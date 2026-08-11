@@ -24,12 +24,12 @@ flutter run -d web-server --profile --web-port 8080 --web-hostname 0.0.0.0
 flutter test integration_test/ --platform chrome
 
 # Run integration smoke tests (built web app via HTTP server)
-bash scripts/run_nginx_integration_test.sh
+bash scripts/run-nginx-integration-test.sh
 
 # Or manually: build, serve, test
 flutter build web --release --wasm --no-tree-shake-icons
 cd build/web && python3 -m http.server 8080 &
-cd .. && bash scripts/integration_smoke_test.sh http://localhost:8080
+cd .. && bash scripts/integration-smoke-test.sh http://localhost:8080
 
 # Run E2E browser console error capture (Playwright + flatpak Chromium)
 python3 scripts/capture_console_errors.py
@@ -49,7 +49,7 @@ flutter build web --release --wasm --no-tree-shake-icons
 
 # Serve and test
 cd build/web && python3 -m http.server 8080 &
-cd .. && bash scripts/integration_smoke_test.sh http://localhost:8080
+cd .. && bash scripts/integration-smoke-test.sh http://localhost:8080
 ```
 
 **What it checks:**
@@ -132,7 +132,7 @@ flutter gen-l10n
 
 **Before committing changes:**
 ```bash
-dart analyze && flutter test && dart format --output=none --set-exit-if-changed . && bash scripts/integration_smoke_test.sh http://localhost:8080 && python3 scripts/capture_console_errors.py
+dart analyze && flutter test && dart format --output=none --set-exit-if-changed . && bash scripts/integration-smoke-test.sh http://localhost:8080 && python3 scripts/capture_console_errors.py
 ```
 
 Only commit if all commands exit with code 0.
@@ -203,7 +203,7 @@ ExternalLib/jotrockenmitlockenrepo/ # Git submodule — shared component library
 - **No real content locally:** Blog markdown files are downloaded from WebDAV via CI secrets. Running locally will show placeholder/dummy content from `dummy_assets/`.
 - **Submodule required:** Always clone with `--recurse-submodules`. Run `flutter pub get` in both root and `ExternalLib/jotrockenmitlockenrepo/`.
 - **ARB generation:** After editing `.arb` files, run `flutter gen-l10n` to regenerate `app_localizations*.dart`.
-- **SQLite on web:** The `setup_sqlite3_wasm.sh` script must be run to download `sqlite3.wasm` for web targets.
+- **SQLite on web:** The `setup-sqlite3-wasm.sh` script must be run to download `sqlite3.wasm` for web targets.
 - **iOS/macOS builders:** Do not touch `ios/`, `macos/`, `android/`, `windows/`, `linux/` directories unless specifically requested — they contain platform-specific boilerplate.
 - **Known issues:** `flutter_highlighter` needs a patch; `flutter_markdown` has a blockquote rendering issue.
 - **ARM64 browser automation:** Playwright's `playwright install chromium` fails on ARM64, but Playwright **works** with `flatpak install flathub org.chromium.Chromium` + `executable_path` to use the flatpak binary.

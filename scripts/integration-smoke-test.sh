@@ -3,7 +3,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 CONTAINER_HUB_DIR="${SCRIPT_DIR}/../ExternalLib/Kataglyphis-ContainerHub"
-SHARED_SCRIPT="${CONTAINER_HUB_DIR}/linux/webserver/scripts/flutter_integration_smoke_test.sh"
+SHARED_SCRIPT="${CONTAINER_HUB_DIR}/linux/webserver/scripts/flutter_integration-smoke-test.sh"
 
 if [ ! -f "$SHARED_SCRIPT" ]; then
   echo "Shared integration smoke test not found: $SHARED_SCRIPT"

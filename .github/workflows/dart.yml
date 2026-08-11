@@ -81,7 +81,7 @@ jobs:
           SERVER_PID=$!
           sleep 1
           cd ../..
-          bash scripts/integration_smoke_test.sh http://localhost:8080
+          bash scripts/integration-smoke-test.sh http://localhost:8080
           RESULT=$?
           kill $SERVER_PID 2>/dev/null
           exit $RESULT

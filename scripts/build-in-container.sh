@@ -4,7 +4,7 @@
 # Flutter (the image itself does not ship the Flutter SDK).
 #
 # Usage:
-#   scripts/build_in_container.sh [--shell] [--canvaskit]
+#   scripts/build-in-container.sh [--shell] [--canvaskit]
 #
 # Env vars:
 #   IMAGE            Container image to build in (default: ghcr.io/kataglyphis/kataglyphis_beschleuniger:latest-cross)
