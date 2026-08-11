@@ -12,8 +12,14 @@
 #   ENGINE           Container engine to use: docker or nerdctl (default: docker)
 set -euo pipefail
 
-REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-CONTAINERHUB_DIR="${REPO_ROOT}/ExternalLib/Kataglyphis-ContainerHub"
+# REPO_ROOT and CONTAINERHUB_DIR come from the canonical bootstrap — a verbatim
+# copy of upstream's shared/linux/templates/containerhub.sh — rather than being
+# spelled out here. Six repos each had their own version of these two lines and
+# they had drifted; see ContainerHub shared/linux/templates/README.md.
+# shellcheck source=/dev/null
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib/containerhub.sh"
+
+REPO_ROOT="${KATAGLYPHIS_REPO_ROOT}"
 CONTAINERHUB_SCRIPTS_DIR="${CONTAINERHUB_DIR}/linux/scripts"
 # setup-flutter.sh sources a sibling ../../01-core/downloads.sh by relative
 # path, so the whole scripts/ subtree must be mounted together, not just
