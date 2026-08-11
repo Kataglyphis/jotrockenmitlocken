@@ -4,20 +4,23 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-PROJECT_DIR="$(dirname "$SCRIPT_DIR")"
+
+# The submodule path and the not-found guard come from the canonical bootstrap
+# (a verbatim copy of upstream's shared/linux/templates/containerhub.sh), so this
+# script spells out neither. containerhub_path also names the "it moved upstream"
+# case, which the local guard did not.
+# shellcheck source=/dev/null
+source "${SCRIPT_DIR}/lib/containerhub.sh"
+
+PROJECT_DIR="$KATAGLYPHIS_REPO_ROOT"
 BUILD_DIR="$PROJECT_DIR/build/web"
-CONTAINER_HUB_DIR="$PROJECT_DIR/ExternalLib/Kataglyphis-ContainerHub"
-SHARED_NGINX_CONF="$CONTAINER_HUB_DIR/linux/webserver/templates/flutter-nginx-local.conf"
 
 if [ ! -f "$BUILD_DIR/index.html" ]; then
   echo "Build not found. Building..."
   cd "$PROJECT_DIR" && flutter build web --release --wasm --no-tree-shake-icons
 fi
 
-if [ ! -f "$SHARED_NGINX_CONF" ]; then
-  echo "Shared nginx config not found: $SHARED_NGINX_CONF"
-  exit 1
-fi
+SHARED_NGINX_CONF="$(containerhub_path linux/webserver/templates/flutter-nginx-local.conf)"
 
 echo "=== Starting nginx ==="
 CONTAINER=$(docker run -d --rm \
