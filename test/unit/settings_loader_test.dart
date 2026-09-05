@@ -5,8 +5,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:jotrockenmitlocken/settings_loader.dart';
 import 'package:jotrockenmitlocken/blog_page_config.dart';
 import 'package:jotrockenmitlocken/my_two_cents_config.dart';
-import 'package:jotrockenmitlockenrepo/app_settings.dart';
-import 'package:jotrockenmitlockenrepo/user_settings.dart';
+import 'package:anthology/app_settings.dart';
+import 'package:anthology/user_settings.dart';
 
 const _userPath = '/settings/user.json';
 const _appPath = '/settings/app.json';

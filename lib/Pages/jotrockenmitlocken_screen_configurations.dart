@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 
 import 'package:jotrockenmitlocken/Pages/ErrorPage/error_page_stateful_branch_info_provider.dart';
-import 'package:jotrockenmitlockenrepo/Pages/Footer/generic_footer_page_config.dart';
-import 'package:jotrockenmitlockenrepo/Pages/generic_navbar_page_config.dart';
-import 'package:jotrockenmitlockenrepo/Pages/Sqlite/sqlite_test_page_config.dart';
+import 'package:anthology/Pages/Footer/generic_footer_page_config.dart';
+import 'package:anthology/Pages/generic_navbar_page_config.dart';
+import 'package:anthology/Pages/Sqlite/sqlite_test_page_config.dart';
 import 'package:jotrockenmitlocken/l10n/app_localizations.dart';
-import 'package:jotrockenmitlockenrepo/Pages/simple_page_config.dart';
+import 'package:anthology/Pages/simple_page_config.dart';
 import 'package:jotrockenmitlocken/Pages/blog_dependent_screen_configurations.dart';
 import 'package:jotrockenmitlocken/blog_page_config.dart';
-import 'package:jotrockenmitlockenrepo/Pages/Footer/footer_page_config.dart';
+import 'package:anthology/Pages/Footer/footer_page_config.dart';
 import 'package:jotrockenmitlocken/my_two_cents_config.dart';
-import 'package:jotrockenmitlockenrepo/Pages/navbar_page_config.dart';
-import 'package:jotrockenmitlockenrepo/Pages/stateful_branch_info_provider.dart';
-import 'package:jotrockenmitlockenrepo/Routing/screen_configurations.dart';
+import 'package:anthology/Pages/navbar_page_config.dart';
+import 'package:anthology/Pages/stateful_branch_info_provider.dart';
+import 'package:anthology/Routing/screen_configurations.dart';
 
 class JotrockenmitLockenScreenConfigurations extends ScreenConfigurations
     with BlogDependentScreenConfigurations {

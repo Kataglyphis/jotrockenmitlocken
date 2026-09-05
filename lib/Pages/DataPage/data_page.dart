@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:jotrockenmitlocken/l10n/app_localizations.dart';
-import 'package:jotrockenmitlockenrepo/Decoration/row_divider.dart';
-import 'package:jotrockenmitlockenrepo/Pages/data_page_entry.dart';
+import 'package:anthology/Decoration/row_divider.dart';
+import 'package:anthology/Pages/data_page_entry.dart';
 
-import 'package:jotrockenmitlockenrepo/Pages/Footer/footer.dart';
-import 'package:jotrockenmitlockenrepo/Layout/ResponsiveDesign/one_two_transition_widget.dart';
-import 'package:jotrockenmitlockenrepo/app_attributes.dart';
+import 'package:anthology/Pages/Footer/footer.dart';
+import 'package:anthology/Layout/ResponsiveDesign/one_two_transition_widget.dart';
+import 'package:anthology/app_attributes.dart';
 
 class DataPage extends StatefulWidget {
   final AppAttributes appAttributes;

@@ -10,8 +10,8 @@ def main() -> int:
     script_dir = Path(__file__).resolve().parent
     shared_script = (
         script_dir.parent
-        / "ExternalLib"
-        / "Kataglyphis-ContainerHub"
+        / "third_party"
+        / "ContainerHub"
         / "linux"
         / "webserver"
         / "scripts"

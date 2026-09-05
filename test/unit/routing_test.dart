@@ -4,16 +4,16 @@ import 'package:jotrockenmitlocken/Pages/jotrockenmitlocken_screen_configuration
 import 'package:jotrockenmitlocken/Routing/jotrockenmitlocken_router.dart';
 import 'package:jotrockenmitlocken/blog_dependent_app_attributes.dart';
 import 'package:jotrockenmitlocken/l10n/app_localizations.dart';
-import 'package:jotrockenmitlockenrepo/Pages/Footer/footer.dart';
-import 'package:jotrockenmitlockenrepo/Pages/Footer/footer_config.dart';
-import 'package:jotrockenmitlockenrepo/Pages/Home/button_names.dart';
-import 'package:jotrockenmitlockenrepo/Pages/Home/home_config.dart';
-import 'package:jotrockenmitlockenrepo/Pages/generic_navbar_page_config.dart';
-import 'package:jotrockenmitlockenrepo/Url/external_link_config.dart';
-import 'package:jotrockenmitlockenrepo/app_attributes.dart';
-import 'package:jotrockenmitlockenrepo/app_settings.dart';
-import 'package:jotrockenmitlockenrepo/constants.dart';
-import 'package:jotrockenmitlockenrepo/user_settings.dart';
+import 'package:anthology/Pages/Footer/footer.dart';
+import 'package:anthology/Pages/Footer/footer_config.dart';
+import 'package:anthology/Pages/Home/button_names.dart';
+import 'package:anthology/Pages/Home/home_config.dart';
+import 'package:anthology/Pages/generic_navbar_page_config.dart';
+import 'package:anthology/Url/external_link_config.dart';
+import 'package:anthology/app_attributes.dart';
+import 'package:anthology/app_settings.dart';
+import 'package:anthology/constants.dart';
+import 'package:anthology/user_settings.dart';
 
 class _TestFooterConfig extends FooterConfig {
   @override

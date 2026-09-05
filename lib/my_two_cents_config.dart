@@ -1,4 +1,4 @@
-import 'package:jotrockenmitlockenrepo/Pages/stateful_branch_info_provider.dart';
+import 'package:anthology/Pages/stateful_branch_info_provider.dart';
 
 class MyTwoCentsConfig extends StatefulBranchInfoProvider {
   MyTwoCentsConfig.fromJsonFile(Map<String, dynamic> jsonFile)

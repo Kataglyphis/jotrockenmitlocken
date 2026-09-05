@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:jotrockenmitlocken/Pages/ErrorPage/error_page_widget.dart';
-import 'package:jotrockenmitlockenrepo/Decoration/component_group_decoration.dart';
-import 'package:jotrockenmitlockenrepo/Media/Files/file.dart';
-import 'package:jotrockenmitlockenrepo/Media/Files/file_table.dart';
-import 'package:jotrockenmitlockenrepo/Media/Files/file_tile.dart';
+import 'package:anthology/Decoration/component_group_decoration.dart';
+import 'package:anthology/Media/Files/file.dart';
+import 'package:anthology/Media/Files/file_table.dart';
+import 'package:anthology/Media/Files/file_tile.dart';
 
 void main() {
   // ---- File model ----

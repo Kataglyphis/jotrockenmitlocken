@@ -5,9 +5,9 @@ import 'package:jotrockenmitlocken/Pages/DataPage/FilmsPage/film.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/GamesPage/game.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/QuotesPage/quote.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/BlockOverviewPage/block_entry.dart';
-import 'package:jotrockenmitlockenrepo/Media/Files/file.dart';
-import 'package:jotrockenmitlockenrepo/Media/DataTable/table_data.dart';
-import 'package:jotrockenmitlockenrepo/Media/DataTable/datacell_content_strategies.dart';
+import 'package:anthology/Media/Files/file.dart';
+import 'package:anthology/Media/DataTable/table_data.dart';
+import 'package:anthology/Media/DataTable/datacell_content_strategies.dart';
 
 class _MockTableData extends TableData {
   final List<String> cells;
