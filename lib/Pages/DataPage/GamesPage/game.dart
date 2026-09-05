@@ -1,4 +1,4 @@
-import 'package:jotrockenmitlockenrepo/Media/DataTable/table_data.dart';
+import 'package:anthology/Media/DataTable/table_data.dart';
 
 class Game extends TableData {
   String title = "placeholder";

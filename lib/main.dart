@@ -12,11 +12,11 @@ import 'package:jotrockenmitlocken/blog_dependent_app_attributes.dart';
 import 'package:jotrockenmitlocken/blog_page_config.dart';
 import 'package:jotrockenmitlocken/my_two_cents_config.dart';
 import 'package:jotrockenmitlocken/settings_loader.dart';
-import 'package:jotrockenmitlockenrepo/app_attributes.dart';
-import 'package:jotrockenmitlockenrepo/app_settings.dart';
-import 'package:jotrockenmitlockenrepo/constants.dart';
-import 'package:jotrockenmitlockenrepo/Routing/router_creater.dart';
-import 'package:jotrockenmitlockenrepo/user_settings.dart';
+import 'package:anthology/app_attributes.dart';
+import 'package:anthology/app_settings.dart';
+import 'package:anthology/constants.dart';
+import 'package:anthology/Routing/router_creater.dart';
+import 'package:anthology/user_settings.dart';
 
 void main() {
   runApp(const App());

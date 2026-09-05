@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:jotrockenmitlocken/Pages/AboutMePage/Widgets/about_me_table.dart';
 import 'package:jotrockenmitlocken/Pages/AboutMePage/Widgets/perfect_day_chart.dart';
-import 'package:jotrockenmitlockenrepo/Widgets/skill_table.dart';
-import 'package:jotrockenmitlockenrepo/Layout/ResponsiveDesign/one_two_transition_widget.dart';
-import 'package:jotrockenmitlockenrepo/Pages/Footer/footer.dart';
-import 'package:jotrockenmitlockenrepo/app_attributes.dart';
-import 'package:jotrockenmitlockenrepo/user_settings.dart';
+import 'package:anthology/Widgets/skill_table.dart';
+import 'package:anthology/Layout/ResponsiveDesign/one_two_transition_widget.dart';
+import 'package:anthology/Pages/Footer/footer.dart';
+import 'package:anthology/app_attributes.dart';
+import 'package:anthology/user_settings.dart';
 
 class AboutMePage extends StatefulWidget {
   final AppAttributes appAttributes;

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:jotrockenmitlocken/Pages/AboutMePage/Widgets/perfect_day_chart.dart';
-import 'package:jotrockenmitlockenrepo/Layout/Widgets/Scrolling/build_silvers.dart';
-import 'package:jotrockenmitlockenrepo/Media/DataTable/jotrockenmitlocken_table.dart';
-import 'package:jotrockenmitlockenrepo/Media/DataTable/table_data.dart';
-import 'package:jotrockenmitlockenrepo/Media/DataTable/datacell_content_strategies.dart';
+import 'package:anthology/Layout/Widgets/Scrolling/build_silvers.dart';
+import 'package:anthology/Media/DataTable/jotrockenmitlocken_table.dart';
+import 'package:anthology/Media/DataTable/table_data.dart';
+import 'package:anthology/Media/DataTable/datacell_content_strategies.dart';
 
 // Minimal TableData implementation for testing JotrockenmitlockenTable sorting.
 class _TestTableData extends TableData {

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:jotrockenmitlocken/l10n/app_localizations.dart';
-import 'package:jotrockenmitlockenrepo/Pages/Footer/footer.dart';
-import 'package:jotrockenmitlockenrepo/Media/Files/file.dart';
-import 'package:jotrockenmitlockenrepo/Layout/ResponsiveDesign/single_page.dart';
-import 'package:jotrockenmitlockenrepo/Media/Files/file_table.dart';
-import 'package:jotrockenmitlockenrepo/app_attributes.dart';
-import 'package:jotrockenmitlockenrepo/constants.dart';
+import 'package:anthology/Pages/Footer/footer.dart';
+import 'package:anthology/Media/Files/file.dart';
+import 'package:anthology/Layout/ResponsiveDesign/single_page.dart';
+import 'package:anthology/Media/Files/file_table.dart';
+import 'package:anthology/app_attributes.dart';
+import 'package:anthology/constants.dart';
 
 class DocumentPage extends StatefulWidget {
   final AppAttributes appAttributes;

@@ -1,4 +1,4 @@
-# Shared template lives in ExternalLib/Kataglyphis-ContainerHub:
+# Shared template lives in third_party/ContainerHub:
 # linux/webserver/templates/flutter-web.htaccess
 
 # Begin .htaccess

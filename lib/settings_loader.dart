@@ -5,8 +5,8 @@ import 'package:flutter/services.dart' show rootBundle;
 
 import 'package:jotrockenmitlocken/blog_page_config.dart';
 import 'package:jotrockenmitlocken/my_two_cents_config.dart';
-import 'package:jotrockenmitlockenrepo/app_settings.dart';
-import 'package:jotrockenmitlockenrepo/user_settings.dart';
+import 'package:anthology/app_settings.dart';
+import 'package:anthology/user_settings.dart';
 
 typedef SettingsLoadResult = (
   AppSettings,

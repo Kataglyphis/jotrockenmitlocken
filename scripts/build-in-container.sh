@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Build the Flutter web app inside the custom Kataglyphis container image,
-# using the submodule at ExternalLib/Kataglyphis-ContainerHub to bootstrap
+# using the submodule at third_party/ContainerHub to bootstrap
 # Flutter (the image itself does not ship the Flutter SDK).
 #
 # Usage:
@@ -46,11 +46,11 @@ done
 
 if [ ! -f "${CONTAINERHUB_SCRIPTS_DIR}/05-frameworks/flutter/setup-flutter.sh" ]; then
   echo "Error: ${CONTAINERHUB_SCRIPTS_DIR}/05-frameworks/flutter/setup-flutter.sh not found." >&2
-  echo "Did you run 'git submodule update --init ExternalLib/Kataglyphis-ContainerHub'?" >&2
+  echo "Did you run 'git submodule update --init third_party/ContainerHub'?" >&2
   exit 1
 fi
 
-BUILD_CMD='flutter config --enable-web && flutter pub get && (cd ExternalLib/jotrockenmitlockenrepo && flutter pub get)'
+BUILD_CMD='flutter config --enable-web && flutter pub get && (cd third_party/ANThology && flutter pub get)'
 if [ "${BUILD_TARGET}" = "wasm" ]; then
   BUILD_CMD="${BUILD_CMD} && flutter build web --release --wasm --no-tree-shake-icons"
 else

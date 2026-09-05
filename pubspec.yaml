@@ -14,8 +14,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  jotrockenmitlockenrepo:
-    path: ExternalLib/jotrockenmitlockenrepo
+  anthology:
+    path: third_party/ANThology
   provider: ^6.1.5+1
   cupertino_icons: ^1.0.9
   flutter_localizations:

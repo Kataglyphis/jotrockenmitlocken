@@ -21,7 +21,7 @@ The flutter/dart source code stays
 **__Official docs__** are located [here](https://holdmydocs.jonasheinle.de).
 
 Visit [jonasheinle.de](https://jonasheinle.de/) for the full experience of my personal web blog. Cheers! :beers: </br>
-Visit my repo [jotrockenmitlockenrepo](https://github.com/Kataglyphis/jotrockenmitlockenrepo) if you are interested 
+Visit my repo [anthology](https://github.com/Kataglyphis/ANThology) if you are interested 
 in Flutter/Dart development in general. 
 All components in this repo are reusable for any target available (Linux/Windows/Android/Web).  
 

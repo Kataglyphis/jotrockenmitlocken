@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:jotrockenmitlockenrepo/Media/DataTable/csv_data_list.dart';
+import 'package:anthology/Media/DataTable/csv_data_list.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/FilmsPage/film.dart';
-import 'package:jotrockenmitlockenrepo/Media/DataTable/datacell_content_strategies.dart';
+import 'package:anthology/Media/DataTable/datacell_content_strategies.dart';
 
 class FilmsList extends CsvDataList {
   const FilmsList({

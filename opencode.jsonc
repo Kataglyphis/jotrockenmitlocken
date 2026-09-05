@@ -6,6 +6,6 @@
     "analysis_options.yaml",
     "pubspec.yaml",
     "l10n.yaml",
-    "ExternalLib/jotrockenmitlockenrepo/pubspec.yaml"
+    "third_party/ANThology/pubspec.yaml"
   ]
 }
