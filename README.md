@@ -27,7 +27,7 @@ All components in this repo are reusable for any target available (Linux/Windows
 
 🚀 Markdown is great 🚀:  
 If you also love the lightweight markdown approach you might be interested in 
-my [md2pdf](https://github.com/Kataglyphis/Kataglyphis-mdToPdf)-project that even allows you to convert markdown to a a4paper PDF or presentation slides PDF :satisfied:   
+my [md2pdf](https://github.com/Kataglyphis/DocumANTation)-project that even allows you to convert markdown to a a4paper PDF or presentation slides PDF :satisfied:   
 🎉🎉🎉
 
 
@@ -83,7 +83,7 @@ But why not just using a CMS? Here are my reasons:
   * I want a very unique look and feel for my website. Therefore I want all power over my
   application which can be difficult with some drag-and-drop solutions.
   * I want to learn front-end development and its challenges. Just using wordpress won't bring you there
-  * I developed my own [WebDavClient](https://github.com/Kataglyphis/Kataglyphis-WebDavClient)
+  * I developed my own [WebDavClient](https://github.com/Kataglyphis/WebDavClient)
     that allows me to keep the content (.md files, images, videos, .csv, etc.) private while
     the source code stays **Open Source**. You might also be interested in **keeping your data private**.
     Have a look into my [Build Pipeline File](.github\workflows\dart.yml) for more 
@@ -225,7 +225,7 @@ apps](https://flutter.dev/docs/development/accessibility-and-localization/intern
 ### Built With
 
 * [Flutter/Dart](https://flutter.dev/)
-* [WebDavClient](https://github.com/Kataglyphis/Kataglyphis-WebDavClient) Wrote my own WebDavClient for this repo :)
+* [WebDavClient](https://github.com/Kataglyphis/WebDavClient) Wrote my own WebDavClient for this repo :)
 
 <!-- GETTING STARTED -->
 ## Getting Started
