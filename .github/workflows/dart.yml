@@ -33,7 +33,7 @@ jobs:
       # You can test your matrix by printing the current Python version
       - name: Install WebDav Client and Sync content
         run: |
-          uv pip install git+https://github.com/Kataglyphis/Kataglyphis-WebDavClient
+          uv pip install git+https://github.com/Kataglyphis/WebDavClient
           uv run python scripts/download_markdown_files.py ${{ secrets.WEBDAV_HOSTNAME }} ${{ secrets.WEBDAV_USERNAME }} ${{ secrets.WEBDAV_PASSWORD }} ${{ secrets.REMOTE_BASE_PATH }} "$LOCAL_ASSETS_FOLDER"
 
       - name: Setup Flutter SDK
