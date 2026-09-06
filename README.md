@@ -27,7 +27,7 @@ All components in this repo are reusable for any target available (Linux/Windows
 
 🚀 Markdown is great 🚀:  
 If you also love the lightweight markdown approach you might be interested in 
-my [md2pdf](https://github.com/Kataglyphis/DocumANTation)-project that even allows you to convert markdown to a a4paper PDF or presentation slides PDF :satisfied:   
+my [DocumANTation](https://github.com/Kataglyphis/DocumANTation)-project that even allows you to convert markdown to a a4paper PDF or presentation slides PDF :satisfied:   
 🎉🎉🎉
 
 
