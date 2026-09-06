@@ -1,9 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:anthology/Sqlite/sqlite_self_test_impl_io.dart'
-    as impl_io;
-import 'package:anthology/Sqlite/sqlite_self_test_impl_stub.dart'
-    as impl_stub;
+import 'package:anthology/Sqlite/sqlite_self_test_impl_io.dart' as impl_io;
+import 'package:anthology/Sqlite/sqlite_self_test_impl_stub.dart' as impl_stub;
 
 void main() {
   group('sqlite_self_test_impl_stub', () {
