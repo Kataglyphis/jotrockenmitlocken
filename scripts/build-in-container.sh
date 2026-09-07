@@ -1,14 +1,17 @@
 #!/usr/bin/env bash
 # Build the Flutter web app inside the custom Kataglyphis container image,
-# using the submodule at third_party/ContainerHub to bootstrap
-# Flutter (the image itself does not ship the Flutter SDK).
+# using the submodule at third_party/ContainerHub to bootstrap a CALLER-CHOSEN
+# Flutter version. The image DOES ship its own SDK at /opt/flutter (since the
+# lanes moved onto latest-cross, 2026-09-07) - this script stays useful exactly
+# when you want a version OTHER than the image's pin; to build with the image's
+# own Flutter, use the CI path (scripts/ci-container-steps.sh) instead.
 #
 # Usage:
 #   scripts/build-in-container.sh [--shell] [--canvaskit]
 #
 # Env vars:
 #   IMAGE            Container image to build in (default: ghcr.io/kataglyphis/kataglyphis_beschleuniger:latest-cross)
-#   FLUTTER_VERSION  Flutter SDK version to install inside the container (default: 3.44.0, matches CI)
+#   FLUTTER_VERSION  Flutter SDK version to bootstrap inside the container (default: 3.44.0; CI no longer pins one - it uses the image's SDK)
 #   ENGINE           Container engine to use: docker or nerdctl (default: docker)
 set -euo pipefail
 
