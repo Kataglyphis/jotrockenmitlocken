@@ -1,3 +1,4 @@
+import 'package:anthology/l10n/anthology_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/FilmsPage/films_list.dart';
 import 'package:anthology/Pages/Footer/footer.dart';
@@ -20,7 +21,9 @@ class FilmsPage extends StatelessWidget {
       appAttributes: appAttributes,
       footer: footer,
       child: FilmsList(
-        entryRedirectText: AppLocalizations.of(context)!.entryRedirectText,
+        entryRedirectText: AnthologyLocalizations.of(
+          context,
+        )!.entryRedirectText,
         title: AppLocalizations.of(context)!.films,
         description:
             "${AppLocalizations.of(context)!.filmsDescription}\u{1F63A}",

@@ -1,252 +1,83 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:jotrockenmitlocken/l10n/app_localizations.dart';
 
-import 'package:go_router/go_router.dart';
+import 'package:anthology/Pages/Footer/default_footer_config.dart';
+import 'package:anthology/Pages/Home/default_home_config.dart';
+import 'package:anthology/app_shell.dart';
+import 'package:anthology/blog_dependent_app_attributes.dart';
 
-import 'package:jotrockenmitlocken/Pages/Footer/jotrockenmitlocken_footer.dart';
-import 'package:jotrockenmitlocken/Routing/jotrockenmitlocken_router.dart';
-import 'package:jotrockenmitlocken/Pages/Home/home_config.dart';
 import 'package:jotrockenmitlocken/Pages/jotrockenmitlocken_screen_configurations.dart';
-import 'package:jotrockenmitlocken/blog_dependent_app_attributes.dart';
-import 'package:jotrockenmitlocken/blog_page_config.dart';
-import 'package:jotrockenmitlocken/my_two_cents_config.dart';
+import 'package:jotrockenmitlocken/Routing/jotrockenmitlocken_router.dart';
+import 'package:jotrockenmitlocken/l10n/app_localizations.dart';
 import 'package:jotrockenmitlocken/settings_loader.dart';
-import 'package:anthology/app_attributes.dart';
-import 'package:anthology/app_settings.dart';
-import 'package:anthology/constants.dart';
-import 'package:anthology/Routing/router_creater.dart';
-import 'package:anthology/user_settings.dart';
+
+const String userSettingsFilePath =
+    "assets/settings/user_settings/global_user_settings.json";
+const String appSettingsFilePath = "assets/settings/app_settings.json";
+const String blogSettingsFilePath = "assets/settings/blog_settings.json";
+const String twoCentsSettingsFilePath =
+    "assets/settings/my_two_cents_settings.json";
+
+/// Loads this app's settings through its own [SettingsLoader], which logs and
+/// rethrows on a malformed or missing file.
+Future<SettingsLoadResult> loadAppSettings() {
+  return SettingsLoader().loadAll(
+    userSettingsPath: userSettingsFilePath,
+    appSettingsPath: appSettingsFilePath,
+    blogSettingsPath: blogSettingsFilePath,
+    twoCentsSettingsPath: twoCentsSettingsFilePath,
+  );
+}
 
 void main() {
   runApp(const App());
 }
 
-class App extends StatefulWidget {
+/// jotrockenmitlocken's half of the shared shell.
+///
+/// Everything that used to live here - the animation controller, the width
+/// breakpoints, the four `handle*` callbacks, the theme pair and the
+/// `FutureBuilder -> MaterialApp.router` tail - now lives once in
+/// [KataglyphisAppShell]. What is left is genuinely this app's: its
+/// [SettingsLoader], its generated `AppLocalizations` and its screen
+/// configurations.
+class App extends StatelessWidget {
   const App({super.key});
 
   @override
-  State<App> createState() => _AppState();
-}
-
-class _AppState extends State<App> with SingleTickerProviderStateMixin {
-  ThemeMode themeMode = ThemeMode.dark;
-  ColorSeed colorSelected = ColorSeed.baseColor;
-  int currentLanguageIndex = 0;
-  int currentPageIndex = 0;
-
-  bool get useLightMode {
-    switch (themeMode) {
-      case ThemeMode.system:
-        return View.of(context).platformDispatcher.platformBrightness ==
-            Brightness.light;
-      case ThemeMode.light:
-        return true;
-      case ThemeMode.dark:
-        return false;
-    }
-  }
-
-  late final AnimationController controller;
-  late final CurvedAnimation railAnimation;
-  late Future<
-    (AppSettings, UserSettings, List<BlogPageConfig>, List<MyTwoCentsConfig>)
-  >
-  _settings;
-  final String userSettingsFilePath =
-      "assets/settings/user_settings/global_user_settings.json";
-  final String appSettingsFilePath = "assets/settings/app_settings.json";
-  final String blogSettingsFilePath = "assets/settings/blog_settings.json";
-  final String twoCentsSettingsFilePath =
-      "assets/settings/my_two_cents_settings.json";
-  bool controllerInitialized = false;
-  bool showMediumSizeLayout = false;
-  bool showLargeSizeLayout = false;
-
-  @override
-  initState() {
-    super.initState();
-    controller = AnimationController(
-      duration: Duration(milliseconds: transitionLength.toInt() * 2),
-      value: 0,
-      vsync: this,
-    );
-    railAnimation = CurvedAnimation(
-      parent: controller,
-      curve: const Interval(0.5, 1.0),
-    );
-    _settings = SettingsLoader().loadAll(
-      userSettingsPath: userSettingsFilePath,
-      appSettingsPath: appSettingsFilePath,
-      blogSettingsPath: blogSettingsFilePath,
-      twoCentsSettingsPath: twoCentsSettingsFilePath,
-    );
-  }
-
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-
-    final double width = MediaQuery.of(context).size.width;
-    final AnimationStatus status = controller.status;
-    if (width > mediumWidthBreakpoint) {
-      if (width > largeWidthBreakpoint) {
-        showMediumSizeLayout = false;
-        showLargeSizeLayout = true;
-      } else {
-        showMediumSizeLayout = true;
-        showLargeSizeLayout = false;
-      }
-      if (status != AnimationStatus.forward &&
-          status != AnimationStatus.completed) {
-        controller.forward();
-      }
-    } else {
-      showMediumSizeLayout = false;
-      showLargeSizeLayout = false;
-      if (status != AnimationStatus.reverse &&
-          status != AnimationStatus.dismissed) {
-        controller.reverse();
-      }
-    }
-    if (!controllerInitialized) {
-      controllerInitialized = true;
-      controller.value = width > mediumWidthBreakpoint ? 1 : 0;
-    }
-  }
-
-  void handleBrightnessChange(bool useLightMode) {
-    setState(() {
-      themeMode = useLightMode ? ThemeMode.light : ThemeMode.dark;
-    });
-  }
-
-  void handlePageChange(int pageIndex) {
-    currentPageIndex = pageIndex;
-  }
-
-  void handleLanguageSelect(int index) {
-    setState(() {
-      currentLanguageIndex = index;
-    });
-  }
-
-  void handleColorSelect(int value) {
-    setState(() {
-      colorSelected = ColorSeed.values[value];
-    });
-  }
-
-  final List<LocalizationsDelegate> localizationsDelegate = const [
-    AppLocalizations.delegate,
-    GlobalMaterialLocalizations.delegate,
-    GlobalWidgetsLocalizations.delegate,
-    GlobalCupertinoLocalizations.delegate,
-  ];
-  @override
   Widget build(BuildContext context) {
-    ThemeData darkTheme = ThemeData(
-      fontFamily: 'Roboto',
-      colorSchemeSeed: colorSelected.color,
-      useMaterial3: true,
-      brightness: Brightness.dark,
-    );
-    ThemeData lightTheme = ThemeData(
-      fontFamily: 'Roboto',
-      colorSchemeSeed: colorSelected.color,
-      useMaterial3: true,
-      brightness: Brightness.light,
-    );
-    return FutureBuilder(
-      future: _settings,
-      builder: (context, data) {
-        if (data.hasData) {
-          JotrockenmitLockenScreenConfigurations screenConfigurations =
-              JotrockenmitLockenScreenConfigurations.fromBlogAndDataConfigs(
-                blogPageConfigs: data.requireData.$3,
-                twoCentsConfigs: data.requireData.$4,
-              );
-          BlogDependentAppAttributes blogDependentAppAttributes =
-              BlogDependentAppAttributes(
-                blogDependentScreenConfigurations: screenConfigurations,
-                twoCentsConfigs: data.requireData.$4,
-                blockSettings: data.requireData.$3,
-              );
-          AppAttributes appAttributes = AppAttributes(
-            footerConfig: JoTrockenMitLockenFooterConfig(),
-            homeConfig: JotrockenMitLockenHomeConfig(),
-            appSettings: data.requireData.$1,
-            userSettings: data.requireData.$2,
-            screenConfigurations: screenConfigurations,
-            railAnimation: railAnimation,
-            showMediumSizeLayout: showMediumSizeLayout,
-            showLargeSizeLayout: showLargeSizeLayout,
-            currentLanguageIndex: currentLanguageIndex,
-            useLightMode: useLightMode,
-            colorSelected: colorSelected,
-            handleBrightnessChange: handleBrightnessChange,
-            handleLanguageSelect: handleLanguageSelect,
-            handleColorSelect: handleColorSelect,
-          );
+    return KataglyphisAppShell<SettingsLoadResult>(
+      loadBootstrapData: loadAppSettings,
+      appLocalizationsDelegates: const <LocalizationsDelegate<dynamic>>[
+        AppLocalizations.delegate,
+      ],
+      buildBinding:
+          (SettingsLoadResult data, KataglyphisAppShellRuntime runtime) {
+            final (appSettings, userSettings, blogConfigs, twoCentsConfigs) =
+                data;
 
-          RoutesCreator routesCreator = JotrockenMitLockenRoutes(
-            blogDependentAppAttributes: blogDependentAppAttributes,
-          );
+            final JotrockenmitLockenScreenConfigurations screenConfigurations =
+                JotrockenmitLockenScreenConfigurations.fromBlogAndDataConfigs(
+                  blogPageConfigs: blogConfigs,
+                  twoCentsConfigs: twoCentsConfigs,
+                );
 
-          final GoRouter routerConfig = routesCreator.getRouterConfig(
-            appAttributes,
-            controller,
-            handlePageChange,
-            currentPageIndex,
-          );
-          var supportedLanguages =
-              (data.requireData.$1.supportedLocales ?? <String>[])
-                  .map((element) => Locale(element))
-                  .toList();
-          if (supportedLanguages.isEmpty) {
-            supportedLanguages = [const Locale('en')];
-          }
-          return MaterialApp.router(
-            debugShowCheckedModeBanner: false,
-            localizationsDelegates: localizationsDelegate,
-            onGenerateTitle: (context) =>
-                (Localizations.localeOf(context) == const Locale("de"))
-                ? appAttributes.appSettings.appTitleDe
-                : appAttributes.appSettings.appTitleEn,
-            themeMode: themeMode,
-            locale:
-                supportedLanguages[currentLanguageIndex %
-                    supportedLanguages.length],
-            supportedLocales: supportedLanguages,
-            theme: lightTheme,
-            darkTheme: darkTheme,
-            routerConfig: routerConfig,
-          );
-        } else if (data.hasError) {
-          return Material(
-            child: Center(
-              child: Padding(
-                padding: const EdgeInsets.all(24),
-                child: Text(
-                  "Error: ${data.error}",
-                  style: Theme.of(context).textTheme.bodyLarge,
-                  textAlign: TextAlign.center,
+            return KataglyphisAppShellBinding(
+              appAttributes: runtime.buildAppAttributes(
+                footerConfig: DefaultFooterConfig(),
+                homeConfig: DefaultHomeConfig(),
+                appSettings: appSettings,
+                userSettings: userSettings,
+                screenConfigurations: screenConfigurations,
+              ),
+              routesCreator: JotrockenMitLockenRoutes(
+                blogDependentAppAttributes: BlogDependentAppAttributes(
+                  blogDependentScreenConfigurations: screenConfigurations,
+                  twoCentsConfigs: twoCentsConfigs,
+                  blockSettings: blogConfigs,
                 ),
               ),
-            ),
-          );
-        } else {
-          return Center(
-            child: CircularProgressIndicator(color: ColorSeed.baseColor.color),
-          );
-        }
-      },
+            );
+          },
     );
   }
 }

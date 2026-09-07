@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:jotrockenmitlocken/Pages/AboutMePage/Widgets/perfect_day_chart.dart';
+import 'package:anthology/Pages/AboutMePage/Widgets/perfect_day_chart.dart';
 import 'package:anthology/Layout/Widgets/Scrolling/build_silvers.dart';
 import 'package:anthology/Media/DataTable/jotrockenmitlocken_table.dart';
 import 'package:anthology/Media/DataTable/table_data.dart';
@@ -23,28 +23,28 @@ Widget _wrapWithMaterial(Widget child) {
 
 void main() {
   // ---------------------------------------------------------------------------
-  // getDayHourPercantage (public static method on PerfectDayState)
+  // getDayHourPercentage (public static method on PerfectDayState)
   // ---------------------------------------------------------------------------
-  group('getDayHourPercantage', () {
+  group('getDayHourPercentage', () {
     test('8 hours returns ~33.33', () {
-      expect(PerfectDayState.getDayHourPercantage(8), 33.33);
+      expect(PerfectDayState.getDayHourPercentage(8), 33.33);
     });
 
     test('24 hours returns 100.0', () {
-      expect(PerfectDayState.getDayHourPercantage(24), 100.0);
+      expect(PerfectDayState.getDayHourPercentage(24), 100.0);
     });
 
     test('0 hours returns 0.0', () {
-      expect(PerfectDayState.getDayHourPercantage(0), 0.0);
+      expect(PerfectDayState.getDayHourPercentage(0), 0.0);
     });
 
     test('12 hours returns 50.0', () {
-      expect(PerfectDayState.getDayHourPercantage(12), 50.0);
+      expect(PerfectDayState.getDayHourPercentage(12), 50.0);
     });
 
     test('result is rounded to 2 decimal places', () {
       // 1/24*100 = 4.1666… → rounded to 4.17
-      expect(PerfectDayState.getDayHourPercantage(1), 4.17);
+      expect(PerfectDayState.getDayHourPercentage(1), 4.17);
     });
   });
 

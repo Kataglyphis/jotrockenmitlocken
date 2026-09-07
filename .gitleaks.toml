@@ -1,0 +1,66 @@
+# gitleaks config for this repository's secret-scan gate
+# (.github/workflows/dart.yml -> third_party/ContainerHub/linux/scripts/lint-secrets.sh).
+#
+# The hub script prefers the SCANNED tree's own .gitleaks.toml over its own, so
+# this file - not ContainerHub's - is what grades jotrockenmitlocken. It EXTENDS
+# the built-in rule set and only ever ADDS allowlist entries; it never disables a
+# rule and carries no blanket suppression.
+#
+# RULE: every entry needs a justification comment saying why the matched value or
+# path is not a credential of this repository. An entry without one is a bug.
+#
+# First run (2026-09-07, gitleaks 8.30.1, default rules, this repo's tracked
+# tree): CLEAN - zero findings. The FTP and WebDAV credentials this repo's
+# deploy steps use are `${{ secrets.* }}` references and CLI arguments, never
+# literals, so nothing had to be triaged away to get there. The single entry
+# below is about the vendored submodules, not about this repo's own files.
+
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = """
+third_party/ - the ContainerHub and ANThology submodules. The CI checkout uses
+`submodules: true`, so both working trees sit inside the scan root, but neither
+is this repository's code: each is gated in ITS OWN repo, by its own allowlist,
+against its own triage history. Grading a vendored tree by this repo's rules is
+the same category of error as scanning the wrong tree.
+
+Measured 2026-09-07: scanning third_party/ with the default rules and no
+consumer allowlist reports exactly 2 findings, both ContainerHub's and both
+already justified in ContainerHub/.gitleaks.toml - the ROCm apt signing key's
+SHA256 in linux/scripts/01-core/versions.env (a checksum of a public file) and
+the GCC release-signer GPG fingerprints in
+linux/scripts/02-toolchain/build-gcc.sh (public trust anchors). Restating those
+two justifications here would duplicate a list that changes upstream; excluding
+the tree whose owner already grades it does not.
+
+The pattern is deliberately NOT anchored with a bare `^`: lint-secrets.sh has to
+be handed an ABSOLUTE scan root by a consumer (it cd's to the ContainerHub
+checkout first, so a relative "." would resolve to the submodule), and gitleaks
+then reports absolute paths - `^third_party/` silently matches nothing. Verified
+both ways before committing to this form.
+"""
+paths = ['''(^|/)third_party/''']
+
+[[allowlists]]
+description = """
+.pub-cache/ - the Dart/Flutter package cache. This repo sets PUB_CACHE into the
+working tree (scripts/ci-container-steps.sh), so a LOCAL run of the gate walks
+several hundred MB of third-party package sources. It is machine-local and
+regenerable, .gitignore:/.pub-cache/ keeps it out of every commit, and
+lint-secrets.sh's own scope is "what the NEXT commit would ship". The CI lint
+job checks out fresh and never has it at all.
+
+Measured 2026-09-07 on a populated tree: 58 findings, ALL of them here and none
+anywhere else - pub.dev's own -versions.json metadata caches (47), plus test
+fixtures and sample keys inside published packages (shelf's ssl_certs.dart,
+flutter_template_images' Windows_TemporaryKey.pfx, unified_analytics test
+constants, ...). Those belong to their upstream packages, not to this
+repository, and no commit here can change them.
+
+build/ is deliberately NOT excluded: it produced zero findings, and excluding a
+directory on suspicion rather than on measurement is how a justified entry turns
+into a blanket one.
+"""
+paths = ['''(^|/)\.pub-cache/''']

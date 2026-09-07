@@ -130,12 +130,16 @@ def check_css_files():
 def check_assets():
     """Check common asset files."""
     print("Checking assets...")
-    # Check fonts
+    # Montserrat and Roboto are declared by the `anthology` package, so the web
+    # build serves them under assets/packages/<package>/<declared path>. The
+    # paths listed here before were the repo-root-relative strings from a
+    # `fonts:` block that sat at column 0 in pubspec.yaml - a key Flutter
+    # ignores - so they 404ed on every run and this check never covered a font.
     fonts = [
-        "static/Montserrat-Regular.ttf",
-        "static/Montserrat-Bold.ttf",
-        "Roboto-Regular.ttf",
-        "Roboto-Bold.ttf",
+        "assets/packages/anthology/assets/fonts/Montserrat/static/Montserrat-Regular.ttf",
+        "assets/packages/anthology/assets/fonts/Montserrat/static/Montserrat-Bold.ttf",
+        "assets/packages/anthology/assets/fonts/Roboto/Roboto-Regular.ttf",
+        "assets/packages/anthology/assets/fonts/Roboto/Roboto-Bold.ttf",
     ]
     for font in fonts:
         status, _ = check_url(BASE_URL + f"/{font}")
@@ -146,8 +150,8 @@ def check_assets():
     
     # Check images
     images = [
-        "assets/images/logo.png",
-        "assets/images/barbell.png",
+        "assets/packages/anthology/assets/images/logo.png",
+        "assets/assets/images/barbell.png",
     ]
     for img in images:
         status, _ = check_url(BASE_URL + f"/{img}")

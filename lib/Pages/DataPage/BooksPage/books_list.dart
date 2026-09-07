@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/BooksPage/book.dart';
-import 'package:jotrockenmitlocken/blog_dependent_app_attributes.dart';
+import 'package:anthology/blog_dependent_app_attributes.dart';
 import 'package:anthology/Media/DataTable/csv_data_list.dart';
 import 'package:anthology/Media/DataTable/datacell_content_strategies.dart';
-import 'package:jotrockenmitlocken/my_two_cents_config.dart';
+import 'package:anthology/my_two_cents_config.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/media_config_helper.dart';
 import 'package:anthology/app_attributes.dart';
 

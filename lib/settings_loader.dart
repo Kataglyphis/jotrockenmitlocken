@@ -3,8 +3,8 @@ import 'dart:developer' as developer;
 
 import 'package:flutter/services.dart' show rootBundle;
 
-import 'package:jotrockenmitlocken/blog_page_config.dart';
-import 'package:jotrockenmitlocken/my_two_cents_config.dart';
+import 'package:anthology/blog_page_config.dart';
+import 'package:anthology/my_two_cents_config.dart';
 import 'package:anthology/app_settings.dart';
 import 'package:anthology/user_settings.dart';
 

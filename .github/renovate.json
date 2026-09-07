@@ -1,0 +1,10 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": [
+    "Adopts the shared Kataglyphis Renovate preset. Everything this repo needs is in there, so this file is deliberately one line of policy: the whole point of the preset is that consumers do not each carry their own copy of the rules.",
+    "What the preset adds beyond the defaults, and why it matters here: it ENABLES the git-submodules manager, which Renovate disables by default - that is why third_party/ANThology and third_party/ContainerHub have never had a gitlink bump proposed. Both entries in .gitmodules already carry `branch = main`, which is what the manager needs to know what to bump them to.",
+    "It also pins third-party GitHub Actions by digest (this repo currently references astral-sh/setup-uv and SamKirkland/FTP-Deploy-Action by tag) while explicitly NOT proposing pins for Kataglyphis/ContainerHub composite actions, which are resolved at @main on purpose for the upstream-first change flow.",
+    "Renovate resolves `github>Kataglyphis/ContainerHub` from ContainerHub's DEFAULT BRANCH, so a preset change only reaches this repo once it is merged there - not from the pin in third_party/ContainerHub."
+  ],
+  "extends": ["github>Kataglyphis/ContainerHub"]
+}

@@ -52,20 +52,12 @@ flutter:
   generate: true
   uses-material-design: true
 
+  # The shared corpus (images, blog/footer documents, Montserrat + Roboto) now
+  # lives in the anthology package and is referenced as
+  # `packages/anthology/assets/...`. Only assets unique to this app remain here.
   assets:
     - assets/images/
-    - assets/images/Pages/AboutMe/
-    - assets/images/Pages/AboutMe/Bewerbungsbilder/
-    - assets/images/Pages/Data/
-    - assets/images/Pages/Error/
-    - assets/images/Pages/Blog/
-    - assets/images/Pages/Blog/VulkanRenderer/
-    - assets/images/cats/
-    - assets/images/aiBlog/
-    - assets/images/books/
     - assets/documents/
-    - assets/documents/footer/
-    - assets/documents/blog/
     - assets/documents/books/
     - assets/documents/games/
     - assets/documents/thesis/
@@ -74,59 +66,9 @@ flutter:
     - assets/settings/
     - assets/settings/user_settings/
 
-fonts:
-  - family: Montserrat
-    fonts:
-      - asset: static/Montserrat-Thin.ttf
-      - asset: static/Montserrat-ExtraLight.ttf
-      - asset: static/Montserrat-Light.ttf
-      - asset: static/Montserrat-Regular.ttf
-      - asset: static/Montserrat-Medium.ttf
-      - asset: static/Montserrat-SemiBold.ttf
-      - asset: static/Montserrat-Bold.ttf
-      - asset: static/Montserrat-ExtraBold.ttf
-      - asset: static/Montserrat-Black.ttf
-      - asset: static/Montserrat-ThinItalic.ttf
-        style: italic
-      - asset: static/Montserrat-ExtraLightItalic.ttf
-        style: italic
-      - asset: static/Montserrat-LightItalic.ttf
-        style: italic
-      - asset: static/Montserrat-Italic.ttf
-        style: italic
-      - asset: static/Montserrat-MediumItalic.ttf
-        style: italic
-      - asset: static/Montserrat-SemiBoldItalic.ttf
-        style: italic
-      - asset: static/Montserrat-BoldItalic.ttf
-        style: italic
-      - asset: static/Montserrat-ExtraBoldItalic.ttf
-        style: italic
-      - asset: static/Montserrat-BlackItalic.ttf
-        style: italic
-  - family: Roboto
-    fonts:
-      - asset: Roboto-Black.ttf
-      - asset: Roboto-BlackItalic.ttf
-        style: italic
-      - asset: Roboto-Bold.ttf
-        weight: 700
-      - asset: Roboto-BoldItalic.ttf
-        style: italic
-        weight: 700
-      - asset: Roboto-Italic.ttf
-        style: italic
-      - asset: Roboto-Light.ttf
-      - asset: Roboto-LightItalic.ttf
-        style: italic
-      - asset: Roboto-Medium.ttf
-        weight: 400
-      - asset: Roboto-MediumItalic.ttf
-        weight: 400
-        style: italic
-      - asset: Roboto-Regular.ttf
-      - asset: Roboto-Thin.ttf
-        weight: 200
-      - asset: Roboto-ThinItalic.ttf
-        weight: 200
-        style: italic
+# NOTE: there is deliberately no `fonts:` key here any more. The block that used
+# to follow sat at column 0 - a top-level pubspec key, which Flutter ignores -
+# and every asset path in it (`static/Montserrat-Thin.ttf`, `Roboto-Black.ttf`,
+# resolved from the repo root) pointed at a file that does not exist. Montserrat
+# and Roboto are declared by the anthology package now, correctly nested under
+# its own `flutter:` key, and register as `packages/anthology/<family>`.

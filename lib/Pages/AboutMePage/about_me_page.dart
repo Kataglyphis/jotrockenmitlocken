@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:jotrockenmitlocken/Pages/AboutMePage/Widgets/about_me_table.dart';
-import 'package:jotrockenmitlocken/Pages/AboutMePage/Widgets/perfect_day_chart.dart';
+import 'package:anthology/Pages/AboutMePage/Widgets/about_me_table.dart';
+import 'package:anthology/Pages/AboutMePage/Widgets/perfect_day_chart.dart';
 import 'package:anthology/Widgets/skill_table.dart';
 import 'package:anthology/Layout/ResponsiveDesign/one_two_transition_widget.dart';
 import 'package:anthology/Pages/Footer/footer.dart';
