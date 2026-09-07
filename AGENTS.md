@@ -5,17 +5,18 @@ Personal blog as a responsive cross-platform Flutter/Dart web app by Jonas Heinl
 ## Build, Lint & Test
 
 ```bash
-# Install dependencies (root + external submodule)
-flutter pub get && cd third_party/ANThology && flutter pub get && cd -
+# The whole Dart gate — pub get (root + ANThology), format, analyze, test.
+# Thin wrapper over ContainerHub's flutter_checks.sh; CI runs this exact script.
+bash scripts/run-dart-checks.sh
 
-# Lint & analyze (zero tolerance for errors)
+# The individual steps, when you want only one of them
+# Deps only (the gate above already does this)
+flutter pub get && (cd third_party/ANThology && flutter pub get)
 dart analyze
-
-# Check formatting
-dart format --output=none --set-exit-if-changed .
-
-# Run tests
 flutter test
+dart format --output=none --set-exit-if-changed $(git ls-files '*.dart')
+# NOT `dart format .` — a recursive walk format-checks third_party/ANThology
+# (86 .dart files). `git ls-files` matches the gate: tracked, non-vendored only.
 
 # Local web dev (no real blog content without WebDAV secrets)
 flutter run -d web-server --profile --web-port 8080 --web-hostname 0.0.0.0
@@ -126,13 +127,15 @@ CRITICAL: Always build with `--wasm`. The CanvasKit build is only a fallback for
 flutter gen-l10n
 ```
 
-**Verification order:** `dart analyze` → `flutter test` → `dart format --output=none --set-exit-if-changed .`
+**Verification:** `bash scripts/run-dart-checks.sh` — format → analyze → test, in that order.
 
-> **MANDATORY for agents:** After making any code changes, you MUST run all three verification commands in order (analyze → test → format) and ensure they all pass with zero errors. If any command fails, fix the issues and re-run before considering the task complete. The CI pipeline enforces zero tolerance on `dart analyze` and `dart format` — failures block deployment.
+> **MANDATORY for agents:** After making any code changes, you MUST run `bash scripts/run-dart-checks.sh` and it MUST pass with zero errors. If it fails, fix the issues and re-run before considering the task complete. The CI pipeline runs this same script and enforces zero tolerance on `dart analyze` and `dart format` — failures block deployment.
+>
+> This used to read "analyze → test → format" and CI inlined the three commands in that order. The order was never load-bearing: all three are blocking, so the job fails identically whichever runs first, and the shared gate's format → analyze → test is the cheaper triage order (formatting is the fastest of the three to fail). The order changed to stop the repo from maintaining its own copy of a check that ContainerHub already owns.
 
 **Before committing changes:**
 ```bash
-dart analyze && flutter test && dart format --output=none --set-exit-if-changed . && bash scripts/integration-smoke-test.sh http://localhost:8080 && python3 scripts/capture_console_errors.py
+bash scripts/run-dart-checks.sh && bash scripts/integration-smoke-test.sh http://localhost:8080 && python3 scripts/capture_console_errors.py
 ```
 
 Only commit if all commands exit with code 0.
@@ -141,13 +144,14 @@ Only commit if all commands exit with code 0.
 
 This repo has a second submodule besides the shared component library:
 `third_party/ContainerHub`. It owns every reusable script, container
-recipe and build doc shared across the Kataglyphis repos, and **four scripts here
+recipe and build doc shared across the Kataglyphis repos, and **five scripts here
 are thin wrappers over it** — editing the wrapper when the behaviour lives
 upstream is the mistake to avoid:
 
 | Wrapper | Delegates to |
 | --- | --- |
 | `scripts/build-in-container.sh` | ContainerHub's container bootstrap |
+| `scripts/run-dart-checks.sh` | shared Flutter format/analyze/test gate |
 | `scripts/integration-smoke-test.sh` | shared Flutter-web smoke test |
 | `scripts/run-nginx-integration-test.sh` | shared nginx integration harness |
 | `scripts/capture_console_errors.py` | shared Flutter-web console-error test |
@@ -244,7 +248,19 @@ third_party/ANThology/ # Git submodule — shared component library
 ## CI/CD
 
 - **Trigger:** Push to `main` or `develop`
-- **Flow:** Checkout → sync WebDAV content → `flutter pub get` (both dirs) → `dart analyze` → `flutter test` → `flutter build web --release` → FTP deploy
+- **Containerised lane:** every Dart/Flutter step runs inside the public image
+  `ghcr.io/kataglyphis/kataglyphis_beschleuniger:latest-cross` (Flutter baked in
+  at `/opt/flutter` — no `setup-flutter` action, so the CI Flutter version
+  tracks the image) via ContainerHub's `prepare-linux-ci-host` and
+  `run-in-linux-container` actions. The phase bodies live in
+  `scripts/ci-container-steps.sh`; each step is a fresh container, so that
+  script re-establishes PATH, git `safe.directory` and the pub cache
+  (`.pub-cache/` in the workspace, so packages survive across phases) per phase.
+- **Host-side steps:** the WebDAV asset sync (needs repo secrets + uv; the
+  fetched assets land in the workspace the container bind-mounts) and the four
+  FTP deploy steps. The repo has no `GHCR_PAT`: the prologue action gets no
+  registry credentials, skips login, and pulls the public image anonymously.
+- **Flow:** Checkout → sync WebDAV content → `scripts/run-dart-checks.sh` (pub get both dirs, format, analyze, test) → `flutter build web --release` → smoke test → FTP deploy
 - **main branch:** WASM build deployed to production domain
 - **develop branch:** Both WASM and CanvasKit builds deployed to dev domains
 - CI: `dart analyze` and `dart format` must pass (zero tolerance) before builds proceed.

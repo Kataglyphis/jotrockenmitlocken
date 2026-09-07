@@ -15,76 +15,81 @@ on:
 jobs:
   build:
     name: 🚀 Deploy website on push
-    #runs-on: windows-latest
     runs-on: ubuntu-26.04
+
+    env:
+      CONTAINER_IMAGE: ghcr.io/kataglyphis/kataglyphis_beschleuniger:latest-cross
+
     steps:
-      - name: 🚚 Get latest code
-        uses: actions/checkout@v7.0.1
+      # ContainerHub's shared prologue: reclaim disk, check out (submodules:
+      # ANThology is a path dependency, ContainerHub owns the shared gates),
+      # pull the image with retries. No registry credentials on purpose: this
+      # repo has no GHCR_PAT, the action skips login on empty credentials, and
+      # the image is public, so the anonymous pull works.
+      - name: 🚚 Prepare CI host
+        uses: Kataglyphis/ContainerHub/.github/actions/prepare-linux-ci-host@main
         with:
-          fetch-depth: 0
+          image: ${{ env.CONTAINER_IMAGE }}
+          fetch-depth: '0'
           submodules: recursive
 
+      # Host, not container: the WebDAV sync is the one step needing repo
+      # secrets and uv. The assets it fetches land in the workspace, so the
+      # container steps below see them through the bind mount.
       - name: Install uv
         uses: astral-sh/setup-uv@v9.0.0
 
       - name: Set up Python 3.14
         run: uv venv --python=3.14
 
-      # You can test your matrix by printing the current Python version
       - name: Install WebDav Client and Sync content
         run: |
           uv pip install git+https://github.com/Kataglyphis/WebDavClient
           uv run python scripts/download_markdown_files.py ${{ secrets.WEBDAV_HOSTNAME }} ${{ secrets.WEBDAV_USERNAME }} ${{ secrets.WEBDAV_PASSWORD }} ${{ secrets.REMOTE_BASE_PATH }} "$LOCAL_ASSETS_FOLDER"
 
-      - name: Setup Flutter SDK
-        uses: flutter-actions/setup-flutter@v4.3
+      # Every Dart/Flutter step runs inside the Kataglyphis container image
+      # (Flutter baked in at /opt/flutter) - the host has no Flutter SDK any
+      # more. One phase per step; the phases live in
+      # scripts/ci-container-steps.sh, which re-establishes per-container
+      # state (PATH, git safe.directory, pub cache) every time.
+
+      # pub get (root + ANThology), format, analyze and test were four inline
+      # steps here until they were folded into ContainerHub's shared gate. The
+      # inline `dart format .` was the reason to move: a recursive walk cannot
+      # tell vendored code from ours, so it format-checked third_party/ANThology
+      # (a separate repo, 86 .dart files).
+      - name: Dart checks (format, analyze, test)
+        uses: Kataglyphis/ContainerHub/.github/actions/run-in-linux-container@main
         with:
-          channel: stable
-          version: 3.44.0
+          image: ${{ env.CONTAINER_IMAGE }}
+          extra-args: --platform "linux/amd64"
+          script: bash /workspace/scripts/ci-container-steps.sh dart-checks
 
-      # git submodule update --init --recursive
-      - name: Install dependencies
-        run: |
-          flutter pub get
-          cd third_party/ANThology
-          flutter pub get
-
-      # Verification order matches AGENTS.md: analyze → test → format
-      - name: Analyze project source
-        run: dart analyze
-
-      - name: Run tests
-        run: flutter test
-
-      - name: Verify formatting
-        run: dart format --output=none --set-exit-if-changed .
-
-      - name: Enable flutter web
-        run: |
-          flutter config --enable-web
-
+      # `flutter config --enable-web` moved into the build phases: it writes
+      # per-user config, which the next step's fresh container never inherits.
       - name: "Build Web App"
         if: github.ref == 'refs/heads/main'
-        run: |
-          flutter build web --release --wasm --no-tree-shake-icons
+        uses: Kataglyphis/ContainerHub/.github/actions/run-in-linux-container@main
+        with:
+          image: ${{ env.CONTAINER_IMAGE }}
+          extra-args: --platform "linux/amd64"
+          script: bash /workspace/scripts/ci-container-steps.sh build-web-wasm
 
       - name: "Build Web App (WASM)"
         if: github.ref == 'refs/heads/develop'
         id: build-wasm
-        run: |
-          flutter build web --release --wasm --no-tree-shake-icons
+        uses: Kataglyphis/ContainerHub/.github/actions/run-in-linux-container@main
+        with:
+          image: ${{ env.CONTAINER_IMAGE }}
+          extra-args: --platform "linux/amd64"
+          script: bash /workspace/scripts/ci-container-steps.sh build-web-wasm
 
       - name: 🔍 Integration smoke test
-        run: |
-          cd build/web
-          python3 -m http.server 8080 --bind 127.0.0.1 &
-          SERVER_PID=$!
-          sleep 1
-          cd ../..
-          bash scripts/integration-smoke-test.sh http://localhost:8080
-          RESULT=$?
-          kill $SERVER_PID 2>/dev/null
-          exit $RESULT
+        uses: Kataglyphis/ContainerHub/.github/actions/run-in-linux-container@main
+        with:
+          image: ${{ env.CONTAINER_IMAGE }}
+          extra-args: --platform "linux/amd64"
+          script: bash /workspace/scripts/ci-container-steps.sh smoke-test
 
       - name: 📂 Sync files to main domain
         if: github.ref == 'refs/heads/main'
@@ -106,9 +111,11 @@ jobs:
 
       - name: "Build Web App with canavaskit"
         if: github.ref == 'refs/heads/develop'
-        run: |
-          rm -r ./build/web/
-          flutter build web --release --no-tree-shake-icons
+        uses: Kataglyphis/ContainerHub/.github/actions/run-in-linux-container@main
+        with:
+          image: ${{ env.CONTAINER_IMAGE }}
+          extra-args: --platform "linux/amd64"
+          script: bash /workspace/scripts/ci-container-steps.sh build-web-canvaskit
 
       - name: 📂 Sync files to dev domain
         if: github.ref == 'refs/heads/develop'
@@ -120,8 +127,11 @@ jobs:
           local-dir: "./build/web/"
 
       - name: Build docs
-        run: |
-          dart doc
+        uses: Kataglyphis/ContainerHub/.github/actions/run-in-linux-container@main
+        with:
+          image: ${{ env.CONTAINER_IMAGE }}
+          extra-args: --platform "linux/amd64"
+          script: bash /workspace/scripts/ci-container-steps.sh dart-doc
 
       - name: 📂 Sync files to doc domain
         uses: SamKirkland/FTP-Deploy-Action@v4.4.0
