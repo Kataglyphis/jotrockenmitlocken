@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:jotrockenmitlocken/Pages/ErrorPage/error_page_widget.dart';
+import 'package:anthology/Pages/ErrorPage/error_page_widget.dart';
 import 'package:anthology/Decoration/component_group_decoration.dart';
 import 'package:anthology/Media/Files/file.dart';
 import 'package:anthology/Media/Files/file_table.dart';

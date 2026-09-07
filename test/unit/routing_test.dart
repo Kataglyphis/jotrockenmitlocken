@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:jotrockenmitlocken/Pages/jotrockenmitlocken_screen_configurations.dart';
 import 'package:jotrockenmitlocken/Routing/jotrockenmitlocken_router.dart';
-import 'package:jotrockenmitlocken/blog_dependent_app_attributes.dart';
+import 'package:anthology/blog_dependent_app_attributes.dart';
 import 'package:jotrockenmitlocken/l10n/app_localizations.dart';
 import 'package:anthology/Pages/Footer/footer.dart';
 import 'package:anthology/Pages/Footer/footer_config.dart';

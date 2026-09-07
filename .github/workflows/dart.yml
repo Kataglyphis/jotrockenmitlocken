@@ -13,9 +13,94 @@ on:
     branches: ["main", "develop"]
 
 jobs:
+  # ---------------------------------------------------------------------------
+  # Lint gates, entirely ContainerHub's: shellcheck over this repo's bash,
+  # actionlint over its workflows, gitleaks over its working tree - all three
+  # using the pinned, SHA-verified binaries ContainerHub bootstraps rather than a
+  # second set installed here.
+  #
+  # Cheap and first-to-finish (no image pull, no Flutter build), and it covers
+  # classes the deploy job cannot: bash only reports a quoting or
+  # undefined-function bug when the line finally executes - inside a container,
+  # mid-deploy - `yaml.safe_load` proves a workflow is valid YAML but not valid
+  # Actions, and nothing here looked for committed credentials at all until now.
+  #
+  # `build` NEEDS this job on purpose. This workflow deploys to three live FTP
+  # targets on every push; a lint gate that runs beside the deploy instead of
+  # in front of it can only report a problem the world has already been served.
+  # ---------------------------------------------------------------------------
+  lint:
+    name: 🧹 shell + workflow + secret lint
+    runs-on: ubuntu-26.04
+    steps:
+      # ContainerHub is the only submodule these gates read, and `submodules:
+      # true` is top-level only - ANThology comes along because it is also
+      # top-level, which is fine and costs seconds. fetch-depth 1: nothing here
+      # looks at history.
+      - uses: actions/checkout@v7.0.1
+        with:
+          submodules: true
+          fetch-depth: 1
+
+      # The file list comes from `git ls-files`, NOT from a glob. A bare
+      # `scripts/**/*.sh` does not recurse without `shopt -s globstar`, so it
+      # would have covered scripts/*.sh and silently skipped scripts/lib/ - and
+      # a lint gate that checks four of seven files still reports green.
+      # third_party/ is dropped because vendored trees are linted in their own
+      # repos, at their own ratchet.
+      # The count is asserted rather than assumed: an empty list is the exact
+      # failure mode this construction exists to prevent, so it fails the step
+      # instead of passing over nothing.
+      - name: Lint shell scripts (ContainerHub shellcheck gate)
+        shell: bash
+        run: |
+          mapfile -t sh_files < <(git ls-files '*.sh' | grep -v '^third_party/')
+          if [ "${#sh_files[@]}" -eq 0 ]; then
+            echo "::error::no first-party shell scripts matched; the gate would have checked nothing" >&2
+            exit 1
+          fi
+          printf 'linting %d shell script(s):\n' "${#sh_files[@]}"
+          printf '  %s\n' "${sh_files[@]}"
+          bash third_party/ContainerHub/linux/scripts/lint-shell.sh "${sh_files[@]}"
+
+      # The root argument is mandatory for a consumer: the script lives inside
+      # the submodule, so its default root resolves to ContainerHub and the gate
+      # would lint the wrong tree while still reporting green.
+      # .github/actionlint.yaml teaches the pinned actionlint (1.7.12) about the
+      # ubuntu-26.04 runner label, which it predates.
+      - name: Lint workflows (ContainerHub actionlint gate)
+        run: >-
+          bash third_party/ContainerHub/linux/scripts/lint-workflows.sh
+          "${{ github.workspace }}"
+
+      # This repository holds FTP and WebDAV deploy credentials - as
+      # `${{ secrets.* }}` references, which is the point: the gate is what keeps
+      # it that way. The scan root must be ABSOLUTE (the script cd's to the
+      # ContainerHub checkout first, so a relative "." would grade the
+      # submodule), and the scanned tree's own .gitleaks.toml is what grades it.
+      #
+      # The precondition is checked rather than assumed. A ContainerHub pin from
+      # before the consumer-scan-root change IGNORES the argument and scans
+      # ContainerHub instead - it exits 0, and the gate reports green having
+      # looked at none of this repository's files. A vacuously green secret gate
+      # is worse than none, so this fails loudly and names the fix.
+      - name: Scan for committed secrets (ContainerHub gitleaks gate)
+        shell: bash
+        run: |
+          hub_script=third_party/ContainerHub/linux/scripts/lint-secrets.sh
+          if ! grep -q 'SCAN_ROOT=' "$hub_script"; then
+            echo "::error::${hub_script} predates the consumer scan-root support;" \
+                 "it would scan ContainerHub and report green. Bump the" \
+                 "third_party/ContainerHub gitlink to a commit that has it." >&2
+            exit 1
+          fi
+          bash "$hub_script" "${{ github.workspace }}"
+
   build:
     name: 🚀 Deploy website on push
     runs-on: ubuntu-26.04
+    # The deploy job is gated on the lint job: see the block above `lint:`.
+    needs: lint
 
     env:
       CONTAINER_IMAGE: ghcr.io/kataglyphis/kataglyphis_beschleuniger:latest-cross

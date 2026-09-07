@@ -1,15 +1,16 @@
+import 'package:anthology/l10n/anthology_localizations.dart';
 import 'package:flutter/material.dart';
 
-import 'package:jotrockenmitlocken/Pages/ErrorPage/error_page_stateful_branch_info_provider.dart';
+import 'package:anthology/Pages/ErrorPage/error_page_stateful_branch_info_provider.dart';
 import 'package:anthology/Pages/Footer/generic_footer_page_config.dart';
 import 'package:anthology/Pages/generic_navbar_page_config.dart';
 import 'package:anthology/Pages/Sqlite/sqlite_test_page_config.dart';
 import 'package:jotrockenmitlocken/l10n/app_localizations.dart';
 import 'package:anthology/Pages/simple_page_config.dart';
-import 'package:jotrockenmitlocken/Pages/blog_dependent_screen_configurations.dart';
-import 'package:jotrockenmitlocken/blog_page_config.dart';
+import 'package:anthology/Pages/blog_dependent_screen_configurations.dart';
+import 'package:anthology/blog_page_config.dart';
 import 'package:anthology/Pages/Footer/footer_page_config.dart';
-import 'package:jotrockenmitlocken/my_two_cents_config.dart';
+import 'package:anthology/my_two_cents_config.dart';
 import 'package:anthology/Pages/navbar_page_config.dart';
 import 'package:anthology/Pages/stateful_branch_info_provider.dart';
 import 'package:anthology/Routing/screen_configurations.dart';
@@ -90,48 +91,56 @@ class JotrockenmitLockenScreenConfigurations extends ScreenConfigurations
     return [
       GenericFooterPageConfig(
         routingName: '/imprint',
-        headingBuilder: (context) => AppLocalizations.of(context)!.imprint,
-        filePathDe: 'assets/documents/footer/imprintDe.md',
-        filePathEn: 'assets/documents/footer/imprintEn.md',
+        headingBuilder: (context) =>
+            AnthologyLocalizations.of(context)!.imprint,
+        filePathDe: 'packages/anthology/assets/documents/footer/imprintDe.md',
+        filePathEn: 'packages/anthology/assets/documents/footer/imprintEn.md',
       ),
       GenericFooterPageConfig(
         routingName: '/contact',
-        headingBuilder: (context) => AppLocalizations.of(context)!.contact,
-        filePathDe: 'assets/documents/footer/contactDe.md',
-        filePathEn: 'assets/documents/footer/contactEn.md',
+        headingBuilder: (context) =>
+            AnthologyLocalizations.of(context)!.contact,
+        filePathDe: 'packages/anthology/assets/documents/footer/contactDe.md',
+        filePathEn: 'packages/anthology/assets/documents/footer/contactEn.md',
       ),
       GenericFooterPageConfig(
         routingName: '/privacyPolicy',
         headingBuilder: (context) =>
-            AppLocalizations.of(context)!.privacyPolicy,
-        filePathDe: 'assets/documents/footer/privacyPolicyDe.md',
-        filePathEn: 'assets/documents/footer/privacyPolicyEn.md',
+            AnthologyLocalizations.of(context)!.privacyPolicy,
+        filePathDe:
+            'packages/anthology/assets/documents/footer/privacyPolicyDe.md',
+        filePathEn:
+            'packages/anthology/assets/documents/footer/privacyPolicyEn.md',
       ),
       GenericFooterPageConfig(
         routingName: '/cookieDeclaration',
         headingBuilder: (context) =>
-            AppLocalizations.of(context)!.cookieStatement,
-        filePathDe: 'assets/documents/footer/cookieDeclarationDe.md',
-        filePathEn: 'assets/documents/footer/cookieDeclarationEn.md',
+            AnthologyLocalizations.of(context)!.cookieStatement,
+        filePathDe:
+            'packages/anthology/assets/documents/footer/cookieDeclarationDe.md',
+        filePathEn:
+            'packages/anthology/assets/documents/footer/cookieDeclarationEn.md',
       ),
       GenericFooterPageConfig(
         routingName: '/declarationOnAccessibility',
         headingBuilder: (context) =>
-            AppLocalizations.of(context)!.declarationOnAccessibility,
-        filePathDe: 'assets/documents/footer/declarationOnAccessibilityDe.md',
-        filePathEn: 'assets/documents/footer/declarationOnAccessibilityEn.md',
+            AnthologyLocalizations.of(context)!.declarationOnAccessibility,
+        filePathDe:
+            'packages/anthology/assets/documents/footer/declarationOnAccessibilityDe.md',
+        filePathEn:
+            'packages/anthology/assets/documents/footer/declarationOnAccessibilityEn.md',
       ),
       GenericFooterPageConfig(
         routingName: '/copyright',
         headingBuilder: (context) =>
-            AppLocalizations.of(context)!.copyrightFooterTitle,
-        filePathDe: 'assets/documents/footer/copyRightDe.md',
-        filePathEn: 'assets/documents/footer/copyRightEn.md',
+            AnthologyLocalizations.of(context)!.copyrightFooterTitle,
+        filePathDe: 'packages/anthology/assets/documents/footer/copyRightDe.md',
+        filePathEn: 'packages/anthology/assets/documents/footer/copyRightEn.md',
       ),
       GenericFooterPageConfig(
         routingName: '/openSourceLicenses',
         headingBuilder: (context) =>
-            AppLocalizations.of(context)!.openSourceLicenses,
+            AnthologyLocalizations.of(context)!.openSourceLicenses,
         filePathDe: '',
         filePathEn: '',
       ),

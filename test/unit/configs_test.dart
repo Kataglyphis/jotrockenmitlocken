@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:jotrockenmitlocken/blog_page_config.dart';
+import 'package:anthology/blog_page_config.dart';
 import 'package:jotrockenmitlocken/l10n/app_localizations.dart';
-import 'package:jotrockenmitlocken/my_two_cents_config.dart';
-import 'package:jotrockenmitlocken/Pages/ErrorPage/error_page_stateful_branch_info_provider.dart';
+import 'package:anthology/my_two_cents_config.dart';
+import 'package:anthology/Pages/ErrorPage/error_page_stateful_branch_info_provider.dart';
 import 'package:anthology/Pages/Footer/generic_footer_page_config.dart';
 import 'package:anthology/Pages/generic_navbar_page_config.dart';
 import 'package:anthology/Pages/simple_page_config.dart';
@@ -386,7 +386,7 @@ void main() {
       expect(config.docsDesc[1]['title'], 'CV_DE.pdf');
     });
 
-    test('landingPageEntryImageCaptioning absent → throws TypeError', () {
+    test('landingPageEntryImageCaptioning absent → null, not a throw', () {
       final json = {
         'routingName': '/myBlog',
         'shortDescriptionEN': 'A short description',
@@ -403,10 +403,11 @@ void main() {
         'docsDesc': <dynamic>[],
       };
 
-      expect(
-        () => BlogPageConfig.fromJsonFile(json),
-        throwsA(isA<TypeError>()),
-      );
+      // The caption is genuinely optional in the settings files. Reading it as
+      // a non-nullable String used to make an absent caption blow up at load.
+      final config = BlogPageConfig.fromJsonFile(json);
+
+      expect(config.landingPageEntryImageCaptioning, isNull);
     });
 
     test('landingPageEntryImageCaptioning with value → stored correctly', () {

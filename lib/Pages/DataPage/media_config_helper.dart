@@ -1,4 +1,4 @@
-import 'package:jotrockenmitlocken/my_two_cents_config.dart';
+import 'package:anthology/my_two_cents_config.dart';
 
 String resolveMediaCommentRoute(
   List<MyTwoCentsConfig> configs,

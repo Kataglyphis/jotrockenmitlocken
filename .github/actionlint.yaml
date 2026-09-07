@@ -1,0 +1,12 @@
+# ubuntu-26.04/-arm are GitHub preview labels (family-wide since 2026-09-06) that
+# pinned actionlint 1.7.12 - the latest release - predates; this only ADDS labels.
+#
+# Without this file the workflow lint gate fails on `runs-on: ubuntu-26.04`
+# ("label \"ubuntu-26.04\" is unknown") before it ever looks at a real problem,
+# so the config has to land in the same change that adds the gate.
+# Same content as BeschleunigerBallett/.github/actionlint.yaml; the -arm label is
+# listed too so a future arm64 lane does not have to rediscover this.
+self-hosted-runner:
+  labels:
+    - ubuntu-26.04
+    - ubuntu-26.04-arm

@@ -35,7 +35,8 @@ class DataPageState extends State<DataPage> {
       DataPageEntry(
         label: AppLocalizations.of(context)!.quotations,
         routerPath: '/quotations',
-        imagePath: 'assets/images/Pages/Data/Quotes_cover.jpg',
+        imagePath:
+            'packages/anthology/assets/images/Pages/Data/Quotes_cover.jpg',
         description: AppLocalizations.of(context)!.quotationsDescription,
         lastModified: 'babbeln',
         followLabel: AppLocalizations.of(context)!.follow,
@@ -44,7 +45,7 @@ class DataPageState extends State<DataPage> {
       DataPageEntry(
         label: AppLocalizations.of(context)!.films,
         routerPath: '/films',
-        imagePath: 'assets/images/Pages/Data/Film_cover.jpg',
+        imagePath: 'packages/anthology/assets/images/Pages/Data/Film_cover.jpg',
         description: AppLocalizations.of(context)!.filmsDescription,
         lastModified: 'glotze',
         followLabel: AppLocalizations.of(context)!.follow,
@@ -53,7 +54,7 @@ class DataPageState extends State<DataPage> {
       DataPageEntry(
         label: sqliteTestLabel,
         routerPath: '/sqliteTest',
-        imagePath: 'assets/images/Pages/Data/Book_cover.jpg',
+        imagePath: 'packages/anthology/assets/images/Pages/Data/Book_cover.jpg',
         description: sqliteTestDescription,
         lastModified: 'sqlite3',
         followLabel: AppLocalizations.of(context)!.follow,
@@ -64,7 +65,7 @@ class DataPageState extends State<DataPage> {
       DataPageEntry(
         label: AppLocalizations.of(context)!.books,
         routerPath: '/books',
-        imagePath: 'assets/images/Pages/Data/Book_cover.jpg',
+        imagePath: 'packages/anthology/assets/images/Pages/Data/Book_cover.jpg',
         description: AppLocalizations.of(context)!.booksDescription,
         lastModified: '.._..',
         followLabel: AppLocalizations.of(context)!.follow,
@@ -73,7 +74,8 @@ class DataPageState extends State<DataPage> {
       DataPageEntry(
         label: AppLocalizations.of(context)!.games,
         routerPath: '/games',
-        imagePath: 'assets/images/Pages/Data/Spiele_cover.jpg',
+        imagePath:
+            'packages/anthology/assets/images/Pages/Data/Spiele_cover.jpg',
         description: AppLocalizations.of(context)!.gamesDescription,
         lastModified: 'Go rust',
         followLabel: AppLocalizations.of(context)!.follow,

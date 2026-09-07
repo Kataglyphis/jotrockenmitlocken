@@ -4,7 +4,7 @@ import 'package:jotrockenmitlocken/Pages/DataPage/BooksPage/book.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/FilmsPage/film.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/GamesPage/game.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/QuotesPage/quote.dart';
-import 'package:jotrockenmitlocken/Pages/DataPage/BlockOverviewPage/block_entry.dart';
+import 'package:anthology/Pages/DataPage/BlockOverviewPage/block_entry.dart';
 import 'package:anthology/Media/Files/file.dart';
 import 'package:anthology/Media/DataTable/table_data.dart';
 import 'package:anthology/Media/DataTable/datacell_content_strategies.dart';

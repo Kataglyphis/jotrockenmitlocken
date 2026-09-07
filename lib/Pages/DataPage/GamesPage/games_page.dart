@@ -1,6 +1,7 @@
+import 'package:anthology/l10n/anthology_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/GamesPage/games_list.dart';
-import 'package:jotrockenmitlocken/blog_dependent_app_attributes.dart';
+import 'package:anthology/blog_dependent_app_attributes.dart';
 import 'package:anthology/Pages/Footer/footer.dart';
 import 'package:anthology/app_attributes.dart';
 import 'package:jotrockenmitlocken/l10n/app_localizations.dart';
@@ -24,7 +25,9 @@ class GamesPage extends StatelessWidget {
       footer: footer,
       child: GamesList(
         blogDependentAppAttributes: blogDependentAppAttributes,
-        entryRedirectText: AppLocalizations.of(context)!.entryRedirectText,
+        entryRedirectText: AnthologyLocalizations.of(
+          context,
+        )!.entryRedirectText,
         appAttributes: appAttributes,
         title: AppLocalizations.of(context)!.games,
         description:
