@@ -18,6 +18,17 @@ dart format --output=none --set-exit-if-changed $(git ls-files '*.dart')
 # NOT `dart format .` — a recursive walk format-checks third_party/ANThology
 # (86 .dart files). `git ls-files` matches the gate: tracked, non-vendored only.
 
+# The whole lint gate - shellcheck over this repo's bash, actionlint plus the
+# fleet CI-image-ref check over its workflows, gitleaks over the tree. Uses
+# ContainerHub's pinned, SHA-verified binaries; CI runs this exact script, and
+# `build` (the deploy job) will not start until it passes.
+bash scripts/run-lint-gates.sh
+
+# Pull the private blog content off WebDAV into assets/ (needs the four
+# credentials CI holds as repository secrets). CI runs this exact script.
+WEBDAV_HOSTNAME=... WEBDAV_USERNAME=... WEBDAV_PASSWORD=... \
+  WEBDAV_REMOTE_BASE_PATH=... bash scripts/sync-webdav-content.sh
+
 # Local web dev (no real blog content without WebDAV secrets)
 flutter run -d web-server --profile --web-port 8080 --web-hostname 0.0.0.0
 
@@ -144,7 +155,7 @@ Only commit if all commands exit with code 0.
 
 This repo has a second submodule besides the shared component library:
 `third_party/ContainerHub`. It owns every reusable script, container
-recipe and build doc shared across the Kataglyphis repos, and **five scripts here
+recipe and build doc shared across the Kataglyphis repos, and **six scripts here
 are thin wrappers over it** — editing the wrapper when the behaviour lives
 upstream is the mistake to avoid:
 
@@ -155,6 +166,7 @@ upstream is the mistake to avoid:
 | `scripts/integration-smoke-test.sh` | shared Flutter-web smoke test |
 | `scripts/run-nginx-integration-test.sh` | shared nginx integration harness |
 | `scripts/capture_console_errors.py` | shared Flutter-web console-error test |
+| `scripts/run-lint-gates.sh` | shared shellcheck / actionlint / gitleaks gates |
 
 **Do not restate upstream procedures here.** Start at
 [`third_party/ContainerHub/docs/INDEX.md`](third_party/ContainerHub/docs/INDEX.md)
@@ -252,15 +264,24 @@ third_party/ANThology/ # Git submodule — shared component library
   `ghcr.io/kataglyphis/kataglyphis_beschleuniger:latest-cross` (Flutter baked in
   at `/opt/flutter` — no `setup-flutter` action, so the CI Flutter version
   tracks the image) via ContainerHub's `prepare-linux-ci-host` and
-  `run-in-linux-container` actions. The phase bodies live in
+  `run-in-linux-container` actions. That tag is **not written in
+  `.github/workflows/dart.yml`**: the steps omit the `image:` input and inherit
+  the actions' default, which ContainerHub composes from
+  `IMAGE_REGISTRY_PREFIX` + `CI_IMAGE_LINUX_TAG` in
+  `linux/scripts/01-core/versions.env` and checks with
+  `verify_ci_image_refs.py`. A fleet-wide tag change therefore lands in one file
+  in one repo. Passing `image:` explicitly would opt this lane back out of
+  that. The phase bodies live in
   `scripts/ci-container-steps.sh`; each step is a fresh container, so that
   script re-establishes PATH, git `safe.directory` and the pub cache
   (`.pub-cache/` in the workspace, so packages survive across phases) per phase.
-- **Host-side steps:** the WebDAV asset sync (needs repo secrets + uv; the
-  fetched assets land in the workspace the container bind-mounts) and the four
-  FTP deploy steps. The repo has no `GHCR_PAT`: the prologue action gets no
+- **Host-side steps:** the lint gate job (`scripts/run-lint-gates.sh`, which
+  `build` needs, so a lint failure stops the deploy before it starts), the
+  WebDAV asset sync (`scripts/sync-webdav-content.sh` — needs repo secrets +
+  uv; the fetched assets land in the workspace the container bind-mounts) and
+  the four FTP deploy steps. The repo has no `GHCR_PAT`: the prologue action gets no
   registry credentials, skips login, and pulls the public image anonymously.
-- **Flow:** Checkout → sync WebDAV content → `scripts/run-dart-checks.sh` (pub get both dirs, format, analyze, test) → `flutter build web --release` → smoke test → FTP deploy
+- **Flow:** Checkout → `scripts/run-lint-gates.sh` → `scripts/sync-webdav-content.sh` → `scripts/run-dart-checks.sh` (pub get both dirs, format, analyze, test) → `flutter build web --release` → smoke test → FTP deploy
 - **main branch:** WASM build deployed to production domain
 - **develop branch:** Both WASM and CanvasKit builds deployed to dev domains
 - CI: `dart analyze` and `dart format` must pass (zero tolerance) before builds proceed.
