@@ -41,19 +41,52 @@ source "${SCRIPT_DIR}/lib/containerhub.sh"
 LOCAL_ASSETS_FOLDER="${LOCAL_ASSETS_FOLDER:-assets}"
 SYNC_PYTHON_VERSION="${SYNC_PYTHON_VERSION:-3.14}"
 
-if ! command -v uv >/dev/null 2>&1; then
-  echo "Error: uv is not on PATH." >&2
-  echo "       CI installs it with astral-sh/setup-uv; locally see https://docs.astral.sh/uv/." >&2
-  exit 1
-fi
+# uv bootstrap and venv creation are ContainerHub's, not this repo's. What was
+# here was a hand-rolled `command -v uv` guard plus a bare `uv venv`; the
+# upstream library does both properly and is what BeschleunigerBallett already
+# consumes through two thin wrappers of its own. uv_ensure_installed downloads
+# the installer TO A FILE rather than piping curl into sh, and verifies it
+# against UV_INSTALL_SH_SHA256 from versions.env - a truncated stream cannot
+# execute as a partial script. uv_venv_create adds the interpreter-availability
+# probe (`uv python install` when python3.14 is not on the box) that the bare
+# call did not have: on the hosted runner setup-uv provides uv but nothing
+# provides 3.14, so `uv venv --python=3.14` was one upstream image change away
+# from a needless red.
+containerhub_source linux/scripts/01-core/python_uv.sh
 
 # The venv lives at the repo root because `uv run` discovers .venv from the cwd,
 # and download_markdown_files.py is resolved relative to the root too.
 cd "$KATAGLYPHIS_REPO_ROOT"
 
-uv venv --python="${SYNC_PYTHON_VERSION}"
-uv pip install git+https://github.com/Kataglyphis/WebDavClient
-uv run python scripts/download_markdown_files.py \
+uv_ensure_installed
+uv_venv_create "${KATAGLYPHIS_REPO_ROOT}/.venv" "${SYNC_PYTHON_VERSION}"
+
+# --python, spelled out rather than left to .venv discovery, is the one piece
+# the upstream library does NOT cover: it owns uv_pip_install_requirements,
+# which takes a requirements FILE, and this step installs a git URL instead.
+# The pin is copied from that function, whose comment says it is load-bearing
+# because uv honours UV_PYTHON over an activated venv and the family image
+# exports UV_PYTHON=/opt/venv/bin/python (root-owned, while the container user
+# is uid 1001). MEASURED 2026-09-08 in :latest-cross with uv 0.9.x: that no
+# longer reproduces - a `.venv` in the cwd wins over UV_PYTHON and the install
+# lands locally either way. The pin stays because it names the target instead
+# of depending on which of two mechanisms uv currently prefers, and because
+# the failure it guards against is a root-owned write, not a red build.
+#
+# bin/python is the POSIX venv layout; a Git Bash venv carries
+# Scripts/python.exe instead. Missing both is a broken venv, and it fails HERE
+# by name rather than as a confusing resolver error two commands later.
+VENV_PYTHON="${KATAGLYPHIS_REPO_ROOT}/.venv/bin/python"
+[ -x "$VENV_PYTHON" ] || VENV_PYTHON="${KATAGLYPHIS_REPO_ROOT}/.venv/Scripts/python.exe"
+if [ ! -x "$VENV_PYTHON" ]; then
+  echo "Error: no interpreter in ${KATAGLYPHIS_REPO_ROOT}/.venv" >&2
+  echo "       (neither bin/python nor Scripts/python.exe) - uv_venv_create" >&2
+  echo "       reported success but produced no usable venv." >&2
+  exit 1
+fi
+
+uv pip install --python "$VENV_PYTHON" git+https://github.com/Kataglyphis/WebDavClient
+uv run --python "$VENV_PYTHON" python scripts/download_markdown_files.py \
   "${WEBDAV_HOSTNAME}" \
   "${WEBDAV_USERNAME}" \
   "${WEBDAV_PASSWORD}" \
