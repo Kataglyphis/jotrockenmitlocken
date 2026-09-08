@@ -13,11 +13,36 @@
 # commit, and is pinned to a commit still reachable from its remote. Nothing here
 # has to name ANThology or ContainerHub for them to be covered.
 #
+# PESTER VERSION - measured, not assumed (2026-09-07, PowerShell 7.6.5, suite at
+# ContainerHub 3721d91b, this repo as the -RepoRoot). run-pester-suite runs
+# `shell: pwsh`, which IS PowerShell 7, so the suite's `#requires -Version 7.0`
+# is satisfied on every version below; what differs is whether the ACTION's own
+# invocation survives:
+#
+#   3.4.0 (the action's default)  TOTAL=4 PASSED=4 FAILED=0.
+#   5.7.1                         TOTAL=4 PASSED=4, but only through Pester 5's
+#                                 deprecated legacy parameter set, and there
+#                                 `$r.TestResult` is $null - so the action's
+#                                 per-failure Describe/FailureMessage/StackTrace
+#                                 block prints NOTHING and a red run says only
+#                                 "exit 1".
+#   6.1.0                         does not run at all: `Invoke-Pester: A
+#                                 parameter cannot be found that matches
+#                                 parameter name 'Quiet'`, i.e. the step dies
+#                                 before a single test executes.
+#
+# So 3.4.0 is the only version this action can currently drive, and it is pinned
+# HERE rather than inherited from the action's default: the default is the hub's
+# to change, and a change to 5.x would silently blind this lane's diagnostics
+# while a change to 6.x would break it outright. The pin is the consumer saying
+# which dialect it was verified against.
+#
 # Runner is windows-latest, not the ubuntu-26.04 the rest of this repo uses,
-# because ContainerHub's run-pester-suite action installs Pester 3.4.0 by default
-# and 3.4.0 is a Windows PowerShell-era module. The suite itself is
-# version-agnostic (it asserts with `throw`, not `Should`), so this can move to a
-# cheaper runner the day the action can be told a Core-compatible version.
+# because Pester 3.4.0 is a Windows PowerShell-era module that was never
+# released for PowerShell Core on Linux, and nothing here has measured it there.
+# The suite itself is version-agnostic (it asserts with `throw`, not `Should`),
+# so the day the action's invocation speaks Pester 5+/6 this can be re-measured
+# on a cheaper runner.
 name: Submodule Pins
 
 on:
@@ -70,3 +95,7 @@ jobs:
         uses: Kataglyphis/ContainerHub/.github/actions/run-pester-suite@main
         with:
           path: third_party/ContainerHub/shared/windows/tests/Submodule.Pins.Tests.ps1
+          # Pinned, not defaulted - see the PESTER VERSION note in the header
+          # for the three versions this was measured against and what 5.x and
+          # 6.x actually do to the action's invocation.
+          version: '3.4.0'
