@@ -37,12 +37,25 @@
 # while a change to 6.x would break it outright. The pin is the consumer saying
 # which dialect it was verified against.
 #
-# Runner is windows-latest, not the ubuntu-26.04 the rest of this repo uses,
-# because Pester 3.4.0 is a Windows PowerShell-era module that was never
-# released for PowerShell Core on Linux, and nothing here has measured it there.
-# The suite itself is version-agnostic (it asserts with `throw`, not `Should`),
-# so the day the action's invocation speaks Pester 5+/6 this can be re-measured
-# on a cheaper runner.
+# Runner is Windows, not the ubuntu-26.04 the rest of this repo uses, because
+# Pester 3.4.0 is a Windows PowerShell-era module that was never released for
+# PowerShell Core on Linux, and nothing here has measured it there. The suite
+# itself is version-agnostic (it asserts with `throw`, not `Should`), so the day
+# the action's invocation speaks Pester 5+/6 this can be re-measured on a
+# cheaper runner.
+#
+# The label is `windows-2025`, PINNED - not `windows-latest`, which is what this
+# job used to say. The two resolve to the same image today, so the change is a
+# behavioural no-op; the point is that the alias moves on GitHub's schedule and
+# would swap the OS image under a green run with no commit to blame. It is also
+# the label BeschleunigerBallett, OmniAccelerANT and OrchestrANT already use, so
+# this was the family's last unpinned Windows runner outside ContainerHub.
+#
+# It is NOT containerised, and should not be: the job is `git` metadata plus
+# pwsh 7, both preinstalled on the runner, so :winamd64 would add a multi-GB
+# Windows-container pull for zero extra coverage. run-pester-suite already
+# refuses a vacuous pass (TotalCount == 0 -> exit 1), so the gate is not green
+# over nothing.
 name: Submodule Pins
 
 on:
@@ -69,7 +82,7 @@ concurrency:
 jobs:
   pins:
     name: 📌 Submodule pins sit at their recorded commits
-    runs-on: windows-latest
+    runs-on: windows-2025
     timeout-minutes: 15
     env:
       # The suite takes the repo root as a parameter and the composite action can

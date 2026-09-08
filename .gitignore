@@ -48,6 +48,10 @@ doc/api/
 # dotenv environment variables file
 .env*
 
+# uv virtualenv created by scripts/sync-webdav-content.sh (CI throws its runner
+# away; a local run would otherwise leave it untracked at the repo root).
+.venv/
+
 # Avoid committing generated Javascript files:
 *.dart.js
 *.info.json      # Produced by the --dump-info flag.

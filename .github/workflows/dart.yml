@@ -42,59 +42,19 @@ jobs:
           submodules: true
           fetch-depth: 1
 
-      # The file list comes from `git ls-files`, NOT from a glob. A bare
-      # `scripts/**/*.sh` does not recurse without `shopt -s globstar`, so it
-      # would have covered scripts/*.sh and silently skipped scripts/lib/ - and
-      # a lint gate that checks four of seven files still reports green.
-      # third_party/ is dropped because vendored trees are linted in their own
-      # repos, at their own ratchet.
-      # The count is asserted rather than assumed: an empty list is the exact
-      # failure mode this construction exists to prevent, so it fails the step
-      # instead of passing over nothing.
-      - name: Lint shell scripts (ContainerHub shellcheck gate)
-        shell: bash
-        run: |
-          mapfile -t sh_files < <(git ls-files '*.sh' | grep -v '^third_party/')
-          if [ "${#sh_files[@]}" -eq 0 ]; then
-            echo "::error::no first-party shell scripts matched; the gate would have checked nothing" >&2
-            exit 1
-          fi
-          printf 'linting %d shell script(s):\n' "${#sh_files[@]}"
-          printf '  %s\n' "${sh_files[@]}"
-          bash third_party/ContainerHub/linux/scripts/lint-shell.sh "${sh_files[@]}"
-
-      # The root argument is mandatory for a consumer: the script lives inside
-      # the submodule, so its default root resolves to ContainerHub and the gate
-      # would lint the wrong tree while still reporting green.
-      # .github/actionlint.yaml teaches the pinned actionlint (1.7.12) about the
-      # ubuntu-26.04 runner label, which it predates.
-      - name: Lint workflows (ContainerHub actionlint gate)
-        run: >-
-          bash third_party/ContainerHub/linux/scripts/lint-workflows.sh
-          "${{ github.workspace }}"
-
-      # This repository holds FTP and WebDAV deploy credentials - as
-      # `${{ secrets.* }}` references, which is the point: the gate is what keeps
-      # it that way. The scan root must be ABSOLUTE (the script cd's to the
-      # ContainerHub checkout first, so a relative "." would grade the
-      # submodule), and the scanned tree's own .gitleaks.toml is what grades it.
+      # One script, not three inline `run:` blocks. The `git ls-files` file-list
+      # construction (a bare `**` does not recurse without `shopt -s globstar`),
+      # the vacuity guard and the ContainerHub-pin preconditions used to live
+      # here in YAML, which meant the gate that blocks this deploy could not be
+      # reproduced locally at all. Both places now run
+      # `bash scripts/run-lint-gates.sh`; that file carries the reasoning for
+      # each of the three gates.
       #
-      # The precondition is checked rather than assumed. A ContainerHub pin from
-      # before the consumer-scan-root change IGNORES the argument and scans
-      # ContainerHub instead - it exits 0, and the gate reports green having
-      # looked at none of this repository's files. A vacuously green secret gate
-      # is worse than none, so this fails loudly and names the fix.
-      - name: Scan for committed secrets (ContainerHub gitleaks gate)
-        shell: bash
-        run: |
-          hub_script=third_party/ContainerHub/linux/scripts/lint-secrets.sh
-          if ! grep -q 'SCAN_ROOT=' "$hub_script"; then
-            echo "::error::${hub_script} predates the consumer scan-root support;" \
-                 "it would scan ContainerHub and report green. Bump the" \
-                 "third_party/ContainerHub gitlink to a commit that has it." >&2
-            exit 1
-          fi
-          bash "$hub_script" "${{ github.workspace }}"
+      # No `shell: bash` override: bash is the default on ubuntu runners and it
+      # already runs with -e -o pipefail, so the script's exit status is the
+      # step's - the same failure signal the three steps had.
+      - name: Lint gates (shellcheck + actionlint + gitleaks)
+        run: bash scripts/run-lint-gates.sh
 
   build:
     name: 🚀 Deploy website on push
@@ -102,9 +62,17 @@ jobs:
     # The deploy job is gated on the lint job: see the block above `lint:`.
     needs: lint
 
-    env:
-      CONTAINER_IMAGE: ghcr.io/kataglyphis/kataglyphis_beschleuniger:latest-cross
-
+    # NO `image:` ANYWHERE IN THIS JOB, and no CONTAINER_IMAGE env var either.
+    # The tag used to be written here as a literal and passed to all seven
+    # container steps; it now comes from ContainerHub's own single source of
+    # truth - linux/scripts/01-core/versions.env composes
+    # `${IMAGE_REGISTRY_PREFIX}:${CI_IMAGE_LINUX_TAG}`, the four container
+    # composite actions carry that value as their `image` input DEFAULT, and
+    # verify_ci_image_refs.py checks the copies against versions.env. An input
+    # OMITTED gets the default; an input passed as an expression does not, so
+    # `image: ${{ env.X }}` with X unset would hand the action an empty ref.
+    # Omission is therefore the whole mechanism: a family-wide tag change lands
+    # in one file in one repo and this lane follows without a commit.
     steps:
       # ContainerHub's shared prologue: reclaim disk, check out (submodules:
       # ANThology is a path dependency, ContainerHub owns the shared gates),
@@ -114,23 +82,30 @@ jobs:
       - name: 🚚 Prepare CI host
         uses: Kataglyphis/ContainerHub/.github/actions/prepare-linux-ci-host@main
         with:
-          image: ${{ env.CONTAINER_IMAGE }}
           fetch-depth: '0'
           submodules: recursive
 
       # Host, not container: the WebDAV sync is the one step needing repo
       # secrets and uv. The assets it fetches land in the workspace, so the
       # container steps below see them through the bind mount.
+      #
+      # setup-uv installs the tool; scripts/sync-webdav-content.sh does the work
+      # (venv, python pin, WebDavClient install, download). That split is the
+      # point: the venv/install half was inline here, so the step had no local
+      # equivalent. The secrets go through `env:` rather than into the command
+      # line - a password containing a quote or `$(...)` was a quoting bug in the
+      # old interpolated `run:`.
       - name: Install uv
         uses: astral-sh/setup-uv@v9.0.0
 
-      - name: Set up Python 3.14
-        run: uv venv --python=3.14
-
-      - name: Install WebDav Client and Sync content
-        run: |
-          uv pip install git+https://github.com/Kataglyphis/WebDavClient
-          uv run python scripts/download_markdown_files.py ${{ secrets.WEBDAV_HOSTNAME }} ${{ secrets.WEBDAV_USERNAME }} ${{ secrets.WEBDAV_PASSWORD }} ${{ secrets.REMOTE_BASE_PATH }} "$LOCAL_ASSETS_FOLDER"
+      - name: Sync content from WebDAV
+        env:
+          WEBDAV_HOSTNAME: ${{ secrets.WEBDAV_HOSTNAME }}
+          WEBDAV_USERNAME: ${{ secrets.WEBDAV_USERNAME }}
+          WEBDAV_PASSWORD: ${{ secrets.WEBDAV_PASSWORD }}
+          WEBDAV_REMOTE_BASE_PATH: ${{ secrets.REMOTE_BASE_PATH }}
+          # LOCAL_ASSETS_FOLDER comes from the workflow-level env above.
+        run: bash scripts/sync-webdav-content.sh
 
       # Every Dart/Flutter step runs inside the Kataglyphis container image
       # (Flutter baked in at /opt/flutter) - the host has no Flutter SDK any
@@ -146,33 +121,32 @@ jobs:
       - name: Dart checks (format, analyze, test)
         uses: Kataglyphis/ContainerHub/.github/actions/run-in-linux-container@main
         with:
-          image: ${{ env.CONTAINER_IMAGE }}
           extra-args: --platform "linux/amd64"
           script: bash /workspace/scripts/ci-container-steps.sh dart-checks
 
       # `flutter config --enable-web` moved into the build phases: it writes
       # per-user config, which the next step's fresh container never inherits.
-      - name: "Build Web App"
+      # Both branches build the SAME WASM bundle - the step names say so now;
+      # "Build Web App" on main read as a non-WASM build in the runs UI and was
+      # not one.
+      - name: "Build Web App (WASM, main)"
         if: github.ref == 'refs/heads/main'
         uses: Kataglyphis/ContainerHub/.github/actions/run-in-linux-container@main
         with:
-          image: ${{ env.CONTAINER_IMAGE }}
           extra-args: --platform "linux/amd64"
           script: bash /workspace/scripts/ci-container-steps.sh build-web-wasm
 
-      - name: "Build Web App (WASM)"
+      - name: "Build Web App (WASM, develop)"
         if: github.ref == 'refs/heads/develop'
         id: build-wasm
         uses: Kataglyphis/ContainerHub/.github/actions/run-in-linux-container@main
         with:
-          image: ${{ env.CONTAINER_IMAGE }}
           extra-args: --platform "linux/amd64"
           script: bash /workspace/scripts/ci-container-steps.sh build-web-wasm
 
       - name: 🔍 Integration smoke test
         uses: Kataglyphis/ContainerHub/.github/actions/run-in-linux-container@main
         with:
-          image: ${{ env.CONTAINER_IMAGE }}
           extra-args: --platform "linux/amd64"
           script: bash /workspace/scripts/ci-container-steps.sh smoke-test
 
@@ -198,7 +172,6 @@ jobs:
         if: github.ref == 'refs/heads/develop'
         uses: Kataglyphis/ContainerHub/.github/actions/run-in-linux-container@main
         with:
-          image: ${{ env.CONTAINER_IMAGE }}
           extra-args: --platform "linux/amd64"
           script: bash /workspace/scripts/ci-container-steps.sh build-web-canvaskit
 
@@ -214,7 +187,6 @@ jobs:
       - name: Build docs
         uses: Kataglyphis/ContainerHub/.github/actions/run-in-linux-container@main
         with:
-          image: ${{ env.CONTAINER_IMAGE }}
           extra-args: --platform "linux/amd64"
           script: bash /workspace/scripts/ci-container-steps.sh dart-doc
 
