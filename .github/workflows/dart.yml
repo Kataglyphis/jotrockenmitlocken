@@ -47,8 +47,10 @@ jobs:
       # the vacuity guard and the ContainerHub-pin preconditions used to live
       # here in YAML, which meant the gate that blocks this deploy could not be
       # reproduced locally at all. Both places now run
-      # `bash scripts/run-lint-gates.sh`; that file carries the reasoning for
-      # each of the three gates.
+      # `bash scripts/run-lint-gates.sh`, which is now a thin wrapper over
+      # ContainerHub's shared aggregator (linux/scripts/run-lint-gates.sh) that
+      # three consumers share; the reasoning for each of the three gates lives
+      # there, and the wrapper carries only this repo's exclude set.
       #
       # No `shell: bash` override: bash is the default on ubuntu runners and it
       # already runs with -e -o pipefail, so the script's exit status is the

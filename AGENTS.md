@@ -155,8 +155,8 @@ Only commit if all commands exit with code 0.
 
 This repo has a second submodule besides the shared component library:
 `third_party/ContainerHub`. It owns every reusable script, container
-recipe and build doc shared across the Kataglyphis repos, and **six scripts here
-are thin wrappers over it** — editing the wrapper when the behaviour lives
+recipe and build doc shared across the Kataglyphis repos, and **seven scripts
+here are thin wrappers over it** — editing the wrapper when the behaviour lives
 upstream is the mistake to avoid:
 
 | Wrapper | Delegates to |
@@ -166,7 +166,12 @@ upstream is the mistake to avoid:
 | `scripts/integration-smoke-test.sh` | shared Flutter-web smoke test |
 | `scripts/run-nginx-integration-test.sh` | shared nginx integration harness |
 | `scripts/capture_console_errors.py` | shared Flutter-web console-error test |
-| `scripts/run-lint-gates.sh` | shared shellcheck / actionlint / gitleaks gates |
+| `scripts/run-lint-gates.sh` | shared lint aggregator (shellcheck / actionlint+CI-image-refs / gitleaks, with the secret gate's self-test) |
+| `scripts/setup-sqlite3-wasm.sh` | shared SHA256-verified sqlite3.wasm fetcher |
+
+`scripts/sync-webdav-content.sh` is half a wrapper: its uv bootstrap and venv
+creation are ContainerHub's `01-core/python_uv.sh`; only the WebDAV step itself
+is this repo's.
 
 **Do not restate upstream procedures here.** Start at
 [`third_party/ContainerHub/docs/INDEX.md`](third_party/ContainerHub/docs/INDEX.md)
@@ -252,7 +257,7 @@ third_party/ANThology/ # Git submodule — shared component library
 - **No real content locally:** Blog markdown files are downloaded from WebDAV via CI secrets. Running locally will show placeholder/dummy content from `dummy_assets/`.
 - **Submodule required:** Always clone with `--recurse-submodules`. Run `flutter pub get` in both root and `third_party/ANThology/`.
 - **ARB generation:** After editing `.arb` files, run `flutter gen-l10n` to regenerate `app_localizations*.dart`.
-- **SQLite on web:** The `setup-sqlite3-wasm.sh` script must be run to download `sqlite3.wasm` for web targets.
+- **SQLite on web:** `bash scripts/setup-sqlite3-wasm.sh` downloads `sqlite3.wasm` into `web/` for web targets. It takes no arguments: the version and its SHA256 come from ContainerHub's `linux/scripts/01-core/versions.env` (`SQLITE3_WASM_VERSION`), and the download is verified against it. The tracked `web/sqlite3.wasm` is still 3.2.0 while `pubspec.yaml` pins `sqlite3: ^3.3.1` — re-running the script updates it.
 - **iOS/macOS builders:** Do not touch `ios/`, `macos/`, `android/`, `windows/`, `linux/` directories unless specifically requested — they contain platform-specific boilerplate.
 - **Known issues:** `flutter_highlighter` needs a patch; `flutter_markdown` has a blockquote rendering issue.
 - **ARM64 browser automation:** Playwright's `playwright install chromium` fails on ARM64, but Playwright **works** with `flatpak install flathub org.chromium.Chromium` + `executable_path` to use the flatpak binary.
