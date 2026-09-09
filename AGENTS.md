@@ -24,6 +24,18 @@ dart format --output=none --set-exit-if-changed $(git ls-files '*.dart')
 # `build` (the deploy job) will not start until it passes.
 bash scripts/run-lint-gates.sh
 
+# Dependency upgrades - Renovate as a local CLI over the two submodule gitlinks
+# in .gitmodules. Move those through this rather than by hand. It does NOT cover
+# pubspec.yaml; .github/dependabot.yml is still the live path for pub. It is not
+# a gate either - no workflow runs it.
+bash scripts/renovate-local.sh                    # report what is behind
+bash scripts/renovate-local.sh --apply --dry-run  # the plan, with pre-flight
+bash scripts/renovate-local.sh --apply            # move the gitlinks
+# Needs node, so on Windows run it from WSL; the script picks the git that owns
+# the working tree for --apply itself, and refuses before moving anything if it
+# cannot reach it. Rationale and the full workflow:
+# third_party/ContainerHub/docs/dependency-updates.md
+
 # Pull the private blog content off WebDAV into assets/ (needs the four
 # credentials CI holds as repository secrets). CI runs this exact script.
 WEBDAV_HOSTNAME=... WEBDAV_USERNAME=... WEBDAV_PASSWORD=... \
@@ -155,7 +167,7 @@ Only commit if all commands exit with code 0.
 
 This repo has a second submodule besides the shared component library:
 `third_party/ContainerHub`. It owns every reusable script, container
-recipe and build doc shared across the Kataglyphis repos, and **seven scripts
+recipe and build doc shared across the Kataglyphis repos, and **eight scripts
 here are thin wrappers over it** — editing the wrapper when the behaviour lives
 upstream is the mistake to avoid:
 
@@ -168,6 +180,7 @@ upstream is the mistake to avoid:
 | `scripts/capture_console_errors.py` | shared Flutter-web console-error test |
 | `scripts/run-lint-gates.sh` | shared lint aggregator (shellcheck / actionlint+CI-image-refs / gitleaks, with the secret gate's self-test) |
 | `scripts/setup-sqlite3-wasm.sh` | shared SHA256-verified sqlite3.wasm fetcher |
+| `scripts/renovate-local.sh` | shared Renovate local-CLI dependency updater (submodule pins) |
 
 `scripts/sync-webdav-content.sh` is half a wrapper: its uv bootstrap and venv
 creation are ContainerHub's `01-core/python_uv.sh`; only the WebDAV step itself
