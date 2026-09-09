@@ -60,6 +60,7 @@ my [DocumANTation](https://github.com/Kataglyphis/DocumANTation)-project that ev
   - [Run Web Server locally for Debugging](#run-web-server-locally-for-debugging)
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
+  - [Dependency upgrades](#dependency-upgrades)
 - [Roadmap](#roadmap)
 - [Contributing](#contributing)
 - [License](#license)
@@ -248,6 +249,23 @@ flutter run -d web-server --profile --web-port 8080 --web-hostname 0.0.0.0
    ```sh
    git clone --recurse-submodules git@github.com:Kataglyphis/jotrockenmitlocken.git
    ```
+
+### Dependency upgrades
+
+Renovate, run as a local CLI over the two submodule gitlinks in `.gitmodules`.
+Move those through this rather than by hand. It does not cover `pubspec.yaml`;
+`.github/dependabot.yml` is still the live path for pub. It needs node, so on
+Windows run it from WSL; the script picks the git that owns the working tree for
+`--apply` itself, and refuses before moving anything if it cannot reach it.
+
+```bash
+bash scripts/renovate-local.sh                    # report what is behind
+bash scripts/renovate-local.sh --apply --dry-run  # the plan, with pre-flight
+bash scripts/renovate-local.sh --apply            # move the gitlinks
+```
+
+Rationale and the full workflow:
+[`third_party/ContainerHub/docs/dependency-updates.md`](third_party/ContainerHub/docs/dependency-updates.md)
 
 <!-- ROADMAP -->
 ## Roadmap
