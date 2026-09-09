@@ -1,0 +1,14 @@
+# What this repo takes from ContainerHub. One row per asset: the id from
+# third_party/ContainerHub/shared/config/shared-assets.manifest, and a path only
+# when the copy does not sit at that registry row default.
+#
+# Checked by:
+#   bash third_party/ContainerHub/shared/config/sync-shared-config.sh --repo-root . --check
+#
+# One row: this repo copy of the bash bootstrap sits at scripts/lib/, one level
+# above the registry default scripts/linux/lib/, which is why the path is
+# spelled out - and why its KATAGLYPHIS_REPO_ROOT_RELATIVE reads ../.. rather
+# than ../../.. That knob is a declared one and its VALUE is not compared.
+# None of the five shared configs is taken: no CMakeLists.txt and no C++ here.
+
+containerhub-sh   scripts/lib/containerhub.sh
