@@ -10,7 +10,9 @@
 #   scripts/build-in-container.sh [--shell] [--canvaskit]
 #
 # Env vars:
-#   IMAGE            Container image to build in (default: ghcr.io/kataglyphis/kataglyphis_beschleuniger:latest-cross)
+#   IMAGE            Container image to build in (default: the family Linux CI
+#                    image, composed by ContainerHub's
+#                    linux/scripts/ci-image-ref.sh out of its versions.env)
 #   FLUTTER_VERSION  Flutter SDK version to bootstrap inside the container (default: 3.44.0; CI no longer pins one - it uses the image's SDK)
 #   ENGINE           Container engine to use: docker or nerdctl (default: docker)
 set -euo pipefail
@@ -29,7 +31,28 @@ CONTAINERHUB_SCRIPTS_DIR="${CONTAINERHUB_DIR}/linux/scripts"
 # this one file.
 SETUP_FLUTTER_SCRIPT_IN_CONTAINER="/opt/kataglyphis-scripts/05-frameworks/flutter/setup-flutter.sh"
 
-IMAGE="${IMAGE:-ghcr.io/kataglyphis/kataglyphis_beschleuniger:latest-cross}"
+# The tag is NOT spelled here. ContainerHub's linux/scripts/ci-image-ref.sh
+# composes ${IMAGE_REGISTRY_PREFIX}:${CI_IMAGE_LINUX_TAG} from the hub's
+# linux/scripts/01-core/versions.env, which is the fleet's one owner of both CI
+# image refs; a literal here would be one more copy to drift. (No count: the
+# number was wrong when it was written and would rot on the next edit anyway.)
+# Linux, not
+# --windows: the `docker run` below passes --platform linux/amd64.
+#
+# Its stdout carries the reference and nothing else (every diagnostic goes to
+# stderr), so it is safe inside a command substitution, and a missing key exits
+# non-zero rather than yielding an empty string - under `set -e` that aborts
+# here instead of reaching `docker run` as "run the next argument as an image".
+#
+# containerhub_path is resolved on its own line rather than nested inside that
+# substitution. Nested, a missing submodule printed the helper's three-line
+# diagnostic and then ran `bash ""`, adding a bare "bash: : No such file or
+# directory" of its own before exiting 127. Assigned first, `set -e` stops on
+# the real message - the shape containerhub_source and containerhub_exec use.
+if [ -z "${IMAGE:-}" ]; then
+  _ci_image_ref_sh="$(containerhub_path linux/scripts/ci-image-ref.sh)"
+  IMAGE="$(bash "${_ci_image_ref_sh}")"
+fi
 FLUTTER_VERSION="${FLUTTER_VERSION:-3.44.0}"
 ENGINE="${ENGINE:-docker}"
 
