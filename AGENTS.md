@@ -278,18 +278,20 @@ third_party/ANThology/ # Git submodule — shared component library
 ## CI/CD
 
 - **Trigger:** Push to `main` or `develop`
-- **Containerised lane:** every Dart/Flutter step runs inside the public image
-  `ghcr.io/kataglyphis/kataglyphis_beschleuniger:latest-cross` (Flutter baked in
-  at `/opt/flutter` — no `setup-flutter` action, so the CI Flutter version
-  tracks the image) via ContainerHub's `prepare-linux-ci-host` and
-  `run-in-linux-container` actions. That tag is **not written in
-  `.github/workflows/dart.yml`**: the steps omit the `image:` input and inherit
+- **Containerised lane:** every Dart/Flutter step runs inside the public family
+  Linux CI image (Flutter baked in at `/opt/flutter` — no `setup-flutter`
+  action, so the CI Flutter version tracks the image) via ContainerHub's
+  `prepare-linux-ci-host` and `run-in-linux-container` actions. That tag is
+  **not written in `.github/workflows/dart.yml`** — and, since 2026-09-09, not
+  written here either, because a reference in prose rots on a tag bump exactly
+  like one in code: the steps omit the `image:` input and inherit
   the actions' default, which ContainerHub composes from
   `IMAGE_REGISTRY_PREFIX` + `CI_IMAGE_LINUX_TAG` in
   `linux/scripts/01-core/versions.env` and checks with
   `verify_ci_image_refs.py`. A fleet-wide tag change therefore lands in one file
   in one repo. Passing `image:` explicitly would opt this lane back out of
-  that. The phase bodies live in
+  that; `bash third_party/ContainerHub/linux/scripts/ci-image-ref.sh` prints the
+  current value when you need to see it. The phase bodies live in
   `scripts/ci-container-steps.sh`; each step is a fresh container, so that
   script re-establishes PATH, git `safe.directory` and the pub cache
   (`.pub-cache/` in the workspace, so packages survive across phases) per phase.
