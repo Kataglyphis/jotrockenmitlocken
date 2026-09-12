@@ -42,6 +42,10 @@ jobs:
           submodules: true
           fetch-depth: 1
 
+      # uvx is how the shared aggregator runs ruff; the runner carries no uv.
+      - name: Install uv
+        uses: astral-sh/setup-uv@v9.0.0
+
       # One script, not three inline `run:` blocks. The `git ls-files` file-list
       # construction (a bare `**` does not recurse without `shopt -s globstar`),
       # the vacuity guard and the ANTfrastructure-pin preconditions used to live
