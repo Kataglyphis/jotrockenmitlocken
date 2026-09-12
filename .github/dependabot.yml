@@ -5,13 +5,13 @@
 #
 # The reasoning, so the next person does not have to redo it:
 #
-#   * Renovate's shared preset (github>Kataglyphis/ContainerHub, adopted in
+#   * Renovate's shared preset (github>Kataglyphis/ANTfrastructure, adopted in
 #     .github/renovate.json) extends `config:recommended`, whose pub manager
 #     covers exactly what this file covers - pubspec.yaml, weekly. So the two
 #     bots overlap completely on this repo's ONLY Dependabot ecosystem.
 #   * Renovate additionally covers what this file never did: the github-actions
 #     references in .github/workflows/, and the git-submodules gitlinks for
-#     third_party/ANThology and third_party/ContainerHub.
+#     third_party/ANThology and third_party/ANTfrastructure.
 #   * Deleting this file therefore loses nothing - PROVIDED the Renovate GitHub
 #     App is actually installed on this repository. That cannot be verified from
 #     inside the repo, and a repo with neither bot running is strictly worse than

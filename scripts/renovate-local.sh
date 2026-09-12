@@ -6,17 +6,17 @@
 #     bash scripts/renovate-local.sh --apply --dry-run   # the plan, with pre-flight
 #     bash scripts/renovate-local.sh --apply             # move the gitlinks
 #
-# WHY THIS REPO HAS A WRAPPER. The tool itself is ContainerHub's
+# WHY THIS REPO HAS A WRAPPER. The tool itself is ANTfrastructure's
 # (linux/scripts/renovate-local.sh); this file exists only so the repo has the
 # same one-command local entry point as its other scripts, and so the repo root
 # is passed EXPLICITLY. Upstream defaults its target to $PWD, so running this
-# from any subdirectory - or from third_party/ContainerHub itself - would grade
+# from any subdirectory - or from third_party/ANTfrastructure itself - would grade
 # the wrong tree and report a cheerful "up to date". The flags are yours; the root
 # is not, which is why this forwards "$@" but supplies the root itself.
 #
 # WHAT IT ACTUALLY DOES HERE. The default manager is git-submodules, which is
 # this repo's whole dependency surface for the tool: third_party/ANThology and
-# third_party/ContainerHub, both of which declare `branch = main` in .gitmodules
+# third_party/ANTfrastructure, both of which declare `branch = main` in .gitmodules
 # and are therefore both eligible for --apply. Dart packages are NOT covered -
 # pubspec.yaml is pub's, and .github/dependabot.yml is still the live path for
 # it. Nor is this a gate: no workflow runs it and it blocks no commit.
@@ -32,32 +32,32 @@
 # tree through it, and REFUSES up front, before moving anything, when it cannot.
 #
 # Rationale, the measurements behind all of the above, and the GitHub-token
-# variant: third_party/ContainerHub/docs/dependency-updates.md
+# variant: third_party/ANTfrastructure/docs/dependency-updates.md
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 # The submodule path and the not-found guard come from the canonical bootstrap
-# (a verbatim copy of upstream's shared/linux/templates/containerhub.sh), so this
+# (a verbatim copy of upstream's shared/linux/templates/antfrastructure.sh), so this
 # script spells out neither.
 # shellcheck source=/dev/null
-source "${SCRIPT_DIR}/lib/containerhub.sh"
+source "${SCRIPT_DIR}/lib/antfrastructure.sh"
 
-# Named separately from containerhub_path's generic "not found / it moved
+# Named separately from antfrastructure_path's generic "not found / it moved
 # upstream" message, for the same reason run-lint-gates.sh does it: while the
 # fleet adopts this tool the expected failure is a stale gitlink, and being sent
 # to docs/INDEX.md to look for a file that upstream has not yet been pinned at
 # wastes the trip.
 HUB_RENOVATE_RELATIVE="linux/scripts/renovate-local.sh"
-if [ ! -f "${CONTAINERHUB_DIR}/${HUB_RENOVATE_RELATIVE}" ]; then
-  echo "Error: ${CONTAINERHUB_DIR}/${HUB_RENOVATE_RELATIVE} is missing." >&2
-  echo "       Either ContainerHub is not checked out (git submodule update" >&2
-  echo "       --init --recursive third_party/ContainerHub), or the pinned" >&2
-  echo "       ContainerHub predates the shared Renovate CLI - bump the" >&2
-  echo "       third_party/ContainerHub gitlink." >&2
+if [ ! -f "${ANTFRASTRUCTURE_DIR}/${HUB_RENOVATE_RELATIVE}" ]; then
+  echo "Error: ${ANTFRASTRUCTURE_DIR}/${HUB_RENOVATE_RELATIVE} is missing." >&2
+  echo "       Either ANTfrastructure is not checked out (git submodule update" >&2
+  echo "       --init --recursive third_party/ANTfrastructure), or the pinned" >&2
+  echo "       ANTfrastructure predates the shared Renovate CLI - bump the" >&2
+  echo "       third_party/ANTfrastructure gitlink." >&2
   exit 1
 fi
 
-# containerhub_exec, not `bash "$(containerhub_path ...)"`: exec makes the tool's
+# antfrastructure_exec, not `bash "$(antfrastructure_path ...)"`: exec makes the tool's
 # exit status this script's, with no intermediate shell to lose it.
-containerhub_exec "${HUB_RENOVATE_RELATIVE}" "${KATAGLYPHIS_REPO_ROOT}" "$@"
+antfrastructure_exec "${HUB_RENOVATE_RELATIVE}" "${KATAGLYPHIS_REPO_ROOT}" "$@"

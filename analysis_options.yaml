@@ -6,7 +6,7 @@
 # invoked from the command line by running `flutter analyze`.
 #
 # The shared family policy — the flutter_lints include, the seven per-platform
-# excludes and the linter section — lives in ContainerHub and is pulled in BY
+# excludes and the linter section — lives in ANTfrastructure and is pulled in BY
 # REFERENCE below, through Dart's native relative include. This file is where
 # that policy was extracted FROM, and it was the one repo that never repointed
 # afterwards: it kept its own verbatim copy of the same seven excludes, so the
@@ -21,7 +21,7 @@
 # This repo has no deltas today. The excludes were byte-identical to the shared
 # ones, and the `linter.rules:` block held only commented-out examples from the
 # Flutter template.
-include: third_party/ContainerHub/shared/config/analysis_options.yaml
+include: third_party/ANTfrastructure/shared/config/analysis_options.yaml
 
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options

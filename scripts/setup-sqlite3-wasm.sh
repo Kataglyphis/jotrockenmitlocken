@@ -10,8 +10,8 @@
 # byte-identical copies of it that differed on exactly that one line, so an
 # unauthenticated third-party binary was being dropped into two shipped web
 # bundles from two different pins. The fetch now lives upstream at
-# third_party/ContainerHub/linux/scripts/05-frameworks/flutter/setup-sqlite3-wasm.sh,
-# which resolves the version AND its SHA256 from ContainerHub's
+# third_party/ANTfrastructure/linux/scripts/05-frameworks/flutter/setup-sqlite3-wasm.sh,
+# which resolves the version AND its SHA256 from ANTfrastructure's
 # 01-core/versions.env and downloads through download_verified_file - so a
 # tampered or truncated asset fails here instead of in a visitor's browser.
 #
@@ -21,27 +21,27 @@
 #     so this script had been fetching a wasm module older than the Dart
 #     package that loads it.
 #   - there is deliberately no version argument any more. A repo that needs
-#     another build bumps SQLITE3_WASM_VERSION in ContainerHub's versions.env,
+#     another build bumps SQLITE3_WASM_VERSION in ANTfrastructure's versions.env,
 #     where the matching SHA256 lives; the two cannot drift apart there.
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 # The submodule path and the not-found guard come from the canonical bootstrap
-# (a verbatim copy of upstream's shared/linux/templates/containerhub.sh).
+# (a verbatim copy of upstream's shared/linux/templates/antfrastructure.sh).
 # shellcheck source=/dev/null
-source "${SCRIPT_DIR}/lib/containerhub.sh"
+source "${SCRIPT_DIR}/lib/antfrastructure.sh"
 
 if [ "$#" -gt 0 ]; then
   echo "Error: $0 takes no arguments (got: $*)." >&2
-  echo "       The version is ContainerHub's SQLITE3_WASM_VERSION, pinned next to" >&2
+  echo "       The version is ANTfrastructure's SQLITE3_WASM_VERSION, pinned next to" >&2
   echo "       its SHA256 in linux/scripts/01-core/versions.env." >&2
   exit 2
 fi
 
 # The consumer root is passed EXPLICITLY. Upstream runs from inside
-# third_party/ContainerHub, so a root it derived from its own location would
-# write third_party/ContainerHub/web/sqlite3.wasm and the app would still not
+# third_party/ANTfrastructure, so a root it derived from its own location would
+# write third_party/ANTfrastructure/web/sqlite3.wasm and the app would still not
 # start - with a green log.
-containerhub_exec linux/scripts/05-frameworks/flutter/setup-sqlite3-wasm.sh \
+antfrastructure_exec linux/scripts/05-frameworks/flutter/setup-sqlite3-wasm.sh \
   "${KATAGLYPHIS_REPO_ROOT}"

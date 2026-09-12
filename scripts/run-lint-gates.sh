@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # The repo's lint gate: shellcheck over this repo's bash, actionlint +
-# ContainerHub's CI-image-ref check over its workflows, gitleaks over its
+# ANTfrastructure's CI-image-ref check over its workflows, gitleaks over its
 # tracked tree - all three using the pinned, SHA256-verified binaries
-# ContainerHub bootstraps rather than a second set installed here.
+# ANTfrastructure bootstraps rather than a second set installed here.
 #
 # This is the single entry point .github/workflows/dart.yml calls, and the same
 # one command to run before pushing:
@@ -12,9 +12,9 @@
 # WHAT THIS FILE IS NOW. It used to be 119 lines carrying the aggregation
 # itself: the `git ls-files` scope construction, the empty-list vacuity guard,
 # the run-all-three-then-fail-once accumulator, and two hand-rolled pin
-# preconditions that grepped ContainerHub's own source text for a feature
+# preconditions that grepped ANTfrastructure's own source text for a feature
 # marker. All of that moved upstream to
-# third_party/ContainerHub/linux/scripts/run-lint-gates.sh, which three other
+# third_party/ANTfrastructure/linux/scripts/run-lint-gates.sh, which three other
 # consumers now share; this file is the wrapper that keeps the local
 # invocation. Everything below is that delegation plus the two decisions that
 # are genuinely this repo's: the argument contract and the exclude set.
@@ -24,7 +24,7 @@
 #     dummy_assets/) is not silently dropped by git's own quoting;
 #   - it scans the top-level entries one at a time and keeps third_party/ out
 #     of the secret gate, where the old single-root scan graded ANThology's and
-#     ContainerHub's trees against THIS repo's .gitleaks.toml;
+#     ANTfrastructure's trees against THIS repo's .gitleaks.toml;
 #   - it passes this repo's .gitleaks.toml explicitly, which per-path scanning
 #     otherwise loses;
 #   - it self-tests the secret gate before trusting it (plant a credential,
@@ -40,10 +40,10 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 # The submodule path and the not-found guard come from the canonical bootstrap
-# (a verbatim copy of upstream's shared/linux/templates/containerhub.sh), so this
+# (a verbatim copy of upstream's shared/linux/templates/antfrastructure.sh), so this
 # script spells out neither.
 # shellcheck source=/dev/null
-source "${SCRIPT_DIR}/lib/containerhub.sh"
+source "${SCRIPT_DIR}/lib/antfrastructure.sh"
 
 # No pass-through: the one knob a caller might reach for is "skip a gate", and a
 # gate that can be skipped from the command line is not a gate. The aggregator
@@ -55,7 +55,7 @@ if [ "$#" -gt 0 ]; then
 fi
 
 # The two failure modes are different problems with different fixes, so they get
-# different messages. containerhub_path collapses them into one ("not found /
+# different messages. antfrastructure_path collapses them into one ("not found /
 # it moved upstream"), which sends you to docs/INDEX.md for what is really a
 # stale gitlink - and a stale gitlink is the expected failure while the fleet
 # adopts this. This existence check REPLACES the two preconditions this file
@@ -63,34 +63,34 @@ fi
 # pinned lint-secrets.sh for the literal 'SCAN_ROOT=' and the pinned
 # lint-workflows.sh for 'verify_ci_image_refs', which breaks on any upstream
 # rename and passes on any comment that happens to contain the string. The
-# aggregator ships in the same ContainerHub commit as the three gates it runs,
+# aggregator ships in the same ANTfrastructure commit as the three gates it runs,
 # so its presence IS the capability - it cannot outrun them.
 HUB_LINT_GATES_RELATIVE="linux/scripts/run-lint-gates.sh"
-if [ ! -d "${CONTAINERHUB_DIR}" ]; then
-  echo "Error: ContainerHub is not checked out at ${CONTAINERHUB_DIR}." >&2
-  echo "       git submodule update --init --recursive third_party/ContainerHub" >&2
+if [ ! -d "${ANTFRASTRUCTURE_DIR}" ]; then
+  echo "Error: ANTfrastructure is not checked out at ${ANTFRASTRUCTURE_DIR}." >&2
+  echo "       git submodule update --init --recursive third_party/ANTfrastructure" >&2
   exit 1
 fi
-if [ ! -f "${CONTAINERHUB_DIR}/${HUB_LINT_GATES_RELATIVE}" ]; then
-  echo "Error: ${CONTAINERHUB_DIR}/${HUB_LINT_GATES_RELATIVE} is missing." >&2
-  echo "       The pinned ContainerHub predates the shared lint aggregator, which" >&2
+if [ ! -f "${ANTFRASTRUCTURE_DIR}/${HUB_LINT_GATES_RELATIVE}" ]; then
+  echo "Error: ${ANTFRASTRUCTURE_DIR}/${HUB_LINT_GATES_RELATIVE} is missing." >&2
+  echo "       The pinned ANTfrastructure predates the shared lint aggregator, which" >&2
   echo "       also carries the consumer-scan-root support in lint-secrets.sh and" >&2
   echo "       the CI-image-ref check in lint-workflows.sh. An older pin would run" >&2
-  echo "       the gates over ContainerHub's own tree and report GREEN over none of" >&2
+  echo "       the gates over ANTfrastructure's own tree and report GREEN over none of" >&2
   echo "       this repository's files." >&2
-  echo "       Bump the third_party/ContainerHub gitlink." >&2
+  echo "       Bump the third_party/ANTfrastructure gitlink." >&2
   exit 1
 fi
 
 # --exclude third_party, spelled out rather than left to the upstream default,
 # because it is this repo's scope decision and it should be readable here: both
-# submodules (ANThology, ContainerHub) are separate repositories, linted and
+# submodules (ANThology, ANTfrastructure) are separate repositories, linted and
 # secret-scanned in their own CI at their own ratchet. Upstream KEEPS the
 # tracked plain files sitting directly inside an excluded directory - dropping
 # the whole prefix would have hidden a file this repo owns.
 #
-# containerhub_exec, not `bash "$(containerhub_path ...)"`: exec makes the
+# antfrastructure_exec, not `bash "$(antfrastructure_path ...)"`: exec makes the
 # aggregator's exit status this script's, with no intermediate shell to lose it.
-containerhub_exec "${HUB_LINT_GATES_RELATIVE}" \
+antfrastructure_exec "${HUB_LINT_GATES_RELATIVE}" \
   "${KATAGLYPHIS_REPO_ROOT}" \
   --exclude third_party

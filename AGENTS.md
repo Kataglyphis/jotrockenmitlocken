@@ -6,7 +6,7 @@ Personal blog as a responsive cross-platform Flutter/Dart web app by Jonas Heinl
 
 ```bash
 # The whole Dart gate — pub get (root + ANThology), format, analyze, test.
-# Thin wrapper over ContainerHub's flutter_checks.sh; CI runs this exact script.
+# Thin wrapper over ANTfrastructure's flutter_checks.sh; CI runs this exact script.
 bash scripts/run-dart-checks.sh
 
 # The individual steps, when you want only one of them
@@ -20,7 +20,7 @@ dart format --output=none --set-exit-if-changed $(git ls-files '*.dart')
 
 # The whole lint gate - shellcheck over this repo's bash, actionlint plus the
 # fleet CI-image-ref check over its workflows, gitleaks over the tree. Uses
-# ContainerHub's pinned, SHA-verified binaries; CI runs this exact script, and
+# ANTfrastructure's pinned, SHA-verified binaries; CI runs this exact script, and
 # `build` (the deploy job) will not start until it passes.
 bash scripts/run-lint-gates.sh
 
@@ -34,7 +34,7 @@ bash scripts/renovate-local.sh --apply            # move the gitlinks
 # Needs node, so on Windows run it from WSL; the script picks the git that owns
 # the working tree for --apply itself, and refuses before moving anything if it
 # cannot reach it. Rationale and the full workflow:
-# third_party/ContainerHub/docs/dependency-updates.md
+# third_party/ANTfrastructure/docs/dependency-updates.md
 
 # Pull the private blog content off WebDAV into assets/ (needs the four
 # credentials CI holds as repository secrets). CI runs this exact script.
@@ -154,7 +154,7 @@ flutter gen-l10n
 
 > **MANDATORY for agents:** After making any code changes, you MUST run `bash scripts/run-dart-checks.sh` and it MUST pass with zero errors. If it fails, fix the issues and re-run before considering the task complete. The CI pipeline runs this same script and enforces zero tolerance on `dart analyze` and `dart format` — failures block deployment.
 >
-> This used to read "analyze → test → format" and CI inlined the three commands in that order. The order was never load-bearing: all three are blocking, so the job fails identically whichever runs first, and the shared gate's format → analyze → test is the cheaper triage order (formatting is the fastest of the three to fail). The order changed to stop the repo from maintaining its own copy of a check that ContainerHub already owns.
+> This used to read "analyze → test → format" and CI inlined the three commands in that order. The order was never load-bearing: all three are blocking, so the job fails identically whichever runs first, and the shared gate's format → analyze → test is the cheaper triage order (formatting is the fastest of the three to fail). The order changed to stop the repo from maintaining its own copy of a check that ANTfrastructure already owns.
 
 **Before committing changes:**
 ```bash
@@ -163,17 +163,17 @@ bash scripts/run-dart-checks.sh && bash scripts/integration-smoke-test.sh http:/
 
 Only commit if all commands exit with code 0.
 
-## What ContainerHub owns — links only
+## What ANTfrastructure owns — links only
 
 This repo has a second submodule besides the shared component library:
-`third_party/ContainerHub`. It owns every reusable script, container
+`third_party/ANTfrastructure`. It owns every reusable script, container
 recipe and build doc shared across the Kataglyphis repos, and **eight scripts
 here are thin wrappers over it** — editing the wrapper when the behaviour lives
 upstream is the mistake to avoid:
 
 | Wrapper | Delegates to |
 | --- | --- |
-| `scripts/build-in-container.sh` | ContainerHub's container bootstrap |
+| `scripts/build-in-container.sh` | ANTfrastructure's container bootstrap |
 | `scripts/run-dart-checks.sh` | shared Flutter format/analyze/test gate |
 | `scripts/integration-smoke-test.sh` | shared Flutter-web smoke test |
 | `scripts/run-nginx-integration-test.sh` | shared nginx integration harness |
@@ -183,22 +183,22 @@ upstream is the mistake to avoid:
 | `scripts/renovate-local.sh` | shared Renovate local-CLI dependency updater (submodule pins) |
 
 `scripts/sync-webdav-content.sh` is half a wrapper: its uv bootstrap and venv
-creation are ContainerHub's `01-core/python_uv.sh`; only the WebDAV step itself
+creation are ANTfrastructure's `01-core/python_uv.sh`; only the WebDAV step itself
 is this repo's.
 
 **Do not restate upstream procedures here.** Start at
-[`third_party/ContainerHub/docs/INDEX.md`](third_party/ContainerHub/docs/INDEX.md)
+[`third_party/ANTfrastructure/docs/INDEX.md`](third_party/ANTfrastructure/docs/INDEX.md)
 — it maps topic → owning document, so links survive upstream reorganisation. The
 rule that decides where anything belongs: *would this still be true in a
-different project?* Yes → ContainerHub owns it, link to it. No → write it out
+different project?* Yes → ANTfrastructure owns it, link to it. No → write it out
 here.
 
 Two upstream facts worth knowing before you reach a doc:
 
-- ContainerHub's PowerShell modules declare `#requires -Version 7.0` — launch
+- ANTfrastructure's PowerShell modules declare `#requires -Version 7.0` — launch
   with `pwsh`, never `powershell`. (Not used by this repo's CI today, which is
   Linux-only, but true if you add a Windows lane.)
-- Workflows resolve ContainerHub's composite actions at `@main`, so an upstream
+- Workflows resolve ANTfrastructure's composite actions at `@main`, so an upstream
   change a workflow depends on must be pushed **before** the consumer change.
 
 Clone with `--recurse-submodules` or the wrappers fail with an explicit
@@ -270,7 +270,7 @@ third_party/ANThology/ # Git submodule — shared component library
 - **No real content locally:** Blog markdown files are downloaded from WebDAV via CI secrets. Running locally will show placeholder/dummy content from `dummy_assets/`.
 - **Submodule required:** Always clone with `--recurse-submodules`. Run `flutter pub get` in both root and `third_party/ANThology/`.
 - **ARB generation:** After editing `.arb` files, run `flutter gen-l10n` to regenerate `app_localizations*.dart`.
-- **SQLite on web:** `bash scripts/setup-sqlite3-wasm.sh` downloads `sqlite3.wasm` into `web/` for web targets. It takes no arguments: the version and its SHA256 come from ContainerHub's `linux/scripts/01-core/versions.env` (`SQLITE3_WASM_VERSION`), and the download is verified against it. The tracked `web/sqlite3.wasm` is still 3.2.0 while `pubspec.yaml` pins `sqlite3: ^3.3.1` — re-running the script updates it.
+- **SQLite on web:** `bash scripts/setup-sqlite3-wasm.sh` downloads `sqlite3.wasm` into `web/` for web targets. It takes no arguments: the version and its SHA256 come from ANTfrastructure's `linux/scripts/01-core/versions.env` (`SQLITE3_WASM_VERSION`), and the download is verified against it. The tracked `web/sqlite3.wasm` is still 3.2.0 while `pubspec.yaml` pins `sqlite3: ^3.3.1` — re-running the script updates it.
 - **iOS/macOS builders:** Do not touch `ios/`, `macos/`, `android/`, `windows/`, `linux/` directories unless specifically requested — they contain platform-specific boilerplate.
 - **Known issues:** `flutter_highlighter` needs a patch; `flutter_markdown` has a blockquote rendering issue.
 - **ARM64 browser automation:** Playwright's `playwright install chromium` fails on ARM64, but Playwright **works** with `flatpak install flathub org.chromium.Chromium` + `executable_path` to use the flatpak binary.
@@ -280,17 +280,17 @@ third_party/ANThology/ # Git submodule — shared component library
 - **Trigger:** Push to `main` or `develop`
 - **Containerised lane:** every Dart/Flutter step runs inside the public family
   Linux CI image (Flutter baked in at `/opt/flutter` — no `setup-flutter`
-  action, so the CI Flutter version tracks the image) via ContainerHub's
+  action, so the CI Flutter version tracks the image) via ANTfrastructure's
   `prepare-linux-ci-host` and `run-in-linux-container` actions. That tag is
   **not written in `.github/workflows/dart.yml`** — and, since 2026-09-09, not
   written here either, because a reference in prose rots on a tag bump exactly
   like one in code: the steps omit the `image:` input and inherit
-  the actions' default, which ContainerHub composes from
+  the actions' default, which ANTfrastructure composes from
   `IMAGE_REGISTRY_PREFIX` + `CI_IMAGE_LINUX_TAG` in
   `linux/scripts/01-core/versions.env` and checks with
   `verify_ci_image_refs.py`. A fleet-wide tag change therefore lands in one file
   in one repo. Passing `image:` explicitly would opt this lane back out of
-  that; `bash third_party/ContainerHub/linux/scripts/ci-image-ref.sh` prints the
+  that; `bash third_party/ANTfrastructure/linux/scripts/ci-image-ref.sh` prints the
   current value when you need to see it. The phase bodies live in
   `scripts/ci-container-steps.sh`; each step is a fresh container, so that
   script re-establishes PATH, git `safe.directory` and the pub cache

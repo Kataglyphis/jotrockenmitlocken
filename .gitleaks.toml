@@ -1,8 +1,8 @@
 # gitleaks config for this repository's secret-scan gate
-# (.github/workflows/dart.yml -> third_party/ContainerHub/linux/scripts/lint-secrets.sh).
+# (.github/workflows/dart.yml -> third_party/ANTfrastructure/linux/scripts/lint-secrets.sh).
 #
 # The hub script prefers the SCANNED tree's own .gitleaks.toml over its own, so
-# this file - not ContainerHub's - is what grades jotrockenmitlocken. It EXTENDS
+# this file - not ANTfrastructure's - is what grades jotrockenmitlocken. It EXTENDS
 # the built-in rule set and only ever ADDS allowlist entries; it never disables a
 # rule and carries no blanket suppression.
 #
@@ -20,15 +20,15 @@ useDefault = true
 
 [[allowlists]]
 description = """
-third_party/ - the ContainerHub and ANThology submodules. The CI checkout uses
+third_party/ - the ANTfrastructure and ANThology submodules. The CI checkout uses
 `submodules: true`, so both working trees sit inside the scan root, but neither
 is this repository's code: each is gated in ITS OWN repo, by its own allowlist,
 against its own triage history. Grading a vendored tree by this repo's rules is
 the same category of error as scanning the wrong tree.
 
 Measured 2026-09-07: scanning third_party/ with the default rules and no
-consumer allowlist reports exactly 2 findings, both ContainerHub's and both
-already justified in ContainerHub/.gitleaks.toml - the ROCm apt signing key's
+consumer allowlist reports exactly 2 findings, both ANTfrastructure's and both
+already justified in ANTfrastructure/.gitleaks.toml - the ROCm apt signing key's
 SHA256 in linux/scripts/01-core/versions.env (a checksum of a public file) and
 the GCC release-signer GPG fingerprints in
 linux/scripts/02-toolchain/build-gcc.sh (public trust anchors). Restating those
@@ -36,7 +36,7 @@ two justifications here would duplicate a list that changes upstream; excluding
 the tree whose owner already grades it does not.
 
 The pattern is deliberately NOT anchored with a bare `^`: lint-secrets.sh has to
-be handed an ABSOLUTE scan root by a consumer (it cd's to the ContainerHub
+be handed an ABSOLUTE scan root by a consumer (it cd's to the ANTfrastructure
 checkout first, so a relative "." would resolve to the submodule), and gitleaks
 then reports absolute paths - `^third_party/` silently matches nothing. Verified
 both ways before committing to this form.

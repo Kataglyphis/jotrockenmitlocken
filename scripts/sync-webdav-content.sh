@@ -27,7 +27,7 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 # shellcheck source=/dev/null
-source "${SCRIPT_DIR}/lib/containerhub.sh"
+source "${SCRIPT_DIR}/lib/antfrastructure.sh"
 
 # A missing secret used to reach argparse as "too few arguments", which names
 # neither the variable nor the fact that it is a repository secret. Worse, an
@@ -41,7 +41,7 @@ source "${SCRIPT_DIR}/lib/containerhub.sh"
 LOCAL_ASSETS_FOLDER="${LOCAL_ASSETS_FOLDER:-assets}"
 SYNC_PYTHON_VERSION="${SYNC_PYTHON_VERSION:-3.14}"
 
-# uv bootstrap and venv creation are ContainerHub's, not this repo's. What was
+# uv bootstrap and venv creation are ANTfrastructure's, not this repo's. What was
 # here was a hand-rolled `command -v uv` guard plus a bare `uv venv`; the
 # upstream library does both properly and is what BeschleunigerBallett already
 # consumes through two thin wrappers of its own. uv_ensure_installed downloads
@@ -52,7 +52,7 @@ SYNC_PYTHON_VERSION="${SYNC_PYTHON_VERSION:-3.14}"
 # call did not have: on the hosted runner setup-uv provides uv but nothing
 # provides 3.14, so `uv venv --python=3.14` was one upstream image change away
 # from a needless red.
-containerhub_source linux/scripts/01-core/python_uv.sh
+antfrastructure_source linux/scripts/01-core/python_uv.sh
 
 # The venv lives at the repo root because `uv run` discovers .venv from the cwd,
 # and download_markdown_files.py is resolved relative to the root too.

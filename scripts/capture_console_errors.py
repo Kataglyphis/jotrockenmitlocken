@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Delegate to the shared ContainerHub Flutter web console test."""
+"""Delegate to the shared ANTfrastructure Flutter web console test."""
 
 import subprocess
 import sys
@@ -11,7 +11,7 @@ def main() -> int:
     shared_script = (
         script_dir.parent
         / "third_party"
-        / "ContainerHub"
+        / "ANTfrastructure"
         / "linux"
         / "webserver"
         / "scripts"
