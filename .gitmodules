@@ -2,7 +2,7 @@
 	path = third_party/ANThology
 	url = https://github.com/Kataglyphis/ANThology.git
 	branch = main
-[submodule "third_party/ContainerHub"]
-	path = third_party/ContainerHub
-	url = https://github.com/Kataglyphis/ContainerHub.git
+[submodule "third_party/ANTfrastructure"]
+	path = third_party/ANTfrastructure
+	url = https://github.com/Kataglyphis/ANTfrastructure.git
 	branch = main

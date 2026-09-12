@@ -23,9 +23,9 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 # The submodule path and the not-found guard come from the canonical bootstrap
-# (a verbatim copy of upstream's shared/linux/templates/containerhub.sh).
+# (a verbatim copy of upstream's shared/linux/templates/antfrastructure.sh).
 # shellcheck source=/dev/null
-source "${SCRIPT_DIR}/lib/containerhub.sh"
+source "${SCRIPT_DIR}/lib/antfrastructure.sh"
 
 FLUTTER_DIR="${FLUTTER_DIR:-/opt/flutter}"
 

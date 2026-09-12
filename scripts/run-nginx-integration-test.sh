@@ -12,11 +12,11 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 # The submodule path and the not-found guard come from the canonical bootstrap
-# (a verbatim copy of upstream's shared/linux/templates/containerhub.sh), so this
-# script spells out neither. containerhub_path also names the "it moved upstream"
+# (a verbatim copy of upstream's shared/linux/templates/antfrastructure.sh), so this
+# script spells out neither. antfrastructure_path also names the "it moved upstream"
 # case, which the local guard did not.
 # shellcheck source=/dev/null
-source "${SCRIPT_DIR}/lib/containerhub.sh"
+source "${SCRIPT_DIR}/lib/antfrastructure.sh"
 
 PROJECT_DIR="$KATAGLYPHIS_REPO_ROOT"
 BUILD_DIR="$PROJECT_DIR/build/web"
@@ -26,10 +26,10 @@ if [ ! -f "$BUILD_DIR/index.html" ]; then
   cd "$PROJECT_DIR" && flutter build web --release --wasm --no-tree-shake-icons
 fi
 
-# ContainerHub owns the nginx config under test. Resolved through
-# containerhub_path so a missing submodule fails by name instead of silently
+# ANTfrastructure owns the nginx config under test. Resolved through
+# antfrastructure_path so a missing submodule fails by name instead of silently
 # serving nginx's own default config and grading nothing this repo ships.
-SHARED_NGINX_CONF="$(containerhub_path linux/webserver/templates/flutter-nginx-local.conf)"
+SHARED_NGINX_CONF="$(antfrastructure_path linux/webserver/templates/flutter-nginx-local.conf)"
 
 # --- teardown ----------------------------------------------------------------
 # One trap, set BEFORE the container exists, so an interrupt or a failure at any

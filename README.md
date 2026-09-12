@@ -265,7 +265,7 @@ bash scripts/renovate-local.sh --apply            # move the gitlinks
 ```
 
 Rationale and the full workflow:
-[`third_party/ContainerHub/docs/dependency-updates.md`](third_party/ContainerHub/docs/dependency-updates.md)
+[`third_party/ANTfrastructure/docs/dependency-updates.md`](third_party/ANTfrastructure/docs/dependency-updates.md)
 
 <!-- ROADMAP -->
 ## Roadmap

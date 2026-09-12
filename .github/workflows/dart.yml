@@ -14,9 +14,9 @@ on:
 
 jobs:
   # ---------------------------------------------------------------------------
-  # Lint gates, entirely ContainerHub's: shellcheck over this repo's bash,
+  # Lint gates, entirely ANTfrastructure's: shellcheck over this repo's bash,
   # actionlint over its workflows, gitleaks over its working tree - all three
-  # using the pinned, SHA-verified binaries ContainerHub bootstraps rather than a
+  # using the pinned, SHA-verified binaries ANTfrastructure bootstraps rather than a
   # second set installed here.
   #
   # Cheap and first-to-finish (no image pull, no Flutter build), and it covers
@@ -33,7 +33,7 @@ jobs:
     name: 🧹 shell + workflow + secret lint
     runs-on: ubuntu-26.04
     steps:
-      # ContainerHub is the only submodule these gates read, and `submodules:
+      # ANTfrastructure is the only submodule these gates read, and `submodules:
       # true` is top-level only - ANThology comes along because it is also
       # top-level, which is fine and costs seconds. fetch-depth 1: nothing here
       # looks at history.
@@ -44,11 +44,11 @@ jobs:
 
       # One script, not three inline `run:` blocks. The `git ls-files` file-list
       # construction (a bare `**` does not recurse without `shopt -s globstar`),
-      # the vacuity guard and the ContainerHub-pin preconditions used to live
+      # the vacuity guard and the ANTfrastructure-pin preconditions used to live
       # here in YAML, which meant the gate that blocks this deploy could not be
       # reproduced locally at all. Both places now run
       # `bash scripts/run-lint-gates.sh`, which is now a thin wrapper over
-      # ContainerHub's shared aggregator (linux/scripts/run-lint-gates.sh) that
+      # ANTfrastructure's shared aggregator (linux/scripts/run-lint-gates.sh) that
       # three consumers share; the reasoning for each of the three gates lives
       # there, and the wrapper carries only this repo's exclude set.
       #
@@ -66,7 +66,7 @@ jobs:
 
     # NO `image:` ANYWHERE IN THIS JOB, and no CONTAINER_IMAGE env var either.
     # The tag used to be written here as a literal and passed to all seven
-    # container steps; it now comes from ContainerHub's own single source of
+    # container steps; it now comes from ANTfrastructure's own single source of
     # truth - linux/scripts/01-core/versions.env composes
     # `${IMAGE_REGISTRY_PREFIX}:${CI_IMAGE_LINUX_TAG}`, the four container
     # composite actions carry that value as their `image` input DEFAULT, and
@@ -76,13 +76,13 @@ jobs:
     # Omission is therefore the whole mechanism: a family-wide tag change lands
     # in one file in one repo and this lane follows without a commit.
     steps:
-      # ContainerHub's shared prologue: reclaim disk, check out (submodules:
-      # ANThology is a path dependency, ContainerHub owns the shared gates),
+      # ANTfrastructure's shared prologue: reclaim disk, check out (submodules:
+      # ANThology is a path dependency, ANTfrastructure owns the shared gates),
       # pull the image with retries. No registry credentials on purpose: this
       # repo has no GHCR_PAT, the action skips login on empty credentials, and
       # the image is public, so the anonymous pull works.
       - name: 🚚 Prepare CI host
-        uses: Kataglyphis/ContainerHub/.github/actions/prepare-linux-ci-host@main
+        uses: Kataglyphis/ANTfrastructure/.github/actions/prepare-linux-ci-host@main
         with:
           fetch-depth: '0'
           submodules: recursive
@@ -116,12 +116,12 @@ jobs:
       # state (PATH, git safe.directory, pub cache) every time.
 
       # pub get (root + ANThology), format, analyze and test were four inline
-      # steps here until they were folded into ContainerHub's shared gate. The
+      # steps here until they were folded into ANTfrastructure's shared gate. The
       # inline `dart format .` was the reason to move: a recursive walk cannot
       # tell vendored code from ours, so it format-checked third_party/ANThology
       # (a separate repo, 86 .dart files).
       - name: Dart checks (format, analyze, test)
-        uses: Kataglyphis/ContainerHub/.github/actions/run-in-linux-container@main
+        uses: Kataglyphis/ANTfrastructure/.github/actions/run-in-linux-container@main
         with:
           extra-args: --platform "linux/amd64"
           script: bash /workspace/scripts/ci-container-steps.sh dart-checks
@@ -133,7 +133,7 @@ jobs:
       # not one.
       - name: "Build Web App (WASM, main)"
         if: github.ref == 'refs/heads/main'
-        uses: Kataglyphis/ContainerHub/.github/actions/run-in-linux-container@main
+        uses: Kataglyphis/ANTfrastructure/.github/actions/run-in-linux-container@main
         with:
           extra-args: --platform "linux/amd64"
           script: bash /workspace/scripts/ci-container-steps.sh build-web-wasm
@@ -141,13 +141,13 @@ jobs:
       - name: "Build Web App (WASM, develop)"
         if: github.ref == 'refs/heads/develop'
         id: build-wasm
-        uses: Kataglyphis/ContainerHub/.github/actions/run-in-linux-container@main
+        uses: Kataglyphis/ANTfrastructure/.github/actions/run-in-linux-container@main
         with:
           extra-args: --platform "linux/amd64"
           script: bash /workspace/scripts/ci-container-steps.sh build-web-wasm
 
       - name: 🔍 Integration smoke test
-        uses: Kataglyphis/ContainerHub/.github/actions/run-in-linux-container@main
+        uses: Kataglyphis/ANTfrastructure/.github/actions/run-in-linux-container@main
         with:
           extra-args: --platform "linux/amd64"
           script: bash /workspace/scripts/ci-container-steps.sh smoke-test
@@ -172,7 +172,7 @@ jobs:
 
       - name: "Build Web App with canavaskit"
         if: github.ref == 'refs/heads/develop'
-        uses: Kataglyphis/ContainerHub/.github/actions/run-in-linux-container@main
+        uses: Kataglyphis/ANTfrastructure/.github/actions/run-in-linux-container@main
         with:
           extra-args: --platform "linux/amd64"
           script: bash /workspace/scripts/ci-container-steps.sh build-web-canvaskit
@@ -187,7 +187,7 @@ jobs:
           local-dir: "./build/web/"
 
       - name: Build docs
-        uses: Kataglyphis/ContainerHub/.github/actions/run-in-linux-container@main
+        uses: Kataglyphis/ANTfrastructure/.github/actions/run-in-linux-container@main
         with:
           extra-args: --platform "linux/amd64"
           script: bash /workspace/scripts/ci-container-steps.sh dart-doc

@@ -1,20 +1,20 @@
 # .github/workflows/submodule-pins.yml
 # This repository has two submodules - third_party/ANThology (a path dependency
-# pubspec.yaml compiles against) and third_party/ContainerHub (which owns every
+# pubspec.yaml compiles against) and third_party/ANTfrastructure (which owns every
 # shared gate) - and until this workflow existed, nothing asserted either sat at
 # its recorded gitlink. A drifted submodule means the deploy job builds and ships
 # something other than what is committed, and `git submodule status` marks it
 # with a '+' that is easy to miss in a wall of CI output.
 #
-# The suite is ContainerHub's, run from the submodule rather than copied here:
-# third_party/ContainerHub/shared/windows/tests/Submodule.Pins.Tests.ps1. It is
+# The suite is ANTfrastructure's, run from the submodule rather than copied here:
+# third_party/ANTfrastructure/shared/windows/tests/Submodule.Pins.Tests.ps1. It is
 # repo-agnostic - it takes the superproject root as a parameter and asserts, for
 # EVERY configured submodule, that it is checked out, sits at its recorded
 # commit, and is pinned to a commit still reachable from its remote. Nothing here
-# has to name ANThology or ContainerHub for them to be covered.
+# has to name ANThology or ANTfrastructure for them to be covered.
 #
 # PESTER VERSION - measured, not assumed (2026-09-07, PowerShell 7.6.5, suite at
-# ContainerHub 3721d91b, this repo as the -RepoRoot). run-pester-suite runs
+# ANTfrastructure 3721d91b, this repo as the -RepoRoot). run-pester-suite runs
 # `shell: pwsh`, which IS PowerShell 7, so the suite's `#requires -Version 7.0`
 # is satisfied on every version below; what differs is whether the ACTION's own
 # invocation survives:
@@ -49,7 +49,7 @@
 # behavioural no-op; the point is that the alias moves on GitHub's schedule and
 # would swap the OS image under a green run with no commit to blame. It is also
 # the label BeschleunigerBallett, OmniAccelerANT and OrchestrANT already use, so
-# this was the family's last unpinned Windows runner outside ContainerHub.
+# this was the family's last unpinned Windows runner outside ANTfrastructure.
 #
 # It is NOT containerised, and should not be: the job is `git` metadata plus
 # pwsh 7, both preinstalled on the runner, so :winamd64 would add a multi-GB
@@ -89,7 +89,7 @@ jobs:
       # only pass a path, so the root comes through the environment. It would
       # fall back to GITHUB_WORKSPACE on its own; naming it here keeps the wiring
       # visible instead of implied.
-      CONTAINERHUB_PIN_CHECK_REPO_ROOT: ${{ github.workspace }}
+      ANTFRASTRUCTURE_PIN_CHECK_REPO_ROOT: ${{ github.workspace }}
     steps:
       - uses: actions/checkout@v7.0.1
         with:
@@ -100,14 +100,14 @@ jobs:
           # reachability check exercise its shallow-clone escalation.
           submodules: true
 
-      # @main, like every other ContainerHub action in this repo: the upstream is
+      # @main, like every other ANTfrastructure action in this repo: the upstream is
       # pushed before the consumer change that needs it. The suite PATH, by
       # contrast, is read out of the checked-out submodule, so it moves only when
-      # the ContainerHub gitlink is bumped.
+      # the ANTfrastructure gitlink is bumped.
       - name: Submodule pins sit at their recorded, restorable commits
-        uses: Kataglyphis/ContainerHub/.github/actions/run-pester-suite@main
+        uses: Kataglyphis/ANTfrastructure/.github/actions/run-pester-suite@main
         with:
-          path: third_party/ContainerHub/shared/windows/tests/Submodule.Pins.Tests.ps1
+          path: third_party/ANTfrastructure/shared/windows/tests/Submodule.Pins.Tests.ps1
           # Pinned, not defaulted - see the PESTER VERSION note in the header
           # for the three versions this was measured against and what 5.x and
           # 6.x actually do to the action's invocation.
