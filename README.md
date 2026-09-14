@@ -23,7 +23,7 @@ The flutter/dart source code stays
 Visit [jonasheinle.de](https://jonasheinle.de/) for the full experience of my personal web blog. Cheers! :beers: </br>
 Visit my repo [anthology](https://github.com/Kataglyphis/ANThology) if you are interested 
 in Flutter/Dart development in general. 
-All components in this repo are reusable for any target available (Linux/Windows/Android/Web).  
+Its reusable components live in that package, for any target available (Linux/Windows/Android/Web).  
 
 🚀 Markdown is great 🚀:  
 If you also love the lightweight markdown approach you might be interested in 
@@ -38,15 +38,6 @@ my [DocumANTation](https://github.com/Kataglyphis/DocumANTation)-project that ev
 [![Twitter](https://img.shields.io/twitter/follow/Cataglyphis_?style=social)](https://twitter.com/Cataglyphis_)
 [![YouTube](https://img.shields.io/youtube/channel/subscribers/UC3LZiH4sZzzaVBCUV8knYeg?style=social)](https://www.youtube.com/channel/UC3LZiH4sZzzaVBCUV8knYeg)
 
-<p align="center">
-  <a href="#key-features">Key Features</a> •
-  <a href="#how-to-use">How To Use</a> •
-  <a href="#download">Download</a> •
-  <a href="#credits">Credits</a> •
-  <a href="#related">Related</a> •
-  <a href="#license">License</a>
-</p>
-
 ## Table of Contents
 
 - [About The Project](#about-the-project)
@@ -58,15 +49,12 @@ my [DocumANTation](https://github.com/Kataglyphis/DocumANTation)-project that ev
   - [Key Features](#key-features)
 - [Getting Started](#getting-started)
   - [Run Web Server locally for Debugging](#run-web-server-locally-for-debugging)
-  - [Prerequisites](#prerequisites)
   - [Installation](#installation)
   - [Dependency upgrades](#dependency-upgrades)
-- [Roadmap](#roadmap)
 - [Contributing](#contributing)
 - [License](#license)
 - [Known Issues](#known-issues)
 - [Contact](#contact)
-- [Acknowledgements](#acknowledgements)
 - [Literature](#literature)
 
 <!-- ABOUT THE PROJECT -->
@@ -87,7 +75,7 @@ But why not just using a CMS? Here are my reasons:
   * I developed my own [WebDavClient](https://github.com/Kataglyphis/WebDavClient)
     that allows me to keep the content (.md files, images, videos, .csv, etc.) private while
     the source code stays **Open Source**. You might also be interested in **keeping your data private**.
-    Have a look into my [Build Pipeline File](.github\workflows\dart.yml) for more 
+    Have a look into my [Build Pipeline File](.github/workflows/dart.yml) for more 
     information  
 
 
@@ -114,7 +102,7 @@ The `assets` directory houses all files you want to include within your applicat
 ### Publish a new blog post
 If you want to add a new blog bost do the following steps:
 
-* Open the file `assets\settings\blog_settings.json`
+* Open the file `assets/settings/blog_settings.json`
 * Append an entry like the following:
 ```json
 {
@@ -153,7 +141,7 @@ If you want to add a new blog bost do the following steps:
 
 ### Publishing posts over a book
 
-* Open the file `assets\settings\my_two_cents_settings.json`
+* Open the file `assets/settings/my_two_cents_settings.json`
 * Add an entry like the following
 ```json
 {
@@ -181,22 +169,15 @@ If you want to add a new blog bost do the following steps:
 		]
 	},
 ```
-* Make sure that the mediaTitle you add here is availabale in the `assets\data\Buecherliste_gelesen.csv` file.
+* Make sure that the mediaTitle you add here is availabale in the `assets/data/Buecherliste_gelesen.csv` file.
 ### Localization
 
 This project generates localized messages based on arb files found in
-the `lib/src/localization` directory.
+the `lib/l10n` directory.
 
 To support additional languages, please visit the tutorial on
 [Internationalizing Flutter
 apps](https://flutter.dev/docs/development/accessibility-and-localization/internationalization)
-
-<!-- <h1 align="center">
-  <br>
-  <a href="https://jonasheinle.de"><img src="images/Screenshot1.png" alt="VulkanEngine" width="400"></a>
-  <a href="https://jonasheinle.de"><img src="images/Screenshot2.png" alt="VulkanEngine" width="400"></a>
-  <a href="https://jonasheinle.de"><img src="images/Screenshot3.png" alt="VulkanEngine" width="700"></a>
-</h1> -->
 
 <!-- [![Kataglyphis Engine][product-screenshot1]](https://jonasheinle.de)
 [![Kataglyphis Engine][product-screenshot2]](https://jonasheinle.de)
@@ -241,8 +222,6 @@ samples, guidance on mobile development, and a full API reference.
 flutter run -d web-server --profile --web-port 8080 --web-hostname 0.0.0.0
 ```
 
-### Prerequisites
-
 ### Installation
 
 1. Clone the repo
@@ -252,11 +231,7 @@ flutter run -d web-server --profile --web-port 8080 --web-hostname 0.0.0.0
 
 ### Dependency upgrades
 
-Renovate, run as a local CLI over the two submodule gitlinks in `.gitmodules`.
-Move those through this rather than by hand. It does not cover `pubspec.yaml`;
-`.github/dependabot.yml` is still the live path for pub. It needs node, so on
-Windows run it from WSL; the script picks the git that owns the working tree for
-`--apply` itself, and refuses before moving anything if it cannot reach it.
+Renovate as a local CLI over the two submodule gitlinks in `.gitmodules`:
 
 ```bash
 bash scripts/renovate-local.sh                    # report what is behind
@@ -266,11 +241,6 @@ bash scripts/renovate-local.sh --apply            # move the gitlinks
 
 Rationale and the full workflow:
 [`third_party/ANTfrastructure/docs/dependency-updates.md`](third_party/ANTfrastructure/docs/dependency-updates.md)
-
-<!-- ROADMAP -->
-## Roadmap
-Upcoming :)
-<!-- See the [open issues](https://github.com/othneildrew/Best-README-Template/issues) for a list of proposed features (and known issues). -->
 
 <!-- CONTRIBUTING -->
 ## Contributing
@@ -301,11 +271,8 @@ blockquote.
 
 Jonas Heinle - [@Cataglyphis_](https://twitter.com/Cataglyphis_) - jonasheinle@googlemail.com
 
-Project Link: [https://github.com/Kataglyphis/jonasheinle.de](https://github.com/Kataglyphis/jotrockenmitlocken)
+Project Link: [https://github.com/Kataglyphis/jotrockenmitlocken](https://github.com/Kataglyphis/jotrockenmitlocken)
 
-
-<!-- ACKNOWLEDGEMENTS -->
-## Acknowledgements
 
 ## Literature 
 
