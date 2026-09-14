@@ -24,6 +24,10 @@
 #   SYNC_PYTHON_VERSION  interpreter uv provisions for the venv (default: 3.14)
 set -euo pipefail
 
+# The WebDavClient commit the deploy installs. That repo has no tags yet, so
+# bump by pasting `git ls-remote https://github.com/Kataglyphis/WebDavClient HEAD`.
+WEBDAVCLIENT_REF="4f3f116d9ce7d1e223894513b4dc7a90b5085a9f"
+
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 # shellcheck source=/dev/null
@@ -85,7 +89,7 @@ if [ ! -x "$VENV_PYTHON" ]; then
   exit 1
 fi
 
-uv pip install --python "$VENV_PYTHON" git+https://github.com/Kataglyphis/WebDavClient
+uv pip install --python "$VENV_PYTHON" git+https://github.com/Kataglyphis/WebDavClient@${WEBDAVCLIENT_REF}
 uv run --python "$VENV_PYTHON" python scripts/download_markdown_files.py \
   "${WEBDAV_HOSTNAME}" \
   "${WEBDAV_USERNAME}" \
