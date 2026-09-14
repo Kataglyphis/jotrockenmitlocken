@@ -8,16 +8,19 @@ name: Deploy website with all dependencies
 env:
   LOCAL_ASSETS_FOLDER: "assets"
 
+permissions:
+  contents: read
+
 on:
   push:
     branches: ["main", "develop"]
 
 jobs:
   # ---------------------------------------------------------------------------
-  # Lint gates, entirely ANTfrastructure's: shellcheck over this repo's bash,
-  # actionlint over its workflows, gitleaks over its working tree - all three
-  # using the pinned, SHA-verified binaries ANTfrastructure bootstraps rather than a
-  # second set installed here.
+  # Lint gates, entirely ANTfrastructure's. Which gates run, and why each one,
+  # is the header of third_party/ANTfrastructure/linux/scripts/run-lint-gates.sh;
+  # they use the pinned, SHA-verified binaries ANTfrastructure bootstraps rather
+  # than a second set installed here.
   #
   # Cheap and first-to-finish (no image pull, no Flutter build), and it covers
   # classes the deploy job cannot: bash only reports a quoting or
@@ -30,8 +33,9 @@ jobs:
   # in front of it can only report a problem the world has already been served.
   # ---------------------------------------------------------------------------
   lint:
-    name: 🧹 shell + workflow + secret lint
+    name: 🧹 lint gates
     runs-on: ubuntu-26.04
+    timeout-minutes: 10
     steps:
       # ANTfrastructure is the only submodule these gates read, and `submodules:
       # true` is top-level only - ANThology comes along because it is also
@@ -46,25 +50,25 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v9.0.0
 
-      # One script, not three inline `run:` blocks. The `git ls-files` file-list
+      # One script, not inline `run:` blocks. The `git ls-files` file-list
       # construction (a bare `**` does not recurse without `shopt -s globstar`),
       # the vacuity guard and the ANTfrastructure-pin preconditions used to live
       # here in YAML, which meant the gate that blocks this deploy could not be
       # reproduced locally at all. Both places now run
-      # `bash scripts/run-lint-gates.sh`, which is now a thin wrapper over
-      # ANTfrastructure's shared aggregator (linux/scripts/run-lint-gates.sh) that
-      # three consumers share; the reasoning for each of the three gates lives
-      # there, and the wrapper carries only this repo's exclude set.
+      # `bash scripts/run-lint-gates.sh`, a thin wrapper over ANTfrastructure's
+      # shared aggregator (linux/scripts/run-lint-gates.sh); the wrapper carries
+      # only this repo's exclude set.
       #
       # No `shell: bash` override: bash is the default on ubuntu runners and it
       # already runs with -e -o pipefail, so the script's exit status is the
-      # step's - the same failure signal the three steps had.
-      - name: Lint gates (shellcheck + actionlint + gitleaks)
+      # step's - the same failure signal the inline steps had.
+      - name: Lint gates
         run: bash scripts/run-lint-gates.sh
 
   build:
     name: 🚀 Deploy website on push
     runs-on: ubuntu-26.04
+    timeout-minutes: 60
     # The deploy job is gated on the lint job: see the block above `lint:`.
     needs: lint
 
@@ -156,9 +160,12 @@ jobs:
           extra-args: --platform "linux/amd64"
           script: bash /workspace/scripts/ci-container-steps.sh smoke-test
 
+      # The four FTP publishes go through ANTfrastructure's deploy-over-ftp
+      # action: one SHA-pinned upstream, the empty-tree and permission guards,
+      # and no tolerated failure (third_party/ANTfrastructure/docs/ftp-deploys.md).
       - name: 📂 Sync files to main domain
         if: github.ref == 'refs/heads/main'
-        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
+        uses: Kataglyphis/ANTfrastructure/.github/actions/deploy-over-ftp@main
         with:
           server: ${{ secrets.SERVER }}
           username: ${{ secrets.USERNAME }}
@@ -166,8 +173,8 @@ jobs:
           local-dir: "./build/web/"
 
       - name: 📂 Sync files to dev wasm domain
-        if: github.ref == 'refs/heads/develop' #&& steps.build-wasm.outputs.should_run == 'true'
-        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
+        if: github.ref == 'refs/heads/develop'
+        uses: Kataglyphis/ANTfrastructure/.github/actions/deploy-over-ftp@main
         with:
           server: ${{ secrets.SERVER }}
           username: ${{ secrets.DEV_WASM_USERNAME }}
@@ -183,7 +190,7 @@ jobs:
 
       - name: 📂 Sync files to dev domain
         if: github.ref == 'refs/heads/develop'
-        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
+        uses: Kataglyphis/ANTfrastructure/.github/actions/deploy-over-ftp@main
         with:
           server: ${{ secrets.SERVER }}
           username: ${{ secrets.DEV_USERNAME }}
@@ -197,7 +204,7 @@ jobs:
           script: bash /workspace/scripts/ci-container-steps.sh dart-doc
 
       - name: 📂 Sync files to doc domain
-        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
+        uses: Kataglyphis/ANTfrastructure/.github/actions/deploy-over-ftp@main
         with:
           server: ${{ secrets.DOC_WEBSITE_SERVER }}
           username: ${{ secrets.DOC_WEBSITE_USER }}
