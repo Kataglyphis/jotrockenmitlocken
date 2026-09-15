@@ -15,6 +15,16 @@
 # moves into the workspace so the packages dart-checks fetches are still where
 # package_config.json says they are when the later phases resolve it.
 #
+# The prologue itself is NOT this repo's any more. It was a local copy of a
+# routine OmniAccelerANT also carried, the two had drifted, and both carried
+# work the image already does (a --global safe.directory for /opt/flutter that
+# setup-package-image.sh already registers at --system level). ANTfrastructure
+# owns it now as flutter_lane_prepare_env / flutter_build_web
+# (linux/scripts/05-frameworks/flutter/lane-prologue.sh,
+# third_party/ANTfrastructure/docs/shared-script-libraries.md
+# #05-frameworksflutterlane-prologuesh), and the readiness poll below is its
+# wait_for_http (01-core/http-readiness.sh).
+#
 # Env:
 #   FLUTTER_DIR  Flutter SDK baked into the image (default: /opt/flutter)
 #   PUB_CACHE    pub cache dir (default: <repo>/.pub-cache, gitignored)
@@ -27,33 +37,18 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 # shellcheck source=/dev/null
 source "${SCRIPT_DIR}/lib/antfrastructure.sh"
 
-FLUTTER_DIR="${FLUTTER_DIR:-/opt/flutter}"
+antfrastructure_source linux/scripts/05-frameworks/flutter/lane-prologue.sh
+antfrastructure_source linux/scripts/01-core/http-readiness.sh
 
 usage() {
   echo "Usage: $0 <dart-checks|build-web-wasm|smoke-test|build-web-canvaskit|dart-doc>" >&2
 }
 
 container_prologue() {
-  # The image owns the Flutter SDK; nothing here installs one.
-  if [ ! -x "${FLUTTER_DIR}/bin/flutter" ]; then
-    echo "Error: no Flutter SDK at ${FLUTTER_DIR}." >&2
-    echo "       The container image bakes it in; check FLUTTER_DIR and the image tag." >&2
-    echo "       (Outside the container, point FLUTTER_DIR at your SDK.)" >&2
-    exit 1
-  fi
-  export PATH="${FLUTTER_DIR}/bin:${PATH}"
-
-  # The bind-mounted workspace and the SDK belong to another uid than the
-  # container user; without safe.directory git refuses with "dubious
-  # ownership", which kills the format gate's `git ls-files` and flutter itself.
-  git config --global --add safe.directory "${KATAGLYPHIS_REPO_ROOT}"
-  git config --global --add safe.directory "${FLUTTER_DIR}"
-
-  export PUB_CACHE="${PUB_CACHE:-${KATAGLYPHIS_REPO_ROOT}/.pub-cache}"
-
-  # The image is unpinned (latest-cross); say which Flutter this run got.
-  flutter --version
-
+  # PATH, the workspace safe.directory, PUB_CACHE and the `flutter --version`
+  # measurement are all flutter_lane_prepare_env's; it RETURNS non-zero rather
+  # than exiting, so the exit is spelled here.
+  flutter_lane_prepare_env "${FLUTTER_DIR:-/opt/flutter}" || exit 1
   cd "${KATAGLYPHIS_REPO_ROOT}"
 }
 
@@ -64,7 +59,7 @@ phase_dart_checks() {
 phase_build_web_wasm() {
   # Per-user config, so per-container: enable web in the container that builds.
   flutter config --enable-web
-  flutter build web --release --wasm --no-tree-shake-icons
+  flutter_build_web --wasm --no-tree-shake-icons
 }
 
 phase_build_web_canvaskit() {
@@ -73,7 +68,7 @@ phase_build_web_canvaskit() {
   # dev domain; drop the WASM output so the two bundles never mix. `rm -r`
   # without -f: a missing build/web means the WASM build never ran - fail loud.
   rm -r "${KATAGLYPHIS_REPO_ROOT}/build/web/"
-  flutter build web --release --no-tree-shake-icons
+  flutter_build_web --no-tree-shake-icons
 }
 
 SERVER_PID=""
@@ -93,20 +88,9 @@ phase_smoke_test() {
   trap stop_http_server EXIT
   cd "${KATAGLYPHIS_REPO_ROOT}"
 
-  # Poll instead of the old `sleep 1`: probes failing while the server starts
-  # are the expected case; a server that never comes up fails by name below.
-  local ready=""
-  for _ in $(seq 1 50); do
-    if curl -fs -o /dev/null "${base_url}/"; then
-      ready=1
-      break
-    fi
-    sleep 0.2
-  done
-  if [ -z "${ready}" ]; then
-    echo "Error: http.server (pid ${SERVER_PID}) never served ${base_url} within 10s." >&2
-    exit 1
-  fi
+  # Probes failing while the server starts are the expected case; a server that
+  # never comes up is named by wait_for_http, which returns rather than exits.
+  wait_for_http "${base_url}/" "http.server (pid ${SERVER_PID})" || exit 1
 
   bash "${KATAGLYPHIS_REPO_ROOT}/scripts/integration-smoke-test.sh" "${base_url}"
 }
