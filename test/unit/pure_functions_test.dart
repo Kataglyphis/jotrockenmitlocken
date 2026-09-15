@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:anthology/Pages/AboutMePage/Widgets/perfect_day_chart.dart';
 import 'package:anthology/Layout/Widgets/Scrolling/build_silvers.dart';
-import 'package:anthology/Media/DataTable/jotrockenmitlocken_table.dart';
+import 'package:anthology/Media/DataTable/anthology_table.dart';
 import 'package:anthology/Media/DataTable/table_data.dart';
 import 'package:anthology/Media/DataTable/datacell_content_strategies.dart';
 
-// Minimal TableData implementation for testing JotrockenmitlockenTable sorting.
+// Minimal TableData implementation for testing AnthologyTable sorting.
 class _TestTableData extends TableData {
   final List<String> _cells;
   _TestTableData(this._cells);
@@ -140,14 +140,14 @@ void main() {
   });
 
   // ---------------------------------------------------------------------------
-  // _compareString (private method on JotrockenmitlockenTableState)
+  // _compareString (private method on AnthologyTableState)
   //
   // NOTE: This method should be extracted to a standalone pure function for
   // direct testability. Currently it lives as a private method and can only be
   // exercised indirectly via widget construction. The widget tests below
   // validate the sorting behavior end-to-end.
   // ---------------------------------------------------------------------------
-  group('_compareString via JotrockenmitlockenTable widget', () {
+  group('_compareString via AnthologyTable widget', () {
     List<DataCellContentStrategies> textStrategy(int count) =>
         List<DataCellContentStrategies>.filled(
           count,
@@ -165,7 +165,7 @@ void main() {
 
       await tester.pumpWidget(
         _wrapWithMaterial(
-          JotrockenmitlockenTable<_TestTableData>(
+          AnthologyTable<_TestTableData>(
             dataCategories: ['Name'],
             title: 'Test Table',
             description: 'Sorting test',
@@ -200,7 +200,7 @@ void main() {
 
       await tester.pumpWidget(
         _wrapWithMaterial(
-          JotrockenmitlockenTable<_TestTableData>(
+          AnthologyTable<_TestTableData>(
             dataCategories: ['Name'],
             title: 'Test Table',
             description: 'Sorting test',
@@ -232,7 +232,7 @@ void main() {
 
       await tester.pumpWidget(
         _wrapWithMaterial(
-          JotrockenmitlockenTable<_TestTableData>(
+          AnthologyTable<_TestTableData>(
             dataCategories: ['Name'],
             title: 'Test Table',
             description: 'Sorting test',
@@ -261,7 +261,7 @@ void main() {
 
       await tester.pumpWidget(
         _wrapWithMaterial(
-          JotrockenmitlockenTable<_TestTableData>(
+          AnthologyTable<_TestTableData>(
             dataCategories: ['Name'],
             title: 'Test Table',
             description: 'Sorting test',
@@ -297,7 +297,7 @@ void main() {
 
       await tester.pumpWidget(
         _wrapWithMaterial(
-          JotrockenmitlockenTable<_TestTableData>(
+          AnthologyTable<_TestTableData>(
             dataCategories: ['Name'],
             title: 'Test Table',
             description: 'Sorting test',
