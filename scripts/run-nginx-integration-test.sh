@@ -18,6 +18,15 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 # shellcheck source=/dev/null
 source "${SCRIPT_DIR}/lib/antfrastructure.sh"
 
+# The readiness poll below is upstream's wait_for_http, not a fourth copy of the
+# same loop (01-core/http-readiness.sh,
+# third_party/ANTfrastructure/docs/shared-script-libraries.md
+# #01-corehttp-readinesssh). It RETURNS non-zero
+# instead of exiting, which is exactly what this caller needs: the container
+# logs below are the diagnosis, and a helper that called `exit` would take them
+# away.
+antfrastructure_source linux/scripts/01-core/http-readiness.sh
+
 PROJECT_DIR="$KATAGLYPHIS_REPO_ROOT"
 BUILD_DIR="$PROJECT_DIR/build/web"
 
@@ -69,23 +78,13 @@ if ! CONTAINER=$(docker run -d --rm \
 fi
 
 # --- readiness ---------------------------------------------------------------
-# Poll with an explicit `ready` flag and a hard failure. The old loop had
-# neither: when the server never came up it simply fell out of the loop and ran
-# the smoke test anyway, which then failed somewhere downstream with a message
-# about the page instead of about the server. Same 10s budget, same shape as
-# the poll in scripts/ci-container-steps.sh.
+# The 10s budget (50 attempts at 0.2s) is wait_for_http's default, and a server
+# that never comes up is named by it rather than failing somewhere downstream
+# with a message about the page. The `|| { ... }` block is what this caller adds
+# on top: the container's own logs, which is where the reason actually is.
 BASE_URL="http://localhost:8080"
 echo "Waiting for server..."
-READY=""
-for _ in $(seq 1 50); do
-  if curl -fs -o /dev/null "${BASE_URL}/"; then
-    READY=1
-    break
-  fi
-  sleep 0.2
-done
-if [ -z "$READY" ]; then
-  echo "Error: nginx (container ${CONTAINER}) never served ${BASE_URL} within 10s." >&2
+if ! wait_for_http "${BASE_URL}/" "nginx (container ${CONTAINER})"; then
   echo "       Container logs:" >&2
   # Reported, never `|| true`: if the logs cannot be read that is itself part of
   # the diagnosis, and the exit status below is this script's regardless.

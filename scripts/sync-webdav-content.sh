@@ -2,20 +2,24 @@
 # Pull the site's markdown content off the WebDAV server into the assets folder,
 # which is what the Flutter build then bundles.
 #
-# This is the whole content-sync step: environment bootstrap AND download. The
-# download half was already a script (scripts/download_markdown_files.py); the
-# bootstrap around it - venv, python version, the WebDavClient install - lived
-# only in .github/workflows/dart.yml, so the step could not be reproduced with
-# one command outside CI. It can now:
-#
 #     WEBDAV_HOSTNAME=... WEBDAV_USERNAME=... WEBDAV_PASSWORD=... \
 #     WEBDAV_REMOTE_BASE_PATH=... bash scripts/sync-webdav-content.sh
 #
-# Credentials come through the ENVIRONMENT, not argv. In the workflow that is
-# the difference between `${{ secrets.WEBDAV_PASSWORD }}` being pasted into a
-# shell command line - where a password containing a quote or `$(...)` is a
-# quoting bug at best - and being handed to the process as data. The python
-# entry point keeps its positional interface; only this boundary changed.
+# This is the whole content-sync step, and NONE of it is this repo's code any
+# more. It used to be: a local scripts/download_markdown_files.py, and a local
+# WEBDAVCLIENT_REF pasted into a `uv pip install git+...` line here. Both are
+# gone. ANTfrastructure ships the downloader (01-core/webdav-download.sh and its
+# 01-core/download-webdav-files.py,
+# third_party/ANTfrastructure/docs/shared-script-libraries.md
+# #01-corewebdav-downloadsh) and owns the pin in 01-core/versions.env, so
+# "which WebDavClient did this run use" has one answer for the whole fleet
+# instead of one per consumer. What is left here is this repo's own policy: WHICH
+# secrets, WHICH interpreter, and WHERE the tree lands.
+#
+# Credentials come through the ENVIRONMENT, not argv, all the way down. In the
+# workflow that is the difference between `${{ secrets.WEBDAV_PASSWORD }}` being
+# pasted into a shell command line - where a password containing a quote or
+# `$(...)` is a quoting bug at best - and being handed to the process as data.
 #
 # Env:
 #   WEBDAV_HOSTNAME, WEBDAV_USERNAME, WEBDAV_PASSWORD, WEBDAV_REMOTE_BASE_PATH
@@ -23,10 +27,6 @@
 #   LOCAL_ASSETS_FOLDER  destination, repo-relative (default: assets)
 #   SYNC_PYTHON_VERSION  interpreter uv provisions for the venv (default: 3.14)
 set -euo pipefail
-
-# The WebDavClient commit the deploy installs. That repo has no tags yet, so
-# bump by pasting `git ls-remote https://github.com/Kataglyphis/WebDavClient HEAD`.
-WEBDAVCLIENT_REF="4f3f116d9ce7d1e223894513b4dc7a90b5085a9f"
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
@@ -36,7 +36,9 @@ source "${SCRIPT_DIR}/lib/antfrastructure.sh"
 # A missing secret used to reach argparse as "too few arguments", which names
 # neither the variable nor the fact that it is a repository secret. Worse, an
 # EMPTY one is five arguments and argparse accepts it - the sync would then run
-# against a blank host and the build would ship yesterday's assets.
+# against a blank host and the build would ship yesterday's assets. Upstream
+# checks the three credentials too, but only by variable name; these say which
+# repository secret is missing, which is the part a reader cannot look up.
 : "${WEBDAV_HOSTNAME:?set WEBDAV_HOSTNAME (repository secret WEBDAV_HOSTNAME)}"
 : "${WEBDAV_USERNAME:?set WEBDAV_USERNAME (repository secret WEBDAV_USERNAME)}"
 : "${WEBDAV_PASSWORD:?set WEBDAV_PASSWORD (repository secret WEBDAV_PASSWORD)}"
@@ -47,52 +49,24 @@ SYNC_PYTHON_VERSION="${SYNC_PYTHON_VERSION:-3.14}"
 
 # uv bootstrap and venv creation are ANTfrastructure's, not this repo's. What was
 # here was a hand-rolled `command -v uv` guard plus a bare `uv venv`; the
-# upstream library does both properly and is what BeschleunigerBallett already
-# consumes through two thin wrappers of its own. uv_ensure_installed downloads
-# the installer TO A FILE rather than piping curl into sh, and verifies it
-# against UV_INSTALL_SH_SHA256 from versions.env - a truncated stream cannot
-# execute as a partial script. uv_venv_create adds the interpreter-availability
-# probe (`uv python install` when python3.14 is not on the box) that the bare
-# call did not have: on the hosted runner setup-uv provides uv but nothing
-# provides 3.14, so `uv venv --python=3.14` was one upstream image change away
-# from a needless red.
+# upstream library does both properly. uv_ensure_installed downloads the
+# installer TO A FILE rather than piping curl into sh, and verifies it against
+# UV_INSTALL_SH_SHA256 from versions.env - a truncated stream cannot execute as
+# a partial script. uv_venv_create adds the interpreter-availability probe
+# (`uv python install` when python3.14 is not on the box) that the bare call did
+# not have: on the hosted runner setup-uv provides uv but nothing provides 3.14.
 antfrastructure_source linux/scripts/01-core/python_uv.sh
+antfrastructure_source linux/scripts/01-core/webdav-download.sh
 
-# The venv lives at the repo root because `uv run` discovers .venv from the cwd,
-# and download_markdown_files.py is resolved relative to the root too.
+# The venv lives at the repo root because that is where webdav_download_tree
+# looks for it (${KATAGLYPHIS_REPO_ROOT}/.venv), and the destination below is
+# repo-relative.
 cd "$KATAGLYPHIS_REPO_ROOT"
 
 uv_ensure_installed
 uv_venv_create "${KATAGLYPHIS_REPO_ROOT}/.venv" "${SYNC_PYTHON_VERSION}"
 
-# --python, spelled out rather than left to .venv discovery, is the one piece
-# the upstream library does NOT cover: it owns uv_pip_install_requirements,
-# which takes a requirements FILE, and this step installs a git URL instead.
-# The pin is copied from that function, whose comment says it is load-bearing
-# because uv honours UV_PYTHON over an activated venv and the family image
-# exports UV_PYTHON=/opt/venv/bin/python (root-owned, while the container user
-# is uid 1001). MEASURED 2026-09-08 in :latest-cross with uv 0.9.x: that no
-# longer reproduces - a `.venv` in the cwd wins over UV_PYTHON and the install
-# lands locally either way. The pin stays because it names the target instead
-# of depending on which of two mechanisms uv currently prefers, and because
-# the failure it guards against is a root-owned write, not a red build.
-#
-# bin/python is the POSIX venv layout; a Git Bash venv carries
-# Scripts/python.exe instead. Missing both is a broken venv, and it fails HERE
-# by name rather than as a confusing resolver error two commands later.
-VENV_PYTHON="${KATAGLYPHIS_REPO_ROOT}/.venv/bin/python"
-[ -x "$VENV_PYTHON" ] || VENV_PYTHON="${KATAGLYPHIS_REPO_ROOT}/.venv/Scripts/python.exe"
-if [ ! -x "$VENV_PYTHON" ]; then
-  echo "Error: no interpreter in ${KATAGLYPHIS_REPO_ROOT}/.venv" >&2
-  echo "       (neither bin/python nor Scripts/python.exe) - uv_venv_create" >&2
-  echo "       reported success but produced no usable venv." >&2
-  exit 1
-fi
-
-uv pip install --python "$VENV_PYTHON" git+https://github.com/Kataglyphis/WebDavClient@${WEBDAVCLIENT_REF}
-uv run --python "$VENV_PYTHON" python scripts/download_markdown_files.py \
-  "${WEBDAV_HOSTNAME}" \
-  "${WEBDAV_USERNAME}" \
-  "${WEBDAV_PASSWORD}" \
-  "${WEBDAV_REMOTE_BASE_PATH}" \
-  "${LOCAL_ASSETS_FOLDER}"
+# No extension filter: this site bundles the whole tree (markdown, and the
+# images the posts reference), so the walk is the client's own
+# download_all_files_iterative rather than a per-suffix pass.
+webdav_download_tree "${WEBDAV_REMOTE_BASE_PATH}" "${LOCAL_ASSETS_FOLDER}" all

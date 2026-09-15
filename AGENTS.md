@@ -50,27 +50,28 @@ rule that decides where anything belongs: *would this still be true in a
 different project?* Yes → ANTfrastructure owns it, link to it. No → write it out
 here.
 
-All eleven scripts under `scripts/` are thin wrappers — editing the wrapper when
+All ten scripts under `scripts/` are thin wrappers — editing the wrapper when
 the behaviour lives upstream is the mistake to avoid:
 
 | Wrapper | Delegates to |
 | --- | --- |
-| `scripts/build-in-container.sh` | ANTfrastructure's container bootstrap |
-| `scripts/ci-container-steps.sh` | the per-phase container prologue around the wrappers below (what `.github/workflows/dart.yml` runs in the image) |
+| `scripts/build-in-container.sh` | `linux/scripts/run-in-ci-image.sh` (the container recipe) plus `setup-flutter.sh`, for a Flutter version other than the image's |
+| `scripts/ci-container-steps.sh` | the phase switch around the wrappers below (what `.github/workflows/dart.yml` runs in the image); the prologue itself is `flutter_lane_prepare_env` / `flutter_build_web` |
 | `scripts/run-dart-checks.sh` | shared Flutter format/analyze/test gate (`flutter_checks.sh`) |
 | `scripts/integration-smoke-test.sh` | shared Flutter-web smoke test |
-| `scripts/run-nginx-integration-test.sh` | local docker/nginx harness (hand-run, not in CI) |
+| `scripts/run-nginx-integration-test.sh` | local docker/nginx harness (hand-run, not in CI); readiness is `01-core/http-readiness.sh`'s `wait_for_http` |
 | `scripts/capture_console_errors.py` | shared Flutter-web console-error test |
 | `scripts/run-lint-gates.sh` | shared lint aggregator (`linux/scripts/run-lint-gates.sh`; its header says which gates and why) |
 | `scripts/setup-sqlite3-wasm.sh` | shared SHA256-verified sqlite3.wasm fetcher |
 | `scripts/renovate-local.sh` | shared Renovate local-CLI dependency updater (submodule pins) |
-| `scripts/sync-webdav-content.sh` | half a wrapper: uv bootstrap and venv are `01-core/python_uv.sh`; the WebDAV step is this repo's |
-| `scripts/download_markdown_files.py` | the WebDAV download itself, over the pinned `WebDavClient` (this repo's, called by the sync wrapper) |
+| `scripts/sync-webdav-content.sh` | `01-core/python_uv.sh` (uv, venv) and `01-core/webdav-download.sh` (`webdav_download_tree`, over the `WEBDAVCLIENT_REF` pin in `01-core/versions.env`); only the secret names, the interpreter and the destination are this repo's |
 
 | Topic | Where |
 | --- | --- |
 | Wiring this repo to ANTfrastructure (resolver, actions, libraries) | `docs/adopting-in-a-new-project.md` |
-| Flutter-web smoke + console tests | `third_party/ANTfrastructure/linux/webserver/README.md` § Reusable Flutter web helpers |
+| Flutter-web smoke + console tests | [webserver README](third_party/ANTfrastructure/linux/webserver/README.md#reusable-flutter-web-helpers) |
+| Browser prerequisites for the console test | [same README](third_party/ANTfrastructure/linux/webserver/README.md#prerequisites-for-the-browser-smoke-test) |
+| Running any command in the family CI image, by hand | `docs/shared-script-libraries.md` § run-in-ci-image.sh |
 | CI image reference | `docs/shared-script-libraries.md` § ci-image-ref.sh |
 | Dependency updates (Renovate as a local CLI) | `docs/dependency-updates.md` |
 | The FTP publish action the deploy steps use | `docs/ftp-deploys.md` |
@@ -144,30 +145,22 @@ Flat `scripts/` is deliberate: CI is Linux-only, so there is no
 - **SQLite on web:** `bash scripts/setup-sqlite3-wasm.sh` downloads `sqlite3.wasm` into `web/` for web targets. It takes no arguments: the version and its SHA256 come from ANTfrastructure's `linux/scripts/01-core/versions.env` (`SQLITE3_WASM_VERSION`), and the download is verified against it.
 - **iOS/macOS builders:** Do not touch `ios/`, `macos/`, `android/`, `windows/`, `linux/` directories unless specifically requested — they contain platform-specific boilerplate.
 - **Known issues:** `flutter_highlighter` needs a patch; `flutter_markdown` has a blockquote rendering issue.
-- **ARM64 browser automation:** Playwright's `playwright install chromium` fails on ARM64, but Playwright **works** with `flatpak install flathub org.chromium.Chromium` + `executable_path` to use the flatpak binary.
+- **ARM64 browser automation:** Playwright's `playwright install chromium` fails on ARM64; flatpak Chromium works everywhere. The prerequisites and the four failures worth recognising are ANTfrastructure's now — see § E2E prerequisites below.
 
 ### CI/CD (`.github/workflows/dart.yml`)
 
 - **Trigger:** push to `main` or `develop`. Flow: lint gates → WebDAV sync → dart-checks → `flutter build web --release --wasm` → smoke test → FTP deploy. `main` deploys WASM to the production domain; `develop` deploys WASM and CanvasKit to the dev domains.
-- **Containerised lane:** every Dart/Flutter step runs in the family Linux CI image (Flutter at `/opt/flutter`, no `setup-flutter`) via ANTfrastructure's `prepare-linux-ci-host` and `run-in-linux-container` actions. The image tag is deliberately written nowhere in this repo: the steps omit `image:` and inherit the actions' default (the comment above `build:` in the workflow says why). Each step is a fresh container, so `scripts/ci-container-steps.sh` re-establishes PATH, git `safe.directory` and the pub cache (`.pub-cache/` in the workspace) per phase.
+- **Containerised lane:** every Dart/Flutter step runs in the family Linux CI image (Flutter at `/opt/flutter`, no `setup-flutter`) via ANTfrastructure's `prepare-linux-ci-host` and `run-in-linux-container` actions. The image tag is deliberately written nowhere in this repo: the steps omit `image:` and inherit the actions' default (the comment above `build:` in the workflow says why). Each step is a fresh container, so `scripts/ci-container-steps.sh` re-establishes PATH, git `safe.directory` and the pub cache (`.pub-cache/` in the workspace) per phase — through ANTfrastructure's `flutter_lane_prepare_env`, not a prologue of its own.
 - **Host-side steps:** the lint gate job (`build` needs it, so a lint failure stops the deploy before it starts), the WebDAV sync (repo secrets + uv; the fetched assets land in the workspace the container bind-mounts) and the four FTP deploy steps. The repo has no `GHCR_PAT`: the prologue action skips login and pulls the public image anonymously.
 
 ### E2E prerequisites (Playwright + flatpak Chromium)
 
-Not in CI and not upstream yet; `scripts/capture_console_errors.py` launches a real headless browser to capture console logs, page errors and runtime exceptions.
+Not in CI: `scripts/capture_console_errors.py` launches a real headless browser to capture console logs, page errors and runtime exceptions. It delegates to ANTfrastructure's `flutter_capture_console_errors.py`, and the prerequisites are upstream's too: the install commands and why `--break-system-packages` rather than a venv are in
+[Prerequisites for the browser smoke test](third_party/ANTfrastructure/linux/webserver/README.md#prerequisites-for-the-browser-smoke-test),
+and the four failures that each look like something else — including the one where the test passes against the OLD build — are in
+[Troubleshooting the browser smoke test](third_party/ANTfrastructure/linux/webserver/README.md#troubleshooting-the-browser-smoke-test).
 
-```bash
-flatpak install flathub org.chromium.Chromium   # works on all architectures including ARM64
-flatpak install flathub org.mozilla.firefox     # optional, for manual testing
-python3 -m pip install --break-system-packages playwright
-```
-
-Expected output: only a WebGL GPU stall warning in headless mode — no runtime errors. Troubleshooting:
-
-- **`No module named 'playwright'`**: Run `python3 -m pip install --break-system-packages playwright`
-- **Chromium not found**: Verify with `flatpak list | grep chromium`
-- **Port 8080 in use**: Kill existing process with `kill $(lsof -t -i:8080)`
-- **Browser launch fails**: Ensure flatpak Chromium is installed and `--no-sandbox` is passed (required in containers/WSL)
+The one line that is this repo's: `flatpak install flathub org.mozilla.firefox` is optional and only for eyeballing the site by hand; nothing here drives Firefox.
 
 ## 5. Build, run, test
 
