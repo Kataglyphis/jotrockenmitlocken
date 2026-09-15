@@ -56,6 +56,10 @@ flutter:
   # `packages/anthology/assets/...`. Only assets unique to this app remain here.
   assets:
     - assets/images/
+    # assets/documents/ is populated at build time by scripts/sync-webdav-content.sh;
+    # only the CV and thesis PDFs are tracked. Recorded here rather than in a README
+    # inside that directory, because Flutter bundles every file a declared asset
+    # directory contains, developer notes included.
     - assets/documents/
     - assets/documents/books/
     - assets/documents/games/
