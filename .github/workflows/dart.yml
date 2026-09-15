@@ -32,38 +32,31 @@ jobs:
   # targets on every push; a lint gate that runs beside the deploy instead of
   # in front of it can only report a problem the world has already been served.
   # ---------------------------------------------------------------------------
+  # One `uses:`, not a job. The checkout, the uv install and the aggregator call
+  # were three steps here, and six other consumers carried the same three; they
+  # are ANTfrastructure's reusable lint lane now. `bash scripts/run-lint-gates.sh`
+  # stays as the dev-box command and drives the same aggregator with the same
+  # arguments - the wrapper's header says which, and this call has to agree with
+  # it, because only the wrapper is reachable locally.
+  #
+  # No `timeout-minutes` here: a job that calls a reusable workflow may not carry
+  # one, the callee's job owns it (20 minutes there), and the conventions gate
+  # exempts `uses:` jobs for exactly that reason.
   lint:
     name: 🧹 lint gates
-    runs-on: ubuntu-26.04
-    timeout-minutes: 10
-    steps:
-      # ANTfrastructure is the only submodule these gates read, and `submodules:
-      # true` is top-level only - ANThology comes along because it is also
-      # top-level, which is fine and costs seconds. fetch-depth 1: nothing here
-      # looks at history.
-      - uses: actions/checkout@v7.0.1
-        with:
-          submodules: true
-          fetch-depth: 1
-
-      # uvx is how the shared aggregator runs ruff; the runner carries no uv.
-      - name: Install uv
-        uses: astral-sh/setup-uv@v9.0.0
-
-      # One script, not inline `run:` blocks. The `git ls-files` file-list
-      # construction (a bare `**` does not recurse without `shopt -s globstar`),
-      # the vacuity guard and the ANTfrastructure-pin preconditions used to live
-      # here in YAML, which meant the gate that blocks this deploy could not be
-      # reproduced locally at all. Both places now run
-      # `bash scripts/run-lint-gates.sh`, a thin wrapper over ANTfrastructure's
-      # shared aggregator (linux/scripts/run-lint-gates.sh); the wrapper carries
-      # only this repo's exclude set.
-      #
-      # No `shell: bash` override: bash is the default on ubuntu runners and it
-      # already runs with -e -o pipefail, so the script's exit status is the
-      # step's - the same failure signal the inline steps had.
-      - name: Lint gates
-        run: bash scripts/run-lint-gates.sh
+    uses: Kataglyphis/ANTfrastructure/.github/workflows/lint-gates.yml@main
+    with:
+      # Top-level only, against the callee's `recursive` default. Its default is
+      # right for a consumer whose secret scan reads the whole tree; this one
+      # excludes third_party from every scope, so ANTfrastructure's OWN
+      # submodules are checked out for nothing. ANThology comes along because it
+      # too is top-level, which is fine and costs seconds.
+      submodules: 'true'
+      exclude: third_party
+      # The freeze files are seeded and committed (comment-size.allow), so the
+      # measurement gates run here as well as locally. Left off, CI would grade
+      # less than the dev box does.
+      ratchets: true
 
   build:
     name: 🚀 Deploy website on push

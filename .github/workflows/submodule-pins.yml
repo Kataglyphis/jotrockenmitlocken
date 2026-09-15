@@ -1,61 +1,33 @@
 # .github/workflows/submodule-pins.yml
 # This repository has two submodules - third_party/ANThology (a path dependency
 # pubspec.yaml compiles against) and third_party/ANTfrastructure (which owns every
-# shared gate) - and until this workflow existed, nothing asserted either sat at
-# its recorded gitlink. A drifted submodule means the deploy job builds and ships
-# something other than what is committed, and `git submodule status` marks it
-# with a '+' that is easy to miss in a wall of CI output.
+# shared gate) - and nothing else asserts that either sits at its recorded
+# gitlink. A drifted submodule means the deploy job builds and ships something
+# other than what is committed, and `git submodule status` marks it with a '+'
+# that is easy to miss in a wall of CI output.
 #
-# The suite is ANTfrastructure's, run from the submodule rather than copied here:
-# third_party/ANTfrastructure/shared/windows/tests/Submodule.Pins.Tests.ps1. It is
-# repo-agnostic - it takes the superproject root as a parameter and asserts, for
-# EVERY configured submodule, that it is checked out, sits at its recorded
-# commit, and is pinned to a commit still reachable from its remote. Nothing here
-# has to name ANThology or ANTfrastructure for them to be covered.
+# THE JOB IS ONE `uses:` LINE. Three consumers carried this lane as a near-copy,
+# each with its own forty lines of Pester rationale, and ANTfrastructure made it
+# reusable on 2026-09-14. What is left here is what is genuinely this repo's: the
+# branches and paths that should trigger it. The runner label, the Pester
+# version, the checkout shape and the suite path are the callee's - every one of
+# them a fact about the SUITE, not about this repository, and the header of
+# ANTfrastructure's .github/workflows/submodule-pins.yml still carries the
+# measurements behind them.
 #
-# PESTER VERSION - measured, not assumed (2026-09-07, PowerShell 7.6.5, suite at
-# ANTfrastructure 3721d91b, this repo as the -RepoRoot). run-pester-suite runs
-# `shell: pwsh`, which IS PowerShell 7, so the suite's `#requires -Version 7.0`
-# is satisfied on every version below; what differs is whether the ACTION's own
-# invocation survives:
+# The suite itself is repo-agnostic: it takes the superproject root as a
+# parameter and asserts, for EVERY configured submodule, that it is checked out,
+# sits at its recorded commit, and is pinned to a commit still reachable from its
+# remote. Nothing here has to name ANThology or ANTfrastructure for them to be
+# covered.
 #
-#   3.4.0 (the action's default)  TOTAL=4 PASSED=4 FAILED=0.
-#   5.7.1                         TOTAL=4 PASSED=4, but only through Pester 5's
-#                                 deprecated legacy parameter set, and there
-#                                 `$r.TestResult` is $null - so the action's
-#                                 per-failure Describe/FailureMessage/StackTrace
-#                                 block prints NOTHING and a red run says only
-#                                 "exit 1".
-#   6.1.0                         does not run at all: `Invoke-Pester: A
-#                                 parameter cannot be found that matches
-#                                 parameter name 'Quiet'`, i.e. the step dies
-#                                 before a single test executes.
-#
-# So 3.4.0 is the only version this action can currently drive, and it is pinned
-# HERE rather than inherited from the action's default: the default is the hub's
-# to change, and a change to 5.x would silently blind this lane's diagnostics
-# while a change to 6.x would break it outright. The pin is the consumer saying
-# which dialect it was verified against.
-#
-# Runner is Windows, not the ubuntu-26.04 the rest of this repo uses, because
-# Pester 3.4.0 is a Windows PowerShell-era module that was never released for
-# PowerShell Core on Linux, and nothing here has measured it there. The suite
-# itself is version-agnostic (it asserts with `throw`, not `Should`), so the day
-# the action's invocation speaks Pester 5+/6 this can be re-measured on a
-# cheaper runner.
-#
-# The label is `windows-2025`, PINNED - not `windows-latest`, which is what this
-# job used to say. The two resolve to the same image today, so the change is a
-# behavioural no-op; the point is that the alias moves on GitHub's schedule and
-# would swap the OS image under a green run with no commit to blame. It is also
-# the label BeschleunigerBallett, OmniAccelerANT and OrchestrANT already use, so
-# this was the family's last unpinned Windows runner outside ANTfrastructure.
-#
-# It is NOT containerised, and should not be: the job is `git` metadata plus
-# pwsh 7, both preinstalled on the runner, so :winamd64 would add a multi-GB
-# Windows-container pull for zero extra coverage. run-pester-suite already
-# refuses a vacuous pass (TotalCount == 0 -> exit 1), so the gate is not green
-# over nothing.
+# `pester-version` is passed rather than defaulted, and it is the one input worth
+# stating: 3.4.0 is the only version the composite action's invocation survives
+# (measured 2026-09-07 against this repo as the -RepoRoot: 5.7.1 passes but
+# leaves $r.TestResult null, so a red run prints nothing but "exit 1", and 6.1.0
+# rejects -Quiet before a single test executes). Naming it here is this consumer
+# saying which dialect it was verified against, instead of inheriting a default
+# the hub may change.
 name: Submodule Pins
 
 on:
@@ -82,33 +54,6 @@ concurrency:
 jobs:
   pins:
     name: 📌 Submodule pins sit at their recorded commits
-    runs-on: windows-2025
-    timeout-minutes: 15
-    env:
-      # The suite takes the repo root as a parameter and the composite action can
-      # only pass a path, so the root comes through the environment. It would
-      # fall back to GITHUB_WORKSPACE on its own; naming it here keeps the wiring
-      # visible instead of implied.
-      ANTFRASTRUCTURE_PIN_CHECK_REPO_ROOT: ${{ github.workspace }}
-    steps:
-      - uses: actions/checkout@v7.0.1
-        with:
-          # Without this the submodules are never checked out and the suite fails
-          # on its own vacuity guard rather than passing on an empty tree.
-          # Top-level only (the drift guard is non-recursive for the same
-          # reason) and at the default depth, which is what makes the
-          # reachability check exercise its shallow-clone escalation.
-          submodules: true
-
-      # @main, like every other ANTfrastructure action in this repo: the upstream is
-      # pushed before the consumer change that needs it. The suite PATH, by
-      # contrast, is read out of the checked-out submodule, so it moves only when
-      # the ANTfrastructure gitlink is bumped.
-      - name: Submodule pins sit at their recorded, restorable commits
-        uses: Kataglyphis/ANTfrastructure/.github/actions/run-pester-suite@main
-        with:
-          path: third_party/ANTfrastructure/shared/windows/tests/Submodule.Pins.Tests.ps1
-          # Pinned, not defaulted - see the PESTER VERSION note in the header
-          # for the three versions this was measured against and what 5.x and
-          # 6.x actually do to the action's invocation.
-          version: '3.4.0'
+    uses: Kataglyphis/ANTfrastructure/.github/workflows/submodule-pins.yml@main
+    with:
+      pester-version: '3.4.0'
