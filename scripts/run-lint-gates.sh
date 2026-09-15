@@ -38,8 +38,17 @@ HUB_LINT_GATES_RELATIVE="linux/scripts/run-lint-gates.sh"
 # tracked plain files sitting directly inside an excluded directory - dropping
 # the whole prefix would have hidden a file this repo owns.
 #
+# --ratchets adds the eight measurement gates that take --root (code size,
+# complexity, dead functions, comment size, stdout returns, masked declarations,
+# trailing conditionals, the shellcheck warning ratchet) plus the doc-links gate
+# over this tree, reading freeze files from the repo root. It is on because
+# those freeze files are seeded and committed; upstream keeps the flag opt-in
+# only because a tree with no freeze files is red on its first run, and that
+# first report is what seeds them.
+#
 # antfrastructure_exec, not `bash "$(antfrastructure_path ...)"`: exec makes the
 # aggregator's exit status this script's, with no intermediate shell to lose it.
 antfrastructure_exec "${HUB_LINT_GATES_RELATIVE}" \
   "${KATAGLYPHIS_REPO_ROOT}" \
-  --exclude third_party
+  --exclude third_party \
+  --ratchets

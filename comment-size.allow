@@ -1,0 +1,25 @@
+# Frozen 2026-09-15, the first run with `--ratchets` on (scripts/run-lint-gates.sh).
+# The gate refuses NEW oversized comment blocks and growth in a frozen one; a
+# block that shrinks below the limit means DELETING its line here, not editing
+# it. Format: <file>	<first line of the block>, which is why nothing in this
+# file has a line number - a block must not re-flag because something above it
+# moved.
+#
+# Nothing here is a TODO list. Nine blocks, and every one is a header that
+# records WHY a wrapper delegates where it does: which upstream function
+# replaced a local fork, which knob deviates from the shared template and what
+# breaks if it is "corrected", which failure a guard was written against. This
+# repo has no docs/ tree to move them into and adding one to hold nine script
+# headers would put the explanation further from the code, not closer. The two
+# blocks in scripts/lib/antfrastructure.sh are upstream's own body plus the
+# note saying this copy sits one directory higher than the registry default.
+
+scripts/build-in-container.sh	#!/usr/bin/env bash
+scripts/ci-container-steps.sh	#!/usr/bin/env bash
+scripts/lib/antfrastructure.sh	# Replace this process with a ANTfrastructure driver, forwar
+scripts/lib/antfrastructure.sh	#!/usr/bin/env bash
+scripts/renovate-local.sh	#!/usr/bin/env bash
+scripts/run-lint-gates.sh	# --exclude third_party, spelled out rather than left to the
+scripts/run-lint-gates.sh	#!/usr/bin/env bash
+scripts/setup-sqlite3-wasm.sh	#!/usr/bin/env bash
+scripts/sync-webdav-content.sh	#!/usr/bin/env bash

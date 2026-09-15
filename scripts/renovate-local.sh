@@ -46,7 +46,8 @@ source "${SCRIPT_DIR}/lib/antfrastructure.sh"
 # Named separately from antfrastructure_path's generic "not found / it moved
 # upstream" message, for the same reason run-lint-gates.sh does it: while the
 # fleet adopts this tool the expected failure is a stale gitlink, and being sent
-# to docs/INDEX.md to look for a file that upstream has not yet been pinned at
+# to third_party/ANTfrastructure/docs/INDEX.md to look for a file that upstream
+# has not yet been pinned at
 # wastes the trip.
 HUB_RENOVATE_RELATIVE="linux/scripts/renovate-local.sh"
 if [ ! -f "${ANTFRASTRUCTURE_DIR}/${HUB_RENOVATE_RELATIVE}" ]; then
