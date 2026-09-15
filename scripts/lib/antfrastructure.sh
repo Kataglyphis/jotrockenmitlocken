@@ -1,8 +1,22 @@
 #!/usr/bin/env bash
-# Copied verbatim from ANTfrastructure
-# `shared/linux/templates/antfrastructure.sh` — do not hand-edit; sync from
-# upstream instead. This is the one build-tooling file that cannot be sourced
-# out of the submodule, because it is what *finds* the submodule.
+# Copied from ANTfrastructure `shared/linux/templates/antfrastructure.sh` — do
+# not hand-edit the body; sync from upstream instead. This is the one
+# build-tooling file that cannot be sourced out of the submodule, because it is
+# what *finds* the submodule.
+#
+# WHERE THIS COPY LIVES, because the body below cannot say it. This repo keeps
+# the bootstrap at scripts/lib/, one level above the registry default
+# scripts/linux/lib/, so the repo root is TWO levels up and the knob reads
+# `../..`, not the `../../..` the template ships. The "scripts/linux/lib ->
+# repo root is three levels" line sitting right above that knob is upstream's
+# own, and it describes the DEFAULT location, not this one. It is not editable
+# here: the shared-config drift gate compares this file from its first line of
+# code down, byte for byte, masking only the knob's VALUE, so correcting that
+# sentence in place turns the gate DRIFTED. Both deltas — the path and the knob
+# value — are declared in .antfrastructure-shared.manifest; the gate that
+# enforces all of it is
+#   bash third_party/ANTfrastructure/shared/config/sync-shared-config.sh --repo-root . --check
+# which scripts/run-lint-gates.sh runs.
 #
 # Entry points: antfrastructure_path / antfrastructure_source / antfrastructure_exec.
 # See ANTfrastructure shared/linux/templates/README.md.
