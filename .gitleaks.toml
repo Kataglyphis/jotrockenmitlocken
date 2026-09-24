@@ -1,5 +1,5 @@
 # gitleaks config for this repository's secret-scan gate
-# (.github/workflows/dart.yml -> third_party/ANTfrastructure/linux/scripts/lint-secrets.sh).
+# (.github/workflows/web.yml -> third_party/ANTfrastructure/linux/scripts/lint-secrets.sh).
 #
 # The hub script prefers the SCANNED tree's own .gitleaks.toml over its own, so
 # this file - not ANTfrastructure's - is what grades jotrockenmitlocken. It EXTENDS

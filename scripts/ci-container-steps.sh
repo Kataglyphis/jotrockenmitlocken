@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# The containerised phases of .github/workflows/dart.yml - one phase per
+# The containerised phases of .github/workflows/web.yml - one phase per
 # run-in-linux-container step, so a failing phase names itself in the runs UI.
 #
 # Usage: ci-container-steps.sh <phase>
