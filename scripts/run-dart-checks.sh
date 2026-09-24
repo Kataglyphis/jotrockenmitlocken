@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # The repo's Dart gate: pub get (root + ANThology), format, analyze, test.
 #
-# CI used to inline those four commands in .github/workflows/dart.yml, which
+# CI used to inline those four commands in .github/workflows/web.yml, which
 # meant the gate drifted from every other Kataglyphis repo and its
 # `dart format .` walked third_party/ANThology's 86 .dart files — a recursive
 # walk cannot tell vendored code from ours. The shared driver enumerates

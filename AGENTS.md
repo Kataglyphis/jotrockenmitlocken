@@ -56,7 +56,7 @@ the behaviour lives upstream is the mistake to avoid:
 | Wrapper | Delegates to |
 | --- | --- |
 | `scripts/build-in-container.sh` | `linux/scripts/run-in-ci-image.sh` (the container recipe) plus `setup-flutter.sh`, for a Flutter version other than the image's |
-| `scripts/ci-container-steps.sh` | the phase switch around the wrappers below (what `.github/workflows/dart.yml` runs in the image); the prologue itself is `flutter_lane_prepare_env` / `flutter_build_web` |
+| `scripts/ci-container-steps.sh` | the phase switch around the wrappers below (what `.github/workflows/web.yml` runs in the image); the prologue itself is `flutter_lane_prepare_env` / `flutter_build_web` |
 | `scripts/run-dart-checks.sh` | shared Flutter format/analyze/test gate (`flutter_checks.sh`) |
 | `scripts/integration-smoke-test.sh` | shared Flutter-web smoke test |
 | `scripts/run-nginx-integration-test.sh` | local docker/nginx harness (hand-run, not in CI); readiness is `01-core/http-readiness.sh`'s `wait_for_http` |
@@ -147,8 +147,9 @@ Flat `scripts/` is deliberate: CI is Linux-only, so there is no
 - **Known issues:** `flutter_highlighter` needs a patch; `flutter_markdown` has a blockquote rendering issue.
 - **ARM64 browser automation:** Playwright's `playwright install chromium` fails on ARM64; flatpak Chromium works everywhere. The prerequisites and the four failures worth recognising are ANTfrastructure's now — see § E2E prerequisites below.
 
-### CI/CD (`.github/workflows/dart.yml`)
+### CI/CD (`.github/workflows/web.yml`)
 
+- **Names:** the family convention (owner decision 2026-09-24) — kebab-case, one file per platform, display names `<Platform> · <what>`, shared lanes named the same in every repo. So this lane is `web.yml` "Web · build + deploy" (it was `dart.yml` until then), and the pin lane is `submodule-pins.yml` "Submodule pins". Job ids did not change, so neither did the check-run names.
 - **Trigger:** push to `main` or `develop`. Flow: lint gates → WebDAV sync → dart-checks → `flutter build web --release --wasm` → smoke test → FTP deploy. `main` deploys WASM to the production domain; `develop` deploys WASM and CanvasKit to the dev domains.
 - **Containerised lane:** every Dart/Flutter step runs in the family Linux CI image (Flutter at `/opt/flutter`, no `setup-flutter`) via ANTfrastructure's `prepare-linux-ci-host` and `run-in-linux-container` actions. The image tag is deliberately written nowhere in this repo: the steps omit `image:` and inherit the actions' default (the comment above `build:` in the workflow says why). Each step is a fresh container, so `scripts/ci-container-steps.sh` re-establishes PATH, git `safe.directory` and the pub cache (`.pub-cache/` in the workspace) per phase — through ANTfrastructure's `flutter_lane_prepare_env`, not a prologue of its own.
 - **Host-side steps:** the lint gate job (`build` needs it, so a lint failure stops the deploy before it starts), the WebDAV sync (repo secrets + uv; the fetched assets land in the workspace the container bind-mounts) and the four FTP deploy steps. The repo has no `GHCR_PAT`: the prologue action skips login and pulls the public image anonymously.

@@ -3,7 +3,7 @@
 # Which gates run, and why, is that script's header; the wrapper contract is in
 # third_party/ANTfrastructure/docs/shared-script-libraries.md.
 #
-# This is the single entry point .github/workflows/dart.yml calls, and the same
+# This is the single entry point .github/workflows/web.yml calls, and the same
 # one command to run before pushing:
 #
 #     bash scripts/run-lint-gates.sh

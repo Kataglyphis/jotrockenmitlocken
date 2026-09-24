@@ -31,7 +31,7 @@ my [DocumANTation](https://github.com/Kataglyphis/DocumANTation)-project that ev
 🎉🎉🎉
 
 
-[![Build](https://github.com/Kataglyphis/jotrockenmitlocken/actions/workflows/dart.yml/badge.svg)](https://github.com/Kataglyphis/jotrockenmitlocken/actions/workflows/dart.yml)
+[![Web · build + deploy](https://github.com/Kataglyphis/jotrockenmitlocken/actions/workflows/web.yml/badge.svg)](https://github.com/Kataglyphis/jotrockenmitlocken/actions/workflows/web.yml)
 [![CodeQL](https://github.com/Kataglyphis/jotrockenmitlocken/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/Kataglyphis/jotrockenmitlocken/actions/workflows/github-code-scanning/codeql)
 [![TopLang](https://img.shields.io/github/languages/top/Kataglyphis/jotrockenmitlocken)]() 
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/paypalme/JonasHeinle)
@@ -75,7 +75,7 @@ But why not just using a CMS? Here are my reasons:
   * I developed my own [WebDavClient](https://github.com/Kataglyphis/WebDavClient)
     that allows me to keep the content (.md files, images, videos, .csv, etc.) private while
     the source code stays **Open Source**. You might also be interested in **keeping your data private**.
-    Have a look into my [Build Pipeline File](.github/workflows/dart.yml) for more 
+    Have a look into my [Build Pipeline File](.github/workflows/web.yml) for more 
     information  
 
 

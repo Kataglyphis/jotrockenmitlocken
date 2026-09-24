@@ -28,7 +28,7 @@
 # rejects -Quiet before a single test executes). Naming it here is this consumer
 # saying which dialect it was verified against, instead of inheriting a default
 # the hub may change.
-name: Submodule Pins
+name: Submodule pins
 
 on:
   push:
