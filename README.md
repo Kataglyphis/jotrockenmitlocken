@@ -12,8 +12,8 @@ It is highly customizable for your needs, your personal web blog or you next Fro
 project (<b>not only</b> web but also native Linux/Windows/Android/Web/iOS)</h4>
 </div>
 
-> **__Note__**: If your run locally this website you are not able to
-neither navigate to the blog entries nor the book/film/... critics. 
+> **__Note__**: If you run this website locally, you only see the sample blog
+that ships with the ANThology package, and the book/film/... critics and data tables stay empty. 
 Their "source content .md files" are my intellectual property and therefore only visible to me :) 
 The flutter/dart source code stays
 **__Open Source__** of course
@@ -83,21 +83,22 @@ But why not just using a CMS? Here are my reasons:
 I truly believe in open source. Hence you will get all source code for free use and ready to go.</br>
 My approach allows me to separate the website data from its view (MVC best practice). 
 You will not see my blog posts(only the dummy entries) in this repo. They are my intellectual property :wink:</br>
-The `assets` directory houses all files you want to include within your application namely:
+The `assets` directory houses all files you want to include within your application namely
+(fonts and the shared images come from the ANThology package):
 * images
-* videos
 * data (.zip, .csv, ...)
 * documents (f.e. .md for blog posts)
-* fonts 
 * and the settings directory which harbors many different options for your own needs:
   * global user settings: Here you can easily customize the blog for you. 
     Set all necessary user related options (like email, name, image, etc...)
-  * All entries in the user_skills.json will be displayed in the corresponding section.
+  * All entries in the `user_skills_de.json`, `user_skills_en.json` and `user_skills_fr.json`
+    (one per language, named in the global user settings) will be displayed in the corresponding section.
 * app settings: set the app name, title. You are able to disable the footer; 
   the **supportedLocales** field can have the following values:
   * ["de"]: build a web app in pure german
   * ["en"]: build a web app in pure english
   * ["de","en"] or :["en","de"] You can switch between english and german
+  * ["de","en","fr"] (the committed setting): switch between german, english and french
 
 ### Publish a new blog post
 If you want to add a new blog bost do the following steps:
@@ -138,6 +139,12 @@ If you want to add a new blog bost do the following steps:
 		]
 	},
 ```
+* Every file an entry names must be bundled with the app. Flutter bundles only the files
+  lying directly in a directory listed under `flutter: assets:` in `pubspec.yaml`, and
+  `assets/documents/blog/` and `assets/images/aiBlog/` from the example are not listed
+  any more (they moved into ANThology on 2026-09-07). Either list your directory there,
+  or name a `packages/anthology/...` asset as the committed `blog_settings.json` does.
+  The same holds for the entry below.
 
 ### Publishing posts over a book
 
@@ -231,12 +238,13 @@ flutter run -d web-server --profile --web-port 8080 --web-hostname 0.0.0.0
 
 ### Dependency upgrades
 
-Renovate as a local CLI over the two submodule gitlinks in `.gitmodules`:
+Renovate as a local CLI over every dependency manager this tree has — the two submodule
+gitlinks in `.gitmodules` and `pubspec.yaml` among them:
 
 ```bash
 bash scripts/renovate-local.sh                    # report what is behind
 bash scripts/renovate-local.sh --apply --dry-run  # the plan, with pre-flight
-bash scripts/renovate-local.sh --apply            # move the gitlinks
+bash scripts/renovate-local.sh --apply            # move the gitlinks, edit the manifests
 ```
 
 Rationale and the full workflow:
@@ -264,7 +272,8 @@ selectable. The developer just dont want to integrate the feature ...
 flutter_markdown is not in a very stable version. I had to manually edit 
 the blockquote section for centering it. At the time of writing this 
 they have an open issue on not being able to build and MarkdownBuilder for a 
-blockquote. 
+blockquote. (That note is from 2024; Markdown now renders through `markdown_widget`,
+and `flutter_markdown` is no longer a dependency.)
 
 <!-- CONTACT -->
 ## Contact

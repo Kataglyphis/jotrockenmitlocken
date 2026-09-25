@@ -4,32 +4,34 @@ Guidance for coding agents (and new contributors) working in jotrockenmitlocken.
 
 ## 1. What this project is
 
-Personal blog as a responsive cross-platform Flutter/Dart web app by Jonas Heinle (@Kataglyphis). Blog posts are written in Markdown and kept private: `scripts/sync-webdav-content.sh` pulls them off WebDAV at build time, so the tree tracks only the Flutter/Dart source and the CV/thesis PDFs under `assets/documents/`.
+Personal blog as a responsive cross-platform Flutter/Dart web app by Jonas Heinle (@Kataglyphis). Blog posts are written in Markdown and kept private: `scripts/sync-webdav-content.sh` pulls them off WebDAV at build time, so of the content the tree tracks only the CV/thesis PDFs under `assets/documents/` and the settings JSON under `assets/settings/`. The samples under `dummy_assets/` are neither bundled nor read by anything.
 
 ```
 lib/
-  main.dart                     # Entry point: loads JSON settings in parallel, configures GoRouter, MaterialApp.router
-  Pages/                        # All UI pages
+  main.dart                     # Entry point: loads the JSON settings in parallel (settings_loader.dart) and hands them to ANThology's KataglyphisAppShell, which builds GoRouter + MaterialApp.router
+  Pages/                        # This app's own pages; the shared ones are ANThology's (below)
     jotrockenmitlocken_screen_configurations.dart  # All page config registrations
-    LandingPage/                #   Landing page with blog entry cards
     AboutMePage/                #   About Me page with skills, charts, donation
-    DataPage/                   #   Data sections: books, films, games, quotes, blog overview, SQLite test
+    DataPage/                   #   Data sections: books, films, games, quotes (the blog overview and SQLite test routed beside them are ANThology's)
     DocumentsPage/              #   Document download page (CV, thesis PDFs)
-    ErrorPage/                  #   404 error page
-    Footer/                     #   Footer config
-    Home/                       #   Home button config
-  Routing/                      # RoutesCreator: wires all page configs to GoRouter routes
+  Routing/                      # JotrockenMitLockenRoutes, this app's RoutesCreator: pairs every page with its config
   l10n/                         # ARB-based localization (German + English + French, 15 strings per locale, auto-generated)
-  *.dart                        # Config models: BlogPageConfig, MyTwoCentsConfig, BlogDependentAppAttributes, settings_loader
+  settings_loader.dart          # Loads the four settings files; the config models it fills are ANThology's
 
 scripts/                        # Flat, Linux-only (see § 3); every entry is a thin wrapper, see § 2
 third_party/ANThology/ # Git submodule — shared component library
   lib/
-    app_attributes.dart         # Core data models (AppAttributes, AppSettings, UserSettings)
-    Pages/
+    app_attributes.dart         # AppAttributes; AppSettings and UserSettings sit beside it (app_settings.dart, user_settings.dart)
+    app_shell.dart              # KataglyphisAppShell: app-wide state, themes, the router and MaterialApp.router
+    blog_page_config.dart       # Config models: BlogPageConfig, MyTwoCentsConfig (my_two_cents_config.dart), BlogDependentAppAttributes (blog_dependent_app_attributes.dart)
+    Pages/                      # The shared pages; the first five below left this app's lib/Pages on 2026-09-07
+      LandingPage/              #   Landing page with blog entry cards
+      ErrorPage/                #   404 error page
+      Footer/                   #   Footer, its pages and configs (generic_footer_page_config.dart: the parameterized one)
+      Home/                     #   Home shell: navigation bar/rail and the trailing actions
+      DataPage/BlockOverviewPage/  # Blog overview
+      Sqlite/                   #   SQLite self-test page
       markdown_content_page.dart  # Generic Markdown+appendix page (shared)
-      Footer/
-        generic_footer_page_config.dart  # Parameterized footer page config (shared)
     Widgets/
       skill_table.dart          #   Reusable JSON-to-Table widget (shared)
     Sqlite/                     #   Platform-conditional SQLite self-test (shared)
@@ -63,7 +65,7 @@ the behaviour lives upstream is the mistake to avoid:
 | `scripts/capture_console_errors.py` | shared Flutter-web console-error test |
 | `scripts/run-lint-gates.sh` | shared lint aggregator (`linux/scripts/run-lint-gates.sh`; its header says which gates and why) |
 | `scripts/setup-sqlite3-wasm.sh` | shared SHA256-verified sqlite3.wasm fetcher |
-| `scripts/renovate-local.sh` | shared Renovate local-CLI dependency updater (submodule pins) |
+| `scripts/renovate-local.sh` | shared Renovate local-CLI dependency updater (every manager the tree has, submodule pins and `pubspec.yaml` included) |
 | `scripts/sync-webdav-content.sh` | `01-core/python_uv.sh` (uv, venv) and `01-core/webdav-download.sh` (`webdav_download_tree`, over the `WEBDAVCLIENT_REF` pin in `01-core/versions.env`); only the secret names, the interpreter and the destination are this repo's |
 
 | Topic | Where |
@@ -81,11 +83,14 @@ Two upstream facts worth knowing before you reach a doc:
 - ANTfrastructure's PowerShell modules declare `#requires -Version 7.0` — launch
   with `pwsh`, never `powershell`. (Not used by this repo's CI today, which is
   Linux-only, but true if you add a Windows lane.)
-- Workflows resolve ANTfrastructure's composite actions at `@develop`, so an upstream
-  change a workflow depends on must be pushed **before** the consumer change.
+- Workflows resolve ANTfrastructure's composite actions and reusable workflows at
+  `@develop`, so an upstream change a workflow depends on must be pushed
+  **before** the consumer change.
 
-Clone with `--recurse-submodules` or the wrappers fail with an explicit
-"did you run `git submodule update --init`?" message rather than a confusing one.
+Clone with `--recurse-submodules`. Without the ANTfrastructure submodule the
+wrappers stop with `Error: ANTfrastructure file not found: …` and the command
+that fixes it (`git submodule update --init --recursive third_party/ANTfrastructure`)
+rather than a confusing error.
 
 ## 3. Critical invariant: submodule pins
 
@@ -113,13 +118,13 @@ Flat `scripts/` is deliberate: CI is Linux-only, so there is no
 
 ### Architecture & Conventions
 
-- **State management:** Provider (`package:provider`)
+- **State management:** plain `StatefulWidget` state — ANThology's `KataglyphisAppShell` holds the app-wide state and changes it with `setState`. `provider` is declared in `pubspec.yaml` but imported nowhere (nor by ANThology).
 - **Routing:** GoRouter (`package:go_router`, pinned by ANThology) with declarative named routes
 - **Responsive layout:** Switch between single-page and two-column layout based on screen width breakpoints (defined in `third_party/ANThology/lib/constants.dart`)
-- **Content:** Blog posts in Markdown, rendered via `markdown_widget` / `flutter_markdown_plus`. Book/film/game reviews via `my_two_cents_config.json`.
+- **Content:** Blog posts in Markdown, rendered via `markdown_widget` (ANThology's `lib/Media/Markdown/markdown_page.dart`; `flutter_markdown_plus` is declared there but imported nowhere). Book/film/game reviews via `assets/settings/my_two_cents_settings.json` (parsed into ANThology's `MyTwoCentsConfig`).
 - **Localization:** ARB files in `lib/l10n/` (template: `app_en.arb`), output auto-generated to `app_localizations.dart`. Always run `flutter gen-l10n` after editing ARB files.
-- **Page pattern:** Each page implements `StatefulBranchInfoProvider` (from shared repo) which provides `getRoutingName()` and a GoRouter-compatible page builder. Config classes hold route metadata, icon, label, and page builder.
-- **Fonts:** Montserrat and Roboto come from the anthology package (pubspec.yaml:68-73).
+- **Page pattern:** every route is a `(page widget, config)` pair, returned by `getAllPagesWithConfigs` in `lib/Routing/jotrockenmitlocken_router.dart`. The config extends ANThology's `StatefulBranchInfoProvider`, which supplies only `getRoutingName()`; nav-bar configs (`NavBarPageConfig`) add the `NavigationDestination` (icon and label), and ANThology's `RoutesCreator` builds the GoRouter from the pairs.
+- **Fonts:** Montserrat and Roboto come from the anthology package (the note closing `pubspec.yaml`).
 - **Lint rules:** `flutter_lints` via the shared include `third_party/ANTfrastructure/shared/config/analysis_options.yaml`. No custom overrides.
 - **Format scope:** `dart format` runs over `git ls-files '*.dart'`, never `.` — a recursive walk format-checks `third_party/ANThology`; see `third_party/ANTfrastructure/docs/code-quality-tooling.md` § Dart file enumeration.
 
@@ -127,7 +132,7 @@ Flat `scripts/` is deliberate: CI is Linux-only, so there is no
 
 | Category | Key Packages |
 |---|---|
-| State management | `provider ^6.1.5+1` |
+| State management | `provider ^6.1.5+1` (declared, imported nowhere) |
 | Routing | `go_router ^18.0.0` (through `anthology`; no direct dependency here) |
 | Icons | `cupertino_icons ^1.0.9`, `font_awesome_flutter ^11.0.0` |
 | Localization | `intl ^0.20.2` |
@@ -135,7 +140,7 @@ Flat `scripts/` is deliberate: CI is Linux-only, so there is no
 | Shared library | `anthology` (local path: `third_party/ANThology`) |
 | Testing | `flutter_test`, `integration_test`, `mockito ^5.7.0` |
 | Charts (in shared repo) | `fl_chart ^1.2.0` |
-| Markdown (in shared repo) | `markdown ^7.3.1`, `markdown_widget ^2.3.2+8`, `flutter_markdown_plus ^1.0.7` |
+| Markdown (in shared repo) | `markdown ^7.3.1`, `markdown_widget ^2.3.2+8`, `flutter_markdown_plus ^1.0.7` (declared; only `markdown_widget` is imported) |
 
 ### Gotchas
 
@@ -144,14 +149,14 @@ Flat `scripts/` is deliberate: CI is Linux-only, so there is no
 - **ARB generation:** After editing `.arb` files, run `flutter gen-l10n` to regenerate `app_localizations*.dart`.
 - **SQLite on web:** `bash scripts/setup-sqlite3-wasm.sh` downloads `sqlite3.wasm` into `web/` for web targets. It takes no arguments: the version and its SHA256 come from ANTfrastructure's `linux/scripts/01-core/versions.env` (`SQLITE3_WASM_VERSION`), and the download is verified against it.
 - **iOS/macOS builders:** Do not touch `ios/`, `macos/`, `android/`, `windows/`, `linux/` directories unless specifically requested — they contain platform-specific boilerplate.
-- **Known issues:** `flutter_highlighter` needs a patch; `flutter_markdown` has a blockquote rendering issue.
+- **Known issues:** `flutter_highlighter` needs a patch (ANThology still declares it; nothing in its `lib/` imports it). The `flutter_markdown` blockquote issue in the README is from 2024; `flutter_markdown` is no longer a dependency, and Markdown renders through `markdown_widget`.
 - **ARM64 browser automation:** Playwright's `playwright install chromium` fails on ARM64; flatpak Chromium works everywhere. The prerequisites and the four failures worth recognising are ANTfrastructure's now — see § E2E prerequisites below.
 
 ### CI/CD (`.github/workflows/web.yml`)
 
 - **Names:** the family convention (owner decision 2026-09-24) — kebab-case, one file per platform, display names `<Platform> · <what>`, shared lanes named the same in every repo. So this lane is `web.yml` "Web · build + deploy" (it was `dart.yml` until then), and the pin lane is `submodule-pins.yml` "Submodule pins". Job ids did not change, so neither did the check-run names.
-- **Trigger:** push to `main` or `develop`. Flow: lint gates → WebDAV sync → dart-checks → `flutter build web --release --wasm` → smoke test → FTP deploy. `main` deploys WASM to the production domain; `develop` deploys WASM and CanvasKit to the dev domains.
-- **Containerised lane:** every Dart/Flutter step runs in the family Linux CI image (Flutter at `/opt/flutter`, no `setup-flutter`) via ANTfrastructure's `prepare-linux-ci-host` and `run-in-linux-container` actions. The image tag is deliberately written nowhere in this repo: the steps omit `image:` and inherit the actions' default (the comment above `build:` in the workflow says why). Each step is a fresh container, so `scripts/ci-container-steps.sh` re-establishes PATH, git `safe.directory` and the pub cache (`.pub-cache/` in the workspace) per phase — through ANTfrastructure's `flutter_lane_prepare_env`, not a prologue of its own.
+- **Trigger:** push to `main` or `develop`. Flow: lint gates → WebDAV sync → dart-checks → `flutter build web --release --wasm` → smoke test → FTP deploy. `main` deploys WASM to the production domain; `develop` deploys WASM and CanvasKit to the dev domains. Both branches then build the API docs (`dart doc`, the `dart-doc` phase) and publish them to the docs domain the README links.
+- **Containerised lane:** every Dart/Flutter step runs in the family Linux CI image (Flutter at `/opt/flutter`, no `setup-flutter`) via ANTfrastructure's `prepare-linux-ci-host` and `run-in-linux-container` actions. The image tag is deliberately written nowhere in this repo: the steps omit `image:` and inherit the actions' default (the comment at the top of the `build` job says why). Each step is a fresh container, so `scripts/ci-container-steps.sh` re-establishes PATH, git `safe.directory` and the pub cache (`.pub-cache/` in the workspace) per phase — through ANTfrastructure's `flutter_lane_prepare_env`, not a prologue of its own.
 - **Host-side steps:** the lint gate job (`build` needs it, so a lint failure stops the deploy before it starts), the WebDAV sync (repo secrets + uv; the fetched assets land in the workspace the container bind-mounts) and the four FTP deploy steps. The repo has no `GHCR_PAT`: the prologue action skips login and pulls the public image anonymously.
 
 ### E2E prerequisites (Playwright + flatpak Chromium)
@@ -177,16 +182,20 @@ flutter test
 dart format --output=none --set-exit-if-changed $(git ls-files '*.dart')   # not `dart format .`, see § 4
 
 # The whole lint gate; which gates and why is the header of
-# third_party/ANTfrastructure/linux/scripts/run-lint-gates.sh. CI runs this exact
-# script, and `build` (the deploy job) will not start until it passes.
+# third_party/ANTfrastructure/linux/scripts/run-lint-gates.sh. CI's `lint` job
+# (ANTfrastructure's reusable lint lane) runs that same aggregator with the same
+# arguments, not this wrapper, and `build` (the deploy job) will not start until
+# it passes.
 bash scripts/run-lint-gates.sh
 
-# Dependency upgrades — Renovate as a local CLI over the two submodule gitlinks.
-# Not a gate, and it does not cover pubspec.yaml (dependabot does). Needs node;
-# on Windows run it from WSL. third_party/ANTfrastructure/docs/dependency-updates.md
+# Dependency upgrades — Renovate as a local CLI over every manager this tree
+# has: the two submodule gitlinks, pubspec.yaml and the rest the hub script
+# detects (dependabot still covers pubspec.yaml too). Not a gate. It bootstraps
+# its own pinned, checksum-verified Node on Linux x64/arm64; on Windows run it
+# from WSL. third_party/ANTfrastructure/docs/dependency-updates.md
 bash scripts/renovate-local.sh                    # report what is behind
 bash scripts/renovate-local.sh --apply --dry-run  # the plan, with pre-flight
-bash scripts/renovate-local.sh --apply            # move the gitlinks
+bash scripts/renovate-local.sh --apply            # move the gitlinks, edit the manifests
 
 # Pull the private blog content off WebDAV into assets/ (needs the four
 # credentials CI holds as repository secrets). CI runs this exact script.
