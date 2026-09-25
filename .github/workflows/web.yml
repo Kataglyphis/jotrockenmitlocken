@@ -44,7 +44,7 @@ jobs:
   # exempts `uses:` jobs for exactly that reason.
   lint:
     name: 🧹 lint gates
-    uses: Kataglyphis/ANTfrastructure/.github/workflows/lint-gates.yml@main
+    uses: Kataglyphis/ANTfrastructure/.github/workflows/lint-gates.yml@develop
     with:
       # Top-level only, against the callee's `recursive` default. Its default is
       # right for a consumer whose secret scan reads the whole tree; this one
@@ -83,7 +83,7 @@ jobs:
       # repo has no GHCR_PAT, the action skips login on empty credentials, and
       # the image is public, so the anonymous pull works.
       - name: 🚚 Prepare CI host
-        uses: Kataglyphis/ANTfrastructure/.github/actions/prepare-linux-ci-host@main
+        uses: Kataglyphis/ANTfrastructure/.github/actions/prepare-linux-ci-host@develop
         with:
           fetch-depth: '0'
           submodules: recursive
@@ -122,7 +122,7 @@ jobs:
       # tell vendored code from ours, so it format-checked third_party/ANThology
       # (a separate repo, 86 .dart files).
       - name: Dart checks (format, analyze, test)
-        uses: Kataglyphis/ANTfrastructure/.github/actions/run-in-linux-container@main
+        uses: Kataglyphis/ANTfrastructure/.github/actions/run-in-linux-container@develop
         with:
           extra-args: --platform "linux/amd64"
           script: bash /workspace/scripts/ci-container-steps.sh dart-checks
@@ -134,7 +134,7 @@ jobs:
       # not one.
       - name: "Build Web App (WASM, main)"
         if: github.ref == 'refs/heads/main'
-        uses: Kataglyphis/ANTfrastructure/.github/actions/run-in-linux-container@main
+        uses: Kataglyphis/ANTfrastructure/.github/actions/run-in-linux-container@develop
         with:
           extra-args: --platform "linux/amd64"
           script: bash /workspace/scripts/ci-container-steps.sh build-web-wasm
@@ -142,13 +142,13 @@ jobs:
       - name: "Build Web App (WASM, develop)"
         if: github.ref == 'refs/heads/develop'
         id: build-wasm
-        uses: Kataglyphis/ANTfrastructure/.github/actions/run-in-linux-container@main
+        uses: Kataglyphis/ANTfrastructure/.github/actions/run-in-linux-container@develop
         with:
           extra-args: --platform "linux/amd64"
           script: bash /workspace/scripts/ci-container-steps.sh build-web-wasm
 
       - name: 🔍 Integration smoke test
-        uses: Kataglyphis/ANTfrastructure/.github/actions/run-in-linux-container@main
+        uses: Kataglyphis/ANTfrastructure/.github/actions/run-in-linux-container@develop
         with:
           extra-args: --platform "linux/amd64"
           script: bash /workspace/scripts/ci-container-steps.sh smoke-test
@@ -158,7 +158,7 @@ jobs:
       # and no tolerated failure (third_party/ANTfrastructure/docs/ftp-deploys.md).
       - name: 📂 Sync files to main domain
         if: github.ref == 'refs/heads/main'
-        uses: Kataglyphis/ANTfrastructure/.github/actions/deploy-over-ftp@main
+        uses: Kataglyphis/ANTfrastructure/.github/actions/deploy-over-ftp@develop
         with:
           server: ${{ secrets.SERVER }}
           username: ${{ secrets.USERNAME }}
@@ -167,7 +167,7 @@ jobs:
 
       - name: 📂 Sync files to dev wasm domain
         if: github.ref == 'refs/heads/develop'
-        uses: Kataglyphis/ANTfrastructure/.github/actions/deploy-over-ftp@main
+        uses: Kataglyphis/ANTfrastructure/.github/actions/deploy-over-ftp@develop
         with:
           server: ${{ secrets.SERVER }}
           username: ${{ secrets.DEV_WASM_USERNAME }}
@@ -176,14 +176,14 @@ jobs:
 
       - name: "Build Web App with canavaskit"
         if: github.ref == 'refs/heads/develop'
-        uses: Kataglyphis/ANTfrastructure/.github/actions/run-in-linux-container@main
+        uses: Kataglyphis/ANTfrastructure/.github/actions/run-in-linux-container@develop
         with:
           extra-args: --platform "linux/amd64"
           script: bash /workspace/scripts/ci-container-steps.sh build-web-canvaskit
 
       - name: 📂 Sync files to dev domain
         if: github.ref == 'refs/heads/develop'
-        uses: Kataglyphis/ANTfrastructure/.github/actions/deploy-over-ftp@main
+        uses: Kataglyphis/ANTfrastructure/.github/actions/deploy-over-ftp@develop
         with:
           server: ${{ secrets.SERVER }}
           username: ${{ secrets.DEV_USERNAME }}
@@ -191,13 +191,13 @@ jobs:
           local-dir: "./build/web/"
 
       - name: Build docs
-        uses: Kataglyphis/ANTfrastructure/.github/actions/run-in-linux-container@main
+        uses: Kataglyphis/ANTfrastructure/.github/actions/run-in-linux-container@develop
         with:
           extra-args: --platform "linux/amd64"
           script: bash /workspace/scripts/ci-container-steps.sh dart-doc
 
       - name: 📂 Sync files to doc domain
-        uses: Kataglyphis/ANTfrastructure/.github/actions/deploy-over-ftp@main
+        uses: Kataglyphis/ANTfrastructure/.github/actions/deploy-over-ftp@develop
         with:
           server: ${{ secrets.DOC_WEBSITE_SERVER }}
           username: ${{ secrets.DOC_WEBSITE_USER }}

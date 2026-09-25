@@ -81,7 +81,7 @@ Two upstream facts worth knowing before you reach a doc:
 - ANTfrastructure's PowerShell modules declare `#requires -Version 7.0` — launch
   with `pwsh`, never `powershell`. (Not used by this repo's CI today, which is
   Linux-only, but true if you add a Windows lane.)
-- Workflows resolve ANTfrastructure's composite actions at `@main`, so an upstream
+- Workflows resolve ANTfrastructure's composite actions at `@develop`, so an upstream
   change a workflow depends on must be pushed **before** the consumer change.
 
 Clone with `--recurse-submodules` or the wrappers fail with an explicit
