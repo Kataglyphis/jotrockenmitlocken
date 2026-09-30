@@ -79,8 +79,7 @@ void main() {
     late AnimationController animationController;
 
     setUp(() {
-      // CurvedAnimation requires a TickerProvider, available via TestVSync
-      // from the widget test binding.
+      // CurvedAnimation needs a TickerProvider; TestVSync supplies one.
       final vsync = TestVSync();
       animationController = AnimationController(vsync: vsync);
       railAnimation = CurvedAnimation(

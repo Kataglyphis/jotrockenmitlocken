@@ -3,16 +3,11 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-# The submodule path and the not-found guard come from the canonical bootstrap
-# (a verbatim copy of upstream's shared/linux/templates/antfrastructure.sh), so this
-# script spells out neither. antfrastructure_path also names the "it moved upstream"
-# case, which the local guard did not.
+# The submodule path and the not-found guard come from the synced bootstrap.
 # shellcheck source=/dev/null
 source "${SCRIPT_DIR}/lib/antfrastructure.sh"
 
-# NOTE the underscores. This pointed at flutter_integration-smoke-test.sh
-# (hyphens) and had been broken since the kebab-case script-renaming round; the
-# local guard reported "not found" without saying the name had changed.
+# Underscores, not hyphens: the kebab-case rename did not reach this upstream file.
 SHARED_SCRIPT="$(antfrastructure_path linux/webserver/scripts/flutter_integration_smoke_test.sh)"
 
 REQUIRED_CSP_HOSTS="www.gstatic.com fonts.gstatic.com" \

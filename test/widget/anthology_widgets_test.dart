@@ -1,11 +1,4 @@
-// Widget tests for the shared widgets jotrockenmitlocken renders out of
-// package:anthology - the File model, the 404 page and the FileTable/FileTile
-// pair the download pages are built from.
-//
-// FILE NAME: this file used to be `widget_tests.dart` (plural). package:test
-// only discovers `test/**/*_test.dart`, so `flutter test` walked straight past
-// it and the suite below never ran - it was dead weight that looked like
-// coverage. Do not rename it back.
+// Keep the `_test.dart` suffix: package:test discovers nothing else, so a rename silently drops the suite.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:anthology/Pages/ErrorPage/error_page_widget.dart';
@@ -15,22 +8,8 @@ import 'package:anthology/Media/Files/file_table.dart';
 import 'package:anthology/Media/Files/file_tile.dart';
 import 'package:anthology/l10n/anthology_localizations.dart';
 
-/// Hosts [child] the way the real app hosts anthology's widgets.
-///
-/// The delegates are not decoration. anthology's widgets read their chrome
-/// strings through `AnthologyLocalizations.of(context)!` - FileTile's
-/// OpenButton does it for its "Open" label - and that null check is what a
-/// MaterialApp lacking [AnthologyLocalizations.delegate] trips over, throwing
-/// `_TypeError: Null check operator used on a null value` out of
-/// open_button.dart while building the tile. That is exactly what five of the
-/// FileTable tests below used to do. In the app the delegate is supplied once
-/// by `KataglyphisAppShell`; a widget test has to supply it itself, which is
-/// what anthology's own test/shared_pages_test.dart does.
-///
-/// The locale is pinned rather than inherited from the test platform so the
-/// English assertions below cannot start failing on a machine whose default
-/// locale happens to be German or French - both are in
-/// [AnthologyLocalizations.supportedLocales].
+/// Hosts [child] with [AnthologyLocalizations.delegate], without which the widgets throw a null check.
+/// The locale is pinned to English so the assertions hold on a German or French machine.
 Widget _hostedInApp(Widget child) {
   return MaterialApp(
     locale: const Locale('en'),
@@ -206,10 +185,7 @@ void main() {
       expect(find.text(customTitle), findsOneWidget);
     });
 
-    // Names the dependency the five failures above were really about, so a
-    // host that drops AnthologyLocalizations.delegate fails on a test that
-    // says what is missing instead of on an anonymous null check deep inside
-    // the tile.
+    // Fails by name, not with an anonymous null check, when a host drops AnthologyLocalizations.delegate.
     testWidgets('each row carries the localized Open affordance', (
       tester,
     ) async {
@@ -224,8 +200,7 @@ void main() {
         ),
       );
 
-      // 'Open' is AnthologyLocalizations.openLabel in English; it resolves only
-      // through the delegate _hostedInApp installs.
+      // 'Open' resolves only through the delegate _hostedInApp installs.
       expect(find.text('Open'), findsOneWidget);
     });
   });

@@ -1,19 +1,4 @@
-# gitleaks config for this repository's secret-scan gate
-# (.github/workflows/web.yml -> third_party/ANTfrastructure/linux/scripts/lint-secrets.sh).
-#
-# The hub script prefers the SCANNED tree's own .gitleaks.toml over its own, so
-# this file - not ANTfrastructure's - is what grades jotrockenmitlocken. It EXTENDS
-# the built-in rule set and only ever ADDS allowlist entries; it never disables a
-# rule and carries no blanket suppression.
-#
-# RULE: every entry needs a justification comment saying why the matched value or
-# path is not a credential of this repository. An entry without one is a bug.
-#
-# First run (2026-09-07, gitleaks 8.30.1, default rules, this repo's tracked
-# tree): CLEAN - zero findings. The FTP and WebDAV credentials this repo's
-# deploy steps use are `${{ secrets.* }}` references and CLI arguments, never
-# literals, so nothing had to be triaged away to get there. The single entry
-# below is about the vendored submodules, not about this repo's own files.
+# Grades this repo instead of the hub's config; it only ADDS allowlists, each saying why its match is no credential here.
 
 [extend]
 useDefault = true

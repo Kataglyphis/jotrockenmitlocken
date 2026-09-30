@@ -87,11 +87,7 @@ class JotrockenMitLockenRoutes extends RoutesCreator {
         appAttributes: appAttributes,
         blogDependentAppAttributes: blogDependentAppAttributes,
       ),
-      // Title, description and both button labels now come from the shared
-      // anthology catalogue. They used to be a hand-rolled
-      // `localeOf(context) == Locale('de')` ternary here, which served English
-      // to the French locale this app also ships, and errorPrefix was hard-coded
-      // German for every locale.
+      // Labels come from the anthology catalogue, so the fr locale gets French too.
       SqliteTestPage(
         footer: getFooter(appAttributes),
         appAttributes: appAttributes,

@@ -1,8 +1,3 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-
 name: Web · build + deploy
 
 env:
@@ -16,46 +11,15 @@ on:
     branches: ["main", "develop"]
 
 jobs:
-  # ---------------------------------------------------------------------------
-  # Lint gates, entirely ANTfrastructure's. Which gates run, and why each one,
-  # is the header of third_party/ANTfrastructure/linux/scripts/run-lint-gates.sh;
-  # they use the pinned, SHA-verified binaries ANTfrastructure bootstraps rather
-  # than a second set installed here.
-  #
-  # Cheap and first-to-finish (no image pull, no Flutter build), and it covers
-  # classes the deploy job cannot: bash only reports a quoting or
-  # undefined-function bug when the line finally executes - inside a container,
-  # mid-deploy - `yaml.safe_load` proves a workflow is valid YAML but not valid
-  # Actions, and nothing here looked for committed credentials at all until now.
-  #
-  # `build` NEEDS this job on purpose. This workflow deploys to three live FTP
-  # targets on every push; a lint gate that runs beside the deploy instead of
-  # in front of it can only report a problem the world has already been served.
-  # ---------------------------------------------------------------------------
-  # One `uses:`, not a job. The checkout, the uv install and the aggregator call
-  # were three steps here, and six other consumers carried the same three; they
-  # are ANTfrastructure's reusable lint lane now. `bash scripts/run-lint-gates.sh`
-  # stays as the dev-box command and drives the same aggregator with the same
-  # arguments - the wrapper's header says which, and this call has to agree with
-  # it, because only the wrapper is reachable locally.
-  #
-  # No `timeout-minutes` here: a job that calls a reusable workflow may not carry
-  # one, the callee's job owns it (20 minutes there), and the conventions gate
-  # exempts `uses:` jobs for exactly that reason.
+  # Gates `build` (live FTP deploys); must match scripts/run-lint-gates.sh; a `uses:` job may not set timeout-minutes.
   lint:
     name: 🧹 lint gates
     uses: Kataglyphis/ANTfrastructure/.github/workflows/lint-gates.yml@develop
     with:
-      # Top-level only, against the callee's `recursive` default. Its default is
-      # right for a consumer whose secret scan reads the whole tree; this one
-      # excludes third_party from every scope, so ANTfrastructure's OWN
-      # submodules are checked out for nothing. ANThology comes along because it
-      # too is top-level, which is fine and costs seconds.
+      # Top-level only: every scope excludes third_party, so nested submodules would be checked out for nothing.
       submodules: 'true'
       exclude: third_party
-      # The freeze files are seeded and committed (comment-size.allow), so the
-      # measurement gates run here as well as locally. Left off, CI would grade
-      # less than the dev box does.
+      # The freeze files are committed, so CI grades as much as the dev box does.
       ratchets: true
 
   build:
@@ -65,39 +29,16 @@ jobs:
     # The deploy job is gated on the lint job: see the block above `lint:`.
     needs: lint
 
-    # NO `image:` ANYWHERE IN THIS JOB, and no CONTAINER_IMAGE env var either.
-    # The tag used to be written here as a literal and passed to all seven
-    # container steps; it now comes from ANTfrastructure's own single source of
-    # truth - linux/scripts/01-core/versions.env composes
-    # `${IMAGE_REGISTRY_PREFIX}:${CI_IMAGE_LINUX_TAG}`, the four container
-    # composite actions carry that value as their `image` input DEFAULT, and
-    # verify_ci_image_refs.py checks the copies against versions.env. An input
-    # OMITTED gets the default; an input passed as an expression does not, so
-    # `image: ${{ env.X }}` with X unset would hand the action an empty ref.
-    # Omission is therefore the whole mechanism: a family-wide tag change lands
-    # in one file in one repo and this lane follows without a commit.
+    # No `image:` input: omitted, it defaults to the family ref; an expression that resolves empty would not.
     steps:
-      # ANTfrastructure's shared prologue: reclaim disk, check out (submodules:
-      # ANThology is a path dependency, ANTfrastructure owns the shared gates),
-      # pull the image with retries. No registry credentials on purpose: this
-      # repo has no GHCR_PAT, the action skips login on empty credentials, and
-      # the image is public, so the anonymous pull works.
+      # No registry credentials: the image is public and this repo has no GHCR_PAT.
       - name: 🚚 Prepare CI host
         uses: Kataglyphis/ANTfrastructure/.github/actions/prepare-linux-ci-host@develop
         with:
           fetch-depth: '0'
           submodules: recursive
 
-      # Host, not container: the WebDAV sync is the one step needing repo
-      # secrets and uv. The assets it fetches land in the workspace, so the
-      # container steps below see them through the bind mount.
-      #
-      # setup-uv installs the tool; scripts/sync-webdav-content.sh does the work
-      # (venv, python pin, WebDavClient install, download). That split is the
-      # point: the venv/install half was inline here, so the step had no local
-      # equivalent. The secrets go through `env:` rather than into the command
-      # line - a password containing a quote or `$(...)` was a quoting bug in the
-      # old interpolated `run:`.
+      # On the host: the one step needing repo secrets, passed via env: so quotes in them cannot break the command.
       - name: Install uv
         uses: astral-sh/setup-uv@v9.0.0
 
@@ -110,28 +51,14 @@ jobs:
           # LOCAL_ASSETS_FOLDER comes from the workflow-level env above.
         run: bash scripts/sync-webdav-content.sh
 
-      # Every Dart/Flutter step runs inside the Kataglyphis container image
-      # (Flutter baked in at /opt/flutter) - the host has no Flutter SDK any
-      # more. One phase per step; the phases live in
-      # scripts/ci-container-steps.sh, which re-establishes per-container
-      # state (PATH, git safe.directory, pub cache) every time.
-
-      # pub get (root + ANThology), format, analyze and test were four inline
-      # steps here until they were folded into ANTfrastructure's shared gate. The
-      # inline `dart format .` was the reason to move: a recursive walk cannot
-      # tell vendored code from ours, so it format-checked third_party/ANThology
-      # (a separate repo, 86 .dart files).
+      # Flutter runs only in the image; each phase of scripts/ci-container-steps.sh re-establishes per-container state.
       - name: Dart checks (format, analyze, test)
         uses: Kataglyphis/ANTfrastructure/.github/actions/run-in-linux-container@develop
         with:
           extra-args: --platform "linux/amd64"
           script: bash /workspace/scripts/ci-container-steps.sh dart-checks
 
-      # `flutter config --enable-web` moved into the build phases: it writes
-      # per-user config, which the next step's fresh container never inherits.
-      # Both branches build the SAME WASM bundle - the step names say so now;
-      # "Build Web App" on main read as a non-WASM build in the runs UI and was
-      # not one.
+      # Both branches build the same WASM bundle.
       - name: "Build Web App (WASM, main)"
         if: github.ref == 'refs/heads/main'
         uses: Kataglyphis/ANTfrastructure/.github/actions/run-in-linux-container@develop
@@ -153,9 +80,7 @@ jobs:
           extra-args: --platform "linux/amd64"
           script: bash /workspace/scripts/ci-container-steps.sh smoke-test
 
-      # The four FTP publishes go through ANTfrastructure's deploy-over-ftp
-      # action: one SHA-pinned upstream, the empty-tree and permission guards,
-      # and no tolerated failure (third_party/ANTfrastructure/docs/ftp-deploys.md).
+      # See third_party/ANTfrastructure/docs/ftp-deploys.md
       - name: 📂 Sync files to main domain
         if: github.ref == 'refs/heads/main'
         uses: Kataglyphis/ANTfrastructure/.github/actions/deploy-over-ftp@develop

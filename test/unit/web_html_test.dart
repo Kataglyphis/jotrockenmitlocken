@@ -86,9 +86,7 @@ void main() {
     test('CSP does NOT use fixed 3-second timer pattern', () async {
       final html = await _loadWebIndexHtml();
 
-      // The old buggy code had: setTimeout(..., 3000) and setTimeout(..., 3500)
-      // right after window.addEventListener('load', ...)
-      // The new code should NOT have load + 3000/3500 pattern
+      // The fixed setTimeout(3000/3500) after the load event must not come back.
       final hasOldPattern = RegExp(
         r"addEventListener\('load'[\s\S]*3000",
       ).hasMatch(html);

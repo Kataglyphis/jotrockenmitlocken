@@ -22,9 +22,7 @@ Widget _wrapWithMaterial(Widget child) {
 }
 
 void main() {
-  // ---------------------------------------------------------------------------
-  // getDayHourPercentage (public static method on PerfectDayState)
-  // ---------------------------------------------------------------------------
+  // --- getDayHourPercentage (PerfectDayState) ---
   group('getDayHourPercentage', () {
     test('8 hours returns ~33.33', () {
       expect(PerfectDayState.getDayHourPercentage(8), 33.33);
@@ -48,9 +46,7 @@ void main() {
     });
   });
 
-  // ---------------------------------------------------------------------------
-  // estimateMaxScrollOffset (public override on BuildSlivers)
-  // ---------------------------------------------------------------------------
+  // --- estimateMaxScrollOffset (BuildSlivers) ---
   group('estimateMaxScrollOffset', () {
     Widget dummyBuilder(BuildContext context, int index) =>
         const SizedBox.shrink();
@@ -94,22 +90,13 @@ void main() {
     });
 
     test('null heights list (default) returns 0.0', () {
-      // heights is non-null List<double?> but can contain nulls.
-      // All null entries → result is null-safe and returns 0.0.
+      // The list itself is non-null, but an all-null entry list must still sum to 0.0.
       final slivers = buildSliversWithHeights([null]);
       expect(slivers.estimateMaxScrollOffset(0, 0, 0, 0), 0.0);
     });
   });
 
-  // ---------------------------------------------------------------------------
-  // _formatQuote (private method on _QuotesListState)
-  //
-  // NOTE: This method should be extracted to a standalone pure function for
-  // testability. Currently it lives as a private method inside the private
-  // _QuotesListState class and can only be exercised via widget tests.
-  //
-  // The tests below mirror its exact logic: wrapping a string with »...«
-  // ---------------------------------------------------------------------------
+  // --- _formatQuote: private to _QuotesListState, so these tests mirror its logic ---
   group('_formatQuote (mirrored logic)', () {
     String mirrorFormatQuote(String unformattedQuote) {
       return '\u00BB$unformattedQuote\u00AB';
@@ -139,14 +126,7 @@ void main() {
     });
   });
 
-  // ---------------------------------------------------------------------------
-  // _compareString (private method on AnthologyTableState)
-  //
-  // NOTE: This method should be extracted to a standalone pure function for
-  // direct testability. Currently it lives as a private method and can only be
-  // exercised indirectly via widget construction. The widget tests below
-  // validate the sorting behavior end-to-end.
-  // ---------------------------------------------------------------------------
+  // --- _compareString: private to AnthologyTableState, so it is tested through the widget ---
   group('_compareString via AnthologyTable widget', () {
     List<DataCellContentStrategies> textStrategy(int count) =>
         List<DataCellContentStrategies>.filled(
@@ -277,9 +257,7 @@ void main() {
       );
       await tester.pump();
 
-      // Empty strings come before 'A' and 'B' in ascending order.
-      // There may be other empty strings from the widget tree, so just check
-      // that A and B are rendered.
+      // The widget tree holds other empty strings, so only A and B can be checked.
       expect(find.text('A'), findsOneWidget);
       expect(find.text('B'), findsOneWidget);
 

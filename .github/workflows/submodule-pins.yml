@@ -1,33 +1,4 @@
-# .github/workflows/submodule-pins.yml
-# This repository has two submodules - third_party/ANThology (a path dependency
-# pubspec.yaml compiles against) and third_party/ANTfrastructure (which owns every
-# shared gate) - and nothing else asserts that either sits at its recorded
-# gitlink. A drifted submodule means the deploy job builds and ships something
-# other than what is committed, and `git submodule status` marks it with a '+'
-# that is easy to miss in a wall of CI output.
-#
-# THE JOB IS ONE `uses:` LINE. Three consumers carried this lane as a near-copy,
-# each with its own forty lines of Pester rationale, and ANTfrastructure made it
-# reusable on 2026-09-14. What is left here is what is genuinely this repo's: the
-# branches and paths that should trigger it. The runner label, the Pester
-# version, the checkout shape and the suite path are the callee's - every one of
-# them a fact about the SUITE, not about this repository, and the header of
-# ANTfrastructure's .github/workflows/submodule-pins.yml still carries the
-# measurements behind them.
-#
-# The suite itself is repo-agnostic: it takes the superproject root as a
-# parameter and asserts, for EVERY configured submodule, that it is checked out,
-# sits at its recorded commit, and is pinned to a commit still reachable from its
-# remote. Nothing here has to name ANThology or ANTfrastructure for them to be
-# covered.
-#
-# `pester-version` is passed rather than defaulted, and it is the one input worth
-# stating: 3.4.0 is the only version the composite action's invocation survives
-# (measured 2026-09-07 against this repo as the -RepoRoot: 5.7.1 passes but
-# leaves $r.TestResult null, so a red run prints nothing but "exit 1", and 6.1.0
-# rejects -Quiet before a single test executes). Naming it here is this consumer
-# saying which dialect it was verified against, instead of inheriting a default
-# the hub may change.
+# A drifted submodule means the deploy ships something other than what is committed.
 name: Submodule pins
 
 on:
@@ -56,4 +27,5 @@ jobs:
     name: 📌 Submodule pins sit at their recorded commits
     uses: Kataglyphis/ANTfrastructure/.github/workflows/submodule-pins.yml@develop
     with:
+      # Pinned so a hub default change cannot break the lane: Pester 5 blinds its diagnostics, 6 rejects -Quiet.
       pester-version: '3.4.0'

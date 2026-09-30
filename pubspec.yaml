@@ -51,19 +51,10 @@ flutter:
   generate: true
   uses-material-design: true
 
-  # The shared corpus (images, blog/footer documents, Montserrat + Roboto) now
-  # lives in the anthology package and is referenced as
-  # `packages/anthology/assets/...`. Only assets unique to this app remain here.
+  # App-only assets; the shared corpus and fonts come from anthology as `packages/anthology/...`.
   assets:
     - assets/images/
-    # assets/documents/ is populated at build time by scripts/sync-webdav-content.sh;
-    # only the CV and thesis PDFs are tracked. Recorded here rather than in a README
-    # inside that directory, because Flutter bundles every file a declared asset
-    # directory contains, developer notes included. The empty .gitkeep is what a
-    # declared directory needs to exist in a fresh clone and to bundle SOMETHING
-    # before the sync runs - flutter_checks.sh fails a declared directory that
-    # holds no file, which is what removing the README left behind. Same file,
-    # same reason, as books/, games/ and data/.
+    # Filled at build time by sync-webdav-content.sh; a .gitkeep keeps each empty declared dir from failing the gate.
     - assets/documents/
     - assets/documents/books/
     - assets/documents/games/
@@ -73,9 +64,4 @@ flutter:
     - assets/settings/
     - assets/settings/user_settings/
 
-# NOTE: there is deliberately no `fonts:` key here any more. The block that used
-# to follow sat at column 0 - a top-level pubspec key, which Flutter ignores -
-# and every asset path in it (`static/Montserrat-Thin.ttf`, `Roboto-Black.ttf`,
-# resolved from the repo root) pointed at a file that does not exist. Montserrat
-# and Roboto are declared by the anthology package now, correctly nested under
-# its own `flutter:` key, and register as `packages/anthology/<family>`.
+# No `fonts:` key: anthology declares the fonts, registered as `packages/anthology/<family>`.
