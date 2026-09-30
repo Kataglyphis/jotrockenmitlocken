@@ -1,24 +1,14 @@
 #!/usr/bin/env bash
-# The repo's Dart gate: pub get (root + ANThology), format, analyze, test.
-#
-# CI used to inline those four commands in .github/workflows/web.yml, which
-# meant the gate drifted from every other Kataglyphis repo and its
-# `dart format .` walked third_party/ANThology's 86 .dart files — a recursive
-# walk cannot tell vendored code from ours. The shared driver enumerates
-# tracked, non-vendored files instead.
+# run-dart-checks.sh - the Dart gate (pub get for root and ANThology, format on tracked files, analyze, test).
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-# The submodule path and the not-found guard come from the canonical bootstrap
-# (a verbatim copy of upstream's shared/linux/templates/antfrastructure.sh), so this
-# script spells out neither. antfrastructure_path also names the "it moved upstream"
-# case, which the local guard did not.
+# The submodule path and the not-found guard come from the synced bootstrap.
 # shellcheck source=/dev/null
 source "${SCRIPT_DIR}/lib/antfrastructure.sh"
 
-# No pass-through: silently dropping an argument would be worse, and the one
-# knob a caller might reach for (--strict false) turns the gate into a warning.
+# No arguments: --strict false would turn the blocking gate into a warning.
 if [ "$#" -gt 0 ]; then
   echo "Error: $0 takes no arguments (got: $*)." >&2
   echo "       This is the blocking gate; it is fixed at --strict true." >&2
@@ -26,12 +16,10 @@ if [ "$#" -gt 0 ]; then
   exit 2
 fi
 
-# flutter_checks.sh resolves dependencies and enumerates Dart files relative to
-# the cwd, so run from the repo root whatever directory the caller was in.
+# flutter_checks.sh works relative to the cwd.
 cd "$KATAGLYPHIS_REPO_ROOT"
 
-# --extra-package: ANThology is a submodule with its own pubspec, and the root
-# package's `flutter test` does not resolve it without its own `flutter pub get`.
+# ANThology has its own pubspec, which the root's `flutter test` does not resolve without its own pub get.
 antfrastructure_exec linux/scripts/05-frameworks/flutter/flutter_checks.sh \
   --strict true \
   --extra-package third_party/ANThology

@@ -40,14 +40,12 @@ app.*.map.json
 build/
 
 # Directory created by dartdoc
-# If you don't generate documentation locally you can remove this line.
 doc/api/
 
 # dotenv environment variables file
 .env*
 
-# uv virtualenv created by scripts/sync-webdav-content.sh (CI throws its runner
-# away; a local run would otherwise leave it untracked at the repo root).
+# uv virtualenv a local run of scripts/sync-webdav-content.sh leaves at the repo root
 .venv/
 
 # Avoid committing generated Javascript files:

@@ -403,8 +403,7 @@ void main() {
         'docsDesc': <dynamic>[],
       };
 
-      // The caption is genuinely optional in the settings files. Reading it as
-      // a non-nullable String used to make an absent caption blow up at load.
+      // The caption is optional in the settings files, so an absent one must not throw at load.
       final config = BlogPageConfig.fromJsonFile(json);
 
       expect(config.landingPageEntryImageCaptioning, isNull);

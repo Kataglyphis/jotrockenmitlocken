@@ -17,8 +17,7 @@ const String blogSettingsFilePath = "assets/settings/blog_settings.json";
 const String twoCentsSettingsFilePath =
     "assets/settings/my_two_cents_settings.json";
 
-/// Loads this app's settings through its own [SettingsLoader], which logs and
-/// rethrows on a malformed or missing file.
+/// Loads this app's settings via [SettingsLoader], which logs and rethrows on a bad or missing file.
 Future<SettingsLoadResult> loadAppSettings() {
   return SettingsLoader().loadAll(
     userSettingsPath: userSettingsFilePath,
@@ -32,14 +31,7 @@ void main() {
   runApp(const App());
 }
 
-/// jotrockenmitlocken's half of the shared shell.
-///
-/// Everything that used to live here - the animation controller, the width
-/// breakpoints, the four `handle*` callbacks, the theme pair and the
-/// `FutureBuilder -> MaterialApp.router` tail - now lives once in
-/// [KataglyphisAppShell]. What is left is genuinely this app's: its
-/// [SettingsLoader], its generated `AppLocalizations` and its screen
-/// configurations.
+/// This app's half of [KataglyphisAppShell]: its settings loader, localizations and screens.
 class App extends StatelessWidget {
   const App({super.key});
 

@@ -1,30 +1,14 @@
 #!/usr/bin/env bash
-# Serve build/web through the SHARED nginx config and run the smoke test
-# against it - the one check in this repo that grades the webserver
-# configuration (headers, CSP, SPA rewrite) rather than just the bundle.
-#
-#     bash scripts/run-nginx-integration-test.sh
-#
-# Requires: docker (or a compatible CLI), curl. Documented as a hand-run
-# command in AGENTS.md; nothing in CI calls it.
+# run-nginx-integration-test.sh - smoke test through the shared nginx config (headers, CSP, SPA rewrite); needs docker and curl.
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-# The submodule path and the not-found guard come from the canonical bootstrap
-# (a verbatim copy of upstream's shared/linux/templates/antfrastructure.sh), so this
-# script spells out neither. antfrastructure_path also names the "it moved upstream"
-# case, which the local guard did not.
+# The submodule path and the not-found guard come from the synced bootstrap.
 # shellcheck source=/dev/null
 source "${SCRIPT_DIR}/lib/antfrastructure.sh"
 
-# The readiness poll below is upstream's wait_for_http, not a fourth copy of the
-# same loop (01-core/http-readiness.sh,
-# third_party/ANTfrastructure/docs/shared-script-libraries.md
-# #01-corehttp-readinesssh). It RETURNS non-zero
-# instead of exiting, which is exactly what this caller needs: the container
-# logs below are the diagnosis, and a helper that called `exit` would take them
-# away.
+# wait_for_http returns rather than exits, so the container logs below still get printed.
 antfrastructure_source linux/scripts/01-core/http-readiness.sh
 
 PROJECT_DIR="$KATAGLYPHIS_REPO_ROOT"
@@ -35,21 +19,14 @@ if [ ! -f "$BUILD_DIR/index.html" ]; then
   cd "$PROJECT_DIR" && flutter build web --release --wasm --no-tree-shake-icons
 fi
 
-# ANTfrastructure owns the nginx config under test. Resolved through
-# antfrastructure_path so a missing submodule fails by name instead of silently
-# serving nginx's own default config and grading nothing this repo ships.
+# Resolved strictly: a missing file would otherwise serve nginx's default config and grade nothing.
 SHARED_NGINX_CONF="$(antfrastructure_path linux/webserver/templates/flutter-nginx-local.conf)"
 
-# --- teardown ----------------------------------------------------------------
-# One trap, set BEFORE the container exists, so an interrupt or a failure at any
-# point below still stops it. The previous version stopped the container on a
-# line AFTER the smoke test - which `set -e` never reached when the smoke test
-# failed, leaking an nginx container on exactly the runs you re-run most.
+# --- teardown: trapped before the container exists, so any failure below still stops it ---
 CONTAINER=""
 stop_nginx() {
   if [ -n "$CONTAINER" ]; then
-    # Reported, not silenced: `docker stop 2>/dev/null` hid the one message
-    # that explains a container you then find still running.
+    # Not silenced: this message explains a container you later find still running.
     docker stop "$CONTAINER" >/dev/null || echo "Warning: could not stop container $CONTAINER" >&2
     CONTAINER=""
   fi
@@ -57,14 +34,7 @@ stop_nginx() {
 trap stop_nginx EXIT
 
 echo "=== Starting nginx ==="
-# NO `2>/dev/null`, and NO fall back to `python3 -m http.server`. Both were
-# here, and together they turned "docker is not available" into a green run of
-# a DIFFERENT test: python's http.server serves the bundle with none of the
-# headers, none of the CSP and none of the SPA rewrite rules that this script
-# exists to grade, and the smoke test then printed "Integration tests passed".
-# A pass that covered nothing is worse than a red. The plain-server smoke test
-# still exists and is still one command away - it is the `smoke-test` phase of
-# scripts/ci-container-steps.sh, which is also what CI runs.
+# No http.server fallback: it has none of the headers, CSP or rewrites under test, so it would pass vacuously.
 if ! CONTAINER=$(docker run -d --rm \
   -p 8080:8080 \
   -v "$BUILD_DIR:/usr/share/nginx/html:ro" \
@@ -77,17 +47,12 @@ if ! CONTAINER=$(docker run -d --rm \
   exit 1
 fi
 
-# --- readiness ---------------------------------------------------------------
-# The 10s budget (50 attempts at 0.2s) is wait_for_http's default, and a server
-# that never comes up is named by it rather than failing somewhere downstream
-# with a message about the page. The `|| { ... }` block is what this caller adds
-# on top: the container's own logs, which is where the reason actually is.
+# --- readiness: on a timeout the container's own logs hold the reason ---
 BASE_URL="http://localhost:8080"
 echo "Waiting for server..."
 if ! wait_for_http "${BASE_URL}/" "nginx (container ${CONTAINER})"; then
   echo "       Container logs:" >&2
-  # Reported, never `|| true`: if the logs cannot be read that is itself part of
-  # the diagnosis, and the exit status below is this script's regardless.
+  # Unreadable logs are part of the diagnosis, so they are reported, not swallowed.
   if ! docker logs "$CONTAINER" >&2; then
     echo "       (could not read the container's logs either)" >&2
   fi
@@ -96,13 +61,7 @@ fi
 echo "Server ready"
 
 echo ""
-# `|| RESULT=$?`, not a bare call followed by `RESULT=$?`. Under this file's own
-# `set -euo pipefail` the bare form aborted the script on a failing smoke test,
-# so RESULT was only ever assigned the value 0 and the "✗ Integration tests
-# failed" branch below was unreachable code. Reproduced in isolation:
-# `set -euo pipefail; false; RESULT=$?; echo reached` prints nothing, exit 1.
-# This records the status so the teardown runs and the verdict is printed; it
-# does not swallow it - the status is re-raised at the end.
+# `|| RESULT=$?`: under set -e a bare call would abort before teardown; the status is re-raised below.
 RESULT=0
 "$SCRIPT_DIR/integration-smoke-test.sh" "$BASE_URL" || RESULT=$?
 

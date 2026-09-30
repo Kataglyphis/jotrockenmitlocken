@@ -1,27 +1,4 @@
-# This file configures the analyzer, which statically analyzes Dart code to
-# check for errors, warnings, and lints.
-#
-# The issues identified by the analyzer are surfaced in the UI of Dart-enabled
-# IDEs (https://dart.dev/tools#ides-and-editors). The analyzer can also be
-# invoked from the command line by running `flutter analyze`.
-#
-# The shared family policy — the flutter_lints include, the seven per-platform
-# excludes and the linter section — lives in ANTfrastructure and is pulled in BY
-# REFERENCE below, through Dart's native relative include. This file is where
-# that policy was extracted FROM, and it was the one repo that never repointed
-# afterwards: it kept its own verbatim copy of the same seven excludes, so the
-# two could drift apart with nothing to notice.
-#
-# Deliberately a reference and not Sync-SharedConfig.ps1: that copies verbatim
-# and would erase any per-app delta. The analyzer merges an included file with
-# this one and UNIONS analyzer.exclude, so anything added below is additive to
-# the shared list (build/**, android/**, ios/**, web/**, windows/**, macos/**,
-# linux/**).
-#
-# This repo has no deltas today. The excludes were byte-identical to the shared
-# ones, and the `linter.rules:` block held only commented-out examples from the
-# Flutter template.
+# The shared policy by reference, not a synced copy: analyzer.exclude entries added below union with it.
 include: third_party/ANTfrastructure/shared/config/analysis_options.yaml
 
-# Additional information about this file can be found at
-# https://dart.dev/guides/language/analysis-options
+# See https://dart.dev/guides/language/analysis-options

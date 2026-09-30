@@ -74,6 +74,7 @@ the behaviour lives upstream is the mistake to avoid:
 | Flutter-web smoke + console tests | [webserver README](third_party/ANTfrastructure/linux/webserver/README.md#reusable-flutter-web-helpers) |
 | Browser prerequisites for the console test | [same README](third_party/ANTfrastructure/linux/webserver/README.md#prerequisites-for-the-browser-smoke-test) |
 | Running any command in the family CI image, by hand | `docs/shared-script-libraries.md` § run-in-ci-image.sh |
+| Code comments: one line, only the why; API docs short; gated | [the hub rule, Comments](third_party/ANTfrastructure/AGENTS.md#comments-one-line-only-the-why) |
 | CI image reference | `docs/shared-script-libraries.md` § ci-image-ref.sh |
 | Dependency updates (Renovate as a local CLI) | `docs/dependency-updates.md` |
 | The FTP publish action the deploy steps use | `docs/ftp-deploys.md` |
@@ -106,8 +107,8 @@ fallout in the same change.
   gone. Do not re-add a package ANThology already pins unless the ranges overlap.
 
 Drift is guarded by ANTfrastructure's shared suite, run from
-`.github/workflows/submodule-pins.yml` (its header records the Pester version it
-was measured against). Run it after any pin bump. It does **not** check the
+`.github/workflows/submodule-pins.yml` (its `pester-version` input pins Pester 3.4.0,
+and the comment above it says why). Run it after any pin bump. It does **not** check the
 version coupling above; that is on you.
 
 Flat `scripts/` is deliberate: CI is Linux-only, so there is no
