@@ -75,6 +75,7 @@ the behaviour lives upstream is the mistake to avoid:
 | Browser prerequisites for the console test | [same README](third_party/ANTfrastructure/linux/webserver/README.md#prerequisites-for-the-browser-smoke-test) |
 | Running any command in the family CI image, by hand | `docs/shared-script-libraries.md` § run-in-ci-image.sh |
 | Code comments: one line, only the why; API docs short; gated | [the hub rule, Comments](third_party/ANTfrastructure/AGENTS.md#comments-one-line-only-the-why) |
+| Searching the tree: `rg`, not `grep -r` | [the hub rule, Searching](https://github.com/Kataglyphis/ANTfrastructure/blob/develop/AGENTS.md#searching-the-tree-ripgrep-rg) |
 | CI image reference | `docs/shared-script-libraries.md` § ci-image-ref.sh |
 | Dependency updates (Renovate as a local CLI) | `docs/dependency-updates.md` |
 | The FTP publish action the deploy steps use | `docs/ftp-deploys.md` |
