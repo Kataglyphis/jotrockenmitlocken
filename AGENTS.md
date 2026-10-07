@@ -101,6 +101,14 @@ CI builds green. `git submodule update --checkout --recursive` restores every pi
 a drifted submodule is what you actually want, update the gitlink **and** fix the
 fallout in the same change.
 
+The opposite move, for local work on the newest code, is
+`bash third_party/ANTfrastructure/linux/scripts/git-sync-branches.sh` (`--dry-run`
+first): this repo and every submodule, third-party ones included, go to the tip
+of their `branch =`, fast-forward only; `--owned-only` leaves the third-party ones
+pinned. It commits no gitlink, so what it moved shows as `+` until the gitlinks are
+committed, innermost repo first, and the next `git submodule update` puts it back.
+Details: [`adopting-in-a-new-project.md` § *Putting every checkout on its branch*](third_party/ANTfrastructure/docs/adopting-in-a-new-project.md#putting-every-checkout-on-its-branch).
+
 - `third_party/ANThology` is a path dependency in `pubspec.yaml`; a pin bump must
   keep `flutter pub get` resolving. The go_router lesson: this app declared
   `go_router ^17.x` while ANThology moved to `^18.0.0` — disjoint ranges, pub
