@@ -146,7 +146,7 @@ Flat `scripts/` is deliberate: CI is Linux-only, so there is no
 | Routing | `go_router ^18.0.0` (through `anthology`; no direct dependency here) |
 | Icons | `cupertino_icons ^1.0.9`, `font_awesome_flutter ^11.0.0` |
 | Localization | `intl ^0.20.2` |
-| Database | `sqlite3 ^3.3.1` (WASM + native) |
+| Database | `sqlite3 ^3.7.0` (WASM + native; `web/sqlite3.wasm` is the same release) |
 | Shared library | `anthology` (local path: `third_party/ANThology`) |
 | Testing | `flutter_test`, `integration_test`, `mockito ^5.7.0` |
 | Charts (in shared repo) | `fl_chart ^1.2.0` |
