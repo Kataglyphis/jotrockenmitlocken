@@ -17,7 +17,7 @@ dependencies:
   anthology:
     path: third_party/ANThology
   provider: ^6.1.5+1
-  cupertino_icons: ^1.0.9
+  cupertino_icons: ^2.0.0
   flutter_localizations:
     sdk: flutter
   intl: ^0.20.2
