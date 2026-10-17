@@ -57,7 +57,6 @@ flutter:
 
   # App-only assets; the shared corpus and fonts come from anthology as `packages/anthology/...`.
   assets:
-    - assets/images/
     # Filled at build time by sync-webdav-content.sh; a .gitkeep keeps each empty declared dir from failing the gate.
     - assets/documents/
     - assets/documents/books/
