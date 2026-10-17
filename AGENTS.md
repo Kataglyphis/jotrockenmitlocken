@@ -4,7 +4,7 @@ Guidance for coding agents (and new contributors) working in jotrockenmitlocken.
 
 ## 1. What this project is
 
-Personal blog as a responsive cross-platform Flutter/Dart web app by Jonas Heinle (@Kataglyphis). Blog posts are written in Markdown and kept private: `scripts/sync-webdav-content.sh` pulls them off WebDAV at build time, so of the content the tree tracks only the CV/thesis PDFs under `assets/documents/` and the settings JSON under `assets/settings/`. The samples under `dummy_assets/` are neither bundled nor read by anything.
+Personal blog as a responsive cross-platform Flutter/Dart web app by Jonas Heinle (@Kataglyphis). Blog posts are written in Markdown and kept private: `scripts/sync-webdav-content.sh` pulls them off WebDAV at build time, so of the content the tree tracks only the two CV PDFs under `assets/documents/cv/` and the settings JSON under `assets/settings/`; the thesis PDFs come off WebDAV with the posts. The samples under `dummy_assets/` are neither bundled nor read by anything.
 
 ```
 lib/

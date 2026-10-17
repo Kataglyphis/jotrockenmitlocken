@@ -68,3 +68,6 @@ doc/api/
 
 
 
+
+# The theses come off WebDAV at build time (scripts/sync-webdav-content.sh), like books/ and games/.
+/assets/documents/thesis/*.pdf
