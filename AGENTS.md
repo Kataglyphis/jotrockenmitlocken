@@ -160,13 +160,13 @@ Flat `scripts/` is deliberate: CI is Linux-only, so there is no
 - **SQLite on web:** `bash scripts/setup-sqlite3-wasm.sh` downloads `sqlite3.wasm` into `web/` for web targets. It takes no arguments: the version and its SHA256 come from ANTfrastructure's `linux/scripts/01-core/versions.env` (`SQLITE3_WASM_VERSION`), and the download is verified against it.
 - **iOS/macOS builders:** Do not touch `ios/`, `macos/`, `android/`, `windows/`, `linux/` directories unless specifically requested — they contain platform-specific boilerplate.
 - **Android follows OmniAccelerANT's setup:** AGP 9.4.1, Gradle 9.8.1 and AGP's built-in Kotlin (`android.builtInKotlin=true`, no `kotlin-android` plugin; the KGP in `android/settings.gradle.kts` is declared, never applied, to clear Flutter's Kotlin floor). The image's `/opt/android-sdk` is read-only, so `android/build.gradle.kts` pins compileSdk, build-tools and NDK to what it ships, for every plugin too; Flutter's own NDK default is not in it. No CI lane builds the APK: `flutter build apk --release` in the family image is the check (passed 2026-10-13).
-- **Known issues:** `flutter_highlighter` needs a patch (ANThology still declares it; nothing in its `lib/` imports it). The `flutter_markdown` blockquote issue in the README is from 2024; `flutter_markdown` is no longer a dependency, and Markdown renders through `markdown_widget`.
+- **Known issues:** `flutter_highlighter` needs a patch (ANThology still declares it; nothing in its `lib/` imports it). The `flutter_markdown` blockquote issue in [docs/getting-started.md](docs/getting-started.md#known-issues) is from 2024; `flutter_markdown` is no longer a dependency, and Markdown renders through `markdown_widget`.
 - **ARM64 browser automation:** Playwright's `playwright install chromium` fails on ARM64; flatpak Chromium works everywhere. The prerequisites and the four failures worth recognising are ANTfrastructure's now — see § E2E prerequisites below.
 
 ### CI/CD (`.github/workflows/web.yml`)
 
 - **Names:** the family convention (owner decision 2026-09-24) — kebab-case, one file per platform, display names `<Platform> · <what>`, shared lanes named the same in every repo. So this lane is `web.yml` "Web · build + deploy" (it was `dart.yml` until then), and the pin lane is `submodule-pins.yml` "Submodule pins". Job ids did not change, so neither did the check-run names.
-- **Trigger:** push to `main` or `develop`. Flow: lint gates → WebDAV sync → dart-checks → `flutter build web --release --wasm` → smoke test → FTP deploy. `main` deploys WASM to the production domain; `develop` deploys WASM and CanvasKit to the dev domains. Both branches then build the API docs (`dart doc`, the `dart-doc` phase) and publish them to the docs domain the README links.
+- **Trigger:** push to `main` or `develop`. Flow: lint gates → WebDAV sync → dart-checks → `flutter build web --release --wasm` → smoke test → FTP deploy. `main` deploys WASM to the production domain; `develop` deploys WASM and CanvasKit to the dev domains. Both branches then build the API docs (`dart doc`, the `dart-doc` phase) and publish them to the docs domain the README links; the `docs/` guides are read on GitHub and are not part of that build.
 - **Containerised lane:** every Dart/Flutter step runs in the family Linux CI image (Flutter at `/opt/flutter`, no `setup-flutter`) via ANTfrastructure's `prepare-linux-ci-host` and `run-in-linux-container` actions. The image tag is deliberately written nowhere in this repo: the steps omit `image:` and inherit the actions' default (the comment at the top of the `build` job says why). Each step is a fresh container, so `scripts/ci-container-steps.sh` re-establishes PATH, git `safe.directory` and the pub cache (`.pub-cache/` in the workspace) per phase — through ANTfrastructure's `flutter_lane_prepare_env`, not a prologue of its own.
 - **Host-side steps:** the lint gate job (`build` needs it, so a lint failure stops the deploy before it starts), the WebDAV sync (repo secrets + uv; the fetched assets land in the workspace the container bind-mounts) and the four FTP deploy steps. The repo has no `GHCR_PAT`: the prologue action skips login and pulls the public image anonymously.
 
@@ -232,5 +232,12 @@ flutter gen-l10n
 
 ## 6. Docs owned by this repo
 
-- `README.md` — the user-facing story: content layout, how to publish a post or a review, localization. A change to user-facing behaviour updates it in the same PR.
+**Write docs like a developer: short and precise** (owner, 2026-10-19). Say what a thing does,
+how to run it and what breaks; no filler, no marketing, no repetition.
+
+- `README.md` — the overview, in the family's [README shape](https://github.com/Kataglyphis/ANTfrastructure/blob/develop/docs/repository-family.md#the-readme-rule). `dart doc` renders it as the docs site's front page, so its links into this repo are absolute GitHub URLs.
+- `docs/getting-started.md` — running it locally, where the commands are, the known issues, the literature.
+- `docs/publishing-posts.md` — the user-facing story: why Markdown, the content layout, how to publish a post or a review, localization.
+- Both `docs/` pages are read on GitHub, not rendered on the docs site: the `dart-doc` phase runs a bare `dart doc`, which publishes only the README and the API. A new page goes into the README's documentation table.
+- A change to user-facing behaviour updates its page in the same PR.
 - `lib/l10n/*.arb` — the localized strings; `app_en.arb` is the template, and every edit is followed by `flutter gen-l10n` (the generated Dart is not hand-edited).

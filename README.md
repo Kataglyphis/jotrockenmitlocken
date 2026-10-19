@@ -5,293 +5,54 @@
 
   <h1>jotrockenmitlocken</h1>
 
-  <h4>My personal blog as responsive web app using Flutter/Dart. 
-Every blog post is written in pure markdown :boom: and therefore very lightweight to use 
-and add new content. 
-It is highly customizable for your needs, your personal web blog or you next Frontend 
-project (<b>not only</b> web but also native Linux/Windows/Android/Web/iOS)</h4>
+  <h4>My personal blog as a responsive Flutter/Dart web app, every post in plain Markdown.</h4>
 </div>
-
-> **__Note__**: If you run this website locally, you only see the sample blog
-that ships with the ANThology package, and the book/film/... critics and data tables stay empty. 
-Their "source content .md files" are my intellectual property and therefore only visible to me :) 
-The flutter/dart source code stays
-**__Open Source__** of course
-
-**__Official docs__** are located [here](https://holdmydocs.jonasheinle.de).
-
-Visit [jonasheinle.de](https://jonasheinle.de/) for the full experience of my personal web blog. Cheers! :beers: </br>
-Visit my repo [anthology](https://github.com/Kataglyphis/ANThology) if you are interested 
-in Flutter/Dart development in general. 
-Its reusable components live in that package, for any target available (Linux/Windows/Android/Web).  
-
-🚀 Markdown is great 🚀:  
-If you also love the lightweight markdown approach you might be interested in 
-my [DocumANTation](https://github.com/Kataglyphis/DocumANTation)-project that even allows you to convert markdown to a a4paper PDF or presentation slides PDF :satisfied:   
-🎉🎉🎉
-
 
 [![Web · build + deploy](https://github.com/Kataglyphis/jotrockenmitlocken/actions/workflows/web.yml/badge.svg)](https://github.com/Kataglyphis/jotrockenmitlocken/actions/workflows/web.yml)
 [![CodeQL](https://github.com/Kataglyphis/jotrockenmitlocken/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/Kataglyphis/jotrockenmitlocken/actions/workflows/github-code-scanning/codeql)
-[![TopLang](https://img.shields.io/github/languages/top/Kataglyphis/jotrockenmitlocken)]() 
+[![TopLang](https://img.shields.io/github/languages/top/Kataglyphis/jotrockenmitlocken)]()
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/paypalme/JonasHeinle)
 [![Twitter](https://img.shields.io/twitter/follow/Cataglyphis_?style=social)](https://twitter.com/Cataglyphis_)
 [![YouTube](https://img.shields.io/youtube/channel/subscribers/UC3LZiH4sZzzaVBCUV8knYeg?style=social)](https://www.youtube.com/channel/UC3LZiH4sZzzaVBCUV8knYeg)
 
-## Table of Contents
+[**Docs site**](https://holdmydocs.jonasheinle.de)
 
-- [About The Project](#about-the-project)
-  - [Built With](#built-with)
-  - [Content](#content)
-  - [Publish a new blog post](#publish-a-new-blog-post)
-  - [Publishing posts over a book](#publishing-posts-over-a-book)
-  - [Localization](#localization)
-  - [Key Features](#key-features)
-- [Getting Started](#getting-started)
-  - [Run Web Server locally for Debugging](#run-web-server-locally-for-debugging)
-  - [Installation](#installation)
-  - [Dependency upgrades](#dependency-upgrades)
-- [Contributing](#contributing)
-- [License](#license)
-- [Known Issues](#known-issues)
-- [Contact](#contact)
-- [Literature](#literature)
+The Flutter app behind [jonasheinle.de](https://jonasheinle.de/): blog posts, book and film
+reviews, data tables and downloadable documents. A post is a Markdown file and a page is a JSON
+entry, so new content needs no code. The content is private and fetched from WebDAV at build
+time; the code is open source, its reusable widgets live in
+[ANThology](https://github.com/Kataglyphis/ANThology). Targets: web, Linux, Windows, Android, iOS.
 
-<!-- ABOUT THE PROJECT -->
-## About The Project
+## Highlights
 
-I always wanted an easy way to publish new content :metal: 
-(blog posts, thoughts about books,...) fast. 
-But why not just using a CMS? Here are my reasons:
-  * as the content is pure markdown my approach allows me to always change the technology easily, 
-    many CMS integrate the content very strongly into their technology
-    * therefore you will not make yourself dependent from my repo. You are always able to switch :cat2:
-  * what if I want to build an UI for a native Linux application? Than all effort brought
-    into building a web blog with a CMS is more or less useless. With this project I have
-    a very huge reusable part leverage me to build also native UIs (with a Rust backend :rocket: f.e.)
-  * I want a very unique look and feel for my website. Therefore I want all power over my
-  application which can be difficult with some drag-and-drop solutions.
-  * I want to learn front-end development and its challenges. Just using wordpress won't bring you there
-  * I developed my own [WebDavClient](https://github.com/Kataglyphis/WebDavClient)
-    that allows me to keep the content (.md files, images, videos, .csv, etc.) private while
-    the source code stays **Open Source**. You might also be interested in **keeping your data private**.
-    Have a look into my [Build Pipeline File](.github/workflows/web.yml) for more 
-    information  
+- **Posts without code:** Markdown files, pages configured in JSON.
+- **Reviews:** books and films, each a post.
+- **Rendering:** Markdown pages, `.csv` data as tables.
+- **Downloads:** CV, thesis and other files to open or save.
+- **Three languages:** de, en, fr.
+- **Private content, open code:** content arrives through [WebDavClient](https://github.com/Kataglyphis/WebDavClient).
 
-
-### Content
-I truly believe in open source. Hence you will get all source code for free use and ready to go.</br>
-My approach allows me to separate the website data from its view (MVC best practice). 
-You will not see my blog posts(only the dummy entries) in this repo. They are my intellectual property :wink:</br>
-The `assets` directory houses all files you want to include within your application namely
-(fonts and the shared images come from the ANThology package):
-* images
-* data (.zip, .csv, ...)
-* documents (f.e. .md for blog posts)
-* and the settings directory which harbors many different options for your own needs:
-  * global user settings: Here you can easily customize the blog for you. 
-    Set all necessary user related options (like email, name, image, etc...)
-  * All entries in the `user_skills_de.json`, `user_skills_en.json` and `user_skills_fr.json`
-    (one per language, named in the global user settings) will be displayed in the corresponding section.
-* app settings: set the app name, title. You are able to disable the footer; 
-  the **supportedLocales** field can have the following values:
-  * ["de"]: build a web app in pure german
-  * ["en"]: build a web app in pure english
-  * ["de","en"] or :["en","de"] You can switch between english and german
-  * ["de","en","fr"] (the committed setting): switch between german, english and french
-
-### Publish a new blog post
-If you want to add a new blog bost do the following steps:
-
-* Open the file `assets/settings/blog_settings.json`
-* Append an entry like the following:
-```json
-{
-		"routingName":"/aiBlog2",
-		"shortDescriptionEN":"AI playground 2",
-		"shortDescriptionDE":"AI Spielwiese 2",
-		"filePath":"assets/documents/blog/aiBlogPageEn.md",
-		"imageDir":"assets/images/aiBlog",
-		"githubRepo":"MachineLearningAlgorithms",
-		"fileTitle": "AIBlog.pdf",
-		"fileAdditionalInfo": "PDF version",
-		"fileBaseDir": "assets/documents/blog/",
-		"lastModified":"03.04.2024",
-		"landingPageAlignment":"left",
-		"landingPageEntryImagePath": "assets/images/ML_CV.jpeg",
-		"landingPageEntryImageCaptioning": "image source: https://pyimagesearch.com/2023/03/30/machine-learning-computer-vision/",
-		"docsDesc": [
-			{
-				"baseDir":"assets/documents/cv/",
-				"title":"CV_Jonas_Heinle_english.pdf",
-				"additionalInfo": "~3.7MB English"
-			},
-			{
-				"baseDir": "assets/documents/cv/",
-				"title": "CV_Jonas_Heinle_german.pdf",
-				"additionalInfo": "~3.7MB German"
-			},
-			{
-				"baseDir": "assets/data/",
-				"title": "WorleyNoiseTextures.zip",
-				"additionalInfo": "Use it for you own projects."
-			}
-		]
-	},
-```
-* Every file an entry names must be bundled with the app. Flutter bundles only the files
-  lying directly in a directory listed under `flutter: assets:` in `pubspec.yaml`, and
-  `assets/documents/blog/` and `assets/images/aiBlog/` from the example are not listed
-  any more (they moved into ANThology on 2026-09-07). Either list your directory there,
-  or name a `packages/anthology/...` asset as the committed `blog_settings.json` does.
-  The same holds for the entry below.
-
-### Publishing posts over a book
-
-* Open the file `assets/settings/my_two_cents_settings.json`
-* Add an entry like the following
-```json
-{
-		"routingName":"/books/fuenfGeheimnisse",
-		"filePath":"assets/documents/books/fuenfGeheimnisse.md",
-		"imageDir":"assets/images/aiBlog",
-		"mediaTitle":"Die fünf Geheimnisse, die Sie entdecken sollten, bevor Sie sterben",
-		"fileBaseDir": "assets/documents/books/",
-		"docsDesc": [
-			{
-				"baseDir":"assets/documents/cv/",
-				"title":"CV_Jonas_Heinle_english.pdf",
-				"additionalInfo": "~3.7MB English"
-			},
-			{
-				"baseDir": "assets/documents/cv/",
-				"title": "CV_Jonas_Heinle_german.pdf",
-				"additionalInfo": "~3.7MB German"
-			},
-			{
-				"baseDir": "assets/data/",
-				"title": "WorleyNoiseTextures.zip",
-				"additionalInfo": "Use it for you own projects."
-			}
-		]
-	},
-```
-* Make sure that the mediaTitle you add here is availabale in the `assets/data/Buecherliste_gelesen.csv` file.
-### Localization
-
-This project generates localized messages based on arb files found in
-the `lib/l10n` directory.
-
-To support additional languages, please visit the tutorial on
-[Internationalizing Flutter
-apps](https://flutter.dev/docs/development/accessibility-and-localization/internationalization)
-
-<!-- [![Kataglyphis Engine][product-screenshot1]](https://jonasheinle.de)
-[![Kataglyphis Engine][product-screenshot2]](https://jonasheinle.de)
-[![Kataglyphis Engine][product-screenshot3]](https://jonasheinle.de) -->
-
-### Key Features
-
-<div align="center">
-
-|         Category                        |                   Feature                                                             |  Implement Status  |
-|--------------------------------------------|------------------------------------------------------------------------------------|:------------------------------:|
-|  **Media Management**    | Add your media critics (books, films, ...) easily          |         ✔️                      |
-|  **Content Rendering**      | Markdown rendering                                                        |         ✔️                     |
-|                                                 | Display .csv data                                                               |         ✔️                      |
-|  **Publishing**                     |  Publish blog posts by only editing a .json                    |         ✔️                     |
-|  **Customization**              | High degree of customization for yourself                   |         ✔️                      |
-|  **File Access**                    | Make your files (CV, thesis, ...) open-/downloadable  |         ✔️                     |  
-
-</div>
-
-**Legend:**  
-- ✔️ – completed  
-- 🔶 – in progress  
-- ❌ – not started
-
-
-### Built With
-
-* [Flutter/Dart](https://flutter.dev/)
-* [WebDavClient](https://github.com/Kataglyphis/WebDavClient) Wrote my own WebDavClient for this repo :)
-
-<!-- GETTING STARTED -->
-## Getting Started
-
-For help getting started with Flutter development, view the
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-
-Search the tree with [ripgrep](https://github.com/BurntSushi/ripgrep) (`rg`):
-`winget install --id BurntSushi.ripgrep.MSVC -e --scope user` on Windows,
-`apt install ripgrep` on Linux.
-
-### Run Web Server locally for Debugging 
+## Quick start
 
 ```bash
+git clone --recurse-submodules --branch develop https://github.com/Kataglyphis/jotrockenmitlocken.git
+cd jotrockenmitlocken
 flutter run -d web-server --profile --web-port 8080 --web-hostname 0.0.0.0
 ```
 
-### Installation
+A local run shows only the sample blog that ships with ANThology. Prerequisites, the build and
+the tests: [docs/getting-started.md](https://github.com/Kataglyphis/jotrockenmitlocken/blob/develop/docs/getting-started.md).
 
-1. Clone the repo
-   ```sh
-   git clone --recurse-submodules git@github.com:Kataglyphis/jotrockenmitlocken.git
-   ```
+## Documentation
 
-### Dependency upgrades
+| Topic | Read |
+| --- | --- |
+| The API | [holdmydocs.jonasheinle.de](https://holdmydocs.jonasheinle.de) |
+| Getting started: run, build, test, dependency upgrades, known issues, literature | [docs/getting-started.md](https://github.com/Kataglyphis/jotrockenmitlocken/blob/develop/docs/getting-started.md) |
+| Publishing posts: why Markdown, the content layout, a blog post, a book, localization | [docs/publishing-posts.md](https://github.com/Kataglyphis/jotrockenmitlocken/blob/develop/docs/publishing-posts.md) |
+| Rules for agents and contributors | [AGENTS.md](https://github.com/Kataglyphis/jotrockenmitlocken/blob/develop/AGENTS.md) |
 
-Renovate as a local CLI over every dependency manager this tree has — the two submodule
-gitlinks in `.gitmodules` and `pubspec.yaml` among them:
+## Contributing and contact
 
-```bash
-bash scripts/renovate-local.sh                    # report what is behind
-bash scripts/renovate-local.sh --apply --dry-run  # the plan, with pre-flight
-bash scripts/renovate-local.sh --apply            # move the gitlinks, edit the manifests
-```
-
-Rationale and the full workflow:
-[`third_party/ANTfrastructure/docs/dependency-updates.md`](third_party/ANTfrastructure/docs/dependency-updates.md)
-
-<!-- CONTRIBUTING -->
-## Contributing
-
-Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-
-<!-- LICENSE -->
-## License
-MIT.
-
-## Known Issues
-flutter_highlighter needs and update in line 94 from RichText to Text.rich to make it
-selectable. The developer just dont want to integrate the feature ...
-flutter_markdown is not in a very stable version. I had to manually edit 
-the blockquote section for centering it. At the time of writing this 
-they have an open issue on not being able to build and MarkdownBuilder for a 
-blockquote. (That note is from 2024; Markdown now renders through `markdown_widget`,
-and `flutter_markdown` is no longer a dependency.)
-
-<!-- CONTACT -->
-## Contact
-
-Jonas Heinle - [@Cataglyphis_](https://twitter.com/Cataglyphis_) - jonasheinle@googlemail.com
-
-Project Link: [https://github.com/Kataglyphis/jotrockenmitlocken](https://github.com/Kataglyphis/jotrockenmitlocken)
-
-
-## Literature 
-
-Some very helpful literature, tutorials, etc. 
-
-Flutter/Dart
-* [Johannes Milke](https://www.youtube.com/@JohannesMilke)
-* [package repository for Dart and Flutter apps](https://pub.dev/)
-* [Official flutter web example](https://flutter.github.io/samples/material_3.html)
+jotrockenmitlocken is one of the [Kataglyphis repositories](https://github.com/Kataglyphis/ANTfrastructure/blob/develop/docs/repository-family.md),
+which share one way to contribute and one contact. Licence: MIT, see [LICENSE](https://github.com/Kataglyphis/jotrockenmitlocken/blob/develop/LICENSE).
