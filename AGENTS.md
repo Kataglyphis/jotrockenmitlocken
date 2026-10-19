@@ -51,11 +51,9 @@ third_party/ANTfrastructure/    # Git submodule — owns every reusable script, 
 
 ## 2. What ANTfrastructure owns — links only
 
-**Do not restate upstream procedures here.** Start at
-[`third_party/ANTfrastructure/docs/INDEX.md`](third_party/ANTfrastructure/docs/INDEX.md): it maps
-topic → owning document, so links survive upstream reorganisation. Where anything belongs: *would
-this still be true in a different project?* Yes → ANTfrastructure owns it, link to it. No → write
-it out here.
+Links only, by the hub's [layout rule](third_party/ANTfrastructure/shared/templates/README.md#what-the-layout-is-for).
+Start at [`third_party/ANTfrastructure/docs/INDEX.md`](third_party/ANTfrastructure/docs/INDEX.md),
+which maps topic → owning document.
 
 All ten scripts under `scripts/` are thin wrappers; behaviour that lives upstream is fixed
 upstream, never in the wrapper:
@@ -102,13 +100,9 @@ Builds are only supported against the **recorded submodule gitlinks**, the commi
 green. `git submodule update --checkout --recursive` restores every pin. If a drifted submodule is
 what you want, update the gitlink **and** fix the fallout in the same change.
 
-The opposite move, for local work on the newest code, is
-`bash third_party/ANTfrastructure/linux/scripts/git-sync-branches.sh` (`--dry-run` first): this
-repo and every submodule, third-party ones included, go to the tip of their `branch =`,
-fast-forward only; `--owned-only` leaves the third-party ones pinned. It commits no gitlink, so
-what it moved shows as `+` until the gitlinks are committed, innermost repo first, and the next
-`git submodule update` puts it back.
-Details: [`adopting-in-a-new-project.md` § *Putting every checkout on its branch*](third_party/ANTfrastructure/docs/adopting-in-a-new-project.md#putting-every-checkout-on-its-branch).
+For the newest code instead, `bash third_party/ANTfrastructure/linux/scripts/git-sync-branches.sh`
+(`--dry-run` first) puts every checkout on its branch tip:
+[`adopting-in-a-new-project.md` § *Putting every checkout on its branch*](third_party/ANTfrastructure/docs/adopting-in-a-new-project.md#putting-every-checkout-on-its-branch).
 
 - `third_party/ANThology` is a path dependency in `pubspec.yaml`; a pin bump must keep
   `flutter pub get` resolving. The go_router lesson: this app declared `go_router ^17.x` while
@@ -135,7 +129,7 @@ copy lives at `scripts/lib/` per `.antfrastructure-shared.manifest`.
 - **Page pattern:** every route is a `(page widget, config)` pair, returned by `getAllPagesWithConfigs` in `lib/Routing/jotrockenmitlocken_router.dart`. The config extends ANThology's `StatefulBranchInfoProvider`, which supplies only `getRoutingName()`; nav-bar configs (`NavBarPageConfig`) add the `NavigationDestination` (icon and label), and ANThology's `RoutesCreator` builds the GoRouter from the pairs.
 - **Fonts:** Montserrat and Roboto come from the anthology package (the note closing `pubspec.yaml`).
 - **Lint rules:** `flutter_lints` via the shared include `third_party/ANTfrastructure/shared/config/analysis_options.yaml`. No custom overrides.
-- **Format scope:** `dart format` runs over `git ls-files '*.dart'`, never `.` — a recursive walk format-checks `third_party/ANThology`; see `third_party/ANTfrastructure/docs/code-quality-tooling.md` § Dart file enumeration.
+- **Format scope:** `dart format` runs over `git ls-files '*.dart'`, never `.`: a recursive walk format-checks `third_party/ANThology` ([hub § *`dart format`: the tracked files*](third_party/ANTfrastructure/docs/code-quality-tooling.md#dart-format-the-tracked-files-in-the-floors-style)).
 
 ### Dependencies
 
@@ -162,8 +156,8 @@ copy lives at `scripts/lib/` per `.antfrastructure-shared.manifest`.
 
 ### CI/CD (`.github/workflows/web.yml`)
 
-- **Names** follow the family convention (owner decision 2026-09-24): kebab-case, one file per platform, display names `<Platform> · <what>`, shared lanes named the same in every repo. This lane is `web.yml` "Web · build + deploy" (`dart.yml` until then), the pin lane `submodule-pins.yml` "Submodule pins". Job ids did not change, so neither did the check-run names.
-- **Trigger:** push to `main` or `develop`. Flow: lint gates → WebDAV sync → dart-checks → `flutter build web --release --wasm` → smoke test → FTP deploy. `main` deploys WASM to the production domain; `develop` deploys WASM and CanvasKit to the dev domains. Both branches then build the API docs (`dart doc`, the `dart-doc` phase) and publish them to the docs domain the README links; the `docs/` guides are read on GitHub, outside that build.
+- **Names** follow the family's [workflow naming](third_party/ANTfrastructure/docs/adopting-in-a-new-project.md#workflow-file-names-and-display-names) (owner decision 2026-09-24): this lane is `web.yml` "Web · build + deploy" (`dart.yml` until then), the pin lane `submodule-pins.yml` "Submodule pins". Job ids did not change, so neither did the check-run names.
+- **Trigger:** push to `main` or `develop`, never a PR. The family's [CI-round rule](third_party/ANTfrastructure/docs/branch-and-release-strategy.md) does not reach this repo: it has no platform lane to request ([`ci-build-triggers.md`](third_party/ANTfrastructure/docs/ci-build-triggers.md#the-consumer-lanes)). Flow: lint gates → WebDAV sync → dart-checks → `flutter build web --release --wasm` → smoke test → FTP deploy. `main` deploys WASM to the production domain; `develop` deploys WASM and CanvasKit to the dev domains. Both branches then build the API docs (`dart doc`, the `dart-doc` phase) and publish them to the docs domain the README links; the `docs/` guides are read on GitHub, outside that build.
 - **Containerised lane:** every Dart/Flutter step runs in the family Linux CI image (Flutter at `/opt/flutter`, no `setup-flutter`) via ANTfrastructure's `prepare-linux-ci-host` and `run-in-linux-container` actions. The image tag is deliberately written nowhere in this repo: the steps omit `image:` and inherit the actions' default (the comment at the top of the `build` job says why). Each step is a fresh container, so `scripts/ci-container-steps.sh` re-establishes PATH, git `safe.directory` and the pub cache (`.pub-cache/` in the workspace) per phase, through ANTfrastructure's `flutter_lane_prepare_env`, not a prologue of its own.
 - **Host-side steps:** the lint gate job (`build` needs it, so a lint failure stops the deploy before it starts), the WebDAV sync (repo secrets + uv; the fetched assets land in the workspace the container bind-mounts) and the four FTP deploy steps. The repo has no `GHCR_PAT`: the prologue action skips login and pulls the public image anonymously.
 
@@ -202,13 +196,10 @@ dart format --output=none --set-exit-if-changed $(git ls-files '*.dart')   # not
 # it passes.
 bash scripts/run-lint-gates.sh
 
-# Dependency upgrades — Renovate as a local CLI over every manager this tree
-# has: the two submodule gitlinks, pubspec.yaml and the rest the hub script
-# detects (dependabot still covers pubspec.yaml too). Not a gate. It bootstraps
-# its own pinned, checksum-verified Node on Linux x64/arm64; on Windows run it
-# from WSL. third_party/ANTfrastructure/docs/dependency-updates.md
+# Dependency upgrades, not a gate: third_party/ANTfrastructure/docs/dependency-updates.md.
+# .github/dependabot.yml still covers pubspec.yaml too.
 bash scripts/renovate-local.sh                    # report what is behind
-bash scripts/renovate-local.sh --apply --dry-run  # the plan, with pre-flight
+bash scripts/renovate-local.sh --apply --dry-run  # the plan
 bash scripts/renovate-local.sh --apply            # move the gitlinks, edit the manifests
 
 # Pull the private blog content off WebDAV into assets/ (needs the four
@@ -251,3 +242,5 @@ how to run it and what breaks; no filler, no marketing, no repetition.
   `dart doc`, which publishes only the README and the API. A new page goes into the README's
   documentation table.
 - A change to user-facing behaviour updates its page in the same PR.
+- A page that restates a hub page fails the lint gates (`doc-dupes --against-hub`): link to the hub
+  instead. A passage that must stay is budgeted in `doc-dupes-hub.allow`, with its reason.
