@@ -1,14 +1,12 @@
 # Getting started
 
-How to run jotrockenmitlocken locally, where the build and test commands are, and the known
-issues. How the content is laid out and published: [publishing-posts.md](publishing-posts.md).
+Running jotrockenmitlocken locally, where the build and test commands are, and the known issues.
+How the content is laid out and published: [publishing-posts.md](publishing-posts.md).
 
 ## Prerequisites
 
-For help getting started with Flutter development, view the
-[online documentation](https://flutter.dev/docs), which offers tutorials, samples, guidance on
-mobile development, and a full API reference. CI takes Flutter from the family Linux image, not
-from a local install ([AGENTS.md § 4](../AGENTS.md#cicd-githubworkflowswebyml)).
+Flutter ([online documentation](https://flutter.dev/docs)). CI takes Flutter from the family Linux
+image, not from a local install ([AGENTS.md § 4](../AGENTS.md#cicd-githubworkflowswebyml)).
 
 ## Run the web server locally for debugging
 
@@ -18,13 +16,12 @@ cd jotrockenmitlocken
 flutter run -d web-server --profile --web-port 8080 --web-hostname 0.0.0.0
 ```
 
-> **Note**: If you run this website locally, you only see the sample blog that ships with the
-> ANThology package, and the book/film/... critics and data tables stay empty. Their source
-> content .md files are my intellectual property and therefore only visible to me. The
-> Flutter/Dart source code stays **open source**, of course.
+> **Note**: a local run shows only the sample blog that ships with the ANThology package; the
+> book/film/... critics and data tables stay empty. Their source content .md files are my
+> intellectual property and visible only to me. The Flutter/Dart source code is **open source**.
 
-CI pulls that content off WebDAV before it builds (`scripts/sync-webdav-content.sh`, with the
-four WebDAV credentials it holds as repository secrets).
+CI pulls that content off WebDAV before it builds (`scripts/sync-webdav-content.sh`, with the four
+WebDAV credentials it holds as repository secrets).
 
 ## Build, test, dependency upgrades
 
@@ -37,18 +34,15 @@ local CLI, and the full workflow:
 
 ## Known issues
 
-`flutter_highlighter` needs an update in line 94 from `RichText` to `Text.rich` to make it
-selectable. The developer just doesn't want to integrate the feature. ANThology still declares
-it, but nothing in either `lib/` imports it.
-
-`flutter_markdown` is not in a very stable version. I had to manually edit the blockquote section
-for centering it. At the time of writing this they have an open issue on not being able to build
-a `MarkdownBuilder` for a blockquote. (That note is from 2024; Markdown now renders through
-`markdown_widget`, and `flutter_markdown` is no longer a dependency.)
+- `flutter_highlighter` needs line 94 changed from `RichText` to `Text.rich` to make it
+  selectable; its developer does not want to integrate the feature. ANThology still declares it,
+  but nothing in either `lib/` imports it.
+- `flutter_markdown` (note from 2024): not in a stable version. I edited its blockquote section by
+  hand to centre it, and upstream had an open issue on building a `MarkdownBuilder` for a
+  blockquote. Markdown now renders through `markdown_widget`, and `flutter_markdown` is no longer
+  a dependency.
 
 ## Literature
-
-Some very helpful literature, tutorials, etc.
 
 Flutter/Dart:
 

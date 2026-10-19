@@ -4,7 +4,13 @@ Guidance for coding agents (and new contributors) working in jotrockenmitlocken.
 
 ## 1. What this project is
 
-Personal blog as a responsive cross-platform Flutter/Dart web app by Jonas Heinle (@Kataglyphis). Blog posts are written in Markdown and kept private: `scripts/sync-webdav-content.sh` pulls them off WebDAV at build time, so of the content the tree tracks only the two CV PDFs under `assets/documents/cv/` and the settings JSON under `assets/settings/`; the thesis PDFs come off WebDAV with the posts. The samples under `dummy_assets/` are neither bundled nor read by anything.
+Personal blog of Jonas Heinle (@Kataglyphis): a responsive cross-platform Flutter/Dart web app.
+
+- Blog posts are Markdown and private: `scripts/sync-webdav-content.sh` pulls them, and the thesis
+  PDFs, off WebDAV at build time.
+- Of the content, the tree tracks only the two CV PDFs under `assets/documents/cv/` and the
+  settings JSON under `assets/settings/`.
+- The samples under `dummy_assets/` are neither bundled nor read by anything.
 
 ```
 lib/
@@ -46,14 +52,13 @@ third_party/ANTfrastructure/    # Git submodule — owns every reusable script, 
 ## 2. What ANTfrastructure owns — links only
 
 **Do not restate upstream procedures here.** Start at
-[`third_party/ANTfrastructure/docs/INDEX.md`](third_party/ANTfrastructure/docs/INDEX.md)
-— it maps topic → owning document, so links survive upstream reorganisation. The
-rule that decides where anything belongs: *would this still be true in a
-different project?* Yes → ANTfrastructure owns it, link to it. No → write it out
-here.
+[`third_party/ANTfrastructure/docs/INDEX.md`](third_party/ANTfrastructure/docs/INDEX.md): it maps
+topic → owning document, so links survive upstream reorganisation. Where anything belongs: *would
+this still be true in a different project?* Yes → ANTfrastructure owns it, link to it. No → write
+it out here.
 
-All ten scripts under `scripts/` are thin wrappers — editing the wrapper when
-the behaviour lives upstream is the mistake to avoid:
+All ten scripts under `scripts/` are thin wrappers; behaviour that lives upstream is fixed
+upstream, never in the wrapper:
 
 | Wrapper | Delegates to |
 | --- | --- |
@@ -80,49 +85,43 @@ the behaviour lives upstream is the mistake to avoid:
 | Dependency updates (Renovate as a local CLI) | `docs/dependency-updates.md` |
 | The FTP publish action the deploy steps use | `docs/ftp-deploys.md` |
 
-Two upstream facts worth knowing before you reach a doc:
+Two upstream facts that bite before you reach a doc:
 
-- ANTfrastructure's PowerShell modules declare `#requires -Version 7.0` — launch
-  with `pwsh`, never `powershell`. (Not used by this repo's CI today, which is
-  Linux-only, but true if you add a Windows lane.)
-- Workflows resolve ANTfrastructure's composite actions and reusable workflows at
-  `@develop`, so an upstream change a workflow depends on must be pushed
-  **before** the consumer change.
+- ANTfrastructure's PowerShell modules declare `#requires -Version 7.0`: launch with `pwsh`, never
+  `powershell`. This repo's CI is Linux-only today, so it matters only for a new Windows lane.
+- Workflows resolve ANTfrastructure's composite actions and reusable workflows at `@develop`, so
+  an upstream change a workflow depends on must be pushed **before** the consumer change.
 
-Clone with `--recurse-submodules`. Without the ANTfrastructure submodule the
-wrappers stop with `Error: ANTfrastructure file not found: …` and the command
-that fixes it (`git submodule update --init --recursive third_party/ANTfrastructure`)
-rather than a confusing error.
+Clone with `--recurse-submodules`. Without the ANTfrastructure submodule the wrappers stop with
+`Error: ANTfrastructure file not found: …` and the command that fixes it
+(`git submodule update --init --recursive third_party/ANTfrastructure`).
 
 ## 3. Critical invariant: submodule pins
 
-Builds are only supported against the **recorded submodule gitlinks** — the commits
-CI builds green. `git submodule update --checkout --recursive` restores every pin. If
-a drifted submodule is what you actually want, update the gitlink **and** fix the
-fallout in the same change.
+Builds are only supported against the **recorded submodule gitlinks**, the commits CI builds
+green. `git submodule update --checkout --recursive` restores every pin. If a drifted submodule is
+what you want, update the gitlink **and** fix the fallout in the same change.
 
 The opposite move, for local work on the newest code, is
-`bash third_party/ANTfrastructure/linux/scripts/git-sync-branches.sh` (`--dry-run`
-first): this repo and every submodule, third-party ones included, go to the tip
-of their `branch =`, fast-forward only; `--owned-only` leaves the third-party ones
-pinned. It commits no gitlink, so what it moved shows as `+` until the gitlinks are
-committed, innermost repo first, and the next `git submodule update` puts it back.
+`bash third_party/ANTfrastructure/linux/scripts/git-sync-branches.sh` (`--dry-run` first): this
+repo and every submodule, third-party ones included, go to the tip of their `branch =`,
+fast-forward only; `--owned-only` leaves the third-party ones pinned. It commits no gitlink, so
+what it moved shows as `+` until the gitlinks are committed, innermost repo first, and the next
+`git submodule update` puts it back.
 Details: [`adopting-in-a-new-project.md` § *Putting every checkout on its branch*](third_party/ANTfrastructure/docs/adopting-in-a-new-project.md#putting-every-checkout-on-its-branch).
 
-- `third_party/ANThology` is a path dependency in `pubspec.yaml`; a pin bump must
-  keep `flutter pub get` resolving. The go_router lesson: this app declared
-  `go_router ^17.x` while ANThology moved to `^18.0.0` — disjoint ranges, pub
-  refused the bump, and the app never imported it, so the direct dependency is
-  gone. Do not re-add a package ANThology already pins unless the ranges overlap.
+- `third_party/ANThology` is a path dependency in `pubspec.yaml`; a pin bump must keep
+  `flutter pub get` resolving. The go_router lesson: this app declared `go_router ^17.x` while
+  ANThology moved to `^18.0.0`; the ranges were disjoint, pub refused the bump, and since the app
+  never imported it, the direct dependency is gone. Do not re-add a package ANThology already
+  pins unless the ranges overlap.
 
-Drift is guarded by ANTfrastructure's shared suite, run from
-`.github/workflows/submodule-pins.yml` (its `pester-version` input pins Pester 3.4.0,
-and the comment above it says why). Run it after any pin bump. It does **not** check the
-version coupling above; that is on you.
+ANTfrastructure's shared suite guards drift, run from `.github/workflows/submodule-pins.yml` (its
+`pester-version` input pins Pester 3.4.0; the comment above it says why). Run it after any pin
+bump. It does **not** check the version coupling above; that is on you.
 
-Flat `scripts/` is deliberate: CI is Linux-only, so there is no
-`scripts/windows/`; the bootstrap copy lives at `scripts/lib/` per
-`.antfrastructure-shared.manifest`.
+Flat `scripts/` is deliberate: CI is Linux-only, so there is no `scripts/windows/`; the bootstrap
+copy lives at `scripts/lib/` per `.antfrastructure-shared.manifest`.
 
 ## 4. Pitfalls specific to this project
 
@@ -130,9 +129,9 @@ Flat `scripts/` is deliberate: CI is Linux-only, so there is no
 
 - **State management:** plain `StatefulWidget` state — ANThology's `KataglyphisAppShell` holds the app-wide state and changes it with `setState`. `provider` is declared in `pubspec.yaml` but imported nowhere (nor by ANThology).
 - **Routing:** GoRouter (`package:go_router`, pinned by ANThology) with declarative named routes
-- **Responsive layout:** Switch between single-page and two-column layout based on screen width breakpoints (defined in `third_party/ANThology/lib/constants.dart`)
+- **Responsive layout:** single-page or two-column layout by screen width breakpoints (defined in `third_party/ANThology/lib/constants.dart`)
 - **Content:** Blog posts in Markdown, rendered via `markdown_widget` (ANThology's `lib/Media/Markdown/markdown_page.dart`; `flutter_markdown_plus` is declared there but imported nowhere). Book/film/game reviews via `assets/settings/my_two_cents_settings.json` (parsed into ANThology's `MyTwoCentsConfig`).
-- **Localization:** ARB files in `lib/l10n/` (template: `app_en.arb`), output auto-generated to `app_localizations.dart`. Always run `flutter gen-l10n` after editing ARB files.
+- **Localization:** ARB files in `lib/l10n/` (template: `app_en.arb`) generate `app_localizations*.dart`. Run `flutter gen-l10n` after every ARB edit; never hand-edit the generated Dart.
 - **Page pattern:** every route is a `(page widget, config)` pair, returned by `getAllPagesWithConfigs` in `lib/Routing/jotrockenmitlocken_router.dart`. The config extends ANThology's `StatefulBranchInfoProvider`, which supplies only `getRoutingName()`; nav-bar configs (`NavBarPageConfig`) add the `NavigationDestination` (icon and label), and ANThology's `RoutesCreator` builds the GoRouter from the pairs.
 - **Fonts:** Montserrat and Roboto come from the anthology package (the note closing `pubspec.yaml`).
 - **Lint rules:** `flutter_lints` via the shared include `third_party/ANTfrastructure/shared/config/analysis_options.yaml`. No custom overrides.
@@ -155,29 +154,33 @@ Flat `scripts/` is deliberate: CI is Linux-only, so there is no
 ### Gotchas
 
 - **No real content locally:** local runs show the anthology package's bundled sample blog and empty tables until `scripts/sync-webdav-content.sh` populates `assets/` (needs the four WebDAV repository secrets).
-- **Submodule required:** Always clone with `--recurse-submodules`. Run `flutter pub get` in both root and `third_party/ANThology/`.
-- **ARB generation:** After editing `.arb` files, run `flutter gen-l10n` to regenerate `app_localizations*.dart`.
 - **SQLite on web:** `bash scripts/setup-sqlite3-wasm.sh` downloads `sqlite3.wasm` into `web/` for web targets. It takes no arguments: the version and its SHA256 come from ANTfrastructure's `linux/scripts/01-core/versions.env` (`SQLITE3_WASM_VERSION`), and the download is verified against it.
-- **iOS/macOS builders:** Do not touch `ios/`, `macos/`, `android/`, `windows/`, `linux/` directories unless specifically requested — they contain platform-specific boilerplate.
+- **Platform directories:** do not touch `ios/`, `macos/`, `android/`, `windows/`, `linux/` unless asked; they hold platform-specific boilerplate.
 - **Android follows OmniAccelerANT's setup:** AGP 9.4.1, Gradle 9.8.1 and AGP's built-in Kotlin (`android.builtInKotlin=true`, no `kotlin-android` plugin; the KGP in `android/settings.gradle.kts` is declared, never applied, to clear Flutter's Kotlin floor). The image's `/opt/android-sdk` is read-only, so `android/build.gradle.kts` pins compileSdk, build-tools and NDK to what it ships, for every plugin too; Flutter's own NDK default is not in it. No CI lane builds the APK: `flutter build apk --release` in the family image is the check (passed 2026-10-13).
-- **Known issues:** `flutter_highlighter` needs a patch (ANThology still declares it; nothing in its `lib/` imports it). The `flutter_markdown` blockquote issue in [docs/getting-started.md](docs/getting-started.md#known-issues) is from 2024; `flutter_markdown` is no longer a dependency, and Markdown renders through `markdown_widget`.
-- **ARM64 browser automation:** Playwright's `playwright install chromium` fails on ARM64; flatpak Chromium works everywhere. The prerequisites and the four failures worth recognising are ANTfrastructure's now — see § E2E prerequisites below.
+- **Known issues** (`flutter_highlighter`'s patch, the 2024 `flutter_markdown` blockquote note): [docs/getting-started.md](docs/getting-started.md#known-issues).
+- **ARM64 browser automation:** Playwright's `playwright install chromium` fails on ARM64; flatpak Chromium works everywhere. The prerequisites and the four failures worth recognising are ANTfrastructure's — § E2E prerequisites below.
 
 ### CI/CD (`.github/workflows/web.yml`)
 
-- **Names:** the family convention (owner decision 2026-09-24) — kebab-case, one file per platform, display names `<Platform> · <what>`, shared lanes named the same in every repo. So this lane is `web.yml` "Web · build + deploy" (it was `dart.yml` until then), and the pin lane is `submodule-pins.yml` "Submodule pins". Job ids did not change, so neither did the check-run names.
-- **Trigger:** push to `main` or `develop`. Flow: lint gates → WebDAV sync → dart-checks → `flutter build web --release --wasm` → smoke test → FTP deploy. `main` deploys WASM to the production domain; `develop` deploys WASM and CanvasKit to the dev domains. Both branches then build the API docs (`dart doc`, the `dart-doc` phase) and publish them to the docs domain the README links; the `docs/` guides are read on GitHub and are not part of that build.
-- **Containerised lane:** every Dart/Flutter step runs in the family Linux CI image (Flutter at `/opt/flutter`, no `setup-flutter`) via ANTfrastructure's `prepare-linux-ci-host` and `run-in-linux-container` actions. The image tag is deliberately written nowhere in this repo: the steps omit `image:` and inherit the actions' default (the comment at the top of the `build` job says why). Each step is a fresh container, so `scripts/ci-container-steps.sh` re-establishes PATH, git `safe.directory` and the pub cache (`.pub-cache/` in the workspace) per phase — through ANTfrastructure's `flutter_lane_prepare_env`, not a prologue of its own.
+- **Names** follow the family convention (owner decision 2026-09-24): kebab-case, one file per platform, display names `<Platform> · <what>`, shared lanes named the same in every repo. This lane is `web.yml` "Web · build + deploy" (`dart.yml` until then), the pin lane `submodule-pins.yml` "Submodule pins". Job ids did not change, so neither did the check-run names.
+- **Trigger:** push to `main` or `develop`. Flow: lint gates → WebDAV sync → dart-checks → `flutter build web --release --wasm` → smoke test → FTP deploy. `main` deploys WASM to the production domain; `develop` deploys WASM and CanvasKit to the dev domains. Both branches then build the API docs (`dart doc`, the `dart-doc` phase) and publish them to the docs domain the README links; the `docs/` guides are read on GitHub, outside that build.
+- **Containerised lane:** every Dart/Flutter step runs in the family Linux CI image (Flutter at `/opt/flutter`, no `setup-flutter`) via ANTfrastructure's `prepare-linux-ci-host` and `run-in-linux-container` actions. The image tag is deliberately written nowhere in this repo: the steps omit `image:` and inherit the actions' default (the comment at the top of the `build` job says why). Each step is a fresh container, so `scripts/ci-container-steps.sh` re-establishes PATH, git `safe.directory` and the pub cache (`.pub-cache/` in the workspace) per phase, through ANTfrastructure's `flutter_lane_prepare_env`, not a prologue of its own.
 - **Host-side steps:** the lint gate job (`build` needs it, so a lint failure stops the deploy before it starts), the WebDAV sync (repo secrets + uv; the fetched assets land in the workspace the container bind-mounts) and the four FTP deploy steps. The repo has no `GHCR_PAT`: the prologue action skips login and pulls the public image anonymously.
 
 ### E2E prerequisites (Playwright + flatpak Chromium)
 
-Not in CI: `scripts/capture_console_errors.py` launches a real headless browser to capture console logs, page errors and runtime exceptions. It delegates to ANTfrastructure's `flutter_capture_console_errors.py`, and the prerequisites are upstream's too: the install commands and why `--break-system-packages` rather than a venv are in
-[Prerequisites for the browser smoke test](third_party/ANTfrastructure/linux/webserver/README.md#prerequisites-for-the-browser-smoke-test),
-and the four failures that each look like something else — including the one where the test passes against the OLD build — are in
-[Troubleshooting the browser smoke test](third_party/ANTfrastructure/linux/webserver/README.md#troubleshooting-the-browser-smoke-test).
+Not in CI: `scripts/capture_console_errors.py` launches a real headless browser to capture console
+logs, page errors and runtime exceptions. It delegates to ANTfrastructure's
+`flutter_capture_console_errors.py`, and the prerequisites are upstream's too:
 
-The one line that is this repo's: `flatpak install flathub org.mozilla.firefox` is optional and only for eyeballing the site by hand; nothing here drives Firefox.
+- the install commands, and why `--break-system-packages` rather than a venv:
+  [Prerequisites for the browser smoke test](third_party/ANTfrastructure/linux/webserver/README.md#prerequisites-for-the-browser-smoke-test);
+- the four failures that each look like something else, including the one where the test passes
+  against the OLD build:
+  [Troubleshooting the browser smoke test](third_party/ANTfrastructure/linux/webserver/README.md#troubleshooting-the-browser-smoke-test).
+
+This repo's own line: `flatpak install flathub org.mozilla.firefox` is optional, only for
+eyeballing the site by hand; nothing here drives Firefox.
 
 ## 5. Build, run, test
 
@@ -228,16 +231,23 @@ python3 scripts/capture_console_errors.py    # browser console error capture (pr
 flutter gen-l10n
 ```
 
-> **MANDATORY for agents:** After making any code changes, you MUST run `bash scripts/run-dart-checks.sh` and it MUST pass with zero errors. If it fails, fix the issues and re-run before considering the task complete. The CI pipeline runs this same script and enforces zero tolerance on `dart analyze` and `dart format` — failures block deployment.
+> **MANDATORY for agents:** after any code change, `bash scripts/run-dart-checks.sh` must pass
+> with zero errors; fix and re-run until it does. CI runs the same script with zero tolerance on
+> `dart analyze` and `dart format`, and a failure blocks the deploy.
 
 ## 6. Docs owned by this repo
 
 **Write docs like a developer: short and precise** (owner, 2026-10-19). Say what a thing does,
 how to run it and what breaks; no filler, no marketing, no repetition.
 
-- `README.md` — the overview, in the family's [README shape](https://github.com/Kataglyphis/ANTfrastructure/blob/develop/docs/repository-family.md#the-readme-rule). `dart doc` renders it as the docs site's front page, so its links into this repo are absolute GitHub URLs.
-- `docs/getting-started.md` — running it locally, where the commands are, the known issues, the literature.
-- `docs/publishing-posts.md` — the user-facing story: why Markdown, the content layout, how to publish a post or a review, localization.
-- Both `docs/` pages are read on GitHub, not rendered on the docs site: the `dart-doc` phase runs a bare `dart doc`, which publishes only the README and the API. A new page goes into the README's documentation table.
+| Doc | Holds |
+| --- | --- |
+| `README.md` | The overview, in the family's [README shape](https://github.com/Kataglyphis/ANTfrastructure/blob/develop/docs/repository-family.md#the-readme-rule). `dart doc` renders it as the docs site's front page, so its links into this repo are absolute GitHub URLs |
+| `docs/getting-started.md` | Running it locally, where the commands are, the known issues, the literature |
+| `docs/publishing-posts.md` | The user-facing story: why Markdown, the content layout, how to publish a post or a review, localization |
+| `lib/l10n/*.arb` | The localized strings (§ 4, *Localization*) |
+
+- Both `docs/` pages are read on GitHub, not on the docs site: the `dart-doc` phase runs a bare
+  `dart doc`, which publishes only the README and the API. A new page goes into the README's
+  documentation table.
 - A change to user-facing behaviour updates its page in the same PR.
-- `lib/l10n/*.arb` — the localized strings; `app_en.arb` is the template, and every edit is followed by `flutter gen-l10n` (the generated Dart is not hand-edited).
