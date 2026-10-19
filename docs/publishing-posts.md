@@ -17,7 +17,7 @@ I wanted to publish new content (blog posts, thoughts about books, ...) fast, an
   there.
 - My own [WebDavClient](https://github.com/Kataglyphis/WebDavClient) keeps the content (.md files,
   images, videos, .csv, etc.) private while the source code stays **open source**. To keep your
-  data private too, see my [build pipeline file](../.github/workflows/web.yml).
+  data private too, see my [build pipeline file](https://github.com/Kataglyphis/jotrockenmitlocken/blob/develop/.github/workflows/web.yml).
 
 If you like the lightweight Markdown approach, my
 [DocumANTation](https://github.com/Kataglyphis/DocumANTation) project converts Markdown to an A4

@@ -61,7 +61,7 @@ upstream, never in the wrapper:
 | Wrapper | Delegates to |
 | --- | --- |
 | `scripts/build-in-container.sh` | `linux/scripts/run-in-ci-image.sh` (the container recipe) plus `setup-flutter.sh`, for a Flutter version other than the image's |
-| `scripts/ci-container-steps.sh` | the phase switch around the wrappers below (what `.github/workflows/web.yml` runs in the image); the prologue itself is `flutter_lane_prepare_env` / `flutter_build_web` |
+| `scripts/ci-container-steps.sh` | the phase switch around the wrappers below (what `.github/workflows/web.yml` runs in the image); the prologue itself is `flutter_lane_prepare_env` / `flutter_build_web`, the `dart-doc` phase `lib/dartdoc-build.sh`'s `dartdoc_build_main` |
 | `scripts/run-dart-checks.sh` | shared Flutter format/analyze/test gate (`flutter_checks.sh`) |
 | `scripts/integration-smoke-test.sh` | shared Flutter-web smoke test |
 | `scripts/run-nginx-integration-test.sh` | local docker/nginx harness (hand-run, not in CI); readiness is `01-core/http-readiness.sh`'s `wait_for_http` |
@@ -82,6 +82,7 @@ upstream, never in the wrapper:
 | CI image reference | `docs/shared-script-libraries.md` § ci-image-ref.sh |
 | Dependency updates (Renovate as a local CLI) | `docs/dependency-updates.md` |
 | The FTP publish action the deploy steps use | `docs/ftp-deploys.md` |
+| The docs site's lane: build, `.htaccess`, link gate, publish (`build-docs.yml`) | `docs/docs-sites.md` |
 
 Two upstream facts that bite before you reach a doc:
 
@@ -157,9 +158,10 @@ copy lives at `scripts/lib/` per `.antfrastructure-shared.manifest`.
 ### CI/CD (`.github/workflows/web.yml`)
 
 - **Names** follow the family's [workflow naming](third_party/ANTfrastructure/docs/adopting-in-a-new-project.md#workflow-file-names-and-display-names) (owner decision 2026-09-24): this lane is `web.yml` "Web · build + deploy" (`dart.yml` until then), the pin lane `submodule-pins.yml` "Submodule pins". Job ids did not change, so neither did the check-run names.
-- **Trigger:** push to `main` or `develop`, never a PR. The family's [CI-round rule](third_party/ANTfrastructure/docs/branch-and-release-strategy.md) does not reach this repo: it has no platform lane to request ([`ci-build-triggers.md`](third_party/ANTfrastructure/docs/ci-build-triggers.md#the-consumer-lanes)). Flow: lint gates → WebDAV sync → dart-checks → `flutter build web --release --wasm` → smoke test → FTP deploy. `main` deploys WASM to the production domain; `develop` deploys WASM and CanvasKit to the dev domains. Both branches then build the API docs (`dart doc`, the `dart-doc` phase) and publish them to the docs domain the README links; the `docs/` guides are read on GitHub, outside that build.
+- **Trigger:** push to `main` or `develop`, never a PR. The family's [CI-round rule](third_party/ANTfrastructure/docs/branch-and-release-strategy.md) does not reach this repo: it has no platform lane to request ([`ci-build-triggers.md`](third_party/ANTfrastructure/docs/ci-build-triggers.md#the-consumer-lanes)). Flow: lint gates → WebDAV sync → dart-checks → `flutter build web --release --wasm` → smoke test → FTP deploy. `main` deploys WASM to the production domain; `develop` deploys WASM and CanvasKit to the dev domains.
+- **Docs site:** the `docs` job, beside `build` and gated on neither, calls the hub's [`build-docs.yml`](third_party/ANTfrastructure/docs/docs-sites.md) with `command: bash scripts/ci-container-steps.sh dart-doc`. That phase builds `doc/api` (`dart doc`, the family theme, both `docs/` guides); the hub adds its `.htaccess` and 404 page, fails on a dead internal link or anchor, and publishes to the docs domain the README links, with the `DOC_WEBSITE_*` secrets.
 - **Containerised lane:** every Dart/Flutter step runs in the family Linux CI image (Flutter at `/opt/flutter`, no `setup-flutter`) via ANTfrastructure's `prepare-linux-ci-host` and `run-in-linux-container` actions. The image tag is deliberately written nowhere in this repo: the steps omit `image:` and inherit the actions' default (the comment at the top of the `build` job says why). Each step is a fresh container, so `scripts/ci-container-steps.sh` re-establishes PATH, git `safe.directory` and the pub cache (`.pub-cache/` in the workspace) per phase, through ANTfrastructure's `flutter_lane_prepare_env`, not a prologue of its own.
-- **Host-side steps:** the lint gate job (`build` needs it, so a lint failure stops the deploy before it starts), the WebDAV sync (repo secrets + uv; the fetched assets land in the workspace the container bind-mounts) and the four FTP deploy steps. The repo has no `GHCR_PAT`: the prologue action skips login and pulls the public image anonymously.
+- **Host-side steps:** the lint gate job (`build` needs it, so a lint failure stops the deploy before it starts), the WebDAV sync (repo secrets + uv; the fetched assets land in the workspace the container bind-mounts) and the three web-app FTP deploy steps. The repo has no `GHCR_PAT`: the prologue action skips login and pulls the public image anonymously.
 
 ### E2E prerequisites (Playwright + flatpak Chromium)
 
@@ -220,6 +222,10 @@ python3 scripts/capture_console_errors.py    # browser console error capture (pr
 
 # Generate localization code from ARB files
 flutter gen-l10n
+
+# The docs site as the docs job builds it (in the image), then its .htaccess, 404 page and link gate
+bash scripts/ci-container-steps.sh dart-doc
+bash third_party/ANTfrastructure/linux/scripts/docs-site.sh stage doc/api
 ```
 
 > **MANDATORY for agents:** after any code change, `bash scripts/run-dart-checks.sh` must pass
@@ -238,9 +244,11 @@ how to run it and what breaks; no filler, no marketing, no repetition.
 | `docs/publishing-posts.md` | The user-facing story: why Markdown, the content layout, how to publish a post or a review, localization |
 | `lib/l10n/*.arb` | The localized strings (§ 4, *Localization*) |
 
-- Both `docs/` pages are read on GitHub, not on the docs site: the `dart-doc` phase runs a bare
-  `dart doc`, which publishes only the README and the API. A new page goes into the README's
-  documentation table.
+- Both `docs/` pages are also on the docs site, as `guide-getting-started.html` and
+  `guide-publishing-posts.html`: the `dart-doc` phase lists them in `DARTDOC_BUILD_GUIDES`. A new
+  page goes into that list and into the README's documentation table. A relative link to a
+  non-Markdown file is dead on the site (the renderer rewrites only `*.md` links), so link such a
+  file by its GitHub URL.
 - A change to user-facing behaviour updates its page in the same PR.
 - A page that restates a hub page fails the lint gates (`doc-dupes --against-hub`): link to the hub
   instead. A passage that must stay is budgeted in `doc-dupes-hub.allow`, with its reason.

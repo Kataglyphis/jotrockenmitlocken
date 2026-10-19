@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# ci-container-steps.sh <phase> - one web.yml step per phase, each in a fresh container, so the prologue re-establishes state.
+# ci-container-steps.sh <phase> - one CI step per phase (dart-doc: build-docs.yml's build), each in a fresh container, so the prologue re-establishes state.
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
@@ -63,10 +63,22 @@ phase_smoke_test() {
 phase_dart_doc() {
   # rootUris into the repo's own .pub-cache make dartdoc die with "'_PhysicalFile' is not a subtype of type 'Folder'".
   export PUB_CACHE=/tmp/pub-cache
-  rm -rf "${KATAGLYPHIS_REPO_ROOT}/.dart_tool"
+  # dart doc writes over doc/api without clearing it, so a staged .htaccess or a deleted page would survive a rebuild.
+  rm -rf "${KATAGLYPHIS_REPO_ROOT}/.dart_tool" "${KATAGLYPHIS_REPO_ROOT}/doc/api"
   flutter pub get
   (cd "${KATAGLYPHIS_REPO_ROOT}/third_party/ANThology" && flutter pub get)
-  dart doc
+  antfrastructure_source linux/scripts/lib/dartdoc-build.sh
+  # The hub's builder: dartdoc set-up, plus the docs/ guides that builder cannot take.
+  DARTDOC_BUILD_THEME_CSS="$(antfrastructure_path third_party/DocumANTation/style/dartdoc.css)"
+  DARTDOC_BUILD_IMAGES_DIR="${KATAGLYPHIS_REPO_ROOT}/images"
+  export DARTDOC_BUILD_THEME_CSS DARTDOC_BUILD_IMAGES_DIR
+  # <source>|<slug>|<nav title>; the slug names guide-<slug>.html, so renaming one moves a URL.
+  # shellcheck disable=SC2034 # read by dartdoc_build_stage_guides and dartdoc_build_render_guides
+  DARTDOC_BUILD_GUIDES=(
+    "${KATAGLYPHIS_REPO_ROOT}/docs/getting-started.md|getting-started|Getting started"
+    "${KATAGLYPHIS_REPO_ROOT}/docs/publishing-posts.md|publishing-posts|Publishing posts"
+  )
+  dartdoc_build_main
 }
 
 if [ "$#" -ne 1 ]; then

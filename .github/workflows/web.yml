@@ -115,16 +115,14 @@ jobs:
           password: ${{ secrets.DEV_PW }}
           local-dir: "./build/web/"
 
-      - name: Build docs
-        uses: Kataglyphis/ANTfrastructure/.github/actions/run-in-linux-container@develop
-        with:
-          extra-args: --platform "linux/amd64"
-          script: bash /workspace/scripts/ci-container-steps.sh dart-doc
-
-      - name: 📂 Sync files to doc domain
-        uses: Kataglyphis/ANTfrastructure/.github/actions/deploy-over-ftp@develop
-        with:
-          server: ${{ secrets.DOC_WEBSITE_SERVER }}
-          username: ${{ secrets.DOC_WEBSITE_USER }}
-          password: ${{ secrets.DOC_WEBSITE_PW }}
-          local-dir: "./doc/api/"
+  # The hub's lane builds, link-checks and publishes the docs site, on its own so a red website build cannot hold it back (third_party/ANTfrastructure/docs/docs-sites.md).
+  docs:
+    uses: Kataglyphis/ANTfrastructure/.github/workflows/build-docs.yml@develop
+    with:
+      command: bash scripts/ci-container-steps.sh dart-doc
+      site-dir: doc/api
+      container-args: --platform linux/amd64
+    secrets:
+      FTP_SERVER: ${{ secrets.DOC_WEBSITE_SERVER }}
+      FTP_USERNAME: ${{ secrets.DOC_WEBSITE_USER }}
+      FTP_PASSWORD: ${{ secrets.DOC_WEBSITE_PW }}
