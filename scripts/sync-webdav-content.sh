@@ -14,11 +14,11 @@ source "${SCRIPT_DIR}/lib/antfrastructure.sh"
 : "${WEBDAV_REMOTE_BASE_PATH:?set WEBDAV_REMOTE_BASE_PATH (repository secret REMOTE_BASE_PATH)}"
 
 LOCAL_ASSETS_FOLDER="${LOCAL_ASSETS_FOLDER:-assets}"
-SYNC_PYTHON_VERSION="${SYNC_PYTHON_VERSION:-3.14}"
 
-# uv_venv_create installs the interpreter too: setup-uv provides uv on the runner but no Python 3.14.
+# setup-uv provides uv on the runner but no Python, so uv_venv_create installs the hub's pinned X.Y.
 antfrastructure_source linux/scripts/01-core/python_uv.sh
 antfrastructure_source linux/scripts/01-core/webdav-download.sh
+SYNC_PYTHON_VERSION="${SYNC_PYTHON_VERSION:-$(python_pinned_major_minor)}"
 
 # webdav_download_tree expects the venv at the repo root, and the destination is repo-relative.
 cd "$KATAGLYPHIS_REPO_ROOT"
