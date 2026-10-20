@@ -199,7 +199,7 @@ dart format --output=none --set-exit-if-changed $(git ls-files '*.dart')   # not
 bash scripts/run-lint-gates.sh
 
 # Dependency upgrades, not a gate: third_party/ANTfrastructure/docs/dependency-updates.md.
-# .github/dependabot.yml still covers pubspec.yaml too.
+# Dependabot is off (owner, 2026-10-20), so this is the only dependency watch.
 bash scripts/renovate-local.sh                    # report what is behind
 bash scripts/renovate-local.sh --apply --dry-run  # the plan
 bash scripts/renovate-local.sh --apply            # move the gitlinks, edit the manifests

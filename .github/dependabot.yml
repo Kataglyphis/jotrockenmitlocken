@@ -1,8 +1,0 @@
-# Overlaps Renovate on pub; delete once Renovate has opened a PR here, since no bot at all is worse than two.
-
-version: 2
-updates:
-  - package-ecosystem: "pub" # See documentation for possible values
-    directory: "/" # Location of package manifests
-    schedule:
-      interval: "weekly"
