@@ -38,18 +38,20 @@ jobs:
           fetch-depth: '0'
           submodules: recursive
 
-      # On the host: the one step needing repo secrets, passed via env: so quotes in them cannot break the command.
-      - name: Install uv
-        uses: astral-sh/setup-uv@1c37ad07a6a961277cf70c0d37d6f313000f5884 # v10.3.0
-
+      # On the image's pinned CPython; the secrets reach the container by name (-e NAME), never as values on a command line.
       - name: Sync content from WebDAV
+        uses: Kataglyphis/ANTfrastructure/.github/actions/run-in-linux-container@develop
         env:
           WEBDAV_HOSTNAME: ${{ secrets.WEBDAV_HOSTNAME }}
           WEBDAV_USERNAME: ${{ secrets.WEBDAV_USERNAME }}
           WEBDAV_PASSWORD: ${{ secrets.WEBDAV_PASSWORD }}
           WEBDAV_REMOTE_BASE_PATH: ${{ secrets.REMOTE_BASE_PATH }}
           # LOCAL_ASSETS_FOLDER comes from the workflow-level env above.
-        run: bash scripts/sync-webdav-content.sh
+        with:
+          extra-args: >-
+            --platform "linux/amd64"
+            -e WEBDAV_HOSTNAME -e WEBDAV_USERNAME -e WEBDAV_PASSWORD -e WEBDAV_REMOTE_BASE_PATH -e LOCAL_ASSETS_FOLDER
+          script: bash /workspace/scripts/sync-webdav-content.sh
 
       # Flutter runs only in the image; each phase of scripts/ci-container-steps.sh re-establishes per-container state.
       - name: Dart checks (format, analyze, test)

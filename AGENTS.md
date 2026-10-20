@@ -69,7 +69,7 @@ upstream, never in the wrapper:
 | `scripts/run-lint-gates.sh` | shared lint aggregator (`linux/scripts/run-lint-gates.sh`; its header says which gates and why) |
 | `scripts/setup-sqlite3-wasm.sh` | shared SHA256-verified sqlite3.wasm fetcher |
 | `scripts/renovate-local.sh` | shared Renovate local-CLI dependency updater (every manager the tree has, submodule pins and `pubspec.yaml` included) |
-| `scripts/sync-webdav-content.sh` | `01-core/python_uv.sh` (uv, venv) and `01-core/webdav-download.sh` (`webdav_download_tree`, over the `WEBDAVCLIENT_REF` pin in `01-core/versions.env`); only the secret names, the interpreter and the destination are this repo's |
+| `scripts/sync-webdav-content.sh` | `01-core/python_uv.sh` (uv, venv) and `01-core/webdav-download.sh` (`webdav_download_tree`, over the `WEBDAVCLIENT_REF` pin in `01-core/versions.env`); only the secret names, the image guard and the destination are this repo's |
 
 | Topic | Where |
 | --- | --- |
@@ -161,7 +161,8 @@ copy lives at `scripts/lib/` per `.antfrastructure-shared.manifest`.
 - **Trigger:** push to `main` or `develop`, never a PR. The family's [CI-round rule](third_party/ANTfrastructure/docs/branch-and-release-strategy.md) does not reach this repo: it has no platform lane to request ([`ci-build-triggers.md`](third_party/ANTfrastructure/docs/ci-build-triggers.md#the-consumer-lanes)). Flow: lint gates → WebDAV sync → dart-checks → `flutter build web --release --wasm` → smoke test → FTP deploy. `main` deploys WASM to the production domain; `develop` deploys WASM and CanvasKit to the dev domains.
 - **Docs site:** the `docs` job, beside `build` and gated on neither, calls the hub's [`build-docs.yml`](third_party/ANTfrastructure/docs/docs-sites.md) with `command: bash scripts/ci-container-steps.sh dart-doc`. That phase builds `doc/api` (`dart doc`, the family theme, both `docs/` guides); the hub adds its `.htaccess` and 404 page, fails on a dead internal link or anchor, and publishes to the docs domain the README links, with the `DOC_WEBSITE_*` secrets.
 - **Containerised lane:** every Dart/Flutter step runs in the family Linux CI image (Flutter at `/opt/flutter`, no `setup-flutter`) via ANTfrastructure's `prepare-linux-ci-host` and `run-in-linux-container` actions. The image tag is deliberately written nowhere in this repo: the steps omit `image:` and inherit the actions' default (the comment at the top of the `build` job says why). Each step is a fresh container, so `scripts/ci-container-steps.sh` re-establishes PATH, git `safe.directory` and the pub cache (`.pub-cache/` in the workspace) per phase, through ANTfrastructure's `flutter_lane_prepare_env`, not a prologue of its own.
-- **Host-side steps:** the lint gate job (`build` needs it, so a lint failure stops the deploy before it starts), the WebDAV sync (repo secrets + uv; the fetched assets land in the workspace the container bind-mounts) and the three web-app FTP deploy steps. The repo has no `GHCR_PAT`: the prologue action skips login and pulls the public image anonymously.
+- **Host-side steps:** the lint gate job (`build` needs it, so a lint failure stops the deploy before it starts) and the three web-app FTP deploy steps. The repo has no `GHCR_PAT`: the prologue action skips login and pulls the public image anonymously.
+- **The WebDAV sync runs in the image** (owner, 2026-10-20: only the image's pinned CPython, no interpreter download): `run-in-linux-container` gets the four secrets through the step's `env:` and hands them on by name (`-e WEBDAV_PASSWORD`), so no value is on a command line; the fetched assets land in the bind-mounted workspace. Outside the image the script stops with exit 2.
 
 ### E2E prerequisites (Playwright + flatpak Chromium)
 
@@ -205,9 +206,11 @@ bash scripts/renovate-local.sh --apply --dry-run  # the plan
 bash scripts/renovate-local.sh --apply            # move the gitlinks, edit the manifests
 
 # Pull the private blog content off WebDAV into assets/ (needs the four
-# credentials CI holds as repository secrets). CI runs this exact script.
-WEBDAV_HOSTNAME=... WEBDAV_USERNAME=... WEBDAV_PASSWORD=... \
-  WEBDAV_REMOTE_BASE_PATH=... bash scripts/sync-webdav-content.sh
+# credentials CI holds as repository secrets), in the family image as CI runs it.
+WEBDAV_HOSTNAME=... WEBDAV_USERNAME=... WEBDAV_PASSWORD=... WEBDAV_REMOTE_BASE_PATH=... \
+  docker run --rm -e WEBDAV_HOSTNAME -e WEBDAV_USERNAME -e WEBDAV_PASSWORD -e WEBDAV_REMOTE_BASE_PATH \
+  -v "$PWD:/workspace" -w /workspace ghcr.io/kataglyphis/kataglyphis_beschleuniger:latest \
+  bash scripts/sync-webdav-content.sh
 
 # Local web dev (no real blog content without WebDAV secrets)
 flutter run -d web-server --profile --web-port 8080 --web-hostname 0.0.0.0
