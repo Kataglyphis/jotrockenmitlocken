@@ -250,7 +250,7 @@ Elchwinkel 42
 
 ### E-Mail
 
-- für allgemeine Anfragen: [Kontakt zu mir](#)
+- für allgemeine Anfragen: [contact@jonasheinle.de](mailto:contact@jonasheinle.de)
 
 ## Externe Links
 
