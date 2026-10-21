@@ -1,15 +1,41 @@
 #!/usr/bin/env python3
-"""Delegate to the shared ANTfrastructure Flutter web console test."""
+"""Delegate to the shared ANTfrastructure Flutter web console test, over this site's routes."""
 
+import os
 import subprocess
 import sys
 from pathlib import Path
 
+# Every page the site serves without its WebDAV content, and an unknown route that must land on the error page.
+ROUTES = [
+    "/",
+    "/landingPage",
+    "/aboutMe",
+    "/data",
+    "/documents",
+    "/quotations",
+    "/books",
+    "/films",
+    "/games",
+    "/blockEntries",
+    "/sqliteTest",
+    "/aiBlog",
+    "/rendering",
+    "/imprint",
+    "/contact",
+    "/privacyPolicy",
+    "/cookieDeclaration",
+    "/declarationOnAccessibility",
+    "/copyright",
+    "/openSourceLicenses",
+    "/error404",
+]
+
 
 def main() -> int:
-    script_dir = Path(__file__).resolve().parent
+    repo_root = Path(__file__).resolve().parent.parent
     shared_script = (
-        script_dir.parent
+        repo_root
         / "third_party"
         / "ANTfrastructure"
         / "linux"
@@ -26,9 +52,14 @@ def main() -> int:
         sys.executable,
         str(shared_script),
         "--build-dir",
-        str(script_dir.parent / "build" / "web"),
+        str(repo_root / "build" / "web"),
     ]
-    return subprocess.call(command)
+    for route in ROUTES:
+        command += ["--route", route]
+    # The family image ships Chrome for Testing and names it; elsewhere the shared script's flatpak Chromium default holds.
+    if os.environ.get("CHROME_EXECUTABLE"):
+        command += ["--chromium-bin", os.environ["CHROME_EXECUTABLE"]]
+    return subprocess.call(command + sys.argv[1:])
 
 
 if __name__ == "__main__":

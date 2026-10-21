@@ -12,8 +12,11 @@ antfrastructure_source linux/scripts/05-frameworks/flutter/lane-prologue.sh
 antfrastructure_source linux/scripts/01-core/http-readiness.sh
 
 usage() {
-  echo "Usage: $0 <dart-checks|build-web-wasm|smoke-test|build-web-canvaskit|dart-doc>" >&2
+  echo "Usage: $0 <dart-checks|build-web-wasm|smoke-test|build-web-canvaskit|perf|dart-doc>" >&2
 }
+
+# The floor sits under the 76.1 % of lib/ measured on 2026-10-21 without the WebDAV content.
+DART_COVERAGE_MIN=74
 
 container_prologue() {
   # flutter_lane_prepare_env returns non-zero rather than exiting, so the exit is spelled here.
@@ -23,6 +26,10 @@ container_prologue() {
 
 phase_dart_checks() {
   bash "${KATAGLYPHIS_REPO_ROOT}/scripts/run-dart-checks.sh"
+  bash "$(antfrastructure_path linux/scripts/05-frameworks/flutter/check-dart-coverage.sh)"     --min "${DART_COVERAGE_MIN}" --lcov "${KATAGLYPHIS_REPO_ROOT}/build/coverage/lcov.info"     --repo-root "${KATAGLYPHIS_REPO_ROOT}"
+  # Again in the image's Chrome, where the site runs; the @TestOn('vm') files read the checkout and sit out.
+  flutter test --platform chrome
+  python3 "$(antfrastructure_path linux/scripts/05-frameworks/flutter/check-web-artefacts.py)"     --repo-root "${KATAGLYPHIS_REPO_ROOT}"
 }
 
 phase_build_web_wasm() {
@@ -60,6 +67,11 @@ phase_smoke_test() {
   bash "${KATAGLYPHIS_REPO_ROOT}/scripts/integration-smoke-test.sh" "${base_url}"
 }
 
+# Frame timings in profile mode on the Linux desktop build, into out/perf/frontend.json for the frontend-perf-report action.
+phase_perf() {
+  xvfb-run -a flutter drive --profile -d linux     --driver=test_driver/perf_driver.dart --target=integration_test/performance_test.dart
+}
+
 phase_dart_doc() {
   # rootUris into the repo's own .pub-cache make dartdoc die with "'_PhysicalFile' is not a subtype of type 'Folder'".
   export PUB_CACHE=/tmp/pub-cache
@@ -94,6 +106,7 @@ case "${PHASE}" in
   build-web-wasm) phase_build_web_wasm ;;
   smoke-test) phase_smoke_test ;;
   build-web-canvaskit) phase_build_web_canvaskit ;;
+  perf) phase_perf ;;
   dart-doc) phase_dart_doc ;;
   *)
     echo "Error: unknown phase: ${PHASE}" >&2

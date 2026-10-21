@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# run-dart-checks.sh - the Dart gate (pub get for root and ANThology, format on tracked files, analyze, test).
+# run-dart-checks.sh - the Dart gate (pub get for root and ANThology, format on tracked files, analyze, test with coverage).
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
@@ -19,7 +19,8 @@ fi
 # flutter_checks.sh works relative to the cwd.
 cd "$KATAGLYPHIS_REPO_ROOT"
 
-# ANThology has its own pubspec, which the root's `flutter test` does not resolve without its own pub get.
+# ANThology needs its own pub get; the one VM test run writes the lcov ci-container-steps.sh's coverage floor reads.
 antfrastructure_exec linux/scripts/05-frameworks/flutter/flutter_checks.sh \
   --strict true \
-  --extra-package third_party/ANThology
+  --extra-package third_party/ANThology \
+  --coverage build/coverage/lcov.info

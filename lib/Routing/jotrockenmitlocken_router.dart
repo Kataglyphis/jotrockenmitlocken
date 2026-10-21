@@ -1,29 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:jotrockenmitlocken/Pages/AboutMePage/about_me_page.dart';
-import 'package:anthology/Pages/markdown_content_page.dart';
 import 'package:anthology/Pages/DataPage/BlockOverviewPage/block_overview_page.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/BooksPage/books_page.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/FilmsPage/films_page.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/GamesPage/games_page.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/data_page.dart';
 import 'package:jotrockenmitlocken/Pages/DocumentsPage/documents_page.dart';
-import 'package:anthology/Pages/ErrorPage/error_page.dart';
 import 'package:anthology/blog_dependent_app_attributes.dart';
 
-import 'package:anthology/Pages/Footer/footer_page.dart';
-import 'package:anthology/Pages/Footer/open_source_licenses_page.dart';
 import 'package:anthology/Pages/LandingPage/landing_page.dart';
 import 'package:jotrockenmitlocken/Pages/DataPage/QuotesPage/quotes_page.dart';
-import 'package:anthology/Pages/Footer/footer.dart';
-import 'package:anthology/Pages/Footer/footer_page_config.dart';
 import 'package:anthology/Pages/Sqlite/sqlite_test_page.dart';
-import 'package:anthology/blog_page_config.dart';
-import 'package:anthology/my_two_cents_config.dart';
 import 'package:anthology/Routing/router_creater.dart';
 
 import 'package:anthology/app_attributes.dart';
 import 'package:anthology/Pages/stateful_branch_info_provider.dart';
 
+/// Every jotrockenmitlocken route, each paired with its [StatefulBranchInfoProvider]; the navigation bar's pages first.
 class JotrockenMitLockenRoutes extends RoutesCreator {
   final BlogDependentAppAttributes blogDependentAppAttributes;
 
@@ -33,80 +26,64 @@ class JotrockenMitLockenRoutes extends RoutesCreator {
   List<(Widget, StatefulBranchInfoProvider)> getAllPagesWithConfigs(
     AppAttributes appAttributes,
   ) {
-    List<(Widget, StatefulBranchInfoProvider)> allPagesAndConfigs = [];
-    allPagesAndConfigs += _getNavBarPagesAndConfigs(appAttributes);
-    allPagesAndConfigs += _getFooterPagesAndConfigs(appAttributes);
-    allPagesAndConfigs += _getBlogPagesAndConfigs(appAttributes);
-    allPagesAndConfigs += _getDataPagesAndConfigs(appAttributes);
-    allPagesAndConfigs += _getMediaCriticsPagesAndConfigs(appAttributes);
-    allPagesAndConfigs += _getErrorPagesAndConfigs(appAttributes);
-
-    return allPagesAndConfigs;
-  }
-
-  List<(Widget, StatefulBranchInfoProvider)> _getErrorPagesAndConfigs(
-    AppAttributes appAttributes,
-  ) {
-    List<StatefulBranchInfoProvider> errorPageConfigs = appAttributes
-        .screenConfigurations
-        .getErrorPagesConfig();
-    List<Widget> errorPages = [
-      ErrorPage(footer: getFooter(appAttributes), appAttributes: appAttributes),
-    ];
-    assert(errorPages.length == errorPageConfigs.length);
+    final screens =
+        blogDependentAppAttributes.blogDependentScreenConfigurations;
     return [
-      for (int i = 0; i < errorPages.length; i += 1)
-        (errorPages[i], errorPageConfigs[i]),
+      ..._getNavBarPagesAndConfigs(appAttributes),
+      ...footerPagesWithConfigs(appAttributes),
+      ...blogPagesWithConfigs(appAttributes, screens.getBlogPagesConfig()),
+      ..._getDataPagesAndConfigs(appAttributes),
+      ...mediaCriticsPagesWithConfigs(
+        appAttributes,
+        screens.getMediaCriticsPagesConfig(),
+      ),
+      ...errorPagesWithConfigs(appAttributes),
     ];
   }
 
   List<(Widget, StatefulBranchInfoProvider)> _getDataPagesAndConfigs(
     AppAttributes appAttributes,
   ) {
-    List<StatefulBranchInfoProvider> dataPagesConfigs =
-        blogDependentAppAttributes.blogDependentScreenConfigurations
-            .getDataPagesConfig();
-    List<Widget> dataPages = [
-      QuotesPage(
-        footer: getFooter(appAttributes),
-        appAttributes: appAttributes,
-      ),
-      BooksPage(
-        footer: getFooter(appAttributes),
-        appAttributes: appAttributes,
-        blogDependentAppAttributes: blogDependentAppAttributes,
-      ),
-      FilmsPage(footer: getFooter(appAttributes), appAttributes: appAttributes),
-      GamesPage(
-        footer: getFooter(appAttributes),
-        appAttributes: appAttributes,
-        blogDependentAppAttributes: blogDependentAppAttributes,
-      ),
-      BlockOverviewPage(
-        footer: getFooter(appAttributes),
-        appAttributes: appAttributes,
-        blogDependentAppAttributes: blogDependentAppAttributes,
-      ),
-      // Labels come from the anthology catalogue, so the fr locale gets French too.
-      SqliteTestPage(
-        footer: getFooter(appAttributes),
-        appAttributes: appAttributes,
-      ),
-    ];
-    assert(dataPages.length == dataPagesConfigs.length);
-    return [
-      for (int i = 0; i < dataPages.length; i += 1)
-        (dataPages[i], dataPagesConfigs[i]),
-    ];
+    return pairPagesWithConfigs(
+      [
+        QuotesPage(
+          footer: getFooter(appAttributes),
+          appAttributes: appAttributes,
+        ),
+        BooksPage(
+          footer: getFooter(appAttributes),
+          appAttributes: appAttributes,
+          blogDependentAppAttributes: blogDependentAppAttributes,
+        ),
+        FilmsPage(
+          footer: getFooter(appAttributes),
+          appAttributes: appAttributes,
+        ),
+        GamesPage(
+          footer: getFooter(appAttributes),
+          appAttributes: appAttributes,
+          blogDependentAppAttributes: blogDependentAppAttributes,
+        ),
+        BlockOverviewPage(
+          footer: getFooter(appAttributes),
+          appAttributes: appAttributes,
+          blogDependentAppAttributes: blogDependentAppAttributes,
+        ),
+        // Labels come from the anthology catalogue, so the fr locale gets French too.
+        SqliteTestPage(
+          footer: getFooter(appAttributes),
+          appAttributes: appAttributes,
+        ),
+      ],
+      blogDependentAppAttributes.blogDependentScreenConfigurations
+          .getDataPagesConfig(),
+    );
   }
 
   List<(Widget, StatefulBranchInfoProvider)> _getNavBarPagesAndConfigs(
     AppAttributes appAttributes,
   ) {
-    List<StatefulBranchInfoProvider> navBarPageConfigs = appAttributes
-        .screenConfigurations
-        .getNavRailPagesConfig();
-    List<Widget> navBarPages = [
+    return pairPagesWithConfigs([
       LandingPage(
         footer: getFooter(appAttributes),
         appAttributes: appAttributes,
@@ -121,98 +98,6 @@ class JotrockenMitLockenRoutes extends RoutesCreator {
         footer: getFooter(appAttributes),
         appAttributes: appAttributes,
       ),
-    ];
-    assert(navBarPages.length == navBarPageConfigs.length);
-    return [
-      for (int i = 0; i < navBarPages.length; i += 1)
-        (navBarPages[i], navBarPageConfigs[i]),
-    ];
-  }
-
-  List<(Widget, StatefulBranchInfoProvider)> _getMediaCriticsPagesAndConfigs(
-    AppAttributes appAttributes,
-  ) {
-    List<MyTwoCentsConfig> blogPagesConfigs = blogDependentAppAttributes
-        .blogDependentScreenConfigurations
-        .getMediaCriticsPagesConfig();
-    List<(Widget, StatefulBranchInfoProvider)> footerPages = blogPagesConfigs
-        .map(
-          (pageConfig) => (
-            MarkdownContentPage(
-              footer: getFooter(appAttributes),
-              appAttributes: appAttributes,
-              config: pageConfig,
-            ),
-            pageConfig,
-          ),
-        )
-        .toList();
-
-    return footerPages;
-  }
-
-  List<(Widget, StatefulBranchInfoProvider)> _getBlogPagesAndConfigs(
-    AppAttributes appAttributes,
-  ) {
-    List<BlogPageConfig> blogPagesConfigs = blogDependentAppAttributes
-        .blogDependentScreenConfigurations
-        .getBlogPagesConfig();
-    List<(Widget, StatefulBranchInfoProvider)> footerPages = blogPagesConfigs
-        .map(
-          (pageConfig) => (
-            MarkdownContentPage(
-              footer: getFooter(appAttributes),
-              appAttributes: appAttributes,
-              config: pageConfig,
-            ),
-            pageConfig,
-          ),
-        )
-        .toList();
-
-    return footerPages;
-  }
-
-  List<(Widget, StatefulBranchInfoProvider)> _getFooterPagesAndConfigs(
-    AppAttributes appAttributes,
-  ) {
-    List<FooterPageConfig> footerPagesConfigs = appAttributes
-        .screenConfigurations
-        .getFooterPagesConfig();
-    List<(Widget, StatefulBranchInfoProvider)> footerPages = footerPagesConfigs
-        .map((pageConfig) {
-          if (pageConfig.getRoutingName() == '/openSourceLicenses') {
-            return (
-              OpenSourceLicensesPage(
-                footer: getFooter(appAttributes),
-                appAttributes: appAttributes,
-              ),
-              pageConfig,
-            );
-          }
-
-          return (
-            FooterPage(
-              footer: getFooter(appAttributes),
-              appAttributes: appAttributes,
-              filePathDe: pageConfig.getFilePathDe(),
-              filePathEn: pageConfig.getFilePathEn(),
-            ),
-            pageConfig,
-          );
-        })
-        .toList();
-
-    return footerPages;
-  }
-
-  @override
-  Footer getFooter(AppAttributes appAttributes) {
-    return Footer(
-      footerPagesConfigs: appAttributes.screenConfigurations
-          .getFooterPagesConfig(),
-      userSettings: appAttributes.userSettings,
-      footerConfig: appAttributes.footerConfig,
-    );
+    ], appAttributes.screenConfigurations.getNavRailPagesConfig());
   }
 }

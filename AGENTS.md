@@ -14,15 +14,16 @@ Personal blog of Jonas Heinle (@Kataglyphis): a responsive cross-platform Flutte
 
 ```
 lib/
-  main.dart                     # Entry point: loads the JSON settings in parallel (settings_loader.dart) and hands them to ANThology's KataglyphisAppShell, which builds GoRouter + MaterialApp.router
+  main.dart                     # Entry point: removes the web shell's loading overlay (ANThology's dismissBootOverlay), loads the four settings files in parallel through ANThology's SettingsLoader and hands them to KataglyphisAppShell, which builds GoRouter + MaterialApp.router
   Pages/                        # This app's own pages; the shared ones are ANThology's (below)
     jotrockenmitlocken_screen_configurations.dart  # All page config registrations
     AboutMePage/                #   About Me page with skills, charts, donation
     DataPage/                   #   Data sections: books, films, games, quotes (the blog overview and SQLite test routed beside them are ANThology's)
     DocumentsPage/              #   Document download page (CV, thesis PDFs)
-  Routing/                      # JotrockenMitLockenRoutes, this app's RoutesCreator: pairs every page with its config
+  Routing/                      # JotrockenMitLockenRoutes, this app's RoutesCreator: its nav-bar and data pages; footer, blog, review and error pages come from ANThology's helpers
   l10n/                         # ARB-based localization (German + English + French, 15 strings per locale, auto-generated)
-  settings_loader.dart          # Loads the four settings files; the config models it fills are ANThology's
+web/                            # index.html and manifest.json are this app's; css/ and javascript/ are the hub's shared shell (§ 4), never edited here
+integration_test/performance_test.dart  # Frame timings (start, page switches, resizes) for the perf job; test_driver/perf_driver.dart writes out/perf/frontend.json
 
 scripts/                        # Flat, Linux-only (see § 3); every entry is a thin wrapper, see § 2
 third_party/ANThology/ # Git submodule — shared component library
@@ -40,7 +41,9 @@ third_party/ANThology/ # Git submodule — shared component library
       markdown_content_page.dart  # Generic Markdown+appendix page (shared)
     Widgets/
       skill_table.dart          #   Reusable JSON-to-Table widget (shared)
-    Sqlite/                     #   Platform-conditional SQLite self-test (shared)
+    Sqlite/                     #   SQLite loader (FFI natively, sqlite3.wasm on the web), self-test, healthcheck (shared)
+    Boot/                       #   dismissBootOverlay(): removes the web shell's loading overlay (shared)
+    settings_loader.dart        #   SettingsLoader and the settings parsers (shared)
     Layout/                     # Responsive layout widgets (OneTwoTransitionPage, SinglePage)
     Media/                      # Markdown rendering, file handling, images, data tables
     Routing/                    # Base classes for ScreenConfigurations, RoutesCreator
@@ -64,8 +67,8 @@ upstream, never in the wrapper:
 | `scripts/ci-container-steps.sh` | the phase switch around the wrappers below (what `.github/workflows/web.yml` runs in the image); the prologue itself is `flutter_lane_prepare_env` / `flutter_build_web`, the `dart-doc` phase `lib/dartdoc-build.sh`'s `dartdoc_build_main` |
 | `scripts/run-dart-checks.sh` | shared Flutter format/analyze/test gate (`flutter_checks.sh`) |
 | `scripts/integration-smoke-test.sh` | shared Flutter-web smoke test |
-| `scripts/run-nginx-integration-test.sh` | local docker/nginx harness (hand-run, not in CI); readiness is `01-core/http-readiness.sh`'s `wait_for_http` |
-| `scripts/capture_console_errors.py` | shared Flutter-web console-error test |
+| `scripts/run-nginx-integration-test.sh` | `linux/webserver/scripts/flutter-nginx-integration-test.sh`, the nginx harness (hand-run, not in CI; `--port N`); the wrapper only builds when `build/web` is missing and sets this site's CSP hosts |
+| `scripts/capture_console_errors.py` | shared Flutter-web console-error test, over every route this site serves without its WebDAV content |
 | `scripts/run-lint-gates.sh` | shared lint aggregator (`linux/scripts/run-lint-gates.sh`; its header says which gates and why) |
 | `scripts/setup-sqlite3-wasm.sh` | shared SHA256-verified sqlite3.wasm fetcher |
 | `scripts/renovate-local.sh` | shared Renovate local-CLI dependency updater (every manager the tree has, submodule pins and `pubspec.yaml` included) |
@@ -107,9 +110,9 @@ For the newest code instead, `bash third_party/ANTfrastructure/linux/scripts/git
 
 - `third_party/ANThology` is a path dependency in `pubspec.yaml`; a pin bump must keep
   `flutter pub get` resolving. The go_router lesson: this app declared `go_router ^17.x` while
-  ANThology moved to `^18.0.0`; the ranges were disjoint, pub refused the bump, and since the app
-  never imported it, the direct dependency is gone. Do not re-add a package ANThology already
-  pins unless the ranges overlap.
+  ANThology moved to `^18.0.0`; the ranges were disjoint and pub refused the bump. Since
+  2026-10-21 `go_router` is back, as a dev dependency at ANThology's and OmniAccelerANT's
+  `^18.0.0`, because `test/app_layout_test.dart` reads the router. Move all three together.
 
 ANTfrastructure's shared suite guards drift, run from `.github/workflows/submodule-pins.yml` (its
 `pester-version` input pins Pester 3.4.0; the comment above it says why). Run it after any pin
@@ -124,6 +127,17 @@ copy lives at `scripts/lib/` per `.antfrastructure-shared.manifest`.
 
 - **State management:** plain `StatefulWidget` state — ANThology's `KataglyphisAppShell` holds the app-wide state and changes it with `setState`. `provider` is declared in `pubspec.yaml` but imported nowhere (nor by ANThology).
 - **Routing:** GoRouter (`package:go_router`, pinned by ANThology) with declarative named routes
+- **The web shell is the hub's.** `web/css/` and `web/javascript/` are copies of ANTfrastructure's
+  `shared/web/`, declared in `.antfrastructure-shared.manifest`; the lint gates' `shared-config`
+  check fails on any edit here. Change them upstream and run
+  `sync-shared-config.sh --repo-root . --write` ([`shared/web/README.md`](third_party/ANTfrastructure/shared/web/README.md)).
+  `web/.htaccess` is the hub's Apache template under this repo's header (a `body` row).
+  `index.html` keeps the shell's markup and script order (`test/unit/web_html_test.dart`), and
+  `main()` removes the loading overlay with ANThology's `dismissBootOverlay()`: no JavaScript
+  guesses when Flutter is ready.
+- **SQLite has no IndexedDB database here.** `/sqliteTest` runs in memory (ANThology's
+  `loadSqlite3()` without a name). A name, once shipped, is permanent: a new one opens an empty
+  database in every visitor's browser.
 - **Responsive layout:** single-page or two-column layout by screen width breakpoints (defined in `third_party/ANThology/lib/constants.dart`)
 - **Content:** Blog posts in Markdown, rendered via `markdown_widget` (ANThology's `lib/Media/Markdown/markdown_page.dart`; `flutter_markdown_plus` is declared there but imported nowhere). Book/film/game reviews via `assets/settings/my_two_cents_settings.json` (parsed into ANThology's `MyTwoCentsConfig`).
 - **Localization:** ARB files in `lib/l10n/` (template: `app_en.arb`) generate `app_localizations*.dart`. Run `flutter gen-l10n` after every ARB edit; never hand-edit the generated Dart.
@@ -137,7 +151,7 @@ copy lives at `scripts/lib/` per `.antfrastructure-shared.manifest`.
 | Category | Key Packages |
 |---|---|
 | State management | `provider ^6.1.5+1` (declared, imported nowhere) |
-| Routing | `go_router ^18.0.0` (through `anthology`; no direct dependency here) |
+| Routing | `go_router ^18.0.0` (ANThology's; a dev dependency here for the layout test) |
 | Icons | `cupertino_icons ^2.0.0`, `font_awesome_flutter ^11.0.0` |
 | Localization | `intl ^0.20.2` |
 | Database | `sqlite3 ^3.7.0` (WASM + native; `web/sqlite3.wasm` is the same release) |
@@ -158,7 +172,12 @@ copy lives at `scripts/lib/` per `.antfrastructure-shared.manifest`.
 ### CI/CD (`.github/workflows/web.yml`)
 
 - **Names** follow the family's [workflow naming](third_party/ANTfrastructure/docs/adopting-in-a-new-project.md#workflow-file-names-and-display-names) (owner decision 2026-09-24): this lane is `web.yml` "Web · build + deploy" (`dart.yml` until then), the pin lane `submodule-pins.yml` "Submodule pins". Job ids did not change, so neither did the check-run names.
-- **Trigger:** push to `main` or `develop`, never a PR. The family's [CI-round rule](third_party/ANTfrastructure/docs/branch-and-release-strategy.md) does not reach this repo: it has no platform lane to request ([`ci-build-triggers.md`](third_party/ANTfrastructure/docs/ci-build-triggers.md#the-consumer-lanes)). Flow: lint gates → WebDAV sync → dart-checks → `flutter build web --release --wasm` → smoke test → FTP deploy. `main` deploys WASM to the production domain; `develop` deploys WASM and CanvasKit to the dev domains.
+- **Trigger:** push to `main` or `develop`, never a PR. The family's [CI-round rule](third_party/ANTfrastructure/docs/branch-and-release-strategy.md) does not reach this repo: it has no platform lane to request ([`ci-build-triggers.md`](third_party/ANTfrastructure/docs/ci-build-triggers.md#the-consumer-lanes)). Flow: lint gates → WebDAV sync → dart-checks (format, analyze, VM tests with coverage, the `lib/` floor of 74 %, the suites again in Chrome, the hub's web artefacts gate) → `flutter build web --release --wasm` → smoke test (it also checks the shared shell is served) → FTP deploy. `main` deploys WASM to the production domain; `develop` deploys WASM and CanvasKit to the dev domains.
+- **Frame timings:** the `perf` job, beside `build` and gated on neither, runs
+  `integration_test/performance_test.dart` on the Linux profile build under Xvfb
+  (`ci-container-steps.sh perf`). The hub's `frontend-perf-report` action compares it with the
+  median of `develop`'s last 20 runs: +25 % warns, a doubled average or 90th-percentile build
+  time fails once 3 runs exist.
 - **Docs site:** the `docs` job, beside `build` and gated on neither, calls the hub's [`build-docs.yml`](third_party/ANTfrastructure/docs/docs-sites.md) with `command: bash scripts/ci-container-steps.sh dart-doc`. That phase builds `doc/api` (`dart doc`, the family theme, both `docs/` guides); the hub adds its `.htaccess` and 404 page, fails on a dead internal link or anchor, and publishes to the docs domain the README links, with the `DOC_WEBSITE_*` secrets.
 - **Containerised lane:** every Dart/Flutter step runs in the family Linux CI image (Flutter at `/opt/flutter`, no `setup-flutter`) via ANTfrastructure's `prepare-linux-ci-host` and `run-in-linux-container` actions. The image tag is deliberately written nowhere in this repo: the steps omit `image:` and inherit the actions' default (the comment at the top of the `build` job says why). Each step is a fresh container, so `scripts/ci-container-steps.sh` re-establishes PATH, git `safe.directory` and the pub cache (`.pub-cache/` in the workspace) per phase, through ANTfrastructure's `flutter_lane_prepare_env`, not a prologue of its own.
 - **Host-side steps:** the lint gate job (`build` needs it, so a lint failure stops the deploy before it starts) and the three web-app FTP deploy steps. The repo has no `GHCR_PAT`: the prologue action skips login and pulls the public image anonymously.
@@ -186,11 +205,21 @@ eyeballing the site by hand; nothing here drives Firefox.
 # Thin wrapper over ANTfrastructure's flutter_checks.sh; CI runs this exact script.
 bash scripts/run-dart-checks.sh
 
+# What else CI's dart-checks phase runs: the coverage floor, the suites in Chrome, the web artefacts gate
+bash scripts/ci-container-steps.sh dart-checks
+
+# Frame timings on the Linux profile build (Xvfb), then the table CI writes
+bash scripts/ci-container-steps.sh perf
+python3 third_party/ANTfrastructure/linux/scripts/05-frameworks/flutter/frontend-perf-report.py out/perf/frontend.json
+
 # The individual steps, when you want only one of them
 flutter pub get && (cd third_party/ANThology && flutter pub get)
 dart analyze
 flutter test
 dart format --output=none --set-exit-if-changed $(git ls-files '*.dart')   # not `dart format .`, see § 4
+
+# CI's first gates on every commit, by reference (the hub's hook, never a copy)
+git config core.hooksPath third_party/ANTfrastructure/shared/linux/templates/git-hooks
 
 # The whole lint gate; which gates and why is the header of
 # third_party/ANTfrastructure/linux/scripts/run-lint-gates.sh. CI's `lint` job
@@ -220,7 +249,7 @@ flutter build web --release --wasm --no-tree-shake-icons
 flutter build web --release --no-tree-shake-icons
 
 # E2E, both against a fresh WASM build — run both before committing, exit 0 or do not commit
-bash scripts/run-nginx-integration-test.sh   # HTTP-level smoke test (or: serve build/web on :8080, then bash scripts/integration-smoke-test.sh http://localhost:8080)
+bash scripts/run-nginx-integration-test.sh   # HTTP-level smoke test, nginx in docker/nerdctl (ENGINE; --port N) (or: serve build/web on :8080, then bash scripts/integration-smoke-test.sh http://localhost:8080)
 python3 scripts/capture_console_errors.py    # browser console error capture (prerequisites in § 4)
 
 # Generate localization code from ARB files

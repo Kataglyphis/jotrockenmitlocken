@@ -12,3 +12,12 @@
 # None of the five shared configs is taken: no CMakeLists.txt and no C++ here.
 
 antfrastructure-sh   scripts/lib/antfrastructure.sh
+#
+# The Flutter web shell (shared/web/README.md), copied verbatim, and the Apache
+# template under this repo's own header; --write refreshes the exact rows.
+web-cookie-css
+web-loading-css
+web-cookies-js
+web-utils-js
+web-init-js
+flutter-web-htaccess

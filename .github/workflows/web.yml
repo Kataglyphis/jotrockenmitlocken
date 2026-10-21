@@ -117,6 +117,30 @@ jobs:
           password: ${{ secrets.DEV_PW }}
           local-dir: "./build/web/"
 
+  # Frame timings of the Linux profile build against the default branch's last runs; beside build, so it never holds a deploy back.
+  perf:
+    name: ⏱️ Frontend performance
+    runs-on: ubuntu-26.04
+    timeout-minutes: 45
+    needs: lint
+    steps:
+      - name: 🚚 Prepare CI host
+        uses: Kataglyphis/ANTfrastructure/.github/actions/prepare-linux-ci-host@develop
+        with:
+          submodules: recursive
+
+      - name: Frame timings (profile, Xvfb)
+        uses: Kataglyphis/ANTfrastructure/.github/actions/run-in-linux-container@develop
+        with:
+          extra-args: --platform "linux/amd64"
+          script: bash /workspace/scripts/ci-container-steps.sh perf
+
+      - name: Frontend performance report
+        if: always() && hashFiles('out/perf/frontend.json') != ''
+        uses: Kataglyphis/ANTfrastructure/.github/actions/frontend-perf-report@develop
+        with:
+          key: frontend-perf-x64
+
   # The hub's lane builds, link-checks and publishes the docs site, on its own so a red website build cannot hold it back (third_party/ANTfrastructure/docs/docs-sites.md).
   docs:
     uses: Kataglyphis/ANTfrastructure/.github/workflows/build-docs.yml@develop

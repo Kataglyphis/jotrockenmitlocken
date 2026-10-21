@@ -1,3 +1,7 @@
+// Reads web/index.html off disk, so the VM only.
+@TestOn('vm')
+library;
+
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
@@ -17,19 +21,6 @@ String _extractCsp(String html) {
     fail('CSP meta tag not found in web/index.html');
   }
   return match.group(1)!;
-}
-
-String _extractInlineLoadingScript(String html) {
-  final scripts = RegExp(
-    r'<script>\s*([\s\S]*?)\s*</script>',
-    multiLine: true,
-  ).allMatches(html).toList();
-  expect(
-    scripts.length,
-    greaterThanOrEqualTo(1),
-    reason: 'Expected at least one inline <script> block',
-  );
-  return scripts.last.group(1)!;
 }
 
 void main() {
@@ -98,60 +89,38 @@ void main() {
     });
   });
 
-  group('web/index.html — Loading screen JS', () {
-    test('uses MutationObserver to detect Flutter render', () async {
-      final script = _extractInlineLoadingScript(await _loadWebIndexHtml());
-
+  group('web/index.html — the shared shell (ANTfrastructure shared/web/)', () {
+    test('a phone gets the viewport, not a 980 px desktop layout', () async {
       expect(
-        script,
-        contains('MutationObserver'),
-        reason: 'Must watch DOM for Flutter elements',
-      );
-      expect(
-        script,
-        contains('observer.disconnect()'),
-        reason: 'Must clean up observer to prevent memory leaks',
+        await _loadWebIndexHtml(),
+        contains(
+          '<meta name="viewport" content="width=device-width, initial-scale=1">',
+        ),
       );
     });
 
-    test('has hideLoading function with guard', () async {
-      final script = _extractInlineLoadingScript(await _loadWebIndexHtml());
-
-      expect(
-        script,
-        contains('function hideLoading()'),
-        reason: 'hideLoading function must be defined',
-      );
-      expect(
-        script,
-        contains("classList.add('fade-out')"),
-        reason: 'Must use CSS fade-out transition',
-      );
-      expect(
-        script,
-        contains('hidden = true'),
-        reason: 'Must guard against multiple calls',
-      );
+    test('carries the overlay markup dismissBootOverlay() removes', () async {
+      final html = await _loadWebIndexHtml();
+      expect(html, contains('<div id="background-animation"></div>'));
+      expect(html, contains('<div class="loading">'));
+      expect(html, contains('<section id="cookie-notice">'));
     });
 
-    test('has fallback timeout (not infinite loading)', () async {
-      final script = _extractInlineLoadingScript(await _loadWebIndexHtml());
-
-      expect(
-        script,
-        contains('setTimeout'),
-        reason: 'Must have fallback timeout to hide loading',
-      );
+    test('loads the shell scripts in order, before Flutter', () async {
+      final html = await _loadWebIndexHtml();
+      final order = [
+        'javascript/utils.js',
+        'javascript/cookies.js',
+        'javascript/init.js',
+        'flutter_bootstrap.js',
+      ].map((src) => html.indexOf('<script src="$src"')).toList();
+      expect(order, isNot(contains(-1)));
+      expect(order, orderedEquals([...order]..sort()));
     });
 
-    test('detects element nodes (nodeType === 1)', () async {
-      final script = _extractInlineLoadingScript(await _loadWebIndexHtml());
-
-      expect(
-        script,
-        contains('nodeType === 1'),
-        reason: 'Must check for Element nodes, not text/comment nodes',
-      );
+    test('has no inline script, so the CSP needs none', () async {
+      final html = await _loadWebIndexHtml();
+      expect(RegExp(r'<script>').hasMatch(html), isFalse);
     });
   });
 }

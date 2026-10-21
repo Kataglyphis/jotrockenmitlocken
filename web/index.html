@@ -18,6 +18,8 @@
     <base href="$FLUTTER_BASE_HREF">
 
     <meta charset="UTF-8">
+    <!-- Without it a phone lays the loading screen and cookie notice out at 980 px, like a desktop; Flutter sets its own once it runs. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta content="IE=Edge" http-equiv="X-UA-Compatible">
     <meta name="description" content="Personal blog of Jonas Heinle — programming, books, films, and more.">
     <meta name="theme-color" content="#0175C2">
@@ -51,13 +53,6 @@
     <style>
         :root {
             --kPrimaryColor: rgb(105, 240, 174);
-            --kTextColor: #000000;
-        }
-
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --kTextColor: #e0e0e0;
-            }
         }
     </style>
 
@@ -81,46 +76,10 @@
         <div id="loading-message"></div>
     </div>
 
+    <!-- The shared shell (ANTfrastructure shared/web/); main() removes the overlay through ANThology's dismissBootOverlay(). -->
     <script src="javascript/utils.js"></script>
     <script src="javascript/cookies.js"></script>
     <script src="javascript/init.js"></script>
-    <script>
-        (function () {
-            var loader = document.querySelector('.loading');
-            var bg = document.getElementById('background-animation');
-            var hidden = false;
-
-            function hideLoading() {
-                if (hidden) return;
-                hidden = true;
-                if (loader) { loader.classList.add('fade-out'); }
-                if (bg) { bg.classList.add('fade-out'); }
-                setTimeout(function () {
-                    if (loader) loader.remove();
-                    if (bg) bg.remove();
-                }, 500);
-            }
-
-            // Detect Flutter render by watching for its DOM elements
-            var observer = new MutationObserver(function (mutations) {
-                for (var i = 0; i < mutations.length; i++) {
-                    var added = mutations[i].addedNodes;
-                    for (var j = 0; j < added.length; j++) {
-                        if (added[j].nodeType === 1) {
-                            // Flutter started rendering — hide loading
-                            setTimeout(hideLoading, 100);
-                            observer.disconnect();
-                            return;
-                        }
-                    }
-                }
-            });
-            observer.observe(document.body, { childList: true, subtree: true });
-
-            // Fallback: max 10 seconds
-            setTimeout(hideLoading, 10000);
-        })();
-    </script>
     <script src="flutter_bootstrap.js" async></script>
 </body>
 

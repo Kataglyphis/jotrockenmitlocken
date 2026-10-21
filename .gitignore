@@ -71,3 +71,7 @@ doc/api/
 
 # The theses come off WebDAV at build time (scripts/sync-webdav-content.sh), like books/ and games/.
 /assets/documents/thesis/*.pdf
+
+# Frame timings: written by test_driver/perf_driver.dart, restored by CI from earlier runs.
+out/
+.perf-baseline/

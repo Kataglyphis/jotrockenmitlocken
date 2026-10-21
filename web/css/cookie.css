@@ -1,66 +1,87 @@
+/* The consent notice; javascript/cookies.js shows it until its button is pressed. */
 #cookie-notice {
-	background-color: #fff;
-	color: #000;
+	background-color: #ffffff;
+	color: #000000;
 	bottom: 0;
 	box-shadow: 0 8px 24px rgba(0, 0, 0, .25);
+	-webkit-font-smoothing: antialiased;
 	display: none;
 	left: 0;
 	opacity: 0;
-	padding: clamp(30px, 8vw, 60px) 0;
+	padding: 32px 0;
 	position: fixed;
 	width: 100%;
 	z-index: 11;
 }
 
 #cookie-notice.show {
-	animation: fadein .5s cubic-bezier(.27, .89, .39, .95) .2s forwards;
+	animation: fadein .5s cubic-bezier(.27, .89, .39, .95) .2s 1 forwards;
 	display: block;
 }
 
 @keyframes fadein {
-	0% { opacity: 0; }
-	to { opacity: 1; }
-}
+	0% {
+		opacity: 0;
+	}
 
-.container {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	margin: 0 auto;
-	max-width: calc(1280px - 100px);
-	width: calc(100% - 48px);
-	white-space: pre-line;
-}
-
-.container p {
-	max-width: 1200px;
-	margin: 0 50px 0 0;
-	color: #4a4a4a;
-	font-size: clamp(13px, 2.5vw, 16px);
-	font-family: "Roboto", sans-serif;
-	line-height: 1.5;
-}
-
-button {
-	background-color: var(--kPrimaryColor);
-	color: #fff;
-	border: none;
-	border-radius: 24px;
-	cursor: pointer;
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	font-family: "Montserrat", sans-serif;
-	font-size: clamp(12px, 2vw, 14px);
-	font-weight: 700;
-	height: 40px;
-	padding: 0 32px;
-	text-align: center;
-	line-height: 1.15;
-	white-space: nowrap;
+	to {
+		opacity: 1;
+	}
 }
 
 #cookie-notice .container {
-	flex-wrap: wrap;
-	gap: 12px;
+	align-items: center;
+	display: flex;
+	gap: 24px;
+	justify-content: space-between;
+	margin: 0 auto;
+	max-width: 1180px;
+	width: calc(100% - 48px);
+}
+
+#message {
+	color: #4a4a4a;
+	font-size: 16px;
+	line-height: 1.5;
+	white-space: pre-line;
+}
+
+#cookie-consent {
+	background-color: var(--kPrimaryColor);
+	color: #ffffff;
+	align-items: center;
+	justify-content: center;
+	border: 0;
+	border-radius: 24px;
+	cursor: pointer;
+	display: inline-flex;
+	flex-shrink: 0;
+	font-family: inherit;
+	font-size: 14px;
+	font-weight: 700;
+	height: 40px;
+	padding: 0 32px;
+	line-height: 1.15;
+}
+
+/* A phone stacks the text above a full-width button instead of squeezing both into one row. */
+@media (max-width: 600px) {
+	#cookie-notice {
+		padding: 16px 0;
+	}
+
+	#cookie-notice .container {
+		align-items: stretch;
+		flex-direction: column;
+		gap: 12px;
+		width: calc(100% - 32px);
+	}
+
+	#message {
+		font-size: 15px;
+	}
+
+	#cookie-consent {
+		width: 100%;
+	}
 }

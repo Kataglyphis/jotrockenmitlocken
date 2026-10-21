@@ -1,38 +1,44 @@
-(function() {
-	// Max-Age, since an unparsable Expires is ignored (session cookie); 400 days is the browser cap; path=/ spans the site.
+// Shows the consent notice until its button sets a technically necessary cookie.
+(function () {
+	// Max-Age, since an unparsable Expires made it a session cookie; 400 days is the browsers' cap; path=/ spans the site.
 	const CONSENT_MAX_AGE_SECONDS = 400 * 24 * 60 * 60;
+	const COOKIE_KEY = 'cookie-consent';
+	const COOKIE_VALUE = 'true';
 
 	function setCookie(name, value) {
-		const attributes = '; Max-Age=' + CONSENT_MAX_AGE_SECONDS + '; path=/; SameSite=Strict; Secure';
-		document.cookie = name + '=' + (value || '') + attributes;
+		// Secure on https only: a plain-http LAN page drops a Secure cookie, and the notice came back on every visit.
+		const secure = location.protocol === 'https:' ? '; Secure' : '';
+		document.cookie = name + '=' + value + '; Max-Age=' + CONSENT_MAX_AGE_SECONDS + '; path=/; SameSite=Strict' + secure;
 	}
 
 	function getCookie(name) {
-		const nameEQ = name + '=';
-		const ca = document.cookie.split(';');
-		for (let i = 0; i < ca.length; i++) {
-			let c = ca[i];
-			while (c.charAt(0) === ' ') c = c.substring(1, c.length);
-			if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+		const prefix = name + '=';
+		for (const part of document.cookie.split(';')) {
+			const cookie = part.trim();
+			if (cookie.indexOf(prefix) === 0) {
+				return cookie.substring(prefix.length);
+			}
 		}
 		return null;
 	}
 
 	function initCookieNotice() {
 		const notice = document.getElementById('cookie-notice');
-		const consentBtn = document.getElementById('cookie-consent');
-		const cookieKey = 'cookie-consent';
-		const cookieValue = 'true';
-
-		if (getCookie(cookieKey) === cookieValue) return;
-
+		const consentButton = document.getElementById('cookie-consent');
+		if (!notice || !consentButton || getCookie(COOKIE_KEY) === COOKIE_VALUE) {
+			return;
+		}
 		notice.classList.add('show');
-		consentBtn.addEventListener('click', function(e) {
-			e.preventDefault();
-			setCookie(cookieKey, cookieValue);
+		consentButton.addEventListener('click', function (event) {
+			event.preventDefault();
+			setCookie(COOKIE_KEY, COOKIE_VALUE);
 			notice.classList.remove('show');
 		});
 	}
 
-	initCookieNotice();
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', initCookieNotice);
+	} else {
+		initCookieNotice();
+	}
 })();
