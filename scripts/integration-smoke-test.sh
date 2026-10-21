@@ -10,8 +10,9 @@ source "${SCRIPT_DIR}/lib/antfrastructure.sh"
 # Underscores, not hyphens: the kebab-case rename did not reach this upstream file.
 SHARED_SCRIPT="$(antfrastructure_path linux/webserver/scripts/flutter_integration_smoke_test.sh)"
 
-# No CSP host to require: the build serves every engine and font file itself.
+# No CSP host to require: the build serves every engine and font file itself, the fallback fonts too.
 REQUIRED_CSP_HOSTS="" \
 CHECK_LOADING_SHELL=1 \
 CHECK_LOCAL_ENGINE=1 \
+CHECK_FALLBACK_FONTS=1 \
   bash "$SHARED_SCRIPT" "$@"

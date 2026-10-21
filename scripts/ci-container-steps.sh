@@ -29,7 +29,13 @@ phase_dart_checks() {
   bash "$(antfrastructure_path linux/scripts/05-frameworks/flutter/check-dart-coverage.sh)"     --min "${DART_COVERAGE_MIN}" --lcov "${KATAGLYPHIS_REPO_ROOT}/build/coverage/lcov.info"     --repo-root "${KATAGLYPHIS_REPO_ROOT}"
   # Again in the image's Chrome, where the site runs; the @TestOn('vm') files read the checkout and sit out.
   flutter test --platform chrome
-  python3 "$(antfrastructure_path linux/scripts/05-frameworks/flutter/check-web-artefacts.py)"     --repo-root "${KATAGLYPHIS_REPO_ROOT}"
+  # The icons sit in web/app-icons/: Apache's default Alias /icons/ hides a site's own icons/.
+  python3 "$(antfrastructure_path linux/scripts/05-frameworks/flutter/check-web-artefacts.py)"     --repo-root "${KATAGLYPHIS_REPO_ROOT}" --icons-dir app-icons
+}
+
+# The engine's emoji and symbol fonts, where web/flutter_bootstrap.js's fontFallbackBaseUrl points.
+fetch_fallback_fonts() {
+  python3 "$(antfrastructure_path linux/scripts/05-frameworks/flutter/fetch-fallback-fonts.py)"     --dest "${KATAGLYPHIS_REPO_ROOT}/build/web/fallback-fonts"
 }
 
 phase_build_web_wasm() {
@@ -37,6 +43,7 @@ phase_build_web_wasm() {
   flutter config --enable-web
   # Every engine file from this site, none from Google's CDN (owner, 2026-10-21).
   flutter_build_web --wasm --no-web-resources-cdn --no-tree-shake-icons
+  fetch_fallback_fonts
 }
 
 phase_build_web_canvaskit() {
@@ -44,6 +51,7 @@ phase_build_web_canvaskit() {
   # Drop the WASM output so the bundles never mix; no -f, since a missing build/web means the WASM build never ran.
   rm -r "${KATAGLYPHIS_REPO_ROOT}/build/web/"
   flutter_build_web --no-web-resources-cdn --no-tree-shake-icons
+  fetch_fallback_fonts
 }
 
 SERVER_PID=""

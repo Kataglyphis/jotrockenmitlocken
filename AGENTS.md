@@ -22,7 +22,7 @@ lib/
     DocumentsPage/              #   Document download page (CV, thesis PDFs)
   Routing/                      # JotrockenMitLockenRoutes, this app's RoutesCreator: its nav-bar and data pages; footer, blog, review and error pages come from ANThology's helpers
   l10n/                         # ARB-based localization (German + English + French, 15 strings per locale, auto-generated)
-web/                            # index.html and manifest.json are this app's; css/ and javascript/ are the hub's shared shell (§ 4), never edited here
+web/                            # index.html, manifest.json, flutter_bootstrap.js and app-icons/ are this app's; css/ and javascript/ are the hub's shared shell (§ 4), never edited here
 integration_test/performance_test.dart  # Frame timings (start, page switches, resizes) for the perf job; test_driver/perf_driver.dart writes out/perf/frontend.json
 
 scripts/                        # Flat, Linux-only (see § 3); every entry is a thin wrapper, see § 2
@@ -58,7 +58,7 @@ Links only, by the hub's [layout rule](third_party/ANTfrastructure/shared/templa
 Start at [`third_party/ANTfrastructure/docs/INDEX.md`](third_party/ANTfrastructure/docs/INDEX.md),
 which maps topic → owning document.
 
-All ten scripts under `scripts/` are thin wrappers; behaviour that lives upstream is fixed
+All eleven scripts under `scripts/` are thin wrappers; behaviour that lives upstream is fixed
 upstream, never in the wrapper:
 
 | Wrapper | Delegates to |
@@ -69,6 +69,7 @@ upstream, never in the wrapper:
 | `scripts/integration-smoke-test.sh` | shared Flutter-web smoke test |
 | `scripts/run-nginx-integration-test.sh` | `linux/webserver/scripts/flutter-nginx-integration-test.sh`, the nginx harness (hand-run, not in CI; `--port N`); the wrapper only builds when `build/web` is missing and sets this site's CSP hosts |
 | `scripts/capture_console_errors.py` | shared Flutter-web console-error test, over every route this site serves without its WebDAV content; a request to a Google host fails it |
+| `scripts/check-live-site.py` | `linux/scripts/check-live-site.js`, the check of the deployed site, over the console test's routes plus the posts and reviews `build/web` names, and every file of `build/web` |
 | `scripts/run-lint-gates.sh` | shared lint aggregator (`linux/scripts/run-lint-gates.sh`; its header says which gates and why) |
 | `scripts/setup-sqlite3-wasm.sh` | shared SHA256-verified sqlite3.wasm fetcher |
 | `scripts/renovate-local.sh` | shared Renovate local-CLI dependency updater (every manager the tree has, submodule pins and `pubspec.yaml` included) |
@@ -139,10 +140,17 @@ copy lives at `scripts/lib/` per `.antfrastructure-shared.manifest`.
   `--no-web-resources-cdn`, so the engine comes from `canvaskit/` on this site, and `pubspec.yaml`
   declares a `Roboto` family (ANThology's TTF, by path), which the engine would otherwise fetch from
   fonts.gstatic.com. The CSP names no other host, and the smoke test (`CHECK_LOCAL_ENGINE`) and
-  the console capture (`--forbid-host`) fail on a regression. The cost is that a glyph outside
-  Roboto, Material Icons and Font Awesome (an emoji, CJK) has no fallback font: the engine would
-  fetch one from fonts.gstatic.com, and the CSP blocks that. None of the routes with the sample
-  content needs one.
+  the console capture (`--forbid-host`) fail on a regression. The engine's fallback fonts come from
+  this site too: `web/flutter_bootstrap.js` sets `fontFallbackBaseUrl: "fallback-fonts/"`, and both
+  build phases fetch the hub's locked Noto Color Emoji and Noto Sans Symbols 2 chunks there
+  ([hub README](third_party/ANTfrastructure/linux/webserver/README.md#fallback-fonts-from-the-site));
+  the smoke test's `CHECK_FALLBACK_FONTS` fails a build without them. A glyph outside those (CJK)
+  404s from this site, and the live-site check names its URL. The licences page lists their OFL
+  notice (`lib/fallback_font_licenses.dart`).
+- **The app icons are in `web/app-icons/`, never `web/icons/`.** The production host's Apache
+  maps `/icons/` to its own icon directory, so the site's own files there 404 (they did until
+  1.4.0). The hub's artefacts gate runs with `--icons-dir app-icons` and fails a `web/icons/`;
+  regenerating the icons: [docs/getting-started.md](docs/getting-started.md#app-icons).
 - **SQLite has no IndexedDB database here.** `/sqliteTest` runs in memory (ANThology's
   `loadSqlite3()` without a name). A name, once shipped, is permanent: a new one opens an empty
   database in every visitor's browser.
@@ -180,7 +188,8 @@ copy lives at `scripts/lib/` per `.antfrastructure-shared.manifest`.
 ### CI/CD (`.github/workflows/web.yml`)
 
 - **Names** follow the family's [workflow naming](third_party/ANTfrastructure/docs/adopting-in-a-new-project.md#workflow-file-names-and-display-names) (owner decision 2026-09-24): this lane is `web.yml` "Web · build + deploy" (`dart.yml` until then), the pin lane `submodule-pins.yml` "Submodule pins". Job ids did not change, so neither did the check-run names.
-- **Trigger:** push to `main` or `develop`, never a PR. The family's [CI-round rule](third_party/ANTfrastructure/docs/branch-and-release-strategy.md) does not reach this repo: it has no platform lane to request ([`ci-build-triggers.md`](third_party/ANTfrastructure/docs/ci-build-triggers.md#the-consumer-lanes)). Flow: lint gates → WebDAV sync → dart-checks (format, analyze, VM tests with coverage, the `lib/` floor of 74 %, the suites again in Chrome, the hub's web artefacts gate) → `flutter build web --release --wasm --no-web-resources-cdn` → smoke test (it also checks the shared shell and the local engine) → FTP deploy. `main` deploys WASM to the production domain; `develop` deploys WASM and CanvasKit to the dev domains.
+- **Trigger:** push to `main` or `develop`, never a PR. The family's [CI-round rule](third_party/ANTfrastructure/docs/branch-and-release-strategy.md) does not reach this repo: it has no platform lane to request ([`ci-build-triggers.md`](third_party/ANTfrastructure/docs/ci-build-triggers.md#the-consumer-lanes)). Flow: lint gates → WebDAV sync → dart-checks (format, analyze, VM tests with coverage, the `lib/` floor of 74 %, the suites again in Chrome, the hub's web artefacts gate) → `flutter build web --release --wasm --no-web-resources-cdn` → fallback fonts into `build/web/fallback-fonts/` → smoke test (it also checks the shared shell, the local engine and the fallback fonts) → FTP deploy. `main` deploys WASM to the production domain; `develop` deploys WASM and CanvasKit to the dev domains.
+- **Live-site check:** after `main`'s upload, `scripts/check-live-site.py https://jonasheinle.de` loads every route in Chrome and fails on a console error, a CSP block, a third-party host, a file of `build/web` not served with 200, or a `version.json` that is not the build's. It cannot undo the upload: red means the site is broken now. `develop` has no check: the dev domains are secret and no secret holds their URL.
 - **Frame timings:** the `perf` job, beside `build` and gated on neither, runs
   `integration_test/performance_test.dart` on the Linux profile build under Xvfb
   (`ci-container-steps.sh perf`). The hub's `frontend-perf-report` action compares it with the

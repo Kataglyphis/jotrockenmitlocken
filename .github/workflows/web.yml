@@ -92,6 +92,14 @@ jobs:
           password: ${{ secrets.PW }}
           local-dir: "./build/web/"
 
+      # The upload cannot be undone: red here means the live site is broken now (third_party/ANTfrastructure/docs/ftp-deploys.md#the-live-site-check).
+      - name: 🔎 Live site check (main domain)
+        if: github.ref == 'refs/heads/main'
+        uses: Kataglyphis/ANTfrastructure/.github/actions/run-in-linux-container@develop
+        with:
+          extra-args: --platform "linux/amd64"
+          script: python3 /workspace/scripts/check-live-site.py https://jonasheinle.de
+
       - name: 📂 Sync files to dev wasm domain
         if: github.ref == 'refs/heads/develop'
         uses: Kataglyphis/ANTfrastructure/.github/actions/deploy-over-ftp@develop

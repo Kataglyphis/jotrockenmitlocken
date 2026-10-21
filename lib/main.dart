@@ -13,6 +13,7 @@ import 'package:anthology/user_settings.dart';
 
 import 'package:jotrockenmitlocken/Pages/jotrockenmitlocken_screen_configurations.dart';
 import 'package:jotrockenmitlocken/Routing/jotrockenmitlocken_router.dart';
+import 'package:jotrockenmitlocken/fallback_font_licenses.dart';
 import 'package:jotrockenmitlocken/l10n/app_localizations.dart';
 
 /// Everything read off the asset bundle before the first frame: the shared three and the media reviews.
@@ -52,6 +53,7 @@ Future<SettingsLoadResult> loadAppSettings([SettingsLoader? loader]) async {
 
 void main() {
   dismissBootOverlay();
+  registerFallbackFontLicenses();
   runApp(const App());
 }
 

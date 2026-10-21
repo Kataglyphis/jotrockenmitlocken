@@ -32,6 +32,21 @@ two submodule gitlinks in `.gitmodules` and `pubspec.yaml` among them). Why Reno
 local CLI, and the full workflow:
 [ANTfrastructure's `dependency-updates.md`](https://github.com/Kataglyphis/ANTfrastructure/blob/develop/docs/dependency-updates.md).
 
+## App icons
+
+The web icons live in `web/app-icons/`, not Flutter's `web/icons/`: the production host's Apache
+maps `/icons/` to its own icon directory, so every file there answered 404. The hub's web
+artefacts gate fails a `web/icons/` again ([`failure-modes.md`](https://github.com/Kataglyphis/ANTfrastructure/blob/develop/docs/failure-modes.md)).
+`flutter_launcher_icons` writes only `web/icons/`, so its web generator is off. To regenerate the
+web icons from `assets/icons/kataglyphis_app_icon.png`:
+
+1. Set `flutter_launcher_icons: web: generate: true` in `pubspec.yaml` and run
+   `dart run flutter_launcher_icons`.
+2. Move its output: `mv web/icons/* web/app-icons/ && rmdir web/icons`.
+3. Restore `web/manifest.json` and `pubspec.yaml` (`git checkout -- web/manifest.json pubspec.yaml`):
+   the generator points the manifest back at `icons/`.
+4. Re-encode the PNGs to 8 bits, as the artefacts gate's message says.
+
 ## Known issues
 
 - `flutter_highlighter` needs line 94 changed from `RichText` to `Text.rich` to make it

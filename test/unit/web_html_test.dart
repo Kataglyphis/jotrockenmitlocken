@@ -2,6 +2,7 @@
 @TestOn('vm')
 library;
 
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
@@ -60,6 +61,38 @@ void main() {
         isFalse,
         reason: 'Fixed 3-second loading timeout must be replaced',
       );
+    });
+  });
+
+  group('web/ — paths the production Apache serves', () {
+    test('no icon under icons/, which Apache aliases to its own', () async {
+      // The hub's check-web-artefacts.py --icons-dir app-icons fails the same tree; this names it in the app's own suite.
+      final manifest =
+          jsonDecode(await File('web/manifest.json').readAsString())
+              as Map<String, dynamic>;
+      final sources = [
+        for (final icon in manifest['icons'] as List<dynamic>)
+          (icon as Map<String, dynamic>)['src'] as String,
+      ];
+      expect(sources, isNotEmpty);
+      for (final src in sources) {
+        expect(src, startsWith('app-icons/'));
+        expect(File('web/$src').existsSync(), isTrue, reason: src);
+      }
+      final html = await _loadWebIndexHtml();
+      expect(html, contains('href="app-icons/Icon-192.png"'));
+      expect(html, isNot(contains('/icons/')));
+      expect(html, isNot(contains('"icons/')));
+      expect(Directory('web/icons').existsSync(), isFalse);
+    });
+
+    test('the engine fetches its fallback fonts from this site', () async {
+      final bootstrap = await File('web/flutter_bootstrap.js').readAsString();
+      final base = RegExp(
+        r'fontFallbackBaseUrl:\s*"([^"]*)"',
+      ).firstMatch(bootstrap)?.group(1);
+      expect(base, 'fallback-fonts/');
+      expect(bootstrap, contains('{{flutter_build_config}}'));
     });
   });
 
