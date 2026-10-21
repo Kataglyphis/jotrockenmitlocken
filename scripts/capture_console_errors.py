@@ -56,6 +56,9 @@ def main() -> int:
     ]
     for route in ROUTES:
         command += ["--route", route]
+    # The site serves every engine and font file itself; a request to Google fails the run.
+    for host in ("gstatic.com", "googleapis.com", "google.com"):
+        command += ["--forbid-host", host]
     # The family image ships Chrome for Testing and names it; elsewhere the shared script's flatpak Chromium default holds.
     if os.environ.get("CHROME_EXECUTABLE"):
         command += ["--chromium-bin", os.environ["CHROME_EXECUTABLE"]]

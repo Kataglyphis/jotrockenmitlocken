@@ -68,7 +68,7 @@ upstream, never in the wrapper:
 | `scripts/run-dart-checks.sh` | shared Flutter format/analyze/test gate (`flutter_checks.sh`) |
 | `scripts/integration-smoke-test.sh` | shared Flutter-web smoke test |
 | `scripts/run-nginx-integration-test.sh` | `linux/webserver/scripts/flutter-nginx-integration-test.sh`, the nginx harness (hand-run, not in CI; `--port N`); the wrapper only builds when `build/web` is missing and sets this site's CSP hosts |
-| `scripts/capture_console_errors.py` | shared Flutter-web console-error test, over every route this site serves without its WebDAV content |
+| `scripts/capture_console_errors.py` | shared Flutter-web console-error test, over every route this site serves without its WebDAV content; a request to a Google host fails it |
 | `scripts/run-lint-gates.sh` | shared lint aggregator (`linux/scripts/run-lint-gates.sh`; its header says which gates and why) |
 | `scripts/setup-sqlite3-wasm.sh` | shared SHA256-verified sqlite3.wasm fetcher |
 | `scripts/renovate-local.sh` | shared Renovate local-CLI dependency updater (every manager the tree has, submodule pins and `pubspec.yaml` included) |
@@ -135,6 +135,14 @@ copy lives at `scripts/lib/` per `.antfrastructure-shared.manifest`.
   `index.html` keeps the shell's markup and script order (`test/unit/web_html_test.dart`), and
   `main()` removes the loading overlay with ANThology's `dismissBootOverlay()`: no JavaScript
   guesses when Flutter is ready.
+- **Nothing loads from Google** (owner, 2026-10-21, "Selbst ausliefern"). Every web build passes
+  `--no-web-resources-cdn`, so the engine comes from `canvaskit/` on this site, and `pubspec.yaml`
+  declares a `Roboto` family (ANThology's TTF, by path), which the engine would otherwise fetch from
+  fonts.gstatic.com. The CSP names no other host, and the smoke test (`CHECK_LOCAL_ENGINE`) and
+  the console capture (`--forbid-host`) fail on a regression. The cost is that a glyph outside
+  Roboto, Material Icons and Font Awesome (an emoji, CJK) has no fallback font: the engine would
+  fetch one from fonts.gstatic.com, and the CSP blocks that. None of the routes with the sample
+  content needs one.
 - **SQLite has no IndexedDB database here.** `/sqliteTest` runs in memory (ANThology's
   `loadSqlite3()` without a name). A name, once shipped, is permanent: a new one opens an empty
   database in every visitor's browser.
@@ -172,7 +180,7 @@ copy lives at `scripts/lib/` per `.antfrastructure-shared.manifest`.
 ### CI/CD (`.github/workflows/web.yml`)
 
 - **Names** follow the family's [workflow naming](third_party/ANTfrastructure/docs/adopting-in-a-new-project.md#workflow-file-names-and-display-names) (owner decision 2026-09-24): this lane is `web.yml` "Web · build + deploy" (`dart.yml` until then), the pin lane `submodule-pins.yml` "Submodule pins". Job ids did not change, so neither did the check-run names.
-- **Trigger:** push to `main` or `develop`, never a PR. The family's [CI-round rule](third_party/ANTfrastructure/docs/branch-and-release-strategy.md) does not reach this repo: it has no platform lane to request ([`ci-build-triggers.md`](third_party/ANTfrastructure/docs/ci-build-triggers.md#the-consumer-lanes)). Flow: lint gates → WebDAV sync → dart-checks (format, analyze, VM tests with coverage, the `lib/` floor of 74 %, the suites again in Chrome, the hub's web artefacts gate) → `flutter build web --release --wasm` → smoke test (it also checks the shared shell is served) → FTP deploy. `main` deploys WASM to the production domain; `develop` deploys WASM and CanvasKit to the dev domains.
+- **Trigger:** push to `main` or `develop`, never a PR. The family's [CI-round rule](third_party/ANTfrastructure/docs/branch-and-release-strategy.md) does not reach this repo: it has no platform lane to request ([`ci-build-triggers.md`](third_party/ANTfrastructure/docs/ci-build-triggers.md#the-consumer-lanes)). Flow: lint gates → WebDAV sync → dart-checks (format, analyze, VM tests with coverage, the `lib/` floor of 74 %, the suites again in Chrome, the hub's web artefacts gate) → `flutter build web --release --wasm --no-web-resources-cdn` → smoke test (it also checks the shared shell and the local engine) → FTP deploy. `main` deploys WASM to the production domain; `develop` deploys WASM and CanvasKit to the dev domains.
 - **Frame timings:** the `perf` job, beside `build` and gated on neither, runs
   `integration_test/performance_test.dart` on the Linux profile build under Xvfb
   (`ci-container-steps.sh perf`). The hub's `frontend-perf-report` action compares it with the
@@ -245,8 +253,8 @@ WEBDAV_HOSTNAME=... WEBDAV_USERNAME=... WEBDAV_PASSWORD=... WEBDAV_REMOTE_BASE_P
 flutter run -d web-server --profile --web-port 8080 --web-hostname 0.0.0.0
 
 # Build web release (always --wasm; CanvasKit is the fallback bundle only)
-flutter build web --release --wasm --no-tree-shake-icons
-flutter build web --release --no-tree-shake-icons
+flutter build web --release --wasm --no-web-resources-cdn --no-tree-shake-icons
+flutter build web --release --no-web-resources-cdn --no-tree-shake-icons
 
 # E2E, both against a fresh WASM build — run both before committing, exit 0 or do not commit
 bash scripts/run-nginx-integration-test.sh   # HTTP-level smoke test, nginx in docker/nerdctl (ENGINE; --port N) (or: serve build/web on :8080, then bash scripts/integration-smoke-test.sh http://localhost:8080)

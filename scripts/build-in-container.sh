@@ -29,9 +29,9 @@ antfrastructure_path linux/scripts/05-frameworks/flutter/setup-flutter.sh >/dev/
 
 BUILD_CMD='flutter config --enable-web && flutter pub get && (cd third_party/ANThology && flutter pub get)'
 if [ "${BUILD_TARGET}" = "wasm" ]; then
-  BUILD_CMD="${BUILD_CMD} && flutter build web --release --wasm --no-tree-shake-icons"
+  BUILD_CMD="${BUILD_CMD} && flutter build web --release --wasm --no-web-resources-cdn --no-tree-shake-icons"
 else
-  BUILD_CMD="${BUILD_CMD} && flutter build web --release --no-tree-shake-icons"
+  BUILD_CMD="${BUILD_CMD} && flutter build web --release --no-web-resources-cdn --no-tree-shake-icons"
 fi
 
 CONTAINER_CMD="

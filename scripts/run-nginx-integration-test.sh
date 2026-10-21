@@ -11,10 +11,11 @@ source "${SCRIPT_DIR}/lib/antfrastructure.sh"
 BUILD_DIR="${KATAGLYPHIS_REPO_ROOT}/build/web"
 if [ ! -f "${BUILD_DIR}/index.html" ]; then
   echo "Build not found. Building..."
-  (cd "${KATAGLYPHIS_REPO_ROOT}" && flutter build web --release --wasm --no-tree-shake-icons)
+  (cd "${KATAGLYPHIS_REPO_ROOT}" && flutter build web --release --wasm --no-web-resources-cdn --no-tree-shake-icons)
 fi
 
-# This app's CSP hosts and shell checks; the harness and its teardown are ANTfrastructure's.
-export REQUIRED_CSP_HOSTS="www.gstatic.com fonts.gstatic.com"
+# No CSP host to require, the shell and the local engine checked; the harness and its teardown are ANTfrastructure's.
+export REQUIRED_CSP_HOSTS=""
 export CHECK_LOADING_SHELL=1
+export CHECK_LOCAL_ENGINE=1
 antfrastructure_exec linux/webserver/scripts/flutter-nginx-integration-test.sh "${BUILD_DIR}" "$@"

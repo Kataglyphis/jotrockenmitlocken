@@ -35,14 +35,15 @@ phase_dart_checks() {
 phase_build_web_wasm() {
   # Per-user config, so per-container: enable web in the container that builds.
   flutter config --enable-web
-  flutter_build_web --wasm --no-tree-shake-icons
+  # Every engine file from this site, none from Google's CDN (owner, 2026-10-21).
+  flutter_build_web --wasm --no-web-resources-cdn --no-tree-shake-icons
 }
 
 phase_build_web_canvaskit() {
   flutter config --enable-web
   # Drop the WASM output so the bundles never mix; no -f, since a missing build/web means the WASM build never ran.
   rm -r "${KATAGLYPHIS_REPO_ROOT}/build/web/"
-  flutter_build_web --no-tree-shake-icons
+  flutter_build_web --no-web-resources-cdn --no-tree-shake-icons
 }
 
 SERVER_PID=""

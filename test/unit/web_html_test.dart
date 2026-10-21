@@ -39,39 +39,13 @@ void main() {
       expect(csp, contains('media-src'));
     });
 
-    test('script-src allows gstatic.com for CanvasKit JS', () async {
+    test('names no host besides the site itself', () async {
+      // The build serves every engine and font file (--no-web-resources-cdn, Roboto in pubspec.yaml), so nothing else may load.
       final csp = _extractCsp(await _loadWebIndexHtml());
 
-      expect(
-        csp,
-        matches(RegExp(r'script-src[^;]*https://www\.gstatic\.com')),
-        reason: 'CanvasKit JS must be loadable from gstatic.com',
-      );
-    });
-
-    test('connect-src allows gstatic.com and fonts.gstatic.com', () async {
-      final csp = _extractCsp(await _loadWebIndexHtml());
-
-      expect(
-        csp,
-        matches(RegExp(r'connect-src[^;]*https://www\.gstatic\.com')),
-        reason: 'CanvasKit WASM must be fetchable from gstatic.com',
-      );
-      expect(
-        csp,
-        matches(RegExp(r'connect-src[^;]*https://fonts\.gstatic\.com')),
-        reason: 'Google Fonts must be fetchable',
-      );
-    });
-
-    test('font-src allows fonts.gstatic.com', () async {
-      final csp = _extractCsp(await _loadWebIndexHtml());
-
-      expect(
-        csp,
-        matches(RegExp(r'font-src[^;]*https://fonts\.gstatic\.com')),
-        reason: 'Google Fonts must be allowed as font source',
-      );
+      expect(csp, isNot(contains('https://')));
+      expect(csp, isNot(contains('gstatic')));
+      expect(csp, isNot(contains('google')));
     });
 
     test('CSP does NOT use fixed 3-second timer pattern', () async {

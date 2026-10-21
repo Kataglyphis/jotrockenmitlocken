@@ -69,4 +69,10 @@ flutter:
     - assets/settings/
     - assets/settings/user_settings/
 
-# No `fonts:` key: anthology declares the fonts, registered as `packages/anthology/<family>`.
+  # The web engine fetches a family named exactly Roboto from fonts.gstatic.com unless the app declares one; ANThology's file, by path.
+  fonts:
+    - family: Roboto
+      fonts:
+        - asset: third_party/ANThology/assets/fonts/Roboto/Roboto-Regular.ttf
+
+# The theme's fonts are anthology's, registered as `packages/anthology/<family>`.
