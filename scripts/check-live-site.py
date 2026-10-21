@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-"""check-live-site.py <base URL>: the hub's live-site check over this site's routes and build/web, after a deploy."""
+"""check-live-site.py <base URL>: the hub's live-site check over this site's routes and build/web, after a deploy.
+
+A route that fails once is retried fresh; only a repeat fails the run (its first failure is logged as flaky:).
+"""
 
 import json
 import subprocess
