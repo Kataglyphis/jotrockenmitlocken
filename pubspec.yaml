@@ -16,7 +16,6 @@ dependencies:
     sdk: flutter
   anthology:
     path: third_party/ANThology
-  provider: ^6.1.5+1
   cupertino_icons: ^2.0.0
   flutter_localizations:
     sdk: flutter
@@ -25,9 +24,10 @@ dependencies:
   sqlite3: ^3.7.0
 
 dev_dependencies:
+  anthology_test_support:
+    path: third_party/ANThology/packages/anthology_test_support
   # OmniAccelerANT's constraint; the layout test reads the router ANThology builds.
   go_router: ^18.0.0
-  mockito: ^5.7.0
   flutter_test:
     sdk: flutter
   integration_test:

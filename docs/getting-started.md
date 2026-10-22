@@ -32,6 +32,15 @@ two submodule gitlinks in `.gitmodules` and `pubspec.yaml` among them). Why Reno
 local CLI, and the full workflow:
 [ANTfrastructure's `dependency-updates.md`](https://github.com/Kataglyphis/ANTfrastructure/blob/develop/docs/dependency-updates.md).
 
+## Pages and file actions
+
+Changing language, theme or window size keeps the current route and page state. Localized
+Markdown and skills reload their selected asset without remounting the page. File buttons use
+ANThology's browser actions or native open/save dialogs and show feedback if an action fails.
+
+The app's layout test registers ANThology's dev-only widget contracts. The same cases run in
+OmniAccelerANT, including real bottom-navigation and appearance-button taps.
+
 ## App icons
 
 The web icons live in `web/app-icons/`, not Flutter's `web/icons/`: the production host's Apache
@@ -49,9 +58,8 @@ web icons from `assets/icons/kataglyphis_app_icon.png`:
 
 ## Known issues
 
-- `flutter_highlighter` needs line 94 changed from `RichText` to `Text.rich` to make it
-  selectable; its developer does not want to integrate the feature. ANThology still declares it,
-  but nothing in either `lib/` imports it.
+- The old `flutter_highlighter` patch is no longer needed: the unused dependency was removed
+  from ANThology. Code blocks render through `markdown_widget`.
 - `flutter_markdown` (note from 2024): not in a stable version. I edited its blockquote section by
   hand to centre it, and upstream had an open issue on building a `MarkdownBuilder` for a
   blockquote. Markdown now renders through `markdown_widget`, and `flutter_markdown` is no longer
