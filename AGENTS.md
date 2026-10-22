@@ -126,7 +126,9 @@ copy lives at `scripts/lib/` per `.antfrastructure-shared.manifest`.
 
 ### Architecture & Conventions
 
-- **State management:** plain `StatefulWidget` state — ANThology's `KataglyphisAppShell` holds the app-wide state and changes it with `setState`. `provider` is declared in `pubspec.yaml` but imported nowhere (nor by ANThology).
+- **State management:** ANThology's `KataglyphisAppShell` holds app-wide state with `setState`.
+  Its router survives theme, locale and breakpoint changes; `AppAttributesScope` updates pages
+  without discarding their state. Cached asset widgets reload changed paths or locale inputs.
 - **Routing:** GoRouter (`package:go_router`, pinned by ANThology) with declarative named routes
 - **The web shell is the hub's.** `web/css/` and `web/javascript/` are copies of ANTfrastructure's
   `shared/web/`, declared in `.antfrastructure-shared.manifest`; the lint gates' `shared-config`
@@ -155,7 +157,13 @@ copy lives at `scripts/lib/` per `.antfrastructure-shared.manifest`.
   `loadSqlite3()` without a name). A name, once shipped, is permanent: a new one opens an empty
   database in every visitor's browser.
 - **Responsive layout:** single-page or two-column layout by screen width breakpoints (defined in `third_party/ANThology/lib/constants.dart`)
-- **Content:** Blog posts in Markdown, rendered via `markdown_widget` (ANThology's `lib/Media/Markdown/markdown_page.dart`; `flutter_markdown_plus` is declared there but imported nowhere). Book/film/game reviews via `assets/settings/my_two_cents_settings.json` (parsed into ANThology's `MyTwoCentsConfig`).
+- **Content:** Blog posts render through ANThology's `markdown_widget` page. Book/film/game
+  reviews use `assets/settings/my_two_cents_settings.json` and ANThology's `MyTwoCentsConfig`.
+- **Files:** ANThology's `FileActions` owns browser downloads and native open/save dialogs;
+  file buttons report failure through its localized feedback.
+- **Widget contracts:** `test/app_layout_test.dart` supplies routes and the app factory to the
+  dev-only `anthology_test_support` package inside ANThology. Both apps run the same layout
+  cases and tap actual navigation, language and brightness controls.
 - **Localization:** ARB files in `lib/l10n/` (template: `app_en.arb`) generate `app_localizations*.dart`. Run `flutter gen-l10n` after every ARB edit; never hand-edit the generated Dart.
 - **Page pattern:** every route is a `(page widget, config)` pair, returned by `getAllPagesWithConfigs` in `lib/Routing/jotrockenmitlocken_router.dart`. The config extends ANThology's `StatefulBranchInfoProvider`, which supplies only `getRoutingName()`; nav-bar configs (`NavBarPageConfig`) add the `NavigationDestination` (icon and label), and ANThology's `RoutesCreator` builds the GoRouter from the pairs.
 - **Fonts:** Montserrat and Roboto come from the anthology package (the note closing `pubspec.yaml`).
@@ -166,15 +174,14 @@ copy lives at `scripts/lib/` per `.antfrastructure-shared.manifest`.
 
 | Category | Key Packages |
 |---|---|
-| State management | `provider ^6.1.5+1` (declared, imported nowhere) |
 | Routing | `go_router ^18.0.0` (ANThology's; a dev dependency here for the layout test) |
 | Icons | `cupertino_icons ^2.0.0`, `font_awesome_flutter ^11.0.0` |
 | Localization | `intl ^0.20.2` |
 | Database | `sqlite3 ^3.7.0` (WASM + native; `web/sqlite3.wasm` is the same release) |
 | Shared library | `anthology` (local path: `third_party/ANThology`) |
-| Testing | `flutter_test`, `integration_test`, `mockito ^5.7.0` |
+| Testing | `flutter_test`, `integration_test`, ANThology's dev-only `anthology_test_support` |
 | Charts (in shared repo) | `fl_chart ^1.2.0` |
-| Markdown (in shared repo) | `markdown ^7.3.1`, `markdown_widget ^2.3.2+8`, `flutter_markdown_plus ^1.0.7` (declared; only `markdown_widget` is imported) |
+| Markdown (in shared repo) | `markdown_widget ^2.3.2+8` |
 
 ### Gotchas
 
@@ -182,7 +189,7 @@ copy lives at `scripts/lib/` per `.antfrastructure-shared.manifest`.
 - **SQLite on web:** `bash scripts/setup-sqlite3-wasm.sh` downloads `sqlite3.wasm` into `web/` for web targets. It takes no arguments: the version and its SHA256 come from ANTfrastructure's `linux/scripts/01-core/versions.env` (`SQLITE3_WASM_VERSION`), and the download is verified against it.
 - **Platform directories:** do not touch `ios/`, `macos/`, `android/`, `windows/`, `linux/` unless asked; they hold platform-specific boilerplate.
 - **Android follows OmniAccelerANT's setup:** AGP 9.4.1, Gradle 9.8.1 and AGP's built-in Kotlin (`android.builtInKotlin=true`, no `kotlin-android` plugin; the KGP in `android/settings.gradle.kts` is declared, never applied, to clear Flutter's Kotlin floor). The image's `/opt/android-sdk` is read-only, so `android/build.gradle.kts` pins compileSdk, build-tools and NDK to what it ships, for every plugin too; Flutter's own NDK default is not in it. No CI lane builds the APK: `flutter build apk --release` in the family image is the check (passed 2026-10-13).
-- **Known issues** (`flutter_highlighter`'s patch, the 2024 `flutter_markdown` blockquote note): [docs/getting-started.md](docs/getting-started.md#known-issues).
+- **Historical Markdown patch notes:** [docs/getting-started.md](docs/getting-started.md#known-issues).
 - **ARM64 browser automation:** Playwright's `playwright install chromium` fails on ARM64; flatpak Chromium works everywhere. The prerequisites and the four failures worth recognising are ANTfrastructure's — § E2E prerequisites below.
 
 ### CI/CD (`.github/workflows/web.yml`)

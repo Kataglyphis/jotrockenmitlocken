@@ -30,6 +30,7 @@ time; the code is open source, its reusable widgets live in
 - **Rendering:** Markdown pages, `.csv` data as tables.
 - **Downloads:** CV, thesis and other files to open or save.
 - **Three languages:** de, en, fr.
+- **Retained pages:** language, theme and window-size changes keep the selected page and its state.
 - **Private content, open code:** content arrives through [WebDavClient](https://github.com/Kataglyphis/WebDavClient).
 
 ## Quick start
