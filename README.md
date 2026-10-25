@@ -50,6 +50,7 @@ the tests: [docs/getting-started.md](https://github.com/Kataglyphis/jotrockenmit
 | --- | --- |
 | The API | [holdmydocs.jonasheinle.de](https://holdmydocs.jonasheinle.de) |
 | Getting started: run, build, test, dependency upgrades, known issues, literature | [docs/getting-started.md](https://github.com/Kataglyphis/jotrockenmitlocken/blob/develop/docs/getting-started.md) |
+| CI quality reports, Ruff/ty and refactor previews | [Shared quality tooling](https://github.com/Kataglyphis/ANTfrastructure/blob/develop/docs/code-quality-tooling.md) |
 | Publishing posts: why Markdown, the content layout, a blog post, a book, localization | [docs/publishing-posts.md](https://github.com/Kataglyphis/jotrockenmitlocken/blob/develop/docs/publishing-posts.md) |
 | Rules for agents and contributors | [AGENTS.md](https://github.com/Kataglyphis/jotrockenmitlocken/blob/develop/AGENTS.md) |
 

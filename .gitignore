@@ -75,3 +75,5 @@ doc/api/
 # Frame timings: written by test_driver/perf_driver.dart, restored by CI from earlier runs.
 out/
 .perf-baseline/
+
+/logs/

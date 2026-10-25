@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Add shared CI size, complexity, duplication and Ruff/ty reports, with a manual Python
+  refactor preview. Generated local reports stay in ignored `logs/`.
 - Keep the selected route and page state when language, theme or layout changes.
 - Use ANThology's native open/save dialogs and shared file-action error feedback.
 - Reuse ANThology's dev-only layout and navigation contracts, including actual control taps.
