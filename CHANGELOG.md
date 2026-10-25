@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Verify the Renovate wrapper and shared config in CI without applying updates.
 - Add shared CI size, complexity, duplication and Ruff/ty reports, with a manual Python
   refactor preview. Generated local reports stay in ignored `logs/`.
 - Keep the selected route and page state when language, theme or layout changes.

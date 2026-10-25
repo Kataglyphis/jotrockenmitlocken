@@ -72,7 +72,7 @@ upstream, never in the wrapper:
 | `scripts/check-live-site.py` | `linux/scripts/check-live-site.js`, the check of the deployed site, over the console test's routes plus the posts and reviews `build/web` names, and every file of `build/web` |
 | `scripts/run-lint-gates.sh` | shared lint aggregator (`linux/scripts/run-lint-gates.sh`; its header says which gates and why) |
 | `scripts/setup-sqlite3-wasm.sh` | shared SHA256-verified sqlite3.wasm fetcher |
-| `scripts/renovate-local.sh` | shared Renovate local-CLI dependency updater (every manager the tree has, submodule pins and `pubspec.yaml` included) |
+| `scripts/renovate-local.sh` | shared Renovate local-CLI dependency updater (every manager the tree has, submodule pins and `pubspec.yaml` included); CI verifies this entrypoint without applying upgrades |
 | `scripts/sync-webdav-content.sh` | `01-core/python_uv.sh` (uv, venv) and `01-core/webdav-download.sh` (`webdav_download_tree`, over the `WEBDAVCLIENT_REF` pin in `01-core/versions.env`); only the secret names, the image guard and the destination are this repo's |
 
 | Topic | Where |
