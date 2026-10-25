@@ -95,9 +95,11 @@ Two upstream facts that bite before you reach a doc:
 - Workflows resolve ANTfrastructure's composite actions and reusable workflows at `@develop`, so
   an upstream change a workflow depends on must be pushed **before** the consumer change.
 
-Clone with `--recurse-submodules`. Without the ANTfrastructure submodule the wrappers stop with
-`Error: ANTfrastructure file not found: …` and the command that fixes it
-(`git submodule update --init --recursive third_party/ANTfrastructure`).
+Clone with `--recurse-submodules`. Without the ANTfrastructure submodule, build and lint wrappers
+stop with `Error: ANTfrastructure file not found: …`; initialize it with
+`git submodule update --init --recursive third_party/ANTfrastructure`. A real
+`scripts/renovate-local.sh --apply` initializes the missing hub and other direct submodules;
+report and dry-run do not clone.
 
 ## 3. Critical invariant: submodule pins
 

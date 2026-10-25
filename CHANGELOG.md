@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Pin ANTfrastructure to the Renovate driver that updates both direct submodules to their
+  remote default branches and initializes missing checkouts on apply.
 - Verify the Renovate wrapper and shared config in CI without applying updates.
 - Add shared CI size, complexity, duplication and Ruff/ty reports, with a manual Python
   refactor preview. Generated local reports stay in ignored `logs/`.
