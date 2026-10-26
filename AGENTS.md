@@ -100,6 +100,7 @@ stop with `Error: ANTfrastructure file not found: …`; initialize it with
 `git submodule update --init --recursive third_party/ANTfrastructure`. A real
 `scripts/renovate-local.sh --apply` initializes the missing hub and other direct submodules;
 report and dry-run do not clone.
+When WSL opens a Windows Git checkout, the copied bootstrap uses native Git for CRLF-sensitive checks.
 
 ## 3. Critical invariant: submodule pins
 
@@ -122,7 +123,7 @@ ANTfrastructure's shared suite guards drift, run from `.github/workflows/submodu
 bump. It does **not** check the version coupling above; that is on you.
 
 Flat `scripts/` is deliberate: CI is Linux-only, so there is no `scripts/windows/`; the bootstrap
-copy lives at `scripts/lib/` per `.antfrastructure-shared.manifest`.
+and its exact Git-mode companion live at `scripts/lib/` per `.antfrastructure-shared.manifest`.
 
 ## 4. Pitfalls specific to this project
 

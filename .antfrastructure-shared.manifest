@@ -5,13 +5,11 @@
 # Checked by:
 #   bash third_party/ANTfrastructure/shared/config/sync-shared-config.sh --repo-root . --check
 #
-# One row: this repo copy of the bash bootstrap sits at scripts/lib/, one level
-# above the registry default scripts/linux/lib/, which is why the path is
-# spelled out - and why its KATAGLYPHIS_REPO_ROOT_RELATIVE reads ../.. rather
-# than ../../.. That knob is a declared one and its VALUE is not compared.
+# Flat scripts/ needs explicit paths; only the resolver uses a ../.. root knob.
 # None of the five shared configs is taken: no CMakeLists.txt and no C++ here.
 
 antfrastructure-sh   scripts/lib/antfrastructure.sh
+renovate-git-mode-sh   scripts/lib/renovate-git-mode.sh
 #
 # The Flutter web shell (shared/web/README.md), copied verbatim, and the Apache
 # template under this repo's own header; --write refreshes the exact rows.
