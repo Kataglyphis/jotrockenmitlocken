@@ -32,6 +32,13 @@ two submodule gitlinks in `.gitmodules` and `pubspec.yaml` among them). Why Reno
 local CLI, and the full workflow:
 [ANTfrastructure's `dependency-updates.md`](https://github.com/Kataglyphis/ANTfrastructure/blob/develop/docs/dependency-updates.md).
 
+## Shared scripts
+
+Before adding a Bash or PowerShell helper, search this repository and its direct submodules,
+including ANTfrastructure. Reuse or extend the shared owner with site-specific arguments;
+[AGENTS.md](https://github.com/Kataglyphis/jotrockenmitlocken/blob/develop/AGENTS.md)
+holds the contributor rule.
+
 ## Pages and file actions
 
 Changing language, theme or window size keeps the current route and page state. Localized

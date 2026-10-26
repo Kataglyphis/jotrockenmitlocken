@@ -2,6 +2,12 @@
 
 Guidance for coding agents (and new contributors) working in jotrockenmitlocken.
 
+**Reuse before adding Bash or PowerShell code.** Search this repository and every direct
+submodule, including `third_party/ANTfrastructure`, for an existing implementation. Call or
+extend its canonical owner, passing project-specific values as arguments. For new behavior
+needed by multiple consumers, create or extend one shared owner module and call it here.
+Keep unique product logic in this repository.
+
 ## 1. What this project is
 
 Personal blog of Jonas Heinle (@Kataglyphis): a responsive cross-platform Flutter/Dart web app.

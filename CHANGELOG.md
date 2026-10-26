@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Search local and direct-submodule Bash/PowerShell helpers before adding behavior here;
+  extend their shared owner for functionality used by other consumers.
 - Pin ANTfrastructure's shared Bash/PowerShell reuse scanner so CI reports
   consumer-to-hub overlap candidates.
 - Pin ANTfrastructure to the Renovate driver that updates both direct submodules to their
