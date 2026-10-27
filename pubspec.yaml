@@ -70,6 +70,8 @@ flutter:
     - assets/settings/
     - assets/settings/user_settings/
     - assets/licenses/
+    # The app's own licence, listed on its licences page (lib/project_license.dart).
+    - LICENSE
 
   # The web engine fetches a family named exactly Roboto from fonts.gstatic.com unless the app declares one; ANThology's file, by path.
   fonts:

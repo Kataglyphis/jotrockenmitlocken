@@ -160,7 +160,9 @@ and its exact Git-mode companion live at `scripts/lib/` per `.antfrastructure-sh
   ([hub README](third_party/ANTfrastructure/linux/webserver/README.md#fallback-fonts-from-the-site));
   the smoke test's `CHECK_FALLBACK_FONTS` fails a build without them. A glyph outside those (CJK)
   404s from this site, and the live-site check names its URL. The licences page lists their OFL
-  notice (`lib/fallback_font_licenses.dart`).
+  notice (`lib/fallback_font_licenses.dart`), the app's own `LICENSE` (`lib/project_license.dart`)
+  and, through ANThology's shell, Roboto's Apache-2.0 text. A new bundled third-party file adds its
+  text the same way, through ANThology's `registerAssetLicense`.
 - **The app icons are in `web/app-icons/`, never `web/icons/`.** The production host's Apache
   maps `/icons/` to its own icon directory, so the site's own files there 404 (they did until
   1.4.0). The hub's artefacts gate runs with `--icons-dir app-icons` and fails a `web/icons/`;

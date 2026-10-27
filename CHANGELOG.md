@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Ship the app's own MIT licence in every build and list it on the licences page; pin
+  ANThology, whose shell now lists the Roboto font's Apache-2.0 text.
+
 - Reuse ANTfrastructure's Flutter gate for Android launcher manifest and resource validation.
 
 - Search local and direct-submodule Bash/PowerShell helpers before adding behavior here;
