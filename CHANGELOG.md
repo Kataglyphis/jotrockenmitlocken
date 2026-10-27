@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Reuse ANTfrastructure's Flutter gate for Android launcher manifest and resource validation.
+
 - Search local and direct-submodule Bash/PowerShell helpers before adding behavior here;
   extend their shared owner for functionality used by other consumers.
 - Pin ANTfrastructure's shared Bash/PowerShell reuse scanner so CI reports

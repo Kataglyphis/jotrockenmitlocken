@@ -23,6 +23,9 @@ entry, so new content needs no code. The content is private and fetched from Web
 time; the code is open source, its reusable widgets live in
 [ANThology](https://github.com/Kataglyphis/ANThology). Targets: web, Linux, Windows, Android, iOS.
 
+The shared Flutter artifact gate checks the Android manifest and launcher resources alongside
+the web assets; this repository does not currently build an APK in CI.
+
 Dependency updates: run `bash scripts/renovate-local.sh` to report, `--apply --dry-run` to plan,
 and `--apply` to update. CI checks the wrapper and config; see
 [the shared Renovate guide](https://github.com/Kataglyphis/ANTfrastructure/blob/develop/docs/dependency-updates.md).

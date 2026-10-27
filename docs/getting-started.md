@@ -72,6 +72,11 @@ web icons from `assets/icons/kataglyphis_app_icon.png`:
   blockquote. Markdown now renders through `markdown_widget`, and `flutter_markdown` is no longer
   a dependency.
 
+## Android launcher validation
+
+The existing shared Flutter artifact gate checks Android launcher resources and the manifest
+alongside web assets. CI does not currently build an APK.
+
 ## Literature
 
 Flutter/Dart:

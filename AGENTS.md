@@ -8,6 +8,9 @@ extend its canonical owner, passing project-specific values as arguments. For ne
 needed by multiple consumers, create or extend one shared owner module and call it here.
 Keep unique product logic in this repository.
 
+Keep the shared Flutter artifact gate in Dart checks: it validates the Android manifest and
+launcher resources as well as the web assets, even though CI does not build an APK.
+
 ## 1. What this project is
 
 Personal blog of Jonas Heinle (@Kataglyphis): a responsive cross-platform Flutter/Dart web app.
