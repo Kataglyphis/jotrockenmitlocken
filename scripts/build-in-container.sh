@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# build-in-container.sh [--canvaskit] - web build in the CI image with FLUTTER_VERSION instead of the image's own; ENGINE picks the engine.
+# build-in-container.sh [--canvaskit] - web build in the CI image with the hub's Flutter pin, or a FLUTTER_VERSION override; ENGINE picks the engine.
 set -euo pipefail
 
 # KATAGLYPHIS_REPO_ROOT and ANTFRASTRUCTURE_DIR come from the synced bootstrap.
@@ -7,7 +7,9 @@ set -euo pipefail
 source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/lib/antfrastructure.sh"
 
 REPO_ROOT="${KATAGLYPHIS_REPO_ROOT}"
-FLUTTER_VERSION="${FLUTTER_VERSION:-3.44.0}"
+# shellcheck source=/dev/null
+source "$(antfrastructure_path linux/scripts/05-frameworks/flutter/flutter-pin.sh)"
+flutter_resolve_pin
 
 BUILD_TARGET="wasm"
 for arg in "$@"; do
@@ -22,23 +24,24 @@ for arg in "$@"; do
 done
 
 # No extra mount: the submodule sits inside /workspace with the whole subtree setup-flutter.sh sources.
-SETUP_FLUTTER_IN_CONTAINER="/workspace/third_party/ANTfrastructure/linux/scripts/05-frameworks/flutter/setup-flutter.sh"
+FLUTTER_SCRIPTS_IN_CONTAINER="/workspace/third_party/ANTfrastructure/linux/scripts/05-frameworks/flutter"
 
 # Checked on the host: in the container the same miss surfaces a screen of pull output later.
 antfrastructure_path linux/scripts/05-frameworks/flutter/setup-flutter.sh >/dev/null
 
 BUILD_CMD='flutter config --enable-web && flutter pub get && (cd third_party/ANThology && flutter pub get)'
 if [ "${BUILD_TARGET}" = "wasm" ]; then
-  BUILD_CMD="${BUILD_CMD} && flutter build web --release --wasm --no-web-resources-cdn --no-tree-shake-icons"
+  BUILD_CMD="${BUILD_CMD} && flutter_build_web --wasm --no-web-resources-cdn --no-tree-shake-icons"
 else
-  BUILD_CMD="${BUILD_CMD} && flutter build web --release --no-web-resources-cdn --no-tree-shake-icons"
+  BUILD_CMD="${BUILD_CMD} && flutter_build_web --no-web-resources-cdn --no-tree-shake-icons"
 fi
 
 CONTAINER_CMD="
 set -euo pipefail
-bash ${SETUP_FLUTTER_IN_CONTAINER} --arch x64 --version ${FLUTTER_VERSION} --dir /opt
+FLUTTER_SDK_SHA256='${FLUTTER_SDK_SHA256:-}' bash ${FLUTTER_SCRIPTS_IN_CONTAINER}/setup-flutter.sh --arch x64 --version ${FLUTTER_VERSION} --dir /opt
 export PATH=\"/opt/flutter/bin:\${PATH}\"
 flutter --version
+source ${FLUTTER_SCRIPTS_IN_CONTAINER}/lane-prologue.sh
 cd /workspace
 ${BUILD_CMD}
 "

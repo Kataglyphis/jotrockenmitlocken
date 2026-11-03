@@ -72,7 +72,7 @@ upstream, never in the wrapper:
 
 | Wrapper | Delegates to |
 | --- | --- |
-| `scripts/build-in-container.sh` | `linux/scripts/run-in-ci-image.sh` (the container recipe) plus `setup-flutter.sh`, for a Flutter version other than the image's |
+| `scripts/build-in-container.sh` | `linux/scripts/run-in-ci-image.sh` (the container recipe) plus `flutter-pin.sh`, `setup-flutter.sh` and `lane-prologue.sh`, at the hub's pin or a `FLUTTER_VERSION` override |
 | `scripts/ci-container-steps.sh` | the phase switch around the wrappers below (what `.github/workflows/web.yml` runs in the image); the prologue itself is `flutter_lane_prepare_env` / `flutter_build_web`, the `dart-doc` phase `lib/dartdoc-build.sh`'s `dartdoc_build_main` |
 | `scripts/run-dart-checks.sh` | shared Flutter format/analyze/test gate (`flutter_checks.sh`) |
 | `scripts/integration-smoke-test.sh` | shared Flutter-web smoke test |
