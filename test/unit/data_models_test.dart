@@ -167,12 +167,12 @@ void main() {
     test('constructor stores title, additionalInfo, baseDir', () {
       final file = File(
         title: 'CV_Jonas_Heinle_english.pdf',
-        additionalInfo: '~3.7MB English',
+        additionalInfo: '~46KB English',
         baseDir: 'assets/documents/cv/',
       );
 
       expect(file.title, 'CV_Jonas_Heinle_english.pdf');
-      expect(file.additionalInfo, '~3.7MB English');
+      expect(file.additionalInfo, '~46KB English');
       expect(file.baseDir, 'assets/documents/cv/');
     });
 

@@ -26,12 +26,12 @@ void main() {
       final file = File(
         baseDir: 'assets/documents/cv/',
         title: 'CV_Jonas_Heinle_english.pdf',
-        additionalInfo: '~3.7MB English',
+        additionalInfo: '~46KB English',
       );
 
       expect(file.baseDir, 'assets/documents/cv/');
       expect(file.title, 'CV_Jonas_Heinle_english.pdf');
-      expect(file.additionalInfo, '~3.7MB English');
+      expect(file.additionalInfo, '~46KB English');
     });
 
     test('fields are mutable', () {

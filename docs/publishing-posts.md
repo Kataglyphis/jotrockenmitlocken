@@ -70,12 +70,12 @@ the ANThology package):
 			{
 				"baseDir":"assets/documents/cv/",
 				"title":"CV_Jonas_Heinle_english.pdf",
-				"additionalInfo": "~3.7MB English"
+				"additionalInfo": "~46KB English"
 			},
 			{
 				"baseDir": "assets/documents/cv/",
 				"title": "CV_Jonas_Heinle_german.pdf",
-				"additionalInfo": "~3.7MB German"
+				"additionalInfo": "~47KB German"
 			},
 			{
 				"baseDir": "assets/data/",
@@ -108,12 +108,12 @@ the ANThology package):
 			{
 				"baseDir":"assets/documents/cv/",
 				"title":"CV_Jonas_Heinle_english.pdf",
-				"additionalInfo": "~3.7MB English"
+				"additionalInfo": "~46KB English"
 			},
 			{
 				"baseDir": "assets/documents/cv/",
 				"title": "CV_Jonas_Heinle_german.pdf",
-				"additionalInfo": "~3.7MB German"
+				"additionalInfo": "~47KB German"
 			},
 			{
 				"baseDir": "assets/data/",

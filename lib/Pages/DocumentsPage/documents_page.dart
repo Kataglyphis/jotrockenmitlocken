@@ -30,12 +30,12 @@ class DocumentPageState extends State<DocumentPage> {
       File(
         baseDir: 'assets/documents/cv/',
         title: 'CV_Jonas_Heinle_english.pdf',
-        additionalInfo: '~3.7MB English',
+        additionalInfo: '~46KB English',
       ),
       File(
         baseDir: 'assets/documents/cv/',
         title: 'CV_Jonas_Heinle_german.pdf',
-        additionalInfo: '~3.7MB DE',
+        additionalInfo: '~47KB DE',
       ),
       File(
         baseDir: 'assets/documents/thesis/',
