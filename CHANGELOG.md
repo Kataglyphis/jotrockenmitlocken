@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### 2026-11-20 (the dev domains get the live-site check)
+- `web.yml` runs `check-live-site.py` after each develop upload too: the WASM domain before the CanvasKit build replaces
+  `build/web`, then the dev domain. Their URLs come from the `DEV_WASM_SITE_URL` and `DEV_SITE_URL` secrets (hub CON148).
+
 - Ship the app's own MIT licence in every build and list it on the licences page; pin
   ANThology, whose shell now lists the Roboto font's Apache-2.0 text.
 
