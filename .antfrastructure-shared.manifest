@@ -6,7 +6,7 @@
 #   bash third_party/ANTfrastructure/shared/config/sync-shared-config.sh --repo-root . --check
 #
 # Flat scripts/ needs explicit paths; only the resolver uses a ../.. root knob.
-# None of the five shared configs is taken: no CMakeLists.txt and no C++ here.
+# None of the five shared configs is taken: the only CMake and C++ here are Flutter's desktop runners.
 
 antfrastructure-sh   scripts/lib/antfrastructure.sh
 renovate-git-mode-sh   scripts/lib/renovate-git-mode.sh
