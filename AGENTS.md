@@ -210,7 +210,7 @@ and its exact Git-mode companion live at `scripts/lib/` per `.antfrastructure-sh
 
 - **Names** follow the family's [workflow naming](third_party/ANTfrastructure/docs/adopting-in-a-new-project.md#workflow-file-names-and-display-names) (owner decision 2026-09-24): this lane is `web.yml` "Web · build + deploy" (`dart.yml` until then), the pin lane `submodule-pins.yml` "Submodule pins". Job ids did not change, so neither did the check-run names.
 - **Trigger:** push to `main` or `develop`, never a PR. The family's [CI-round rule](third_party/ANTfrastructure/docs/branch-and-release-strategy.md) does not reach this repo: it has no platform lane to request ([`ci-build-triggers.md`](third_party/ANTfrastructure/docs/ci-build-triggers.md#the-consumer-lanes)). Flow: lint gates → WebDAV sync → dart-checks (format, analyze, VM tests with coverage, the `lib/` floor of 74 %, the suites again in Chrome, the hub's web artefacts gate) → `flutter build web --release --wasm --no-web-resources-cdn` → fallback fonts into `build/web/fallback-fonts/` → smoke test (it also checks the shared shell, the local engine and the fallback fonts) → FTP deploy. `main` deploys WASM to the production domain; `develop` deploys WASM and CanvasKit to the dev domains.
-- **Live-site check:** after `main`'s upload, `scripts/check-live-site.py https://jonasheinle.de` loads every route in Chrome and fails on a console error, a CSP block, a third-party host, a file of `build/web` not served with 200, or a `version.json` that is not the build's. It cannot undo the upload: red means the site is broken now. `develop` has no check: the dev domains are secret and no secret holds their URL.
+- **Live-site check:** after `main`'s upload, `scripts/check-live-site.py https://jonasheinle.de` loads every route in Chrome and fails on a console error, a CSP block, a third-party host, a file of `build/web` not served with 200, or a `version.json` that is not the build's. It cannot undo the upload: red means the site is broken now. `develop` runs the same check after each dev upload, the WASM domain before the CanvasKit build replaces `build/web`; the URLs come from the `DEV_WASM_SITE_URL` and `DEV_SITE_URL` secrets.
 - **Frame timings:** the `perf` job, beside `build` and gated on neither, runs
   `integration_test/performance_test.dart` on the Linux profile build under Xvfb
   (`ci-container-steps.sh perf`). The hub's `frontend-perf-report` action compares it with the
@@ -237,6 +237,11 @@ This repo's own line: `flatpak install flathub org.mozilla.firefox` is optional,
 eyeballing the site by hand; nothing here drives Firefox.
 
 ## 5. Build, run, test
+
+The `flutter` and `dart` commands below need Flutter on PATH. Without it, run a step in the
+family Linux image, as CI does:
+`bash third_party/ANTfrastructure/linux/scripts/run-in-ci-image.sh . -- bash scripts/ci-container-steps.sh dart-checks`
+([`run-in-ci-image.sh`](third_party/ANTfrastructure/docs/shared-script-libraries.md#run-in-ci-imagesh--run-a-command-in-the-ci-image)).
 
 ```bash
 # The whole Dart gate — pub get (root + ANThology), format, analyze, test.
@@ -300,7 +305,8 @@ bash third_party/ANTfrastructure/linux/scripts/docs-site.sh stage doc/api
 
 > **MANDATORY for agents:** after any code change, `bash scripts/run-dart-checks.sh` must pass
 > with zero errors; fix and re-run until it does. CI runs the same script with zero tolerance on
-> `dart analyze` and `dart format`, and a failure blocks the deploy.
+> `dart analyze` and `dart format`, and a failure blocks the deploy. Before a commit, the two E2E
+> tests in the block above must exit 0 too.
 
 ## 6. Docs owned by this repo
 

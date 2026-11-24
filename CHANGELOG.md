@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+### 2026-11-24 (AGENTS.md matches the tree)
+- `AGENTS.md` says `develop` runs the live-site check on both dev domains, as `web.yml` has done since 2026-11-20; it
+  said develop had no check. § 5 says the `flutter` and `dart` commands need Flutter on PATH and shows how to run a
+  phase in the family image instead, and the MANDATORY box names the two E2E tests the block already required before a
+  commit. No code changed.
+
 ### 2026-11-20 (single-threaded skwasm)
 - `web/flutter_bootstrap.js` sets `forceSingleThreadedSkwasm: true`: the site is cross-origin isolated, so skwasm
   rendered with web workers, and one of them threw `Cannot read properties of undefined (reading 'postMessage')`
