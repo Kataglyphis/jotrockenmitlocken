@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+### 2026-11-27 (the Linux runner loads libgcc_s before Flutter's unwinder)
+- `linux/CMakeLists.txt` calls the hub's `kataglyphis_flutter_unwinder_first` before it links `flutter`. Flutter
+  3.50's `libflutter_linux_gtk.so` exports LLVM libunwind's `_Unwind_*`, so the first C++ exception in the Linux app
+  would abort it; `libgcc_s.so.1` now leads the runner's NEEDED list (hub failure-modes.md, "A Flutter 3.50 Linux
+  app aborts at its first C++ exception"). The hub pin moves to 5f8bc07ae, which carries the module. No CI lane
+  builds the Linux desktop app, so the hub's `check-flutter-unwinder-order.sh` is not wired in yet.
+
 ### 2026-11-24 (AGENTS.md matches the tree)
 - `AGENTS.md` says `develop` runs the live-site check on both dev domains, as `web.yml` has done since 2026-11-20; it
   said develop had no check. § 5 says the `flutter` and `dart` commands need Flutter on PATH and shows how to run a

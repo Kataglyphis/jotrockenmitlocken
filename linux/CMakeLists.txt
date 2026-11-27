@@ -58,6 +58,11 @@ add_executable(${BINARY_NAME}
 
 apply_standard_settings(${BINARY_NAME})
 
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../third_party/ANTfrastructure/cmake")
+include(KataglyphisFlutterUnwinder)
+# Flutter 3.50's engine exports a second _Unwind_*; libgcc_s.so.1 must lead the NEEDED list.
+kataglyphis_flutter_unwinder_first(${BINARY_NAME})
+
 # Add dependency libraries. Add any application-specific dependencies here.
 target_link_libraries(${BINARY_NAME} PRIVATE flutter)
 target_link_libraries(${BINARY_NAME} PRIVATE PkgConfig::GTK)
