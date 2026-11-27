@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+### 2026-11-28 (sqlite3 3.8.0, and the wasm is fetched, not tracked)
+- The hub pin 5f8bc07ae fetches the 3.8.0 build of `web/sqlite3.wasm`, and its web-artefacts check holds the
+  lock to the same release, so the deploy failed on the tracked 3.7.1 copy. `pubspec.yaml`'s floor is `^3.8.0`
+  and the lock moves that one entry, as OmniAccelerANT did. The wasm is untracked now (owner decision):
+  `ci-container-steps.sh` fetches it before the Dart checks and both web builds, as do `build-in-container.sh`
+  and `run-nginx-integration-test.sh`. Its `large-files.allow` row goes with it. Run
+  `bash scripts/setup-sqlite3-wasm.sh` once before `flutter run -d chrome`.
+
 ### 2026-11-27 (the Linux runner loads libgcc_s before Flutter's unwinder)
 - `linux/CMakeLists.txt` calls the hub's `kataglyphis_flutter_unwinder_first` before it links `flutter`. Flutter
   3.50's `libflutter_linux_gtk.so` exports LLVM libunwind's `_Unwind_*`, so the first C++ exception in the Linux app

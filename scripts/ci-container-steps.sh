@@ -24,7 +24,13 @@ container_prologue() {
   cd "${KATAGLYPHIS_REPO_ROOT}"
 }
 
+# web/sqlite3.wasm is untracked, so every phase that tests or builds the web app fetches the pinned, checked copy.
+fetch_sqlite3_wasm() {
+  bash "${KATAGLYPHIS_REPO_ROOT}/scripts/setup-sqlite3-wasm.sh"
+}
+
 phase_dart_checks() {
+  fetch_sqlite3_wasm
   bash "${KATAGLYPHIS_REPO_ROOT}/scripts/run-dart-checks.sh"
   bash "$(antfrastructure_path linux/scripts/05-frameworks/flutter/check-dart-coverage.sh)"     --min "${DART_COVERAGE_MIN}" --lcov "${KATAGLYPHIS_REPO_ROOT}/build/coverage/lcov.info"     --repo-root "${KATAGLYPHIS_REPO_ROOT}"
   # Again in the image's Chrome, where the site runs; the @TestOn('vm') files read the checkout and sit out.
@@ -41,6 +47,7 @@ fetch_fallback_fonts() {
 phase_build_web_wasm() {
   # Per-user config, so per-container: enable web in the container that builds.
   flutter config --enable-web
+  fetch_sqlite3_wasm
   # Every engine file from this site, none from Google's CDN (owner, 2026-10-21).
   flutter_build_web --wasm --no-web-resources-cdn --no-tree-shake-icons
   fetch_fallback_fonts
@@ -50,6 +57,7 @@ phase_build_web_canvaskit() {
   flutter config --enable-web
   # Drop the WASM output so the bundles never mix; no -f, since a missing build/web means the WASM build never ran.
   rm -r "${KATAGLYPHIS_REPO_ROOT}/build/web/"
+  fetch_sqlite3_wasm
   flutter_build_web --no-web-resources-cdn --no-tree-shake-icons
   fetch_fallback_fonts
 }

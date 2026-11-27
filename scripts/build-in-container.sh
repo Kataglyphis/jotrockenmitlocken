@@ -29,7 +29,7 @@ FLUTTER_SCRIPTS_IN_CONTAINER="/workspace/third_party/ANTfrastructure/linux/scrip
 # Checked on the host: in the container the same miss surfaces a screen of pull output later.
 antfrastructure_path linux/scripts/05-frameworks/flutter/setup-flutter.sh >/dev/null
 
-BUILD_CMD='flutter config --enable-web && flutter pub get && (cd third_party/ANThology && flutter pub get)'
+BUILD_CMD='bash scripts/setup-sqlite3-wasm.sh && flutter config --enable-web && flutter pub get && (cd third_party/ANThology && flutter pub get)'
 if [ "${BUILD_TARGET}" = "wasm" ]; then
   BUILD_CMD="${BUILD_CMD} && flutter_build_web --wasm --no-web-resources-cdn --no-tree-shake-icons"
 else

@@ -13,6 +13,7 @@ if [ ! -f "${BUILD_DIR}/index.html" ]; then
   echo "Build not found. Building..."
   # shellcheck source=/dev/null
   source "$(antfrastructure_path linux/scripts/05-frameworks/flutter/lane-prologue.sh)"
+  bash "${KATAGLYPHIS_REPO_ROOT}/scripts/setup-sqlite3-wasm.sh"
   (cd "${KATAGLYPHIS_REPO_ROOT}" && flutter_build_web --wasm --no-web-resources-cdn --no-tree-shake-icons)
   python3 "$(antfrastructure_path linux/scripts/05-frameworks/flutter/fetch-fallback-fonts.py)" --dest "${BUILD_DIR}/fallback-fonts"
 fi

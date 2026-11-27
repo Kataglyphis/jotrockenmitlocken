@@ -191,7 +191,7 @@ and its exact Git-mode companion live at `scripts/lib/` per `.antfrastructure-sh
 | Routing | `go_router ^18.0.0` (ANThology's; a dev dependency here for the layout test) |
 | Icons | `cupertino_icons ^2.0.0`, `font_awesome_flutter ^11.0.0` |
 | Localization | `intl ^0.20.2` |
-| Database | `sqlite3 ^3.7.0` (WASM + native; `web/sqlite3.wasm` is the same release) |
+| Database | `sqlite3 ^3.8.0` (WASM + native; `web/sqlite3.wasm` is the same release, fetched and untracked) |
 | Shared library | `anthology` (local path: `third_party/ANThology`) |
 | Testing | `flutter_test`, `integration_test`, ANThology's dev-only `anthology_test_support` |
 | Charts (in shared repo) | `fl_chart ^1.2.0` |
@@ -200,7 +200,7 @@ and its exact Git-mode companion live at `scripts/lib/` per `.antfrastructure-sh
 ### Gotchas
 
 - **No real content locally:** local runs show the anthology package's bundled sample blog and empty tables until `scripts/sync-webdav-content.sh` populates `assets/` (needs the four WebDAV repository secrets).
-- **SQLite on web:** `bash scripts/setup-sqlite3-wasm.sh` downloads `sqlite3.wasm` into `web/` for web targets. It takes no arguments: the version and its SHA256 come from ANTfrastructure's `linux/scripts/01-core/versions.env` (`SQLITE3_WASM_VERSION`), and the download is verified against it.
+- **SQLite on web:** `bash scripts/setup-sqlite3-wasm.sh` downloads `sqlite3.wasm` into `web/` for web targets; the file is untracked, so run it once before `flutter run -d chrome`. The CI phases that test or build the web app run it themselves. It takes no arguments: the version and its SHA256 come from ANTfrastructure's `linux/scripts/01-core/versions.env` (`SQLITE3_WASM_VERSION`), and the download is verified against it.
 - **Platform directories:** do not touch `ios/`, `macos/`, `android/`, `windows/`, `linux/` unless asked; they hold platform-specific boilerplate.
 - **Android follows OmniAccelerANT's setup:** AGP 9.4.1, Gradle 9.8.1 and AGP's built-in Kotlin (`android.builtInKotlin=true`, no `kotlin-android` plugin; the KGP in `android/settings.gradle.kts` is declared, never applied, to clear Flutter's Kotlin floor). The image's `/opt/android-sdk` is read-only, so `android/build.gradle.kts` pins compileSdk, build-tools and NDK to what it ships, for every plugin too; Flutter's own NDK default is not in it. No CI lane builds the APK: `flutter build apk --release` in the family image is the check (passed 2026-10-13).
 - **Historical Markdown patch notes:** [docs/getting-started.md](docs/getting-started.md#known-issues).
