@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### 2026-11-28 (the pin suite runs under Pester 6.2.0)
+- `submodule-pins.yml` passes `pester-version: '6.2.0'`, the hub's `:latest` copy, instead of 3.4.0: the hub's
+  `run-pester-suite` runs Pester 5 and later since hub 4b8353a00, and the pin suite asserts with `throw`.
+
 ### 2026-11-28 (multi-threaded skwasm again, on Flutter 3.50.1)
 - `web/flutter_bootstrap.js` drops `forceSingleThreadedSkwasm`: the image's Flutter is 3.50.1, whose skwasm worker
   locks no longer throw `Cannot read properties of undefined (reading 'postMessage')` (flutter/flutter#196127). The
