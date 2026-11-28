@@ -8,7 +8,5 @@ _flutter.loader.load({
   },
   config: {
     fontFallbackBaseUrl: "fallback-fonts/",
-    // Multi-threaded skwasm throws a worker TypeError on load (hub CON150); Flutter 3.50.1 fixes its worker locks.
-    forceSingleThreadedSkwasm: true,
   },
 });

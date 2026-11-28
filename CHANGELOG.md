@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+### 2026-11-28 (multi-threaded skwasm again, on Flutter 3.50.1)
+- `web/flutter_bootstrap.js` drops `forceSingleThreadedSkwasm`: the image's Flutter is 3.50.1, whose skwasm worker
+  locks no longer throw `Cannot read properties of undefined (reading 'postMessage')` (flutter/flutter#196127). The
+  develop live check on both dev domains logs a `flaky:` line if it comes back (hub CON150).
+
 ### 2026-11-28 (sqlite3 3.8.0, and the wasm is fetched, not tracked)
 - The hub pin 5f8bc07ae fetches the 3.8.0 build of `web/sqlite3.wasm`, and its web-artefacts check holds the
   lock to the same release, so the deploy failed on the tracked 3.7.1 copy. `pubspec.yaml`'s floor is `^3.8.0`
